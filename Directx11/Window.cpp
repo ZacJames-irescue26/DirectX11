@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Window.h"
+#include <stdexcept>
 
 // Window Class Stuff
 Window::WindowClass Window::WindowClass::wndClass;
@@ -18,7 +19,7 @@ Window::WindowClass::WindowClass() noexcept
 	wc.hIcon = nullptr;
 	wc.hCursor = nullptr;
 	wc.hbrBackground = nullptr;
-	wc.lpszClassName = GetName();
+	wc.lpszClassName = (LPCWSTR)GetName();
 	wc.hIconSm = nullptr;
 
 	RegisterClassEx(&wc);
@@ -26,7 +27,7 @@ Window::WindowClass::WindowClass() noexcept
 
 Window::WindowClass::~WindowClass()
 {
-	UnregisterClass(wndClassName, GetInstance());
+	UnregisterClass((LPCWSTR)wndClassName, GetInstance());
 }
 
 const char* Window::WindowClass::GetName() noexcept
@@ -41,7 +42,7 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept
 
 
 // Window Stuff
-Window::Window(int width, int height, const char* name)
+Window::Window(int width, int height, LPCWSTR name)
 	:
 	width(width),
 	height(height)
@@ -54,36 +55,24 @@ Window::Window(int width, int height, const char* name)
 	wr.bottom = height + wr.top;
 	if (AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
 	{
-		throw CHWND_LAST_EXCEPT();
+		
 	}
+
 	// create window & get hWnd
 	hWnd = CreateWindow(
-		WindowClass::GetName(), name,
+		(LPCWSTR)WindowClass::GetName(), (LPCWSTR)name,
 		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
 		CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top,
-		nullptr, nullptr, WindowClass::GetInstance(), this
-	);
+		nullptr, nullptr, WindowClass::GetInstance(), this);
+
+
 	// check for error
 	if (hWnd == nullptr)
 	{
-		throw CHWND_LAST_EXCEPT();
+		
 	}
 	// newly created windows start off as hidden
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
-	// Init ImGui Win32 Impl
-	ImGui_ImplWin32_Init(hWnd);
-	// create graphics object
-	pGfx = std::make_unique<Graphics>(hWnd, width, height);
-	// register mouse raw input device
-	RAWINPUTDEVICE rid;
-	rid.usUsagePage = 0x01; // mouse page
-	rid.usUsage = 0x02; // mouse usage
-	rid.dwFlags = 0;
-	rid.hwndTarget = nullptr;
-	if (RegisterRawInputDevices(&rid, 1, sizeof(rid)) == FALSE)
-	{
-		throw CHWND_LAST_EXCEPT();
-	}
 }
 
 Window::~Window()
@@ -119,4 +108,24 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 	Window* const pWnd = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	// forward message to window instance handler
 	return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
+}
+
+LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+		PostQuitMessage(0);
+		break;
+	case WM_KEYDOWN:
+		if (wParam == (WPARAM)L"F")
+		{
+		}
+		break;
+	case  WM_CHAR:
+		break;
+	case WM_LBUTTONDOWN:
+		break;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

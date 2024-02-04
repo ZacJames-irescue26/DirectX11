@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "WindowsMessageMap.h"
+#include "Window.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static WindowsMessageMap mm;
-	//OutputDebugString((LPCWSTR)mm(msg,lParam,wParam).c_str());
+	
 	switch (msg)
 	{
 	case WM_CLOSE:
@@ -29,17 +29,8 @@ int CALLBACK WinMain(
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	// register window class
-	const LPCWSTR pClassName = L"DirectX11";
-
-
-
-	//create window instance
-	HWND hWnd = CreateWindowEx(
-		0, (LPCWSTR)pClassName, (LPCWSTR)pClassName,
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-		200,200,640,480,nullptr,nullptr,hInstance,nullptr);
-	ShowWindow(hWnd, SW_SHOW);
+	Window wnd(800,500, L"DirectX11");
+	
 	MSG msg;
 	BOOL gResult;
 	while (gResult = GetMessage(& msg, nullptr, 0, 0) > 0 )
@@ -51,8 +42,5 @@ int CALLBACK WinMain(
 	{
 		return -1;
 	}
-	else
-	{
-		return msg.wParam;
-	}
+	return msg.wParam;
 }
