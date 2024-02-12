@@ -22,6 +22,11 @@
 #include <unordered_map>
 #include <sstream>
 #include <iomanip>
+#include <exception>
+#include <queue>
+#include <bitset>
+#include <optional>
+#include <chrono>
 
 // Link library dependencies
 #pragma comment(lib, "d3d11.lib")
