@@ -69,10 +69,11 @@ Window::Window(int width, int height, LPCWSTR name)
 	// check for error
 	if (hWnd == nullptr)
 	{
-		
+		return;
 	}
 	// newly created windows start off as hidden
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	pGfx = std::make_unique<Graphics>(hWnd, width, height);
 }
 
 std::optional<int> Window::ProcessMessages()

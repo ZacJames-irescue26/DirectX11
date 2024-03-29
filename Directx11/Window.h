@@ -2,6 +2,7 @@
 #include "Exception.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Graphics.h"
 
 class Window
 {
@@ -30,6 +31,10 @@ public:
 	static std::optional<int> ProcessMessages();
 	Keyboard keyboard;
 	Mouse mouse;
+	Graphics& GetGraphics()
+	{
+		return *pGfx;
+	}
 private:
 	class WindowClass
 	{
@@ -55,4 +60,5 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
+	std::unique_ptr<Graphics> pGfx;
 };

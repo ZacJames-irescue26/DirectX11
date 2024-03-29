@@ -7,7 +7,7 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 #include <DirectXColors.h>
-
+#include<wrl.h>
 
 // STL includes
 #include <iostream>
@@ -44,5 +44,22 @@ inline void SafeRelease(T& ptr)
 		ptr = NULL;
 	}
 }
-
+template<class T, class U>
+T Cast(U ToCast)
+{
+	T Result = dynamic_cast<T>(ToCast);
+	return Result;
+}
+template <class T, class U>
+bool IsA(U compare)
+{
+	if (dynamic_cast<T>(compare))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 using namespace DirectX;
