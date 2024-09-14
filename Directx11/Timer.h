@@ -1,12 +1,23 @@
 #pragma once
 
-
+namespace Engine
+{
 class Timer
 {
 public:
 	Timer();
-	float Mark();
-	float Peek() const;
+	double GetMilisecondsElapsed();
+	void Restart();
+	bool Stop();
+	bool Start();
 private:
-	std::chrono::steady_clock::time_point last;
+	bool isrunning = false;
+#ifdef _WIN32
+	std::chrono::time_point<std::chrono::steady_clock> start;
+	std::chrono::time_point<std::chrono::steady_clock> stop;
+#else
+	std::chrono::time_point<std::chrono::system_clock> start;
+	std::chrono::time_point<std::chrono::system_clock> stop;
+#endif
 };
+}

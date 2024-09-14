@@ -1,19 +1,33 @@
-struct VSOut
+
+
+cbuffer buffer : register(b0)
 {
-	float3 color : Color;
-	float4 pos : SV_Position;
+    float4x4 wvpMatrix;
+    float4x4 worldMatrix;
+}; 
+
+struct VS_INPUT
+{
+    float3 inPos : POSITION;
+    float2 inTexCoord : TEXCOORD;
+    float3 inNormal : NORMAL;
 };
 
-cbuffer CBuf
+struct VS_OUTPUT
 {
-	matrix transform;
+    float4 outPosition : SV_POSITION;
+    float2 outTexCoord : TEXCOORD;
+    float3 outNormal : NORMAL;
+    float3 outWorldPos : WORLD_POSITION;
 };
 
-
-VSOut main(float3 pos : Position, float3 color : Color)
+VS_OUTPUT vs_main(VS_INPUT input) 
 {
-	VSOut vso;
-	vso.pos = mul(float4(pos.x,pos.y,pos.z,1.0f), transform);
-	vso.color = color;
-	return vso;
+    VS_OUTPUT output;
+    output.outPosition = mul(float4(input.inPos, 1.0f), wvpMatrix);
+    output.outTexCoord = input.inTexCoord;
+    output.outNormal = normalize(mul(float4(input.inNormal, 0.0f), worldMatrix));
+    output.outWorldPos = mul(float4(input.inPos, 1.0f), worldMatrix);
+    
+    return output;
 }
