@@ -1,5 +1,8 @@
 #pragma once
 #include "StringConverter.h"
+#include <string>
+#define JPH_ENABLE_ASSERTS
+
 namespace Engine
 {
 class COMException;

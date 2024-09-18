@@ -1,6 +1,4 @@
 #pragma once
-#define JPH_DEBUG_RENDERER
-#define JPH_PROFILE_ENABLED
 #include <windows.h>
 #include <comdef.h>
 
@@ -41,7 +39,6 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "winmm.lib")
 
-
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -55,32 +52,5 @@ using namespace JPH;
 
 // If you want your code to compile using single or double precision write 0.0_r to get a Real value that compiles to double or float depending if JPH_DOUBLE_PRECISION is set or not.
 using namespace JPH::literals;
-// Safely release a COM object.
-template<typename T>
-inline void SafeRelease(T& ptr)
-{
-	if (ptr != NULL)
-	{
-		ptr->Release();
-		ptr = NULL;
-	}
-}
-template<class T, class U>
-T Cast(U ToCast)
-{
-	T Result = dynamic_cast<T>(ToCast);
-	return Result;
-}
-template <class T, class U>
-bool IsA(U compare)
-{
-	if (dynamic_cast<T>(compare))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+
 using namespace DirectX;

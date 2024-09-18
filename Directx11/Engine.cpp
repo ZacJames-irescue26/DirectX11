@@ -23,8 +23,7 @@ bool EngineInit::ProcessMessages()
 
 void EngineInit::Update()
 {
-	float dt = timer.GetMilisecondsElapsed();
-	timer.Restart();
+	
 	while (!keyboard.CharBufferIsEmpty())
 	{
 		unsigned char ch = keyboard.ReadChar();
@@ -47,36 +46,13 @@ void EngineInit::Update()
 			}
 		}
 	}
-	const float cameraSpeed = 0.001f;
-	if (keyboard.KeyIsPressed('W'))
-	{
-		this->gfx.camera.AdjustPosition(this->gfx.camera.GetForwardVector() * cameraSpeed * dt);
-	}
-	if (keyboard.KeyIsPressed('S'))
-	{
-		this->gfx.camera.AdjustPosition(this->gfx.camera.GetBackwardVector() * cameraSpeed * dt);
-	}
-	if (keyboard.KeyIsPressed('A'))
-	{
-		this->gfx.camera.AdjustPosition(this->gfx.camera.GetLeftVector() * cameraSpeed * dt);
-	}
-	if (keyboard.KeyIsPressed('D'))
-	{
-		this->gfx.camera.AdjustPosition(this->gfx.camera.GetRightVector() * cameraSpeed * dt);
-	}
-	if (keyboard.KeyIsPressed(VK_SPACE))
-	{
-		this->gfx.camera.AdjustPosition(0.0f, cameraSpeed, 0.0f);
-	}
-	if (keyboard.KeyIsPressed('Z'))
-	{
-		this->gfx.camera.AdjustPosition(0.0f, -cameraSpeed, 0.0f);
-	}
+	
 
 }
 
 void EngineInit::RenderFrame()
 {
+	this->gfx.PhysicsUpdate();
 	this->gfx.RenderFrame();
 }
 

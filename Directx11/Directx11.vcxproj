@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineInclude.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="Game\GameObject.h" />
-    <ClInclude Include="Game\Physics\PhysicsWorld.h" />
+    <ClInclude Include="Game\PhysicsObject.h" />
+    <ClInclude Include="Physics\PhysicsWorld.h" />
     <ClInclude Include="Graphics\AdapterReader.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\Color.h" />
@@ -42,6 +44,7 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Graphics\Vertex.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />
@@ -59,7 +62,8 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Game\GameObject.cpp" />
-    <ClCompile Include="Game\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="Game\PhysicsObject.cpp" />
+    <ClCompile Include="Physics\PhysicsWorld.cpp" />
     <ClCompile Include="Graphics\AdapterReader.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
@@ -91,6 +95,7 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="Keyboard\KeyboardClass.cpp" />
@@ -130,11 +135,8 @@
     <ProjectReference Include="..\Dependances\assimp-master\Build\code\assimp.vcxproj">
       <Project>{5da86718-3c67-3c13-8043-f41967b0e06c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Dependances\DirectXTex\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
-      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Dependances\JoltPhysics-master\Build\VS2022_Clang\Build\Jolt.vcxproj">
-      <Project>{3a596517-5927-3577-bf96-8ee6a26c7bfd}</Project>
+    <ProjectReference Include="..\Dependances\JoltPhysics\Build\VS2022_CL\Jolt.vcxproj">
+      <Project>{a143bd87-7769-3b50-bddd-85e6f9c92fb2}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -159,7 +161,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -230,10 +232,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependances/DirectXTex;$(SolutionDir)Dependances;$(SolutionDir)Dependances\JoltPhysics-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)Dependances;$(SolutionDir)PhysicsEngine;$(SolutionDir)Dependances\JoltPhysics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependances/libs/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>assimp-vc143-mtd.lib;Jolt.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -241,7 +244,7 @@
     <FxCompile>
       <ShaderType>Vertex</ShaderType>
       <EntryPointName>vs_main</EntryPointName>
-      <ObjectFileOutput>$(ProjectDir)CompiledShaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(SolutionDir)Game\CompiledShaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

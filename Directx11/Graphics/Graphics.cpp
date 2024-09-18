@@ -5,22 +5,19 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui_impl_dx11.h"
-#include <Jolt/Physics/Collision/Shape/BoxShape.h>
-#include <Jolt/Physics/Collision/Shape/MeshShape.h>
-#include <Jolt/Physics/Collision/Shape/HeightFieldShape.h>
-#include <Jolt/Physics/Body/BodyCreationSettings.h>
-
+#include "Jolt/Physics/Collision/Shape/BoxShape.h"
 
 namespace Engine
 {
 Microsoft::WRL::ComPtr<ID3D11Device> Graphics::device = nullptr;
 bool Graphics::Initialize(HWND hwnd, int width, int height)
 {
-
+	
 	windowWidth = width;
 	windowHeight = height;
 	if (!InitializeDirectX(hwnd))
 		return false;
+	physicsController.initialise();
 
 	if (!InitializeShaders())
 		return false;
@@ -34,9 +31,14 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(this->device.Get(), this->deviceContext.Get());
 	ImGui::StyleColorsDark();
+
+
 	return true;
 }
-
+void Graphics::PhysicsUpdate()
+{
+	physicsController.Update();
+}
 void Graphics::RenderFrame()
 {
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -59,7 +61,8 @@ void Graphics::RenderFrame()
 	this->lightConstantBuffer.data.dynamicLightPosition = light.GetPositionFloat3();
 	this->lightConstantBuffer.ApplyChanges();
 	
-
+	RVec3 pos = physicsController.GetPosition(gameObject.GetID());
+	gameObject.SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
 	{
 		this->gameObject.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
 		floor.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
@@ -76,16 +79,15 @@ void Graphics::RenderFrame()
 	ImGui::Begin("Light Controls");
 	ImGui::DragFloat3("Ambient Light Color", &this->lightConstantBuffer.data.ambientLightColor.x, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Ambient Light Strength", &this->lightConstantBuffer.data.ambientLightStrength, 0.01f, 0.0f, 1.0f);
-	static float Scale[3] = {1.0,1.0,1.0};
-	ImGui::DragFloat3("Scale",&Scale[0], 0.01, 0.0f, 10.0f);
-	floor.SetScale(XMFLOAT3(Scale[0], Scale[1], Scale[2]));
+	//static float Scale[3] = {1.0,1.0,1.0};
+	//ImGui::DragFloat3("Scale",&Scale[0], 0.01, 0.0f, 10.0f);
+	//floor.SetScale(XMFLOAT3(Scale[0], Scale[1], Scale[2]));
 	this->lightConstantBuffer.ApplyChanges();
 	ImGui::End();
 	//Assemble Together Draw Data
 	ImGui::Render();
 	//Render Draw Data
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
 	this->swapchain->Present(0, NULL);
 }
 
@@ -277,19 +279,83 @@ bool Graphics::InitializeScene()
 	this->lightConstantBuffer.data.ambientLightColor = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
 
-	if (!gameObject.Initialize("Assets/TestCube.glb", this->device.Get(), this->deviceContext.Get(), this->constantBuffer))
-		return false;
+	/*if (!gameObject.Initialize("Assets/TestCube.glb", this->device.Get(), this->deviceContext.Get(), this->constantBuffer))
+		return false;*/
 
 	if (!light.Initialize(this->device.Get(), this->deviceContext.Get(), this->constantBuffer))
 		return false;
-	if (!floor.Initialize("Assets/Quad.obj", device.Get(), deviceContext.Get(), constantBuffer))
+	/*if (!floor.Initialize("Assets/Quad.obj", device.Get(), deviceContext.Get(), constantBuffer))
 	{
 		return false;
-	}
+	}*/
+	BodyCreationSettings Box_settings(new BoxShape(JPH::Vec3(1, 1, 1)), RVec3(0.0_r, 5.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
+	if (!gameObject.Initialize(physicsController.CreateAndAddObject(Box_settings, EActivation::Activate), 
+	"Assets/TestCube.glb", this->device.Get(), 
+	this->deviceContext.Get(), this->constantBuffer))
+		return false;
+	BodyCreationSettings Floor_settings(new BoxShape(JPH::Vec3(100, 0.1, 100)), RVec3(0.0_r, -2.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Static, Layers::NON_MOVING);
+
+	if (!floor.Initialize(physicsController.CreateAndAddObject(Floor_settings, EActivation::DontActivate),
+		"Assets/ground.glb", this->device.Get(),
+		this->deviceContext.Get(), this->constantBuffer))
+		return false;
 	floor.SetPosition(XMVECTOR{0.0f,-2.0,0.0});
+	floor.SetScale({100.0,0.1,100.0});
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
 	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
-
+	physicsController.Optimize();
 	return true;
 }
+
+
+void Graphics::ClearDepthStencil(ID3D11DepthStencilView* stencil)
+{
+	this->deviceContext->ClearDepthStencilView(stencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+}
+void Graphics::SetInputLayout(ID3D11InputLayout* layout)
+{
+	this->deviceContext->IASetInputLayout(layout);
+
+}
+void Graphics::SetTopology(D3D11_PRIMITIVE_TOPOLOGY top)
+{
+	this->deviceContext->IASetPrimitiveTopology(top);
+}
+void Graphics::SetRasterizerState()
+{
+	this->deviceContext->RSSetState(this->rasterizerstate.Get());
+}
+void Graphics::SetDepthStencilState()
+{
+	this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
+}
+void Graphics::SetBlendState()
+{
+	this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
+}
+void Graphics::SetSamplers()
+{
+	this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
+}
+void Graphics::SetPSShader(ID3D11PixelShader* shader)
+{
+	this->deviceContext->PSSetShader(shader, NULL, 0);
+}
+void Graphics::SetVSShader(ID3D11VertexShader* shader)
+{
+	this->deviceContext->VSSetShader(m_vertexShader.GetShader(), NULL, 0);
+}
+
+void Graphics::SetConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer*const* ppBuffer)
+{
+	this->deviceContext->PSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
+}
+
+void Graphics::ClearView(float color[4])
+{
+	this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), color);
+}
+
+
 }
