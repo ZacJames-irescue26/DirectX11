@@ -39,6 +39,12 @@ void Graphics::PhysicsUpdate()
 {
 	physicsController.Update();
 }
+
+void Graphics::Present()
+{
+	this->swapchain->Present(0, NULL);
+}
+
 void Graphics::RenderFrame()
 {
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -344,14 +350,17 @@ void Graphics::SetPSShader(ID3D11PixelShader* shader)
 }
 void Graphics::SetVSShader(ID3D11VertexShader* shader)
 {
-	this->deviceContext->VSSetShader(m_vertexShader.GetShader(), NULL, 0);
+	this->deviceContext->VSSetShader(shader, NULL, 0);
 }
 
-void Graphics::SetConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer*const* ppBuffer)
+void Graphics::SetPSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer*const* ppBuffer)
 {
 	this->deviceContext->PSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
 }
-
+void Graphics::SetVSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer)
+{
+	this->deviceContext->VSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
+}
 void Graphics::ClearView(float color[4])
 {
 	this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), color);

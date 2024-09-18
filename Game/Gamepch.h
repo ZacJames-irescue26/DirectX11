@@ -1,4 +1,6 @@
 #pragma once
+#define JPH_DEBUG_RENDERER
+#define JPH_PROFILE_ENABLED
 #include <windows.h>
 #include <comdef.h>
 

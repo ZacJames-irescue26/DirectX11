@@ -16,13 +16,17 @@ class Graphics
 public:
 	bool Initialize(HWND hwnd, int width, int height);
 	void PhysicsUpdate();
+	void Present();
 	void RenderFrame();
 	Camera camera;
 	static ID3D11Device* GetDevice()
 	{
 		return device.Get();
 	}
-
+	ID3D11DeviceContext* GetDeviceContext()
+	{
+		return deviceContext.Get();
+	}
 	void ClearDepthStencil(ID3D11DepthStencilView* stencil);
 	void SetInputLayout(ID3D11InputLayout* layout);
 	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY top);
@@ -32,13 +36,25 @@ public:
 	void SetSamplers();
 	void SetPSShader(ID3D11PixelShader* shader);
 	void SetVSShader(ID3D11VertexShader* shader);
-	void SetConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer);
+	void SetPSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer);
+	void SetVSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer);
 	void ClearView(float color[4]);
 
 	
 	Light light;
 	PhysicsObject floor;
 	PhysicsObject gameObject;
+	PhysicsEngine physicsController;
+	static Microsoft::WRL::ComPtr<ID3D11Device> device;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> deviceContext;
+	Microsoft::WRL::ComPtr<IDXGISwapChain> swapchain;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerstate;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
+	int windowWidth = 0;
+	int windowHeight = 0;
 private:
 	bool InitializeDirectX(HWND hwnd);
 	bool InitializeShaders();
@@ -49,14 +65,6 @@ private:
 
 
 
-	static Microsoft::WRL::ComPtr<ID3D11Device> device;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> deviceContext;
-	Microsoft::WRL::ComPtr<IDXGISwapChain> swapchain;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerstate;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	VertexShader m_vertexShader;
 	PixelShader m_pixelShader;
 	
@@ -71,10 +79,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 
-	PhysicsEngine physicsController;
 
-	int windowWidth = 0;
-	int windowHeight = 0;
 
 
 };
