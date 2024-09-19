@@ -202,6 +202,17 @@ const XMVECTOR& GameObject::GetLeftVector()
 {
 	return this->vec_left;
 }
+
+void GameObject::SetParent(GameObject* parent)
+{
+	// inverse parent world matrix 
+	XMMATRIX invParentMatrix = XMMatrixInverse(nullptr, parent->worldMatrix);
+	XMVECTOR childpos = XMLoadFloat3(&pos);
+	XMVECTOR childLocalPosVec = XMVector3Transform(childpos, invParentMatrix);
+	XMStoreFloat3(&posLocal, childLocalPosVec);
+	Parent = parent;
+}
+
 void GameObject::UpdateMatrix()
 {
 	this->worldMatrix = XMMatrixRotationRollPitchYaw(this->rot.x, this->rot.y, this->rot.z) * XMMatrixTranslation(this->pos.x, this->pos.y, this->pos.z);

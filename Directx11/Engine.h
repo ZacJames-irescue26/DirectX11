@@ -12,6 +12,7 @@ public:
 	void RenderFrame();
 
 	Timer timer;
-
+	float MouseX;
+	float MouseY;
 };
 }

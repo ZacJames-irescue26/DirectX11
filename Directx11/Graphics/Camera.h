@@ -1,11 +1,13 @@
 #pragma once
 #include <DirectXMath.h>
 
+
 namespace Engine
 {
 
 class Camera
 {
+	
 public:
 	Camera();
 	void SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ);
@@ -33,7 +35,7 @@ public:
 	const XMVECTOR& GetBackwardVector();
 	const XMVECTOR& GetLeftVector();
 
-private:
+	protected:
 	void UpdateViewMatrix();
 	XMVECTOR posVector;
 	XMVECTOR rotVector;

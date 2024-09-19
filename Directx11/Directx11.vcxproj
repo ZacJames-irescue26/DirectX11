@@ -24,6 +24,7 @@
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="Game\GameObject.h" />
     <ClInclude Include="Game\PhysicsObject.h" />
+    <ClInclude Include="Graphics\ThirdPersonCamera.h" />
     <ClInclude Include="Physics\PhysicsWorld.h" />
     <ClInclude Include="Graphics\AdapterReader.h" />
     <ClInclude Include="Graphics\Camera.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Game\GameObject.cpp" />
     <ClCompile Include="Game\PhysicsObject.cpp" />
+    <ClCompile Include="Graphics\ThirdPersonCamera.cpp" />
     <ClCompile Include="Physics\PhysicsWorld.cpp" />
     <ClCompile Include="Graphics\AdapterReader.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />

@@ -3,7 +3,7 @@
 #include "StringConverter.h"
 namespace Engine
 {
-#define max(a,b) (((a > b)) ? (a) : (b))
+
 std::wstring StringHelper::StringToWide(std::string str)
 {
 	std::wstring wide_string(str.begin(), str.end());

@@ -17,7 +17,7 @@ public:
 	PhysicsObject gameObject;
 	GameObject object;
 	Camera camera;
-	Camera PlayerCamera;
+	ThirdPersonCamera PlayerCamera;
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
@@ -38,7 +38,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
-
+	data data;
 	static bool playercam;
 	int windowWidth = 0;
 	int windowHeight = 0;

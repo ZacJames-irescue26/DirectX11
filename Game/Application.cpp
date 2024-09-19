@@ -85,7 +85,6 @@ void Application::InitializeShaders()
 }
 void Application::OnUpdate()
 {
-
 	while (this->ProcessMessages() == true)
 	{
 		this->gfx.PhysicsUpdate();
@@ -117,6 +116,13 @@ void Application::OnUpdate()
 		if (keyboard.KeyIsPressed('Z'))
 		{
 			this->gfx.camera.AdjustPosition(0.0f, -cameraSpeed, 0.0f);
+		}
+		if (playercam)
+		{
+			PlayerCamera.SetRadius(5.0f);
+			PlayerCamera.HandleInput(MouseX, MouseY);
+			data = PlayerCamera.Update(gameObject.GetPositionFloat3());
+
 		}
 	}
 }
@@ -167,6 +173,12 @@ void Application::RenderFrame()
 	ImGui::DragFloat3("Ambient Light Color", &this->lightConstantBuffer.data.ambientLightColor.x, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("Ambient Light Strength", &this->lightConstantBuffer.data.ambientLightStrength, 0.01f, 0.0f, 1.0f);
 	ImGui::Checkbox("Player camera", &playercam);
+	ImGui::Text("CamPos: %f %f %f", data.campos.x, data.campos.y, data.campos.z);
+	ImGui::Text("targetPos: %f %f %f", data.targetpos.x, data.targetpos.y, data.targetpos.z);
+	ImGui::Text("x|y|z: %f %f %f", data.x, data.y, data.z);
+	ImGui::Text("Pitch|Yaw %f %f", data.pitch, data.yaw);
+	ImGui::Text("mouse %f %f", MouseX, MouseY);
+
 	//static float Scale[3] = {1.0,1.0,1.0};
 	//ImGui::DragFloat3("Scale",&Scale[0], 0.01, 0.0f, 10.0f);
 	//floor.SetScale(XMFLOAT3(Scale[0], Scale[1], Scale[2]));

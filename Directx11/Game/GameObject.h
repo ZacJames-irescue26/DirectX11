@@ -33,6 +33,8 @@ public:
 	const XMVECTOR& GetRightVector();
 	const XMVECTOR& GetBackwardVector();
 	const XMVECTOR& GetLeftVector();
+
+	void SetParent(GameObject* parent);
 protected:
 	Model model;
 	void UpdateWorldMatrix();
@@ -42,6 +44,7 @@ protected:
 	XMVECTOR posVector;
 	XMVECTOR rotVector;
 	XMFLOAT3 pos;
+	XMFLOAT3 posLocal;
 	XMFLOAT3 rot;
 	XMFLOAT3 scale = {1.0f,1.0f,1.0f};
 	const XMVECTOR DEFAULT_FORWARD_VECTOR = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
@@ -62,7 +65,7 @@ protected:
 
 	void UpdateMatrix();
 	void UpdateDirectionVectors();
-
+	GameObject* Parent;
 
 
 };

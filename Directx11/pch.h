@@ -1,6 +1,7 @@
 #pragma once
 #define JPH_DEBUG_RENDERER
 #define JPH_PROFILE_ENABLED
+#define max(a,b) (((a > b)) ? (a) : (b))
 #include <windows.h>
 #include <comdef.h>
 

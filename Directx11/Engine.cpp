@@ -38,6 +38,8 @@ void EngineInit::Update()
 	while (!mouse.EventBufferIsEmpty())
 	{
 		MouseEvent me = mouse.ReadEvent();
+		MouseX = me.GetPosX();
+		MouseY = me.GetPosY();
 		if (mouse.IsRightDown())
 		{
 			if (me.GetType() == MouseEvent::EventType::RAW_MOVE)
