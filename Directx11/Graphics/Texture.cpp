@@ -81,11 +81,11 @@ Texture::Texture(ID3D11Device* device, aiTexture* intexture, size_t size, aiText
 	{
 	if (intexture->mHeight == 0)
 	{
-		data = stbi_load_from_memory(reinterpret_cast<unsigned char*> (intexture->pcData), intexture->mWidth, &img_width, &img_height, &img_channels, 0);
+		data = stbi_load_from_memory(reinterpret_cast<unsigned char*> (intexture->pcData), intexture->mWidth, &img_width, &img_height, &img_channels, 4);
 	}
 	else
 	{
-		data = stbi_load_from_memory(reinterpret_cast<unsigned char*> (intexture->pcData), intexture->mWidth * intexture->mHeight, &img_width, &img_height, &img_channels, 0);
+		data = stbi_load_from_memory(reinterpret_cast<unsigned char*> (intexture->pcData), intexture->mWidth * intexture->mHeight, &img_width, &img_height, &img_channels, 4);
 
 	}
 		if (data == nullptr)

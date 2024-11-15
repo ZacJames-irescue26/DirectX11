@@ -45,35 +45,37 @@ void Graphics::Present()
 	this->swapchain->Present(0, NULL);
 }
 
+
+
+
 void Graphics::RenderFrame()
 {
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), bgcolor);
-	this->deviceContext->ClearDepthStencilView(this->depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	//this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), bgcolor);
+	//this->deviceContext->ClearDepthStencilView(this->depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	this->deviceContext->IASetInputLayout(this->m_vertexShader.GetInputLayout());
-	this->deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	this->deviceContext->RSSetState(this->rasterizerstate.Get());
-	this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
-	this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
-	this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
-	this->deviceContext->VSSetShader(m_vertexShader.GetShader(), NULL, 0);
-	this->deviceContext->PSSetShader(m_pixelShader.GetShader(), NULL, 0);
-	
-	this->deviceContext->PSSetConstantBuffers(0, 1, lightConstantBuffer.GetAddressOf());
-	
-	this->lightConstantBuffer.data.dynamicLightColor = light.lightColor;
-	this->lightConstantBuffer.data.dynamicLightStrength = light.lightStrength;
-	this->lightConstantBuffer.data.dynamicLightPosition = light.GetPositionFloat3();
-	this->lightConstantBuffer.ApplyChanges();
-	
-	RVec3 pos = physicsController.GetPosition(gameObject.GetID());
-	gameObject.SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
-	{
-		this->gameObject.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
-		floor.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
-	}
-
+	//this->deviceContext->IASetInputLayout(this->m_vertexShader.GetInputLayout());
+	//this->deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//this->deviceContext->RSSetState(this->rasterizerstate.Get());
+	//this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
+	//this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
+	//this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
+	//this->deviceContext->VSSetShader(m_vertexShader.GetShader(), NULL, 0);
+	//this->deviceContext->PSSetShader(m_pixelShader.GetShader(), NULL, 0);
+	//
+	//this->deviceContext->PSSetConstantBuffers(0, 1, lightConstantBuffer.GetAddressOf());
+	//
+	//this->lightConstantBuffer.data.dynamicLightColor = light.lightColor;
+	//this->lightConstantBuffer.data.dynamicLightStrength = light.lightStrength;
+	//this->lightConstantBuffer.data.dynamicLightPosition = light.GetPositionFloat3();
+	//this->lightConstantBuffer.ApplyChanges();
+	//
+	//RVec3 pos = physicsController.GetPosition(gameObject.GetID());
+	//gameObject.SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
+	//{
+	//	this->gameObject.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
+	//	floor.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
+	//}
 
 	//Square
 
@@ -234,7 +236,11 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 		return false;
 	}
 	
-	
+	//GBuffer
+
+
+
+
 	return true;
 }
 
@@ -249,6 +255,9 @@ bool Graphics::InitializeShaders()
 		{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0}
 	
 	};
+
+
+
 	UINT numElements = ARRAYSIZE(layout);
 
 	if (!m_vertexShader.Initialize(device, L"CompiledShaders/VertexShader.cso", layout, numElements))
@@ -262,6 +271,7 @@ bool Graphics::InitializeShaders()
 		return false;
 	}
 
+	
 
 	return true;
 }
@@ -290,13 +300,15 @@ bool Graphics::InitializeScene()
 
 	if (!light.Initialize(this->device.Get(), this->deviceContext.Get(), this->constantBuffer))
 		return false;
+
+	
 	/*if (!floor.Initialize("Assets/Quad.obj", device.Get(), deviceContext.Get(), constantBuffer))
 	{
 		return false;
 	}*/
 	BodyCreationSettings Box_settings(new BoxShape(JPH::Vec3(1, 1, 1)), RVec3(0.0_r, 5.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
 	if (!gameObject.Initialize(physicsController.CreateAndAddObject(Box_settings, EActivation::Activate), 
-	"Assets/TestCube.glb", this->device.Get(), 
+	"Assets/TexturedSphere.glb", this->device.Get(), 
 	this->deviceContext.Get(), this->constantBuffer))
 		return false;
 	BodyCreationSettings Floor_settings(new BoxShape(JPH::Vec3(100, 0.1, 100)), RVec3(0.0_r, -2.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Static, Layers::NON_MOVING);
@@ -310,7 +322,62 @@ bool Graphics::InitializeScene()
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
 	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
 	physicsController.Optimize();
+	
+
+	// Common settings for G-buffer textures
+	D3D11_TEXTURE2D_DESC textureDesc = {};
+	textureDesc.Width = windowWidth;
+	textureDesc.Height = windowHeight;
+	textureDesc.MipLevels = 1;
+	textureDesc.ArraySize = 1;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+	// Texture for Position (32-bit floating point RGBA format to store position accurately)
+	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	device->CreateTexture2D(&textureDesc, nullptr, &positionTexture);
+
+	// Texture for Normal (32-bit RGBA for storing normal data accurately)
+	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	device->CreateTexture2D(&textureDesc, nullptr, &NormalTexture);
+
+	// Texture for Normal (32-bit RGBA for storing normal data accurately)
+	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	device->CreateTexture2D(&textureDesc, nullptr, &SpecularTexture);
+
+	// Texture for Albedo (8-bit RGBA as it's only color data)
+	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	device->CreateTexture2D(&textureDesc, nullptr, &DiffuseTexture);
+
+	// Now create Render Target Views (RTVs) for each texture
+	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = {};
+	renderTargetViewDesc.Format = textureDesc.Format;
+	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+	renderTargetViewDesc.Texture2D.MipSlice = 0;
+	
+	device->CreateRenderTargetView(positionTexture.Get(), &renderTargetViewDesc, &positionRTV);
+	device->CreateRenderTargetView(NormalTexture.Get(), &renderTargetViewDesc, &NormalRTV);
+	device->CreateRenderTargetView(DiffuseTexture.Get(), &renderTargetViewDesc, &DiffuseRTV);
+	device->CreateRenderTargetView(SpecularTexture.Get(), &renderTargetViewDesc, &SpecularRTV);
+
+	// Create Shader Resource Views (SRVs) for each texture for use in lighting pass
+
+	device->CreateShaderResourceView(positionTexture.Get(), nullptr, &positionSRV);
+	device->CreateShaderResourceView(NormalTexture.Get(), nullptr, &NormalSRV);
+	device->CreateShaderResourceView(DiffuseTexture.Get(), nullptr, &DiffuseSRV);
+	device->CreateShaderResourceView(SpecularTexture.Get(), nullptr, &SpecularSRV);
+	
+	positionTexture->Release();
+	NormalTexture->Release();
+	DiffuseTexture->Release();
+	SpecularTexture->Release();
+	
 	return true;
+
+
+
+
 }
 
 

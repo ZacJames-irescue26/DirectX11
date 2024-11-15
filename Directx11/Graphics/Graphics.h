@@ -63,8 +63,6 @@ private:
 
 
 
-
-
 	VertexShader m_vertexShader;
 	PixelShader m_pixelShader;
 	
@@ -74,13 +72,26 @@ private:
 	ConstantBuffer<CB_VS_vertexShader> constantBuffer;
 	ConstantBuffer<CB_FS_LightPos> lightConstantBuffer;
 	ConstantBuffer<CB_VS_vertexShader> floorConstantBuffer;
-
-
+public:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
+	//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 
 
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> positionTexture;
+	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> positionRTV;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> positionSRV;
 
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> NormalTexture;
+	Microsoft::WRL::ComPtr < ID3D11RenderTargetView>  NormalRTV;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView>  NormalSRV;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> DiffuseTexture;
+	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> DiffuseRTV;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> DiffuseSRV;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> SpecularTexture;
+	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> SpecularRTV;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> SpecularSRV;
 
 };
 }

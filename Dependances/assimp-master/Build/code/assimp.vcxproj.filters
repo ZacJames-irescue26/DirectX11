@@ -1,1982 +1,1982 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Assimp.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Assimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\CApi\CInterfaceIOWrapper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\CApi\CInterfaceIOWrapper.cpp">
       <Filter>CApi</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Compression.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Compression.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\BaseImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\BaseImporter.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\BaseProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\BaseProcess.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\PostStepRegistry.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\PostStepRegistry.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\ImporterRegistry.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\ImporterRegistry.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\DefaultIOStream.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\DefaultIOStream.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\IOSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\IOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\DefaultIOSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\DefaultIOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\ZipArchiveIOSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\ZipArchiveIOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Importer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Importer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\SGSpatialSort.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\SGSpatialSort.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\VertexTriangleAdjacency.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\VertexTriangleAdjacency.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\SpatialSort.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\SpatialSort.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\SceneCombiner.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\SceneCombiner.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\ScenePreprocessor.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\ScenePreprocessor.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\SkeletonMeshBuilder.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\SkeletonMeshBuilder.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\StandardShapes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\StandardShapes.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\TargetAnimation.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\TargetAnimation.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\RemoveComments.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\RemoveComments.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Subdivision.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Subdivision.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\scene.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\scene.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Bitmap.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Bitmap.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Version.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Version.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\CreateAnimMesh.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\CreateAnimMesh.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\simd.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\simd.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\material.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\material.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\AssertHandler.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\AssertHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Exceptional.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Exceptional.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Base64.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Base64.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Geometry\GeometryUtils.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Geometry\GeometryUtils.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\DefaultLogger.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\DefaultLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Exporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Exporter.cpp">
       <Filter>Exporter</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\CApi\AssimpCExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\CApi\AssimpCExport.cpp">
       <Filter>Exporter</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\CalcTangentsProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\CalcTangentsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ComputeUVMappingProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ComputeUVMappingProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ConvertToLHProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ConvertToLHProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\EmbedTexturesProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\EmbedTexturesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindDegenerates.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindDegenerates.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindInstancesProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindInstancesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindInvalidDataProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindInvalidDataProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FixNormalsStep.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FixNormalsStep.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\DropFaceNormalsProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\DropFaceNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenFaceNormalsProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenFaceNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenVertexNormalsProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenVertexNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\PretransformVertices.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\PretransformVertices.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ImproveCacheLocality.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ImproveCacheLocality.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\JoinVerticesProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\JoinVerticesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\LimitBoneWeightsProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\LimitBoneWeightsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\RemoveRedundantMaterials.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\RemoveRedundantMaterials.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\RemoveVCProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\RemoveVCProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SortByPTypeProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SortByPTypeProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SplitLargeMeshes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SplitLargeMeshes.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\TextureTransform.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\TextureTransform.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\TriangulateProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\TriangulateProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ValidateDataStructure.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ValidateDataStructure.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\OptimizeGraph.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\OptimizeGraph.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\OptimizeMeshes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\OptimizeMeshes.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\DeboneProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\DeboneProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ProcessHelper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ProcessHelper.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\MakeVerboseFormat.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\MakeVerboseFormat.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ScaleProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ScaleProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ArmaturePopulate.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ArmaturePopulate.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenBoundingBoxesProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenBoundingBoxesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SplitByBoneCountProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SplitByBoneCountProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Material\MaterialSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Material\MaterialSystem.cpp">
       <Filter>MaterialSystem</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STEPParser\STEPFileReader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STEPParser\STEPFileReader.cpp">
       <Filter>STEPParser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STEPParser\STEPFileEncoding.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STEPParser\STEPFileEncoding.cpp">
       <Filter>STEPParser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter_Geometry.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter_Geometry.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter_Material.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter_Material.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter_Postprocess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter_Postprocess.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSConverter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSConverter.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSLoader.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AC\ACLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AC\ACLoader.cpp">
       <Filter>AssetLib\AC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\ASE\ASELoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\ASE\ASELoader.cpp">
       <Filter>AssetLib\ASE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\ASE\ASEParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\ASE\ASEParser.cpp">
       <Filter>AssetLib\ASE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinLoader.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\B3D\B3DImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\B3D\B3DImporter.cpp">
       <Filter>AssetLib\B3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\BVH\BVHLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\BVH\BVHLoader.cpp">
       <Filter>AssetLib\BVH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaHelper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaHelper.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaLoader.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaParser.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\DXF\DXFLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\DXF\DXFLoader.cpp">
       <Filter>AssetLib\DXF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\CSM\CSMLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\CSM\CSMLoader.cpp">
       <Filter>AssetLib\CSM</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\HMP\HMPLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\HMP\HMPLoader.cpp">
       <Filter>AssetLib\HMP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRMeshLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRMeshLoader.cpp">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRShared.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRShared.cpp">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IQM\IQMImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IQM\IQMImporter.cpp">
       <Filter>AssetLib\IQM</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRLoader.cpp">
       <Filter>AssetLib\IRR</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOAnimation.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOAnimation.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOBLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOBLoader.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOLoader.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOMaterial.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOMaterial.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWS\LWSLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWS\LWSLoader.cpp">
       <Filter>AssetLib\LWS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DImporter.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DWrapper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DWrapper.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD2\MD2Loader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD2\MD2Loader.cpp">
       <Filter>AssetLib\MD2</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD3\MD3Loader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD3\MD3Loader.cpp">
       <Filter>AssetLib\MD3</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD5\MD5Loader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD5\MD5Loader.cpp">
       <Filter>AssetLib\MD5</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD5\MD5Parser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD5\MD5Parser.cpp">
       <Filter>AssetLib\MD5</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDC\MDCLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDC\MDCLoader.cpp">
       <Filter>AssetLib\MDC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\MDLLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\MDLLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\MDLMaterialLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\MDLMaterialLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1MDLLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1MDLLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\NFF\NFFLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\NFF\NFFLoader.cpp">
       <Filter>AssetLib\NFF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\NDO\NDOLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\NDO\NDOLoader.cpp">
       <Filter>AssetLib\NDO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OFF\OFFLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OFF\OFFLoader.cpp">
       <Filter>AssetLib\OFF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileImporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileMtlImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileMtlImporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileParser.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreImporter.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreStructs.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreStructs.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreBinarySerializer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreBinarySerializer.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreXmlSerializer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreXmlSerializer.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreMaterial.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreMaterial.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OpenGEX\OpenGEXImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OpenGEX\OpenGEXImporter.cpp">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyLoader.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyParser.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MS3D\MS3DLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MS3D\MS3DLoader.cpp">
       <Filter>AssetLib\MS3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\COB\COBLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\COB\COBLoader.cpp">
       <Filter>AssetLib\COB</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderLoader.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderDNA.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderDNA.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderScene.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderScene.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderModifier.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderModifier.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderBMesh.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderBMesh.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderTessellator.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderTessellator.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderCustomData.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderCustomData.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCLoader.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCReaderGen1_2x3.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCReaderGen1_2x3.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCReaderGen2_2x3.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCReaderGen2_2x3.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCUtil.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCUtil.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCGeometry.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCGeometry.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCMaterial.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCMaterial.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCProfile.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCProfile.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCCurve.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCCurve.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCBoolean.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCBoolean.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCOpenings.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCOpenings.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\XGL\XGLLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\XGL\XGLLoader.cpp">
       <Filter>AssetLib\XGL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXImporter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXParser.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXTokenizer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXTokenizer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXConverter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXConverter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXUtil.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXUtil.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXDocument.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXDocument.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXProperties.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXProperties.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXMeshGeometry.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXMeshGeometry.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXMaterial.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXMaterial.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXModel.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXModel.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXAnimation.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXAnimation.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXNodeAttribute.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXNodeAttribute.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXDeformer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXDeformer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXBinaryTokenizer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXBinaryTokenizer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXDocumentUtil.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXDocumentUtil.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3D\Q3DLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3D\Q3DLoader.cpp">
       <Filter>AssetLib\Q3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileParser.cpp">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileImporter.cpp">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Raw\RawLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Raw\RawLoader.cpp">
       <Filter>AssetLib\RAW</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\SIB\SIBImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\SIB\SIBImporter.cpp">
       <Filter>AssetLib\SIB</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\SMD\SMDLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\SMD\SMDLoader.cpp">
       <Filter>AssetLib\SMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STL\STLLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STL\STLLoader.cpp">
       <Filter>AssetLib\STL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Terragen\TerragenLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Terragen\TerragenLoader.cpp">
       <Filter>AssetLib\TERRAGEN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Unreal\UnrealLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Unreal\UnrealLoader.cpp">
       <Filter>AssetLib\3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileImporter.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileParser.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Geometry2D.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Geometry2D.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Geometry3D.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Geometry3D.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Group.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Group.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Light.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Light.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Metadata.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Metadata.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Networking.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Networking.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Postprocess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Postprocess.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Rendering.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Rendering.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Shape.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Shape.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Texturing.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Texturing.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DGeoHelper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DGeoHelper.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DXmlHelper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DXmlHelper.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFCommon.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFCommon.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFImporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Importer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Importer.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\XmlSerializer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\XmlSerializer.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFImporter.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFOpcPackage.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFOpcPackage.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDImporter.cpp">
       <Filter>AssetLib\MMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDPmxParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDPmxParser.cpp">
       <Filter>AssetLib\MMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjExporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OpenGEX\OpenGEXExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OpenGEX\OpenGEXExporter.cpp">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyExporter.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSExporter.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinExporter.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinFileWriter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinFileWriter.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assxml\AssxmlExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assxml\AssxmlExporter.cpp">
       <Filter>AssetLib\ASSXML</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assxml\AssxmlFileWriter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assxml\AssxmlFileWriter.cpp">
       <Filter>AssetLib\ASSXML</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DExporter.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaExporter.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExporter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExportNode.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExportNode.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExportProperty.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExportProperty.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STL\STLExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STL\STLExporter.cpp">
       <Filter>AssetLib\STL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileExporter.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DExporter.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFExporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Exporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Exporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFExporter.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Pbrt\PbrtExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Pbrt\PbrtExporter.cpp">
       <Filter>AssetLib\PBRT</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assjson\cencode.c">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assjson\cencode.c">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assjson\json_exporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assjson\json_exporter.cpp">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assjson\mesh_splitter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assjson\mesh_splitter.cpp">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Step\StepExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Step\StepExporter.cpp">
       <Filter>AssetLib\STEP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\unzip\ioapi.c">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\unzip\ioapi.c">
       <Filter>Contrib\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\unzip\unzip.c">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\unzip\unzip.c">
       <Filter>Contrib\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\common\shapes.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\common\shapes.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\advancing_front.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\advancing_front.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\cdt.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\cdt.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep_context.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep_context.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\clipper\clipper.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\clipper\clipper.cpp">
       <Filter>Contrib\Clipper</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\OpenDDLParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\OpenDDLParser.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\DDLNode.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\DDLNode.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\OpenDDLCommon.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\OpenDDLCommon.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\OpenDDLExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\OpenDDLExport.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\Value.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\Value.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\code\OpenDDLStream.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\code\OpenDDLStream.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcArithmeticCodec.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcArithmeticCodec.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorDecoder.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorDecoder.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorEncoder.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorEncoder.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTools.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTools.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleFans.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleFans.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zip\src\zip.c">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zip\src\zip.c">
       <Filter>ziplib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\CApi\CInterfaceIOWrapper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\CApi\CInterfaceIOWrapper.h">
       <Filter>CApi</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\StbCommon.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\StbCommon.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Compression.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Compression.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\BaseProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\BaseProcess.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Importer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Importer.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\ScenePrivate.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\ScenePrivate.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\DefaultProgressHandler.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\DefaultProgressHandler.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\PolyTools.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\PolyTools.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Maybe.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Maybe.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\IFF.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\IFF.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\VertexTriangleAdjacency.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\VertexTriangleAdjacency.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\ScenePreprocessor.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\ScenePreprocessor.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\StackAllocator.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\StackAllocator.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\StackAllocator.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\StackAllocator.inl">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\TargetAnimation.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\TargetAnimation.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\simd.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\simd.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Geometry\GeometryUtils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Geometry\GeometryUtils.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\DefaultLogger.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\DefaultLogger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\LogStream.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\LogStream.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Logger.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Logger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\NullLogger.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\NullLogger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Win32DebugLogStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Win32DebugLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\FileLogStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\FileLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\StdOStreamLogStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\StdOStreamLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\BlobIOSystem.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\BlobIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\CalcTangentsProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\CalcTangentsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ComputeUVMappingProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ComputeUVMappingProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ConvertToLHProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ConvertToLHProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\EmbedTexturesProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\EmbedTexturesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindDegenerates.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindDegenerates.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindInstancesProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindInstancesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FindInvalidDataProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FindInvalidDataProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\FixNormalsStep.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\FixNormalsStep.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\DropFaceNormalsProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\DropFaceNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenFaceNormalsProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenFaceNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenVertexNormalsProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenVertexNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\PretransformVertices.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\PretransformVertices.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ImproveCacheLocality.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ImproveCacheLocality.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\JoinVerticesProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\JoinVerticesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\LimitBoneWeightsProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\LimitBoneWeightsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\RemoveRedundantMaterials.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\RemoveRedundantMaterials.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\RemoveVCProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\RemoveVCProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SortByPTypeProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SortByPTypeProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SplitLargeMeshes.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SplitLargeMeshes.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\TextureTransform.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\TextureTransform.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\TriangulateProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\TriangulateProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ValidateDataStructure.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ValidateDataStructure.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\OptimizeGraph.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\OptimizeGraph.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\OptimizeMeshes.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\OptimizeMeshes.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\DeboneProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\DeboneProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ProcessHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ProcessHelper.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\MakeVerboseFormat.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\MakeVerboseFormat.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ScaleProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ScaleProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\ArmaturePopulate.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\ArmaturePopulate.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\GenBoundingBoxesProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\GenBoundingBoxesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\PostProcessing\SplitByBoneCountProcess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\PostProcessing\SplitByBoneCountProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Material\MaterialSystem.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Material\MaterialSystem.h">
       <Filter>MaterialSystem</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STEPParser\STEPFileReader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STEPParser\STEPFileReader.h">
       <Filter>STEPParser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STEPParser\STEPFileEncoding.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STEPParser\STEPFileEncoding.h">
       <Filter>STEPParser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter.hpp">
       <Filter>AssetLib\AMF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AMF\AMFImporter_Node.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AMF\AMFImporter_Node.hpp">
       <Filter>AssetLib\AMF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSHelper.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSLoader.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\AC\ACLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\AC\ACLoader.h">
       <Filter>AssetLib\AC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\ASE\ASELoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\ASE\ASELoader.h">
       <Filter>AssetLib\ASE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\ASE\ASEParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\ASE\ASEParser.h">
       <Filter>AssetLib\ASE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinLoader.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\B3D\B3DImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\B3D\B3DImporter.h">
       <Filter>AssetLib\B3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\BVH\BVHLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\BVH\BVHLoader.h">
       <Filter>AssetLib\BVH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaHelper.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaLoader.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaParser.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\DXF\DXFLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\DXF\DXFLoader.h">
       <Filter>AssetLib\DXF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\DXF\DXFHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\DXF\DXFHelper.h">
       <Filter>AssetLib\DXF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\CSM\CSMLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\CSM\CSMLoader.h">
       <Filter>AssetLib\CSM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\HMP\HMPFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\HMP\HMPFileData.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\HMP\HMPLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\HMP\HMPLoader.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\HMP\HalfLifeFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\HMP\HalfLifeFileData.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRMeshLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRMeshLoader.h">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRShared.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRShared.h">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IQM\iqm.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IQM\iqm.h">
       <Filter>AssetLib\IQM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IQM\IQMImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IQM\IQMImporter.h">
       <Filter>AssetLib\IQM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Irr\IRRLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Irr\IRRLoader.h">
       <Filter>AssetLib\IRR</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOAnimation.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOAnimation.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOFileData.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWO\LWOLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWO\LWOLoader.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\LWS\LWSLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\LWS\LWSLoader.h">
       <Filter>AssetLib\LWS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DMaterials.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DMaterials.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DImporter.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DWrapper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DWrapper.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\m3d.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\m3d.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD2\MD2FileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD2\MD2FileData.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD2\MD2Loader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD2\MD2Loader.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD2\MD2NormalTable.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD2\MD2NormalTable.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD3\MD3FileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD3\MD3FileData.h">
       <Filter>AssetLib\MD3</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD3\MD3Loader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD3\MD3Loader.h">
       <Filter>AssetLib\MD3</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD5\MD5Loader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD5\MD5Loader.h">
       <Filter>AssetLib\MD5</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MD5\MD5Parser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MD5\MD5Parser.h">
       <Filter>AssetLib\MD5</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDC\MDCFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDC\MDCFileData.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDC\MDCLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDC\MDCLoader.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDC\MDCNormalTable.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDC\MDCNormalTable.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\MDLDefaultColorMap.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\MDLDefaultColorMap.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\MDLFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\MDLFileData.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\MDLLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\MDLLoader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HalfLifeMDLBaseHeader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HalfLifeMDLBaseHeader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1FileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1FileData.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1MDLLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1MDLLoader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1ImportDefinitions.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1ImportDefinitions.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1ImportSettings.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1ImportSettings.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\HL1MeshTrivert.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\HL1MeshTrivert.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\LogFunctions.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\LogFunctions.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\NFF\NFFLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\NFF\NFFLoader.h">
       <Filter>AssetLib\NFF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\NDO\NDOLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\NDO\NDOLoader.h">
       <Filter>AssetLib\NDO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OFF\OFFLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OFF\OFFLoader.h">
       <Filter>AssetLib\OFF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileData.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileImporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileMtlImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileMtlImporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjFileParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjFileParser.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjTools.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjTools.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreImporter.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreStructs.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreStructs.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreParsingUtils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreParsingUtils.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreBinarySerializer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreBinarySerializer.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ogre\OgreXmlSerializer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ogre\OgreXmlSerializer.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OpenGEX\OpenGEXImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OpenGEX\OpenGEXImporter.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OpenGEX\OpenGEXStructs.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OpenGEX\OpenGEXStructs.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyLoader.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyParser.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MS3D\MS3DLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MS3D\MS3DLoader.h">
       <Filter>AssetLib\MS3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\COB\COBLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\COB\COBLoader.h">
       <Filter>AssetLib\COB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\COB\COBScene.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\COB\COBScene.h">
       <Filter>AssetLib\COB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderLoader.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderDNA.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderDNA.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderDNA.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderDNA.inl">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderScene.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderScene.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderSceneGen.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderSceneGen.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderIntermediate.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderIntermediate.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderModifier.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderModifier.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderBMesh.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderBMesh.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderTessellator.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderTessellator.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Blender\BlenderCustomData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Blender\BlenderCustomData.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCLoader.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCReaderGen_2x3.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCReaderGen_2x3.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\IFC\IFCUtil.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\IFC\IFCUtil.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\XGL\XGLLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\XGL\XGLLoader.h">
       <Filter>AssetLib\XGL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXCompileConfig.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXCompileConfig.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXImporter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXParser.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXTokenizer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXTokenizer.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXImportSettings.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXImportSettings.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXConverter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXConverter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXUtil.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXUtil.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXDocument.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXDocument.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXProperties.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXProperties.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXMeshGeometry.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXMeshGeometry.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXCommon.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXCommon.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3D\Q3DLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3D\Q3DLoader.h">
       <Filter>AssetLib\Q3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileData.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileParser.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Q3BSP\Q3BSPFileImporter.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Raw\RawLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Raw\RawLoader.h">
       <Filter>AssetLib\RAW</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\SIB\SIBImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\SIB\SIBImporter.h">
       <Filter>AssetLib\SIB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\SMD\SMDLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\SMD\SMDLoader.h">
       <Filter>AssetLib\SMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STL\STLLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STL\STLLoader.h">
       <Filter>AssetLib\STL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Terragen\TerragenLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Terragen\TerragenLoader.h">
       <Filter>AssetLib\TERRAGEN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Unreal\UnrealLoader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Unreal\UnrealLoader.h">
       <Filter>AssetLib\3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileHelper.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileImporter.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileParser.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Macro.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Macro.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DImporter_Node.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DImporter_Node.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DGeoHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DGeoHelper.h">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DXmlHelper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DXmlHelper.h">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFCommon.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFCommon.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFAsset.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFAsset.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFAsset.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFAsset.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFAssetWriter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFAssetWriter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFAssetWriter.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFAssetWriter.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFImporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Asset.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Asset.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Asset.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Asset.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2AssetWriter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2AssetWriter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2AssetWriter.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2AssetWriter.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Importer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Importer.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\3MFTypes.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\3MFTypes.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\XmlSerializer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\XmlSerializer.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFImporter.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFOpcPackage.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFOpcPackage.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\3MFXmlTags.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\3MFXmlTags.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDCpp14.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDCpp14.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDImporter.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDPmdParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDPmdParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDPmxParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDPmxParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\MMD\MMDVmdParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\MMD\MMDVmdParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Obj\ObjExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Obj\ObjExporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\OpenGEX\OpenGEXExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\OpenGEX\OpenGEXExporter.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Ply\PlyExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Ply\PlyExporter.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3DS\3DSExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3DS\3DSExporter.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinExporter.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assbin\AssbinFileWriter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assbin\AssbinFileWriter.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assxml\AssxmlExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assxml\AssxmlExporter.h">
       <Filter>AssetLib\ASSXML</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assxml\AssxmlFileWriter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assxml\AssxmlFileWriter.h">
       <Filter>AssetLib\ASSXML</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\M3D\M3DExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\M3D\M3DExporter.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Collada\ColladaExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Collada\ColladaExporter.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExporter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExportNode.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExportNode.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\FBX\FBXExportProperty.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\FBX\FBXExportProperty.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\STL\STLExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\STL\STLExporter.h">
       <Filter>AssetLib\STL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X\XFileExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X\XFileExporter.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\X3D\X3DExporter.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\X3D\X3DExporter.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF\glTFExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF\glTFExporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\glTF2\glTF2Exporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\glTF2\glTF2Exporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\3MF\D3MFExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\3MF\D3MFExporter.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Pbrt\PbrtExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Pbrt\PbrtExporter.h">
       <Filter>AssetLib\PBRT</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assjson\cencode.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assjson\cencode.h">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Assjson\mesh_splitter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Assjson\mesh_splitter.h">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\AssetLib\Step\StepExporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\AssetLib\Step\StepExporter.h">
       <Filter>AssetLib\STEP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\unzip\crypt.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\unzip\crypt.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\unzip\ioapi.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\unzip\ioapi.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\unzip\unzip.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\unzip\unzip.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\common\shapes.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\common\shapes.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\common\utils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\common\utils.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\advancing_front.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\advancing_front.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\cdt.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\cdt.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep_context.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\poly2tri\poly2tri\sweep\sweep_context.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\clipper\clipper.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\clipper\clipper.hpp">
       <Filter>Contrib\Clipper</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLParser.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLExport.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLExport.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\OpenDDLStream.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\DDLNode.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\DDLNode.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\openddlparser\include\openddlparser\Value.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\openddlparser\include\openddlparser\Value.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcAdjacencyInfo.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcAdjacencyInfo.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcArithmeticCodec.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcArithmeticCodec.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcBinaryStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcBinaryStream.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcCommon.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcCommon.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDVEncodeParams.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDVEncodeParams.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorDecoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorEncoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDynamicVectorEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcDynamicVector.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcDynamicVector.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcFIFO.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcFIFO.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcIndexedFaceSet.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcIndexedFaceSet.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcIndexedFaceSet.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcIndexedFaceSet.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcSC3DMCDecoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcSC3DMCDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcSC3DMCDecoder.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcSC3DMCDecoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncodeParams.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncodeParams.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncoder.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcSC3DMCEncoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTimer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTimer.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleFans.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleFans.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleListDecoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleListDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleListDecoder.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleListDecoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleListEncoder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleListEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcTriangleListEncoder.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcTriangleListEncoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcVector.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcVector.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\Open3DGC\o3dgcVector.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\Open3DGC\o3dgcVector.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zip\src\miniz.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zip\src\miniz.h">
       <Filter>ziplib</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zip\src\zip.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zip\src\zip.h">
       <Filter>ziplib</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\pugixml\src\pugiconfig.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\pugixml\src\pugiconfig.hpp">
       <Filter>Contrib\Pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\pugixml\src\pugixml.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\pugixml\src\pugixml.hpp">
       <Filter>Contrib\Pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\stb\stb_image.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\stb\stb_image.h">
       <Filter>Contrib\stb</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\anim.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\anim.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\aabb.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\aabb.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ai_assert.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ai_assert.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\camera.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\camera.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\color4.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\color4.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\color4.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\color4.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\include\assimp\config.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\include\assimp\config.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ColladaMetaData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ColladaMetaData.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\commonMetaData.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\commonMetaData.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\defs.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\defs.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\cfileio.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\cfileio.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\light.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\light.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\material.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\material.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\material.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\material.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\matrix3x3.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\matrix3x3.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\matrix3x3.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\matrix3x3.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\matrix4x4.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\matrix4x4.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\matrix4x4.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\matrix4x4.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\mesh.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\mesh.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ObjMaterial.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ObjMaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\pbrmaterial.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\pbrmaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\GltfMaterial.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\GltfMaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\postprocess.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\postprocess.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\quaternion.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\quaternion.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\quaternion.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\quaternion.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\scene.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\scene.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\metadata.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\metadata.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\texture.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\texture.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\types.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\types.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\vector2.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\vector2.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\vector2.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\vector2.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\vector3.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\vector3.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\vector3.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\vector3.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\version.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\version.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\cimport.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\cimport.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\AssertHandler.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\AssertHandler.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\importerdesc.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\importerdesc.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Importer.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Importer.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ProgressHandler.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ProgressHandler.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\IOStream.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\IOStream.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\IOSystem.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\IOSystem.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\cexport.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\cexport.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Exporter.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Exporter.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\DefaultIOStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\DefaultIOStream.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\DefaultIOSystem.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\DefaultIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ZipArchiveIOSystem.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ZipArchiveIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SceneCombiner.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SceneCombiner.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\fast_atof.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\fast_atof.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\qnan.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\qnan.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\BaseImporter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\BaseImporter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Hash.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Hash.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\MemoryIOWrapper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\MemoryIOWrapper.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ParsingUtils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ParsingUtils.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\StreamReader.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\StreamReader.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\StreamWriter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\StreamWriter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\StringComparison.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\StringComparison.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\StringUtils.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\StringUtils.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SGSpatialSort.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SGSpatialSort.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\GenericProperty.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\GenericProperty.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SpatialSort.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SpatialSort.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SkeletonMeshBuilder.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SkeletonMeshBuilder.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SmallVector.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SmallVector.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SmoothingGroups.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SmoothingGroups.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\SmoothingGroups.inl">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\SmoothingGroups.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\StandardShapes.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\StandardShapes.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\RemoveComments.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\RemoveComments.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Subdivision.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Subdivision.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Vertex.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Vertex.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\LineSplitter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\LineSplitter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\TinyFormatter.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\TinyFormatter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Profiler.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Profiler.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\LogAux.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\LogAux.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Bitmap.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Bitmap.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\XMLTools.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\XMLTools.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\IOStreamBuffer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\IOStreamBuffer.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\CreateAnimMesh.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\CreateAnimMesh.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\XmlParser.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\XmlParser.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\MathFunctions.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\MathFunctions.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Exceptional.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Exceptional.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\ByteSwapper.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\ByteSwapper.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Base64.hpp">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Base64.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Compiler\pushpack1.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Compiler\pushpack1.h">
       <Filter>Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Compiler\poppack1.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Compiler\poppack1.h">
       <Filter>Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\include\assimp\Compiler\pstdint.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include\assimp\Compiler\pstdint.h">
       <Filter>Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\CMakeLists.txt" />
+    <CustomBuild Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\res\assimp.rc">
+    <ResourceCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\res\assimp.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AssetLib">
-      <UniqueIdentifier>{DB1879F3-3DDA-3954-98A5-76A42F7F45C0}</UniqueIdentifier>
+      <UniqueIdentifier>{265FDA0A-A78F-3308-A52A-E0572CFC800E}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3D">
-      <UniqueIdentifier>{7A8B2F9A-0378-378E-A95E-B26DC810E054}</UniqueIdentifier>
+      <UniqueIdentifier>{19CBFCF5-5B9F-32CC-B007-AC2E809443ED}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3DS">
-      <UniqueIdentifier>{68E9537A-0D24-3B1D-8476-27439B6F0540}</UniqueIdentifier>
+      <UniqueIdentifier>{716F9239-B7E4-364B-A47B-874A0F2BF04A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3MF">
-      <UniqueIdentifier>{3E634511-19E8-3AF4-9072-A458A4D387A4}</UniqueIdentifier>
+      <UniqueIdentifier>{45C69B06-F4F3-3DC1-A600-9A2EF286B68A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\AC">
-      <UniqueIdentifier>{44709D22-6A94-3D80-AFF4-08A326290EE5}</UniqueIdentifier>
+      <UniqueIdentifier>{2530FA7F-26EB-39DF-856A-16C36FDDC402}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\AMF">
-      <UniqueIdentifier>{15618148-F71D-3260-A7A0-F5FDFE20A9A4}</UniqueIdentifier>
+      <UniqueIdentifier>{4CCD488C-9D33-3868-8679-C1697F9AD1D8}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASE">
-      <UniqueIdentifier>{EBECDCFA-BE65-3C6A-BEC4-D3BA3073C25C}</UniqueIdentifier>
+      <UniqueIdentifier>{594043E3-0EB9-3368-93DE-BAB4F8CECC81}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSBIN">
-      <UniqueIdentifier>{602AE3A0-6F53-3A07-ABFE-3E1FFA749D85}</UniqueIdentifier>
+      <UniqueIdentifier>{EDFE3334-2F4E-3C28-BCDD-189CBF1F5138}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSJSON">
-      <UniqueIdentifier>{CE03D7DE-E6D5-317D-BC03-D8B1805BDCCF}</UniqueIdentifier>
+      <UniqueIdentifier>{70C265BC-44B4-3785-84C4-560327B8BBA4}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSXML">
-      <UniqueIdentifier>{753C7C3C-7F94-3256-B02C-51E43B682737}</UniqueIdentifier>
+      <UniqueIdentifier>{EDA53C44-9830-381C-8BCA-86FDAB024961}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\B3D">
-      <UniqueIdentifier>{15DB7BB8-04E9-3843-A9F5-A4B0C0E828EA}</UniqueIdentifier>
+      <UniqueIdentifier>{09440365-81FC-370D-A74E-92DAADB68386}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\BLEND">
-      <UniqueIdentifier>{F7DA117A-8AEC-3D02-84CE-69945C7B0141}</UniqueIdentifier>
+      <UniqueIdentifier>{55D72B5C-A503-3FDD-B98A-3214AE816686}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\BVH">
-      <UniqueIdentifier>{4AF865A8-404D-3A42-8CF7-6F789455DDB3}</UniqueIdentifier>
+      <UniqueIdentifier>{79746853-02B0-338E-8014-7B65140A17A8}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\COB">
-      <UniqueIdentifier>{2AA7FA36-EAC0-3A93-96C3-4F59DD4A47C1}</UniqueIdentifier>
+      <UniqueIdentifier>{F46E42DA-55E1-362B-8053-D5DF1B7C569B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\COLLADA">
-      <UniqueIdentifier>{1108BF64-52DD-36D7-A851-4884E84318DD}</UniqueIdentifier>
+      <UniqueIdentifier>{06503BF2-E0BA-3A5E-AB50-3245D653A1AC}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\CSM">
-      <UniqueIdentifier>{3881D9E3-E95D-34A3-AF73-B25B576E3D3D}</UniqueIdentifier>
+      <UniqueIdentifier>{3BDB8B1F-5237-39C7-8E92-A8B96D102827}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\DXF">
-      <UniqueIdentifier>{4705A488-FB96-3336-AAC8-F50CCB355AE8}</UniqueIdentifier>
+      <UniqueIdentifier>{78E2643D-9B81-36FE-8A6C-C7586295FD7B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\FBX">
-      <UniqueIdentifier>{4E57BDA0-3ED4-3EE9-A377-79CCAFA7587C}</UniqueIdentifier>
+      <UniqueIdentifier>{59F631E7-EFFC-38DD-AE2C-C645BC4AFAFE}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\GLTF">
-      <UniqueIdentifier>{DB224625-C3AD-3BCC-8B1C-7BEB8E4C8D73}</UniqueIdentifier>
+      <UniqueIdentifier>{761BAB8D-0800-3890-B853-DEF59CA22D1A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\HMP">
-      <UniqueIdentifier>{2658D1E3-4CEC-387C-A624-692ABC14A234}</UniqueIdentifier>
+      <UniqueIdentifier>{76966441-65A2-3541-A687-ECA17D547BF4}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IFC">
-      <UniqueIdentifier>{9536DE71-8BE6-32A9-AA64-0826F8EF5322}</UniqueIdentifier>
+      <UniqueIdentifier>{4D45EC37-5828-315E-8F52-D6BF04FED78C}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IQM">
-      <UniqueIdentifier>{1A709A81-E488-3BA4-A4C7-3D5BCD8CCDB6}</UniqueIdentifier>
+      <UniqueIdentifier>{5F19E4A6-81D2-3BF9-9FE3-CEA2DF4D4FC5}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IRR">
-      <UniqueIdentifier>{5A37C72A-B7EE-3090-88B4-63B818BD3F9F}</UniqueIdentifier>
+      <UniqueIdentifier>{47438A40-A84B-33D1-8A3A-118DAD00F070}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IRRMESH">
-      <UniqueIdentifier>{E50B9EEC-A750-32C1-9C09-9BE7C43C2118}</UniqueIdentifier>
+      <UniqueIdentifier>{8C67EDED-5054-3812-9062-A44D3FF669FF}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\LWO">
-      <UniqueIdentifier>{24D3268F-70F2-37D0-A3C4-F69B03E18434}</UniqueIdentifier>
+      <UniqueIdentifier>{CB08B4FC-B278-3F1B-901D-66EE2D6AFFEB}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\LWS">
-      <UniqueIdentifier>{99DB7E27-0B4B-3F38-8B21-1B0B2039BCFA}</UniqueIdentifier>
+      <UniqueIdentifier>{DCF64165-6D71-3BC1-B5B1-EAE3BF5D6F33}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\M3D">
-      <UniqueIdentifier>{88C59ACA-0DAF-3C7D-A99F-FE539912D9A6}</UniqueIdentifier>
+      <UniqueIdentifier>{770437F0-B873-3EAC-A7C7-B3177614D431}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD2">
-      <UniqueIdentifier>{46B60D03-F9E3-3060-850F-06791A660AB9}</UniqueIdentifier>
+      <UniqueIdentifier>{264FDF9B-8D78-3533-B0B4-65CEE545E248}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD3">
-      <UniqueIdentifier>{7C5F73BD-8A3D-38F7-B2B3-A6154A0761A6}</UniqueIdentifier>
+      <UniqueIdentifier>{4AFDE8E1-1D17-3B84-8361-40C807749F13}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD5">
-      <UniqueIdentifier>{8934F6CA-63F6-3785-A1FA-6500A8FCA605}</UniqueIdentifier>
+      <UniqueIdentifier>{3A13DFA6-7D90-309F-9455-6DFC7BF20EC8}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MDC">
-      <UniqueIdentifier>{44C7C11D-FFF8-3864-BA7E-9207BE1DEA5D}</UniqueIdentifier>
+      <UniqueIdentifier>{AF1B912C-6E3F-3A54-B304-1E7D2CB09EB3}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MDL">
-      <UniqueIdentifier>{F02591D3-DBFE-3BEA-830F-70CD3FE2738A}</UniqueIdentifier>
+      <UniqueIdentifier>{40E458B9-C28B-31BB-AE75-1C1C9D607B27}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MMD">
-      <UniqueIdentifier>{53C15C0D-A32D-3467-997B-066153E48335}</UniqueIdentifier>
+      <UniqueIdentifier>{E5566E50-A07D-3F81-BF5B-EF385F2AF5E3}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MS3D">
-      <UniqueIdentifier>{7E7C08F3-62B6-3BA7-BB85-4E4159A7060E}</UniqueIdentifier>
+      <UniqueIdentifier>{1D1D6F99-977D-3035-868D-4F6255AF03EA}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\NDO">
-      <UniqueIdentifier>{7861BAD3-7BAB-370B-8F1F-B216D1576A96}</UniqueIdentifier>
+      <UniqueIdentifier>{D25CE6C2-3801-3DF7-9E38-EB3CEF7331C1}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\NFF">
-      <UniqueIdentifier>{B3029B3A-4F38-335C-8D9F-55C8A817DD30}</UniqueIdentifier>
+      <UniqueIdentifier>{4D2FA235-17B9-3FA2-9381-333143D57A35}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OBJ">
-      <UniqueIdentifier>{13F6C3E9-F96F-36C3-B18A-9CFA623EE421}</UniqueIdentifier>
+      <UniqueIdentifier>{EC48934B-CB0A-3D59-8558-22C639964BE9}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OFF">
-      <UniqueIdentifier>{887D42EB-B9EA-3F3A-A177-7AA75F99ED91}</UniqueIdentifier>
+      <UniqueIdentifier>{640F802C-4744-3E65-89EB-F510C07FDAAE}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OGRE">
-      <UniqueIdentifier>{F04DB725-A751-33F1-B99D-D4CDFC06A0A0}</UniqueIdentifier>
+      <UniqueIdentifier>{BAC6CA3E-8231-3FAE-97A7-D3CDD4528CC8}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OPENGEX">
-      <UniqueIdentifier>{266EAF81-3057-34B5-B8F9-D0D8DD884CFD}</UniqueIdentifier>
+      <UniqueIdentifier>{C05F5C9E-7737-38A0-AC11-5D7127EC4CB0}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\PBRT">
-      <UniqueIdentifier>{10686904-41FE-3661-BA01-533C9E7D9FC7}</UniqueIdentifier>
+      <UniqueIdentifier>{6E2DA46E-87F2-37DA-92C9-54552E04C858}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\PLY">
-      <UniqueIdentifier>{3AD542BA-00FE-3A41-A631-46F2F7BDDDF3}</UniqueIdentifier>
+      <UniqueIdentifier>{22D186D9-7266-3B0C-9CB7-CD3F797DE235}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\Q3BSP">
-      <UniqueIdentifier>{A1F2B3FE-942D-361F-B550-898274F91FDC}</UniqueIdentifier>
+      <UniqueIdentifier>{7E09FC76-AD7E-3F21-8C32-CE857C1F63FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\Q3D">
-      <UniqueIdentifier>{AC3E3732-3247-347F-B7A9-999806763718}</UniqueIdentifier>
+      <UniqueIdentifier>{5D0A9DB7-C487-38FB-92FC-0D9719F84DBC}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\RAW">
-      <UniqueIdentifier>{3F4FEDE2-5978-39BC-8557-429CD92B1A74}</UniqueIdentifier>
+      <UniqueIdentifier>{5FCE56FE-A13D-3D09-A028-4275D988613F}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\SIB">
-      <UniqueIdentifier>{06EB2230-0899-3554-AB2B-4A4CAE0DC071}</UniqueIdentifier>
+      <UniqueIdentifier>{A0E36DD2-F9AF-3B3A-A0AE-17CA15E93AA0}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\SMD">
-      <UniqueIdentifier>{0280D11C-CF20-315B-BF85-A55D928BA7A3}</UniqueIdentifier>
+      <UniqueIdentifier>{C01D6DAB-D286-3B2B-917F-C967E0485D4B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\STEP">
-      <UniqueIdentifier>{CA236507-0874-30BC-B60C-EA1AA0FEB6CB}</UniqueIdentifier>
+      <UniqueIdentifier>{56B858F9-DCA0-3249-B19F-14E8869674B5}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\STL">
-      <UniqueIdentifier>{86F68E61-B4EC-3B53-BFB8-A1B32651AACC}</UniqueIdentifier>
+      <UniqueIdentifier>{A68B49B4-002E-390C-8D24-C0DD9F7C47B9}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\TERRAGEN">
-      <UniqueIdentifier>{98C2774F-2CBB-3FCF-9E47-D0521106D710}</UniqueIdentifier>
+      <UniqueIdentifier>{67ED8289-4791-3F40-9D12-C5F37454FBAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\X">
-      <UniqueIdentifier>{15D856A4-A1A1-39C8-98DF-1262E473F64F}</UniqueIdentifier>
+      <UniqueIdentifier>{CBB37200-8900-3B1B-8994-63EBACE9A495}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\X3D">
-      <UniqueIdentifier>{484DE685-138B-3D14-91A2-452D1A05D178}</UniqueIdentifier>
+      <UniqueIdentifier>{412D6148-48EA-3463-B6E4-B414484BFF9C}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\XGL">
-      <UniqueIdentifier>{47D29084-301B-39C9-A29C-1C3B465030F6}</UniqueIdentifier>
+      <UniqueIdentifier>{5B1BA6F8-BEB6-39BB-877F-1F03923595C3}</UniqueIdentifier>
     </Filter>
     <Filter Include="CApi">
-      <UniqueIdentifier>{AA171038-0C18-3EEB-9DA7-909630A05ED0}</UniqueIdentifier>
+      <UniqueIdentifier>{AED60EBA-0E83-39B2-BCB6-1304050ECDE9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{F3DD001D-9F47-3464-8416-2AA8A2615BD4}</UniqueIdentifier>
+      <UniqueIdentifier>{F6FC221C-0391-3397-9153-2731854A06B9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Compiler">
-      <UniqueIdentifier>{249763C6-32AA-3554-9418-E889CAB2FB42}</UniqueIdentifier>
+      <UniqueIdentifier>{B3831F5E-0C64-3E63-8BDC-DDFB8CC8C3B5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib">
-      <UniqueIdentifier>{3D42C8BD-B2B7-358C-A578-2AEA4029F7DB}</UniqueIdentifier>
+      <UniqueIdentifier>{AF6CFAF8-CA66-3C32-9AF8-C50018206A75}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Clipper">
-      <UniqueIdentifier>{F5E8D02F-FE76-30D2-B663-50DFFCFDFF61}</UniqueIdentifier>
+      <UniqueIdentifier>{3C5EC42C-4A2B-3AD0-923D-A47E00F387AF}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Poly2Tri">
-      <UniqueIdentifier>{821B8A66-742D-30F4-9837-BB8D4F1FD3A5}</UniqueIdentifier>
+      <UniqueIdentifier>{AA34DFA7-059A-32B3-B9D3-E4AA28FDEC7E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Pugixml">
-      <UniqueIdentifier>{6A01367A-154C-3982-829E-8C9E6EE91593}</UniqueIdentifier>
+      <UniqueIdentifier>{8941FDB3-D358-35D4-BCD4-1B61B6FCA53F}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\open3dgc">
-      <UniqueIdentifier>{3D511478-6101-3C6F-919B-C221B3353385}</UniqueIdentifier>
+      <UniqueIdentifier>{F69652DC-4F22-35DE-9C8E-BF50C27A0359}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\openddl_parser">
-      <UniqueIdentifier>{CB1D425B-5900-301E-BD1C-D0849310F744}</UniqueIdentifier>
+      <UniqueIdentifier>{B8C759C0-66EB-35FC-93FD-33D13B30F411}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\stb">
-      <UniqueIdentifier>{B3E8E6A8-F6BB-3780-9C32-074AF6BCB120}</UniqueIdentifier>
+      <UniqueIdentifier>{0BFCEA1F-B700-35BF-BC42-0499C4A8C5FE}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\unzip">
-      <UniqueIdentifier>{462B5AE3-8F86-33E1-8EDB-9F3DBC343E72}</UniqueIdentifier>
+      <UniqueIdentifier>{1AC6F068-6F63-3885-B9B7-5F7157767B64}</UniqueIdentifier>
     </Filter>
     <Filter Include="Exporter">
-      <UniqueIdentifier>{ACAB03B4-9007-360D-A435-8AB62C15390B}</UniqueIdentifier>
+      <UniqueIdentifier>{2B59580D-9AC3-35B0-8296-642B66E5332D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Geometry">
-      <UniqueIdentifier>{AFE6049E-E50F-3880-A1C2-A08BE529BA0A}</UniqueIdentifier>
+      <UniqueIdentifier>{CAD2F29E-3D16-3EC9-91E9-A31397756F98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Logging">
-      <UniqueIdentifier>{3CC9DD7C-6FBA-3FF8-BE73-ED12744494E8}</UniqueIdentifier>
+      <UniqueIdentifier>{A7499E27-FA00-30FD-B30B-5D015A26FB17}</UniqueIdentifier>
     </Filter>
     <Filter Include="MaterialSystem">
-      <UniqueIdentifier>{958FECE0-10DD-3E67-8F9E-B103A51A922C}</UniqueIdentifier>
+      <UniqueIdentifier>{1FEE37B8-9D21-3141-9BC1-1A684A1A5276}</UniqueIdentifier>
     </Filter>
     <Filter Include="PostProcessing">
-      <UniqueIdentifier>{3622E339-AEE6-32F5-BFDB-79FC631E291B}</UniqueIdentifier>
+      <UniqueIdentifier>{F0395237-A541-3D14-8B2F-D5406B954097}</UniqueIdentifier>
     </Filter>
     <Filter Include="STEPParser">
-      <UniqueIdentifier>{3837DBE5-3E05-38DB-8574-7C43349CD6A5}</UniqueIdentifier>
+      <UniqueIdentifier>{8B4B90C5-B3B6-3C61-813A-AD0467DA87AB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{8D87D1AB-1740-3328-86DB-44B8B38D36EE}</UniqueIdentifier>
+      <UniqueIdentifier>{EC413037-6779-3570-B495-F54CB1C2F009}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{19129175-F6F5-3977-AA8E-FC6ADBC7354B}</UniqueIdentifier>
+      <UniqueIdentifier>{AEFEAC58-54AC-3D1C-AA20-84F920AEEFBC}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\assimp">
-      <UniqueIdentifier>{72EDD25A-9D53-3E6F-90CF-ED7DC03AF93E}</UniqueIdentifier>
+      <UniqueIdentifier>{04391F52-D079-3634-8279-B2E0314C3B38}</UniqueIdentifier>
     </Filter>
     <Filter Include="ziplib">
-      <UniqueIdentifier>{98EA32C2-D414-3D4E-89DC-2D9C712EC5B3}</UniqueIdentifier>
+      <UniqueIdentifier>{4E50B757-CA46-3365-966B-CF9C9BC0208C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

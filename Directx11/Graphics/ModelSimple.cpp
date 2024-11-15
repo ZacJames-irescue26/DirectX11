@@ -116,7 +116,15 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& tran
 	std::vector<Texture> textures;
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	std::vector<Texture> diffuseTextures = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, scene);
+	
+	std::vector<Texture> HeightTextures = LoadMaterialTextures(material, aiTextureType::aiTextureType_HEIGHT, scene);
+	std::vector<Texture> RoughnessTextures = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE_ROUGHNESS, scene);
+
+	std::vector<Texture> MetalnessTextures = LoadMaterialTextures(material, aiTextureType::aiTextureType_METALNESS, scene);
 	textures.insert(textures.end(), diffuseTextures.begin(), diffuseTextures.end());
+	textures.insert(textures.end(), HeightTextures.begin(), HeightTextures.end());
+	textures.insert(textures.end(), RoughnessTextures.begin(), RoughnessTextures.end());
+	textures.insert(textures.end(), MetalnessTextures.begin(), MetalnessTextures.end());
 
 	return Mesh(this->device, this->deviceContext, vertices, indices, textures, transformMatrix);
 }
@@ -181,6 +189,33 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* pMaterial, aiTextur
 
 
 		case aiTextureType_DIFFUSE:
+			pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
+			if (aiColor.IsBlack()) //If color = black, just use grey
+			{
+				materialTextures.push_back(Texture(this->device, ErrorColors::UnloadedTextureColor, textureType));
+				return materialTextures;
+			}
+			materialTextures.push_back(Texture(this->device, Color(aiColor.r * 255, aiColor.g * 255, aiColor.b * 255), textureType));
+			return materialTextures;
+		case aiTextureType_HEIGHT:
+			pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
+			if (aiColor.IsBlack()) //If color = black, just use grey
+			{
+				materialTextures.push_back(Texture(this->device, ErrorColors::UnloadedTextureColor, textureType));
+				return materialTextures;
+			}
+			materialTextures.push_back(Texture(this->device, Color(aiColor.r * 255, aiColor.g * 255, aiColor.b * 255), textureType));
+			return materialTextures;
+		case aiTextureType_METALNESS:
+			pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
+			if (aiColor.IsBlack()) //If color = black, just use grey
+			{
+				materialTextures.push_back(Texture(this->device, ErrorColors::UnloadedTextureColor, textureType));
+				return materialTextures;
+			}
+			materialTextures.push_back(Texture(this->device, Color(aiColor.r * 255, aiColor.g * 255, aiColor.b * 255), textureType));
+			return materialTextures;
+		case aiTextureType_DIFFUSE_ROUGHNESS:
 			pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
 			if (aiColor.IsBlack()) //If color = black, just use grey
 			{

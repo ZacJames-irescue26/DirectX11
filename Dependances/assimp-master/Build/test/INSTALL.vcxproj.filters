@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\CMakeFiles\6cd98eeaa1d817e34781d3be1de36b9a\INSTALL_force.rule">
+    <CustomBuild Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\CMakeFiles\862369eb98444a966810830fc703ce02\INSTALL_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{B09A5142-0D1D-32C5-8F89-6853D128D6C8}</UniqueIdentifier>
+      <UniqueIdentifier>{B9D4C76F-487E-3D2E-BA59-596F7C4582DF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

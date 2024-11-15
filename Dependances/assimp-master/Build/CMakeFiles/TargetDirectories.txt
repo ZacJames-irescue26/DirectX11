@@ -1,13 +1,13 @@
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/CMakeFiles/uninstall.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/CMakeFiles/INSTALL.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/CMakeFiles/ALL_BUILD.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/zlibstatic.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/INSTALL.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/ALL_BUILD.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/code/CMakeFiles/assimp.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/code/CMakeFiles/INSTALL.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/test/CMakeFiles/unit.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/test/CMakeFiles/INSTALL.dir
-C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/test/headercheck/CMakeFiles/INSTALL.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/uninstall.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/INSTALL.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/ALL_BUILD.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/ZERO_CHECK.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/zlibstatic.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/INSTALL.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/code/CMakeFiles/assimp.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/code/CMakeFiles/INSTALL.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/test/CMakeFiles/unit.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/test/CMakeFiles/INSTALL.dir
+D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/test/headercheck/CMakeFiles/INSTALL.dir

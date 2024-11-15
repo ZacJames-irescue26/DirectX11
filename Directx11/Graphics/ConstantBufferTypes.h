@@ -19,4 +19,19 @@ struct CB_FS_LightPos
 	float dynamicLightStrength;
 	DirectX::XMFLOAT3 dynamicLightPosition;
 };
+struct CameraInfo
+{
+	XMFLOAT3 CameraPosition;
+};
+
+struct LightParams
+{
+	DirectX::XMFLOAT3 LightPos;
+	DirectX::XMFLOAT3 LightColor;
+	DirectX::XMFLOAT3 LightDirection;
+	DirectX::XMFLOAT2 SpotlightAngles;
+	DirectX::XMFLOAT4 LightRange;
+};
+
+
 }

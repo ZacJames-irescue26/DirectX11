@@ -16,12 +16,12 @@ struct PS_INPUT
     float3 inWorldPos : WORLD_POSITION;
 };
 
-Texture2D objTexture : TEXTURE : register(t0);
+Texture2D DiffuseTexture : TEXTURE : register(t0);
 SamplerState objSamplerState : SAMPLER : register(s0);
 
 float4 ps_main(PS_INPUT input) : SV_TARGET
 {
-    float3 sampleColor = objTexture.Sample(objSamplerState, input.inTexCoord);
+    float3 sampleColor = DiffuseTexture.Sample(objSamplerState, input.inTexCoord);
     //float3 sampleColor = input.inNormal;
 
     float3 ambientLight = ambientLightColor * ambientLightStrength;

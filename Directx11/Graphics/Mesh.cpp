@@ -31,7 +31,23 @@ void Mesh::Draw()
 		if (textures[i].GetType() == aiTextureType_DIFFUSE)
 		{
 			this->deviceContext->PSSetShaderResources(0, 1, textures[i].GetTextureResourceViewAddress());
+
+		}
+		if (textures[i].GetType() == aiTextureType_HEIGHT)
+		{
+			this->deviceContext->PSSetShaderResources(1, 1, textures[i].GetTextureResourceViewAddress());
+
+		}
+		if (textures[i].GetType() == aiTextureType_METALNESS)
+		{
+			this->deviceContext->PSSetShaderResources(2, 1, textures[i].GetTextureResourceViewAddress());
+
+		}
+		if (textures[i].GetType() == aiTextureType_DIFFUSE_ROUGHNESS)
+		{
+			this->deviceContext->PSSetShaderResources(3, 1, textures[i].GetTextureResourceViewAddress());
 			
+
 		}
 
 	}

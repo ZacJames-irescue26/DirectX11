@@ -1,435 +1,435 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\CCompilerTest.c">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\CCompilerTest.c">
       <Filter>UnitTests\Compiler</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Main.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Version.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Version.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\code\Common\Base64.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code\Common\Base64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSimd.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSimd.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utIOSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utIOSystem.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utIOStreamBuffer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utIOStreamBuffer.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utIssues.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utIssues.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utAnim.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utAnim.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest_aiMatrix3x3.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest_aiMatrix3x3.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest_aiMatrix4x4.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest_aiMatrix4x4.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest_aiQuaternion.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest_aiQuaternion.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest_aiVector2D.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest_aiVector2D.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AssimpAPITest_aiVector3D.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AssimpAPITest_aiVector3D.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\MathTest.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\MathTest.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBatchLoader.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBatchLoader.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utDefaultIOStream.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utDefaultIOStream.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utFastAtof.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utFastAtof.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utMetadata.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utMetadata.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\SceneDiffer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\SceneDiffer.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\AbstractImportExportBase.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\AbstractImportExportBase.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utTypes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utTypes.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utVersion.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utVersion.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utProfiler.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utProfiler.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSharedPPData.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSharedPPData.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utStringUtils.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utStringUtils.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utMaybe.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utMaybe.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utMesh.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utMesh.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utStandardShapes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utStandardShapes.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\uiScene.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\uiScene.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utLineSplitter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utLineSplitter.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utSpatialSort.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utSpatialSort.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utAssertHandler.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utAssertHandler.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utXmlParser.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utXmlParser.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utBase64.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utBase64.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utHash.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utHash.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utBaseProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utBaseProcess.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Common\utLogger.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Common\utLogger.cpp">
       <Filter>UnitTests\Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\Geometry\utGeometryUtils.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\Geometry\utGeometryUtils.cpp">
       <Filter>UnitTests\GeometryTools</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\Assxml\utAssxmlImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\Assxml\utAssxmlImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utLWSImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utLWSImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utLWOImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utLWOImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSMDImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSMDImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utglTFImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utglTFImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utglTF2ImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utglTF2ImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utHMPImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utHMPImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utIFCImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utIFCImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utFBXImporterExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utFBXImporterExporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utImporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utExporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ut3DImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ut3DImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ut3DSImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ut3DSImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utACImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utACImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utAMFImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utAMFImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utASEImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utASEImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utD3MFImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utD3MFImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utQ3DImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utQ3DImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSTLImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSTLImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utXImporterExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utXImporterExporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utX3DImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utX3DImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utDXFImporterExporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utDXFImporterExporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utPMXImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utPMXImporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utPLYImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utPLYImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utObjImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utObjImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utObjTools.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utObjTools.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utOpenGEXImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utOpenGEXImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSIBImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSIBImporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBlenderIntermediate.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBlenderIntermediate.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBlendImportAreaLight.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBlendImportAreaLight.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBlenderImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBlenderImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBlendImportMaterials.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBlendImportMaterials.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBlenderWork.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBlenderWork.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utBVHImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utBVHImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utColladaExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utColladaExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utColladaImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utColladaImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utCSMImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utCSMImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utB3DImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utB3DImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utMDCImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utMDCImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utAssbinImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utAssbinImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utUSDImport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utUSDImport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utAssjsonImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utAssjsonImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utCOBImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utCOBImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utOgreImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utOgreImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utQ3BSPFileImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utQ3BSPFileImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utOFFImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utOFFImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utNFFImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utNFFImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utXGLImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utXGLImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utMD2Importer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utMD2Importer.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utMD5Importer.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utMD5Importer.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\utMDLImporter.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\utMDLImporter.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_ImportSettings.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_ImportSettings.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_Materials.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_Materials.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_Nodes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\MDL\utMDLImporter_HL1_Nodes.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\RAW\utRAWImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\RAW\utRAWImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\Terragen\utTerragenImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\Terragen\utTerragenImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\Pbrt\utPbrtImportExport.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\Pbrt\utPbrtImportExport.cpp">
       <Filter>UnitTests\ImportExport</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utMaterialSystem.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utMaterialSystem.cpp">
       <Filter>UnitTests\Material</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utMatrix3x3.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utMatrix3x3.cpp">
       <Filter>UnitTests\Math</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utMatrix4x4.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utMatrix4x4.cpp">
       <Filter>UnitTests\Math</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utVector3.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utVector3.cpp">
       <Filter>UnitTests\Math</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utImproveCacheLocality.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utImproveCacheLocality.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utFixInfacingNormals.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utFixInfacingNormals.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utGenNormals.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utGenNormals.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utTriangulate.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utTriangulate.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utTextureTransform.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utTextureTransform.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utRemoveRedundantMaterials.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utRemoveRedundantMaterials.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utRemoveVCProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utRemoveVCProcess.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utScaleProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utScaleProcess.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utArmaturePopulate.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utArmaturePopulate.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utJoinVertices.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utJoinVertices.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utRemoveComments.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utRemoveComments.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utRemoveComponent.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utRemoveComponent.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utVertexTriangleAdjacency.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utVertexTriangleAdjacency.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSplitLargeMeshes.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSplitLargeMeshes.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utFindDegenerates.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utFindDegenerates.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utFindInvalidData.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utFindInvalidData.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utLimitBoneWeights.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utLimitBoneWeights.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utPretransformVertices.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utPretransformVertices.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utScenePreprocessor.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utScenePreprocessor.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utTargetAnimation.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utTargetAnimation.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSortByPType.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSortByPType.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utSceneCombiner.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utSceneCombiner.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\utGenBoundingBoxesProcess.cpp">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\utGenBoundingBoxesProcess.cpp">
       <Filter>UnitTests\PostProcess</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\googletest\googletest\src\gtest-all.cc">
+    <ClCompile Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\googletest\googletest\src\gtest-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\MathTest.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\MathTest.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\RandomNumberGeneration.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\RandomNumberGeneration.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\SceneDiffer.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\SceneDiffer.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\UTLogStream.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\UTLogStream.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\TestIOSystem.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\TestIOSystem.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\TestModelFactory.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\TestModelFactory.h">
       <Filter>UnitTests\Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\unit\ImportExport\MDL\MDLHL1TestFiles.h">
+    <ClInclude Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\unit\ImportExport\MDL\MDLHL1TestFiles.h">
       <Filter>UnitTests\ImportExport</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\test\CMakeLists.txt" />
+    <CustomBuild Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\test\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{8D87D1AB-1740-3328-86DB-44B8B38D36EE}</UniqueIdentifier>
+      <UniqueIdentifier>{EC413037-6779-3570-B495-F54CB1C2F009}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests">
-      <UniqueIdentifier>{2ECE9C2C-344E-3243-BCC0-A564A0A1330B}</UniqueIdentifier>
+      <UniqueIdentifier>{A8015838-481F-36D5-AE7D-8330781662FF}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\Common">
-      <UniqueIdentifier>{9FF453D7-270E-3260-BEB7-D572AAEB791E}</UniqueIdentifier>
+      <UniqueIdentifier>{08A5649C-5B47-3A6E-ADB7-F9F4C950E0C2}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\Compiler">
-      <UniqueIdentifier>{B8FDAD68-9638-32B6-A660-3F6C1E156198}</UniqueIdentifier>
+      <UniqueIdentifier>{AA3F9D9E-4B25-3CB5-A2A9-C671FF188127}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\GeometryTools">
-      <UniqueIdentifier>{F0A42AA0-E4F3-30FD-BA56-583C42DD5F8E}</UniqueIdentifier>
+      <UniqueIdentifier>{80433F9B-4973-3F8C-B854-EF2D3918BD5F}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\ImportExport">
-      <UniqueIdentifier>{CDC6100B-20BB-3C74-8190-A835CAF64E03}</UniqueIdentifier>
+      <UniqueIdentifier>{2A117805-ECAA-3DE0-8828-48CEF912B192}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\Material">
-      <UniqueIdentifier>{9CD45A40-2D9B-3B01-8D1A-6CDC7600F973}</UniqueIdentifier>
+      <UniqueIdentifier>{E2E2D00B-3C6F-3863-AFDF-A10B01BCBF44}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\Math">
-      <UniqueIdentifier>{86D14948-EECF-3974-BE9F-BADF707A909B}</UniqueIdentifier>
+      <UniqueIdentifier>{8F3217A4-5404-37A5-BE60-88208605847E}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTests\PostProcess">
-      <UniqueIdentifier>{6E31A2C1-5A51-35C2-8F1F-6726C5D2A218}</UniqueIdentifier>
+      <UniqueIdentifier>{8B05A4D9-501A-3CEA-B197-D343EF2FC6B6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

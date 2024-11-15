@@ -25,7 +25,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F99B11D7-0891-3E8D-BB5A-0493EE5276C7}</ProjectGuid>
+    <ProjectGuid>{E8EFF10F-F3F7-37A9-97EF-F5E84DED9DF7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build;C:\Users\zacja\Downloads\assimp-master\assimp-master\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\code;C:\Users\zacja\Downloads\assimp-master\assimp-master\.;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\.;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build;C:\Users\zacja\Downloads\assimp-master\assimp-master\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\code;C:\Users\zacja\Downloads\assimp-master\assimp-master\.;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\.;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -89,7 +89,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build;C:\Users\zacja\Downloads\assimp-master\assimp-master\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\code;C:\Users\zacja\Downloads\assimp-master\assimp-master\.;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\.;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -99,7 +99,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build;C:\Users\zacja\Downloads\assimp-master\assimp-master\include;C:\Users\zacja\Downloads\assimp-master\assimp-master\code;C:\Users\zacja\Downloads\assimp-master\assimp-master\.;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib;C:\Users\zacja\Downloads\assimp-master\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\include;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\code;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\.;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -108,11 +108,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\CMakeLists.txt">
+    <CustomBuild Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/zacja/Downloads/assimp-master/assimp-master/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/zacja/Downloads/assimp-master/assimp-master -BC:/Users/zacja/Downloads/assimp-master/assimp-master/Build --check-stamp-file C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/DirectX GameEngine/Tutorial/Dependances/assimp-master" "-BD:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build" --check-stamp-file "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -120,12 +120,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zconf.h.cmakein;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zconf.h.cmakein;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/zacja/Downloads/assimp-master/assimp-master/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/zacja/Downloads/assimp-master/assimp-master -BC:/Users/zacja/Downloads/assimp-master/assimp-master/Build --check-stamp-file C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/DirectX GameEngine/Tutorial/Dependances/assimp-master" "-BD:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build" --check-stamp-file "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -133,12 +133,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zconf.h.cmakein;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zconf.h.cmakein;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/zacja/Downloads/assimp-master/assimp-master/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/zacja/Downloads/assimp-master/assimp-master -BC:/Users/zacja/Downloads/assimp-master/assimp-master/Build --check-stamp-file C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/DirectX GameEngine/Tutorial/Dependances/assimp-master" "-BD:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build" --check-stamp-file "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -146,12 +146,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zconf.h.cmakein;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zconf.h.cmakein;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/zacja/Downloads/assimp-master/assimp-master/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/zacja/Downloads/assimp-master/assimp-master -BC:/Users/zacja/Downloads/assimp-master/assimp-master/Build --check-stamp-file C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/DirectX GameEngine/Tutorial/Dependances/assimp-master" "-BD:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build" --check-stamp-file "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/contrib/zlib/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -159,22 +159,23 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zconf.h.cmakein;C:\Users\zacja\Downloads\assimp-master\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CheckSourceCompiles.cmake;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zconf.h.cmakein;D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\ZERO_CHECK.vcxproj">
-      <Project>{860BB41F-0508-38D1-A029-BBCFAC7387DA}</Project>
+    <ProjectReference Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\ZERO_CHECK.vcxproj">
+      <Project>{44D14968-1CA3-35B8-A47F-749E1EF9C8F1}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\zacja\Downloads\assimp-master\assimp-master\Build\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{261D1A40-AA0E-3047-A7ED-6E1B2201A5A6}</Project>
+    <ProjectReference Include="D:\DirectX GameEngine\Tutorial\Dependances\assimp-master\Build\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{1E1CB689-B7AC-3C4D-8FA3-2C28B4CD4FB2}</Project>
       <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>

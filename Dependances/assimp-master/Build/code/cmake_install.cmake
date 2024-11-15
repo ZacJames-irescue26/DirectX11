@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/zacja/Downloads/assimp-master/assimp-master/code
+# Install script for directory: D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,136 +34,142 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.4.3-dev" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/lib/Debug/assimp-vc143-mtd.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/lib/Debug/assimp-vc143-mtd.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/lib/Release/assimp-vc143-mt.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/lib/Release/assimp-vc143-mt.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/lib/MinSizeRel/assimp-vc143-mt.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/lib/MinSizeRel/assimp-vc143-mt.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/lib/RelWithDebInfo/assimp-vc143-mt.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/lib/RelWithDebInfo/assimp-vc143-mt.lib")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.4.3" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/Debug/assimp-vc143-mtd.dll")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/Debug/assimp-vc143-mtd.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/Release/assimp-vc143-mt.dll")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/Release/assimp-vc143-mt.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/MinSizeRel/assimp-vc143-mt.dll")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/MinSizeRel/assimp-vc143-mt.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/RelWithDebInfo/assimp-vc143-mt.dll")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE SHARED_LIBRARY FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/RelWithDebInfo/assimp-vc143-mt.dll")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "assimp-dev" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/assimp" TYPE FILE FILES
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/anim.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/aabb.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ai_assert.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/camera.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/color4.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/color4.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/code/../include/assimp/config.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ColladaMetaData.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/commonMetaData.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/defs.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/cfileio.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/light.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/material.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/material.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/matrix3x3.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/matrix3x3.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/matrix4x4.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/matrix4x4.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/mesh.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ObjMaterial.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/pbrmaterial.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/GltfMaterial.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/postprocess.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/quaternion.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/quaternion.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/scene.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/metadata.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/texture.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/types.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/vector2.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/vector2.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/vector3.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/vector3.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/version.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/cimport.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/AssertHandler.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/importerdesc.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Importer.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/DefaultLogger.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ProgressHandler.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/IOStream.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/IOSystem.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Logger.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/LogStream.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/NullLogger.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/cexport.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Exporter.hpp"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/DefaultIOStream.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/DefaultIOSystem.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ZipArchiveIOSystem.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SceneCombiner.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/fast_atof.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/qnan.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/BaseImporter.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Hash.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/MemoryIOWrapper.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ParsingUtils.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/StreamReader.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/StreamWriter.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/StringComparison.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/StringUtils.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SGSpatialSort.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/GenericProperty.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SpatialSort.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SkeletonMeshBuilder.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SmallVector.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SmoothingGroups.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/SmoothingGroups.inl"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/StandardShapes.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/RemoveComments.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Subdivision.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Vertex.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/LineSplitter.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/TinyFormatter.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Profiler.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/LogAux.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Bitmap.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/XMLTools.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/IOStreamBuffer.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/CreateAnimMesh.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/XmlParser.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/BlobIOSystem.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/MathFunctions.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Exceptional.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/ByteSwapper.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Base64.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/anim.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/aabb.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ai_assert.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/camera.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/color4.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/color4.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/code/../include/assimp/config.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ColladaMetaData.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/commonMetaData.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/defs.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/cfileio.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/light.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/material.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/material.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/matrix3x3.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/matrix3x3.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/matrix4x4.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/matrix4x4.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/mesh.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ObjMaterial.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/pbrmaterial.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/GltfMaterial.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/postprocess.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/quaternion.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/quaternion.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/scene.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/metadata.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/texture.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/types.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/vector2.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/vector2.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/vector3.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/vector3.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/version.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/cimport.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/AssertHandler.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/importerdesc.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Importer.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/DefaultLogger.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ProgressHandler.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/IOStream.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/IOSystem.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Logger.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/LogStream.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/NullLogger.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/cexport.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Exporter.hpp"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/DefaultIOStream.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/DefaultIOSystem.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ZipArchiveIOSystem.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SceneCombiner.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/fast_atof.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/qnan.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/BaseImporter.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Hash.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/MemoryIOWrapper.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ParsingUtils.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/StreamReader.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/StreamWriter.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/StringComparison.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/StringUtils.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SGSpatialSort.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/GenericProperty.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SpatialSort.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SkeletonMeshBuilder.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SmallVector.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SmoothingGroups.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/SmoothingGroups.inl"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/StandardShapes.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/RemoveComments.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Subdivision.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Vertex.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/LineSplitter.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/TinyFormatter.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Profiler.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/LogAux.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Bitmap.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/XMLTools.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/IOStreamBuffer.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/CreateAnimMesh.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/XmlParser.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/BlobIOSystem.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/MathFunctions.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Exceptional.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/ByteSwapper.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Base64.hpp"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "assimp-dev" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/assimp/Compiler" TYPE FILE FILES
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Compiler/pushpack1.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Compiler/poppack1.h"
-    "C:/Users/zacja/Downloads/assimp-master/assimp-master/code/../include/assimp/Compiler/pstdint.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Compiler/pushpack1.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Compiler/poppack1.h"
+    "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/code/../include/assimp/Compiler/pstdint.h"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/Debug/assimp-vc143-mtd.pdb")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/Debug/assimp-vc143-mtd.pdb")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/Release/assimp-vc143-mt.pdb")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/Release/assimp-vc143-mt.pdb")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/MinSizeRel/assimp-vc143-mt.pdb")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/MinSizeRel/assimp-vc143-mt.pdb")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "C:/Users/zacja/Downloads/assimp-master/assimp-master/Build/bin/RelWithDebInfo/assimp-vc143-mt.pdb")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE FILE FILES "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/bin/RelWithDebInfo/assimp-vc143-mt.pdb")
   endif()
 endif()
 
+string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
+       "${CMAKE_INSTALL_MANIFEST_FILES}")
+if(CMAKE_INSTALL_LOCAL_ONLY)
+  file(WRITE "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/code/install_local_manifest.txt"
+     "${CMAKE_INSTALL_MANIFEST_CONTENT}")
+endif()

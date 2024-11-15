@@ -12,4 +12,17 @@ struct Vertex
 	XMFLOAT2 texCoord;
 	XMFLOAT3 normal;
 };
+
+struct FullScreenQuad
+{
+	FullScreenQuad() {}
+	FullScreenQuad(XMFLOAT3 position, XMFLOAT2 uv)
+	: pos(position), texcoord(uv){}
+
+
+	XMFLOAT3 pos;
+	XMFLOAT2 texcoord;
+
+};
+
 }

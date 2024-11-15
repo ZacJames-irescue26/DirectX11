@@ -10,6 +10,8 @@ public:
 	void OnCreate();
 	void InitializeShaders();
 	void OnUpdate();
+	void BindGBufferPass();
+	void BindLightingPass();
 	void RenderFrame();
 	void OnUserInput();
 	Light light;
@@ -34,6 +36,7 @@ private:
 	ConstantBuffer<CB_VS_vertexShader> constantBuffer;
 	ConstantBuffer<CB_FS_LightPos> lightConstantBuffer;
 	ConstantBuffer<CB_VS_vertexShader> floorConstantBuffer;
+	ConstantBuffer<CameraInfo> CameraInfoConstantBuffer;
 
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
@@ -42,5 +45,24 @@ private:
 	static bool playercam;
 	int windowWidth = 0;
 	int windowHeight = 0;
+
+
+
+	//GBuffer
+	VertexShader m_GBuffervertexShader;
+	PixelShader m_GBufferpixelShader;
+
+	D3D11_VIEWPORT viewport;
+
+
+	//deferred shader
+
+	VertexShader m_DeferredvertexShader;
+	PixelShader m_DeferredpixelShader;
+
+	ConstantBuffer<LightParams> m_lightparams;
+
+	VertexBuffer<FullScreenQuad> m_FullScreenVertex;
+	IndexBuffer m_FullScreenIndex;
 	
 };
