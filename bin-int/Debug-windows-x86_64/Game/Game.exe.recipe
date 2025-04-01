@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\DirectX GameEngine\DirectX11\bin\Debug-windows-x86_64\Game\Game.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DefferedPixel_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DefferedVert_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\EquiToHdri_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\EquiToHdri_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\GBufferPixel_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\GBufferVert_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelPBR_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelShader_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexPBR_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexShader_v.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

@@ -4,16 +4,16 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineSystem.cmake:205 (message)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       The system is: Windows - 10.0.26100 - AMD64
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
@@ -23,10 +23,10 @@ events:
       
       The output was:
       0
-      MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-      Build started 08/11/2024 16:43:19.
+      MSBuild version 17.9.5+33de0b227 for .NET Framework
+      Build started 26/03/2025 11:05:52.
       
-      Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
         Creating directory "Debug\\".
         Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
@@ -39,7 +39,7 @@ events:
         CMakeCCompilerId.c
       Link:
         C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
-        CompilerIdC.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdC\\CompilerIdC.exe
+        CompilerIdC.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdC\\CompilerIdC.exe
       PostBuildEvent:
         for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
         :VCEnd
@@ -47,13 +47,13 @@ events:
       FinalizeBuildStatus:
         Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
         Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
-      Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
       
       Build succeeded.
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.63
+      Time Elapsed 00:00:00.66
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -61,14 +61,14 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
       
       The C compiler identification is MSVC, found in:
-        D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/3.31.0-rc1/CompilerIdC/CompilerIdC.exe
+        C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/3.29.0-rc2/CompilerIdC/CompilerIdC.exe
       
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
@@ -78,10 +78,10 @@ events:
       
       The output was:
       0
-      MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-      Build started 08/11/2024 16:43:20.
+      MSBuild version 17.9.5+33de0b227 for .NET Framework
+      Build started 26/03/2025 11:05:53.
       
-      Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
         Creating directory "Debug\\".
         Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
@@ -94,7 +94,7 @@ events:
         CMakeCXXCompilerId.cpp
       Link:
         C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
-        CompilerIdCXX.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdCXX\\CompilerIdCXX.exe
+        CompilerIdCXX.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdCXX\\CompilerIdCXX.exe
       PostBuildEvent:
         for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
         :VCEnd
@@ -102,13 +102,13 @@ events:
       FinalizeBuildStatus:
         Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
         Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
-      Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.31.0-rc1\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\3.29.0-rc2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
       
       Build succeeded.
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.62
+      Time Elapsed 00:00:00.54
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -116,19 +116,19 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
       
       The CXX compiler identification is MSVC, found in:
-        D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/3.31.0-rc1/CompilerIdCXX/CompilerIdCXX.exe
+        C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/3.29.0-rc2/CompilerIdCXX/CompilerIdCXX.exe
       
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:64 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-33om8b"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-33om8b"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-dwdon8"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-dwdon8"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -137,47 +137,47 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-33om8b'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-dwdon8'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_ee183.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:21.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_02150.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:53.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-33om8b\\cmTC_ee183.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-dwdon8\\cmTC_02150.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_ee183.dir\\Debug\\".
+          Creating directory "cmTC_02150.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-33om8b\\Debug\\".
-          Creating directory "cmTC_ee183.dir\\Debug\\cmTC_ee183.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-dwdon8\\Debug\\".
+          Creating directory "cmTC_02150.dir\\Debug\\cmTC_02150.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_ee183.dir\\Debug\\cmTC_ee183.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_ee183.dir\\Debug\\cmTC_ee183.tlog\\unsuccessfulbuild".
+          Creating "cmTC_02150.dir\\Debug\\cmTC_02150.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_02150.dir\\Debug\\cmTC_02150.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_ee183.dir\\Debug\\\\" /Fd"cmTC_ee183.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_02150.dir\\Debug\\\\" /Fd"cmTC_02150.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_ee183.dir\\Debug\\\\" /Fd"cmTC_ee183.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_02150.dir\\Debug\\\\" /Fd"cmTC_02150.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-33om8b\\Debug\\cmTC_ee183.exe" /INCREMENTAL /ILK:"cmTC_ee183.dir\\Debug\\cmTC_ee183.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-33om8b/Debug/cmTC_ee183.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-33om8b/Debug/cmTC_ee183.lib" /MACHINE:X64  /machine:x64 cmTC_ee183.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_ee183.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-33om8b\\Debug\\cmTC_ee183.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-dwdon8\\Debug\\cmTC_02150.exe" /INCREMENTAL /ILK:"cmTC_02150.dir\\Debug\\cmTC_02150.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-dwdon8/Debug/cmTC_02150.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-dwdon8/Debug/cmTC_02150.lib" /MACHINE:X64  /machine:x64 cmTC_02150.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_02150.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-dwdon8\\Debug\\cmTC_02150.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_ee183.dir\\Debug\\cmTC_ee183.tlog\\unsuccessfulbuild".
-          Touching "cmTC_ee183.dir\\Debug\\cmTC_ee183.tlog\\cmTC_ee183.lastbuildstate".
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-33om8b\\cmTC_ee183.vcxproj" (default targets).
+          Deleting file "cmTC_02150.dir\\Debug\\cmTC_02150.tlog\\unsuccessfulbuild".
+          Touching "cmTC_02150.dir\\Debug\\cmTC_02150.tlog\\cmTC_02150.lastbuildstate".
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-dwdon8\\cmTC_02150.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.65
+        Time Elapsed 00:00:00.67
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:170 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Parsed C implicit link information:
@@ -193,75 +193,74 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:207 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Running the C compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/bin/HostX64/x64/link.exe" "-v"
-      Microsoft (R) Incremental Linker Version 14.38.33141.0
+      Microsoft (R) Incremental Linker Version 14.38.33135.0
       Copyright (C) Microsoft Corporation.  All rights reserved.
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:64 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-0v3vz1"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-0v3vz1"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-p339jx"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-p339jx"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
-      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
     buildResult:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-0v3vz1'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-p339jx'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3b47a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:22.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_54b2d.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:54.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-0v3vz1\\cmTC_3b47a.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-p339jx\\cmTC_54b2d.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_3b47a.dir\\Debug\\".
+          Creating directory "cmTC_54b2d.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-0v3vz1\\Debug\\".
-          Creating directory "cmTC_3b47a.dir\\Debug\\cmTC_3b47a.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-p339jx\\Debug\\".
+          Creating directory "cmTC_54b2d.dir\\Debug\\cmTC_54b2d.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_3b47a.dir\\Debug\\cmTC_3b47a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_3b47a.dir\\Debug\\cmTC_3b47a.tlog\\unsuccessfulbuild".
+          Creating "cmTC_54b2d.dir\\Debug\\cmTC_54b2d.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_54b2d.dir\\Debug\\cmTC_54b2d.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b47a.dir\\Debug\\\\" /Fd"cmTC_3b47a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_54b2d.dir\\Debug\\\\" /Fd"cmTC_54b2d.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b47a.dir\\Debug\\\\" /Fd"cmTC_3b47a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_54b2d.dir\\Debug\\\\" /Fd"cmTC_54b2d.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.29\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-0v3vz1\\Debug\\cmTC_3b47a.exe" /INCREMENTAL /ILK:"cmTC_3b47a.dir\\Debug\\cmTC_3b47a.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-0v3vz1/Debug/cmTC_3b47a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-0v3vz1/Debug/cmTC_3b47a.lib" /MACHINE:X64  /machine:x64 cmTC_3b47a.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_3b47a.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-0v3vz1\\Debug\\cmTC_3b47a.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-p339jx\\Debug\\cmTC_54b2d.exe" /INCREMENTAL /ILK:"cmTC_54b2d.dir\\Debug\\cmTC_54b2d.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-p339jx/Debug/cmTC_54b2d.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-p339jx/Debug/cmTC_54b2d.lib" /MACHINE:X64  /machine:x64 cmTC_54b2d.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_54b2d.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-p339jx\\Debug\\cmTC_54b2d.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_3b47a.dir\\Debug\\cmTC_3b47a.tlog\\unsuccessfulbuild".
-          Touching "cmTC_3b47a.dir\\Debug\\cmTC_3b47a.tlog\\cmTC_3b47a.lastbuildstate".
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-0v3vz1\\cmTC_3b47a.vcxproj" (default targets).
+          Deleting file "cmTC_54b2d.dir\\Debug\\cmTC_54b2d.tlog\\unsuccessfulbuild".
+          Touching "cmTC_54b2d.dir\\Debug\\cmTC_54b2d.tlog\\cmTC_54b2d.lastbuildstate".
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-p339jx\\cmTC_54b2d.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.66
+        Time Elapsed 00:00:00.54
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:170 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Parsed CXX implicit link information:
@@ -277,355 +276,355 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeDetermineCompilerABI.cmake:207 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:74 (PROJECT)"
     message: |
       Running the CXX compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/bin/HostX64/x64/link.exe" "-v"
-      Microsoft (R) Incremental Linker Version 14.38.33141.0
+      Microsoft (R) Incremental Linker Version 14.38.33135.0
       Copyright (C) Microsoft Corporation.  All rights reserved.
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "contrib/zlib/CMakeLists.txt:35 (check_include_file)"
     checks:
       - "Looking for sys/types.h"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-b37udi"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-b37udi"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-or8u0v"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-or8u0v"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "HAVE_SYS_TYPES_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-b37udi'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-or8u0v'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_94e3e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:23.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_08951.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:55.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\cmTC_94e3e.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\cmTC_08951.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_94e3e.dir\\Debug\\".
+          Creating directory "cmTC_08951.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\Debug\\".
-          Creating directory "cmTC_94e3e.dir\\Debug\\cmTC_94e3e.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\Debug\\".
+          Creating directory "cmTC_08951.dir\\Debug\\cmTC_08951.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_94e3e.dir\\Debug\\cmTC_94e3e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_94e3e.dir\\Debug\\cmTC_94e3e.tlog\\unsuccessfulbuild".
+          Creating "cmTC_08951.dir\\Debug\\cmTC_08951.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_08951.dir\\Debug\\cmTC_08951.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_94e3e.dir\\Debug\\\\" /Fd"cmTC_94e3e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\CheckIncludeFile.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_08951.dir\\Debug\\\\" /Fd"cmTC_08951.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_94e3e.dir\\Debug\\\\" /Fd"cmTC_94e3e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\CheckIncludeFile.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_08951.dir\\Debug\\\\" /Fd"cmTC_08951.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\CheckIncludeFile.c"
           CheckIncludeFile.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\Debug\\cmTC_94e3e.exe" /INCREMENTAL /ILK:"cmTC_94e3e.dir\\Debug\\cmTC_94e3e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-b37udi/Debug/cmTC_94e3e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-b37udi/Debug/cmTC_94e3e.lib" /MACHINE:X64  /machine:x64 cmTC_94e3e.dir\\Debug\\CheckIncludeFile.obj
-          cmTC_94e3e.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\Debug\\cmTC_94e3e.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\Debug\\cmTC_08951.exe" /INCREMENTAL /ILK:"cmTC_08951.dir\\Debug\\cmTC_08951.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-or8u0v/Debug/cmTC_08951.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-or8u0v/Debug/cmTC_08951.lib" /MACHINE:X64  /machine:x64 cmTC_08951.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_08951.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\Debug\\cmTC_08951.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_94e3e.dir\\Debug\\cmTC_94e3e.tlog\\unsuccessfulbuild".
-          Touching "cmTC_94e3e.dir\\Debug\\cmTC_94e3e.tlog\\cmTC_94e3e.lastbuildstate".
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-b37udi\\cmTC_94e3e.vcxproj" (default targets).
+          Deleting file "cmTC_08951.dir\\Debug\\cmTC_08951.tlog\\unsuccessfulbuild".
+          Touching "cmTC_08951.dir\\Debug\\cmTC_08951.tlog\\cmTC_08951.lastbuildstate".
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-or8u0v\\cmTC_08951.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.61
+        Time Elapsed 00:00:00.54
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "contrib/zlib/CMakeLists.txt:36 (check_include_file)"
     checks:
       - "Looking for stdint.h"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-77wnef"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-77wnef"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-jkqd9k"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-jkqd9k"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "HAVE_STDINT_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-77wnef'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-jkqd9k'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_495d2.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:24.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8446e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:56.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\cmTC_495d2.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\cmTC_8446e.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_495d2.dir\\Debug\\".
+          Creating directory "cmTC_8446e.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\Debug\\".
-          Creating directory "cmTC_495d2.dir\\Debug\\cmTC_495d2.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\Debug\\".
+          Creating directory "cmTC_8446e.dir\\Debug\\cmTC_8446e.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_495d2.dir\\Debug\\cmTC_495d2.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_495d2.dir\\Debug\\cmTC_495d2.tlog\\unsuccessfulbuild".
+          Creating "cmTC_8446e.dir\\Debug\\cmTC_8446e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_8446e.dir\\Debug\\cmTC_8446e.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_495d2.dir\\Debug\\\\" /Fd"cmTC_495d2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\CheckIncludeFile.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8446e.dir\\Debug\\\\" /Fd"cmTC_8446e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_495d2.dir\\Debug\\\\" /Fd"cmTC_495d2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\CheckIncludeFile.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8446e.dir\\Debug\\\\" /Fd"cmTC_8446e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\CheckIncludeFile.c"
           CheckIncludeFile.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\Debug\\cmTC_495d2.exe" /INCREMENTAL /ILK:"cmTC_495d2.dir\\Debug\\cmTC_495d2.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-77wnef/Debug/cmTC_495d2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-77wnef/Debug/cmTC_495d2.lib" /MACHINE:X64  /machine:x64 cmTC_495d2.dir\\Debug\\CheckIncludeFile.obj
-          cmTC_495d2.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\Debug\\cmTC_495d2.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\Debug\\cmTC_8446e.exe" /INCREMENTAL /ILK:"cmTC_8446e.dir\\Debug\\cmTC_8446e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-jkqd9k/Debug/cmTC_8446e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-jkqd9k/Debug/cmTC_8446e.lib" /MACHINE:X64  /machine:x64 cmTC_8446e.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_8446e.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\Debug\\cmTC_8446e.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_495d2.dir\\Debug\\cmTC_495d2.tlog\\unsuccessfulbuild".
-          Touching "cmTC_495d2.dir\\Debug\\cmTC_495d2.tlog\\cmTC_495d2.lastbuildstate".
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-77wnef\\cmTC_495d2.vcxproj" (default targets).
+          Deleting file "cmTC_8446e.dir\\Debug\\cmTC_8446e.tlog\\unsuccessfulbuild".
+          Touching "cmTC_8446e.dir\\Debug\\cmTC_8446e.tlog\\cmTC_8446e.lastbuildstate".
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-jkqd9k\\cmTC_8446e.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.60
+        Time Elapsed 00:00:00.55
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "contrib/zlib/CMakeLists.txt:37 (check_include_file)"
     checks:
       - "Looking for stddef.h"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-691w2z"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-691w2z"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9ozpf7"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9ozpf7"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "HAVE_STDDEF_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-691w2z'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9ozpf7'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_546f3.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:25.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_29032.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:57.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\cmTC_546f3.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\cmTC_29032.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_546f3.dir\\Debug\\".
+          Creating directory "cmTC_29032.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\Debug\\".
-          Creating directory "cmTC_546f3.dir\\Debug\\cmTC_546f3.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\Debug\\".
+          Creating directory "cmTC_29032.dir\\Debug\\cmTC_29032.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_546f3.dir\\Debug\\cmTC_546f3.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_546f3.dir\\Debug\\cmTC_546f3.tlog\\unsuccessfulbuild".
+          Creating "cmTC_29032.dir\\Debug\\cmTC_29032.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_29032.dir\\Debug\\cmTC_29032.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_546f3.dir\\Debug\\\\" /Fd"cmTC_546f3.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\CheckIncludeFile.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_29032.dir\\Debug\\\\" /Fd"cmTC_29032.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_546f3.dir\\Debug\\\\" /Fd"cmTC_546f3.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\CheckIncludeFile.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_29032.dir\\Debug\\\\" /Fd"cmTC_29032.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\CheckIncludeFile.c"
           CheckIncludeFile.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\Debug\\cmTC_546f3.exe" /INCREMENTAL /ILK:"cmTC_546f3.dir\\Debug\\cmTC_546f3.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-691w2z/Debug/cmTC_546f3.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-691w2z/Debug/cmTC_546f3.lib" /MACHINE:X64  /machine:x64 cmTC_546f3.dir\\Debug\\CheckIncludeFile.obj
-          cmTC_546f3.vcxproj -> D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\Debug\\cmTC_546f3.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\Debug\\cmTC_29032.exe" /INCREMENTAL /ILK:"cmTC_29032.dir\\Debug\\cmTC_29032.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9ozpf7/Debug/cmTC_29032.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9ozpf7/Debug/cmTC_29032.lib" /MACHINE:X64  /machine:x64 cmTC_29032.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_29032.vcxproj -> C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\Debug\\cmTC_29032.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_546f3.dir\\Debug\\cmTC_546f3.tlog\\unsuccessfulbuild".
-          Touching "cmTC_546f3.dir\\Debug\\cmTC_546f3.tlog\\cmTC_546f3.lastbuildstate".
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-691w2z\\cmTC_546f3.vcxproj" (default targets).
+          Deleting file "cmTC_29032.dir\\Debug\\cmTC_29032.tlog\\unsuccessfulbuild".
+          Touching "cmTC_29032.dir\\Debug\\cmTC_29032.tlog\\cmTC_29032.lastbuildstate".
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9ozpf7\\cmTC_29032.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.57
+        Time Elapsed 00:00:00.53
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:156 (try_compile)"
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckTypeSize.cmake:283 (__check_type_size_impl)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
       - "contrib/zlib/CMakeLists.txt:55 (check_type_size)"
     checks:
       - "Check size of off64_t"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9zcfbd"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9zcfbd"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-obnsnz"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-obnsnz"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "HAVE_OFF64_T"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-9zcfbd'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-obnsnz'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_f7eef.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:26.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_99f58.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:57.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_f7eef.dir\\Debug\\".
+          Creating directory "cmTC_99f58.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\Debug\\".
-          Creating directory "cmTC_f7eef.dir\\Debug\\cmTC_f7eef.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\Debug\\".
+          Creating directory "cmTC_99f58.dir\\Debug\\cmTC_99f58.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_f7eef.dir\\Debug\\cmTC_f7eef.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_f7eef.dir\\Debug\\cmTC_f7eef.tlog\\unsuccessfulbuild".
+          Creating "cmTC_99f58.dir\\Debug\\cmTC_99f58.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_99f58.dir\\Debug\\cmTC_99f58.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f7eef.dir\\Debug\\\\" /Fd"cmTC_f7eef.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_99f58.dir\\Debug\\\\" /Fd"cmTC_99f58.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f7eef.dir\\Debug\\\\" /Fd"cmTC_f7eef.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_99f58.dir\\Debug\\\\" /Fd"cmTC_99f58.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c"
           OFF64_T.c
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj" (default targets) -- FAILED.
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj" (default target) (1) ->
+        "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj" (default target) (1) ->
         (ClCompile target) -> 
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-9zcfbd\\cmTC_f7eef.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(29,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(30,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(31,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(32,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\OFF64_T.c(33,12): error C2065: 'off64_t': undeclared identifier [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-obnsnz\\cmTC_99f58.vcxproj]
         
             0 Warning(s)
             5 Error(s)
         
-        Time Elapsed 00:00:00.35
+        Time Elapsed 00:00:00.39
         
       exitCode: 1
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckFunctionExists.cmake:93 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckFunctionExists.cmake:86 (try_compile)"
       - "contrib/zlib/CMakeLists.txt:64 (check_function_exists)"
     checks:
       - "Looking for fseeko"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-tv0v7e"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-tv0v7e"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-mfgx21"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-mfgx21"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "HAVE_FSEEKO"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-tv0v7e'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-mfgx21'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_bb315.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:26.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4f5ee.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:58.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_bb315.dir\\Debug\\".
+          Creating directory "cmTC_4f5ee.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\Debug\\".
-          Creating directory "cmTC_bb315.dir\\Debug\\cmTC_bb315.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\Debug\\".
+          Creating directory "cmTC_4f5ee.dir\\Debug\\cmTC_4f5ee.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_bb315.dir\\Debug\\cmTC_bb315.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_bb315.dir\\Debug\\cmTC_bb315.tlog\\unsuccessfulbuild".
+          Creating "cmTC_4f5ee.dir\\Debug\\cmTC_4f5ee.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_4f5ee.dir\\Debug\\cmTC_4f5ee.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bb315.dir\\Debug\\\\" /Fd"cmTC_bb315.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\CheckFunctionExists.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4f5ee.dir\\Debug\\\\" /Fd"cmTC_4f5ee.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bb315.dir\\Debug\\\\" /Fd"cmTC_bb315.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4f5ee.dir\\Debug\\\\" /Fd"cmTC_4f5ee.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\Debug\\cmTC_bb315.exe" /INCREMENTAL /ILK:"cmTC_bb315.dir\\Debug\\cmTC_bb315.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-tv0v7e/Debug/cmTC_bb315.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-tv0v7e/Debug/cmTC_bb315.lib" /MACHINE:X64  /machine:x64 cmTC_bb315.dir\\Debug\\CheckFunctionExists.obj
-        CheckFunctionExists.obj : error LNK2019: unresolved external symbol fseeko referenced in function main [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj]
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\Debug\\cmTC_bb315.exe : fatal error LNK1120: 1 unresolved externals [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj]
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj" (default targets) -- FAILED.
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\Debug\\cmTC_4f5ee.exe" /INCREMENTAL /ILK:"cmTC_4f5ee.dir\\Debug\\cmTC_4f5ee.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-mfgx21/Debug/cmTC_4f5ee.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-mfgx21/Debug/cmTC_4f5ee.lib" /MACHINE:X64  /machine:x64 cmTC_4f5ee.dir\\Debug\\CheckFunctionExists.obj
+        CheckFunctionExists.obj : error LNK2019: unresolved external symbol fseeko referenced in function main [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj]
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\Debug\\cmTC_4f5ee.exe : fatal error LNK1120: 1 unresolved externals [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj]
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj" (default target) (1) ->
+        "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj" (default target) (1) ->
         (Link target) -> 
-          CheckFunctionExists.obj : error LNK2019: unresolved external symbol fseeko referenced in function main [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj]
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\Debug\\cmTC_bb315.exe : fatal error LNK1120: 1 unresolved externals [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-tv0v7e\\cmTC_bb315.vcxproj]
+          CheckFunctionExists.obj : error LNK2019: unresolved external symbol fseeko referenced in function main [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\Debug\\cmTC_4f5ee.exe : fatal error LNK1120: 1 unresolved externals [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-mfgx21\\cmTC_4f5ee.vcxproj]
         
             0 Warning(s)
             2 Error(s)
         
-        Time Elapsed 00:00:00.52
+        Time Elapsed 00:00:00.67
         
       exitCode: 1
   -
     kind: "try_compile-v1"
     backtrace:
-      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.29/Modules/CheckIncludeFile.cmake:90 (try_compile)"
       - "contrib/zlib/CMakeLists.txt:72 (check_include_file)"
     checks:
       - "Looking for unistd.h"
     directories:
-      source: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-ucxdrg"
-      binary: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-ucxdrg"
+      source: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-noomu1"
+      binary: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-noomu1"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
       CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
-      CMAKE_MODULE_PATH: "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/cmake-modules"
+      CMAKE_MODULE_PATH: "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/cmake-modules"
     buildResult:
       variable: "Z_HAVE_UNISTD_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-ucxdrg'
+        Change Dir: 'C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/CMakeFiles/CMakeScratch/TryCompile-noomu1'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_93ae4.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
-        MSBuild version 17.11.9+a69bbaaf5 for .NET Framework
-        Build started 08/11/2024 16:43:27.
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0131e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.9.5+33de0b227 for .NET Framework
+        Build started 26/03/2025 11:05:59.
         
-        Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\cmTC_93ae4.vcxproj" on node 1 (default targets).
+        Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\cmTC_0131e.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_93ae4.dir\\Debug\\".
+          Creating directory "cmTC_0131e.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\Debug\\".
-          Creating directory "cmTC_93ae4.dir\\Debug\\cmTC_93ae4.tlog\\".
+          Creating directory "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\Debug\\".
+          Creating directory "cmTC_0131e.dir\\Debug\\cmTC_0131e.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_93ae4.dir\\Debug\\cmTC_93ae4.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_93ae4.dir\\Debug\\cmTC_93ae4.tlog\\unsuccessfulbuild".
+          Creating "cmTC_0131e.dir\\Debug\\cmTC_0131e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_0131e.dir\\Debug\\cmTC_0131e.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_93ae4.dir\\Debug\\\\" /Fd"cmTC_93ae4.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\CheckIncludeFile.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33141 for x64
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0131e.dir\\Debug\\\\" /Fd"cmTC_0131e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.38.33135 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_93ae4.dir\\Debug\\\\" /Fd"cmTC_93ae4.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\CheckIncludeFile.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0131e.dir\\Debug\\\\" /Fd"cmTC_0131e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\CheckIncludeFile.c"
           CheckIncludeFile.c
-        D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\CheckIncludeFile.c(1,10): error C1083: Cannot open include file: 'unistd.h': No such file or directory [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\cmTC_93ae4.vcxproj]
-        Done Building Project "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\cmTC_93ae4.vcxproj" (default targets) -- FAILED.
+        C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\CheckIncludeFile.c(1,10): error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\cmTC_0131e.vcxproj]
+        Done Building Project "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\cmTC_0131e.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\cmTC_93ae4.vcxproj" (default target) (1) ->
+        "C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\cmTC_0131e.vcxproj" (default target) (1) ->
         (ClCompile target) -> 
-          D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\CheckIncludeFile.c(1,10): error C1083: Cannot open include file: 'unistd.h': No such file or directory [D:\\DirectX GameEngine\\Tutorial\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-ucxdrg\\cmTC_93ae4.vcxproj]
+          C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\CheckIncludeFile.c(1,10): error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\DirectX GameEngine\\DirectX11\\Dependances\\assimp-master\\Build\\CMakeFiles\\CMakeScratch\\TryCompile-noomu1\\cmTC_0131e.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.35
+        Time Elapsed 00:00:00.42
         
       exitCode: 1
 ...

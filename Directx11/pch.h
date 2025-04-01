@@ -1,7 +1,5 @@
 #pragma once
-#define JPH_DEBUG_RENDERER
-#define JPH_PROFILE_ENABLED
-#define max(a,b) (((a > b)) ? (a) : (b))
+#define JPH_EXTERNAL_PROFILE
 #include <windows.h>
 #include <comdef.h>
 
@@ -11,7 +9,7 @@
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 #include<wrl.h>
-
+#include <direct.h>
 
 
 // STL includes

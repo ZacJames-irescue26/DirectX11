@@ -1,8 +1,8 @@
-IF(NOT EXISTS "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/install_manifest.txt")
-  MESSAGE(FATAL_ERROR "Cannot find install manifest: \"D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/install_manifest.txt\"")
-ENDIF(NOT EXISTS "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/install_manifest.txt")
+IF(NOT EXISTS "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/install_manifest.txt")
+  MESSAGE(FATAL_ERROR "Cannot find install manifest: \"C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/install_manifest.txt\"")
+ENDIF(NOT EXISTS "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/install_manifest.txt")
 
-FILE(READ "D:/DirectX GameEngine/Tutorial/Dependances/assimp-master/Build/install_manifest.txt" files)
+FILE(READ "C:/DirectX GameEngine/DirectX11/Dependances/assimp-master/Build/install_manifest.txt" files)
 STRING(REGEX REPLACE "\n" ";" files "${files}")
 FOREACH(file ${files})
   MESSAGE(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
