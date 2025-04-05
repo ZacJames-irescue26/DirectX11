@@ -19,11 +19,18 @@ float2 SampleSphericalMap(float3 v)
     return uv;
 }
 
-
-float4 main(FS_INPUT input) : SV_TARGET
+struct PS_OUTPUT
 {
+    float4 coloroutput : SV_Target0;
+};
+
+
+ PS_OUTPUT main(FS_INPUT input) : SV_TARGET
+{
+    PS_OUTPUT output;
     float2 uv = SampleSphericalMap(normalize(input.localPos)); // make sure to normalize localPos
     float3 color = EquiTexture.Sample(HDRISamplerState, uv).rgb;
 
-    return float4(color, 1.0f);
+    output.coloroutput = float4(color, 1.0);
+    return output;
 }

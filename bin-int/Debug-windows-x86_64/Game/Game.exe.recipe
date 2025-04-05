@@ -7,6 +7,12 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BackgroundCubemap_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BackgroundCubemap_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DefferedPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -23,6 +29,9 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\GBufferVert_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\IrradianceConvolution_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelPBR_p.cso</FullPath>

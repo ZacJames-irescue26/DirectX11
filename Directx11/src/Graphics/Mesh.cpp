@@ -36,12 +36,15 @@ void Mesh::Draw()
 		{
 		case aiTextureType_DIFFUSE:
 			diffuseSRV = tex.GetTextureResourceView();
+			deviceContext->PSSetShaderResources(0, 1, &diffuseSRV);   // t0
 			break;
 		case aiTextureType_NORMALS:
 			normalSRV = tex.GetTextureResourceView();
+			deviceContext->PSSetShaderResources(1, 1, &normalSRV);    // t1
 			break;
 		case aiTextureType_DIFFUSE_ROUGHNESS:
 			roughnessSRV = tex.GetTextureResourceView();
+			deviceContext->PSSetShaderResources(2, 1, &roughnessSRV); // t2
 			break;
 		default:
 			assert(false);// Optional: bind a default color texture or ignore
@@ -50,9 +53,6 @@ void Mesh::Draw()
 	}
 
 	// Always bind even if they're nullptr
-	deviceContext->PSSetShaderResources(0, 1, &diffuseSRV);   // t0
-	deviceContext->PSSetShaderResources(1, 1, &normalSRV);    // t1
-	deviceContext->PSSetShaderResources(2, 1, &roughnessSRV); // t2
 
 	// Bind vertex and index buffers
 	deviceContext->IASetVertexBuffers(0, 1, vertexbuffer.GetAddressOf(), vertexbuffer.StridePtr(), &offset);

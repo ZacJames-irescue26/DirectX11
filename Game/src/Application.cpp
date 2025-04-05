@@ -69,7 +69,7 @@ void Application::OnCreate()
 	/*MiscItems.SetPosition(XMVECTOR{0.0,-2.0,0.0});
 	MiscItems.SetScale({10,10,10});*/
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
-	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 10000.0f);
+	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000000.0f);
 	gfx.physicsController.Optimize();
 
 	PlayerCamera.SetPosition(0.0,0.0,-4.0);
@@ -97,40 +97,40 @@ void Application::OnCreate()
 	std::vector<CubeWPos> cubevertices = {
 		
 		// Front face
-		{ XMFLOAT3(-0.5f,  0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f,  0.5f, -0.5f) },
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f, -0.5f) },
+		{ XMFLOAT3(-1.0f,  1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f,  1.0f, -1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, -1.0f) },
 
 		// Back face
-		{ XMFLOAT3(0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(-0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f,  0.5f) },
-		{ XMFLOAT3(-0.5f, -0.5f,  0.5f) },
+		{ XMFLOAT3(1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(-1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f,  1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f,  1.0f) },
 
 		// Left face
-		{ XMFLOAT3(-0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(-0.5f,  0.5f, -0.5f) },
-		{ XMFLOAT3(-0.5f, -0.5f,  0.5f) },
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f) },
+		{ XMFLOAT3(-1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(-1.0f,  1.0f, -1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f,  1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f) },
 
 		// Right face
-		{ XMFLOAT3(0.5f,  0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f,  0.5f) },
+		{ XMFLOAT3(1.0f,  1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f,  1.0f) },
 
 		// Top face
-		{ XMFLOAT3(-0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(0.5f,  0.5f,  0.5f) },
-		{ XMFLOAT3(-0.5f,  0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f,  0.5f, -0.5f) },
+		{ XMFLOAT3(-1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(1.0f,  1.0f,  1.0f) },
+		{ XMFLOAT3(-1.0f,  1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f,  1.0f, -1.0f) },
 
 		// Bottom face
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f, -0.5f) },
-		{ XMFLOAT3(-0.5f, -0.5f,  0.5f) },
-		{ XMFLOAT3(0.5f, -0.5f,  0.5f) }
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f, -1.0f) },
+		{ XMFLOAT3(-1.0f, -1.0f,  1.0f) },
+		{ XMFLOAT3(1.0f, -1.0f,  1.0f) }
 	};
 
 	hr = m_HdriVertex.Initialize(gfx.GetDevice(), cubevertices.data(), cubevertices.size());
@@ -210,6 +210,7 @@ void Application::OnCreate()
 
 	gfx.device->CreateShaderResourceView(gfx.HDRITexture.Get(), &srvDesc, gfx.HDRISRV.GetAddressOf());
 
+
 }
 void Application::InitializeShaders()
 {
@@ -268,11 +269,24 @@ void Application::InitializeShaders()
 	{
 		return;
 	}
-	if (!m_EquiToHDRI_VS.Initialize(gfx.device, L"CompiledSHaders/EquiToHdri_v.cso", posDesc, ARRAYSIZE(posDesc)))
+	if (!m_EquiToHDRI_VS.Initialize(gfx.device, L"CompiledShaders/EquiToHdri_v.cso", posDesc, ARRAYSIZE(posDesc)))
 	{
 		return;
 	}
-	if (!m_EquiToHdri_PS.Initialize(gfx.device, L"CompiledSHaders/EquiToHdri_p.cso"))
+	if (!m_EquiToHdri_PS.Initialize(gfx.device, L"CompiledShaders/EquiToHdri_p.cso"))
+	{
+		return;
+	}
+
+	if (!m_IrradianceConvolution_PS.Initialize(gfx.device, L"CompiledShaders/IrradianceConvolution_p.cso"))
+	{
+		return;
+	}
+	if (!m_BackgroundCubemap_VS.Initialize(gfx.device, L"CompiledShaders/BackgroundCubemap_v.cso", posDesc, ARRAYSIZE(posDesc)))
+	{
+		return;
+	}
+	if (!m_BackgroundCubemap_PS.Initialize(gfx.device, L"CompiledShaders/BackgroundCubemap_p.cso"))
 	{
 		return;
 	}
@@ -348,10 +362,10 @@ void Application::BindGBufferPass()
 	gfx.SetPSShader(m_GBufferpixelShader.GetShader());
 	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
 	gfx.GetDeviceContext()->OMSetRenderTargets(renderTargets.size(), renderTargets.data(), gfx.depthStencilView.Get());
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[0], red);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[1], red);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[2], red);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[3], red);
+	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[0], bgcolor);
+	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[1], bgcolor);
+	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[2], bgcolor);
+	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[3], bgcolor);
 
 
 
@@ -385,14 +399,13 @@ void Application::BindLightingPass()
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(), nullptr);
-	gfx.GetDeviceContext()->ClearRenderTargetView(gfx.renderTargetView.Get(), bgcolor);
-	gfx.ClearDepthStencil(gfx.depthStencilView.Get());
 
 	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
 	gfx.SetRasterizerState();
 	gfx.SetBlendState();
 	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(),0);
 	gfx.SetSamplers();
+	gfx.GetDeviceContext()->PSSetSamplers(1, 1, gfx.HDRIsamplerState.GetAddressOf());
 	gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
 
 	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -403,7 +416,9 @@ void Application::BindLightingPass()
 		gfx.NormalSRV.Get(),
 		gfx.DiffuseSRV.Get(),
 		gfx.SpecularSRV.Get(),
-		gfx.positionSRV.Get()
+		gfx.positionSRV.Get(),
+		gfx.IrradianceMapSRV.Get(),
+		gfx.HDRIFramebufferSRV.Get()
 	};
 
 	gfx.GetDeviceContext()->PSSetShaderResources(0, shaderresources.size(), shaderresources.data());
@@ -411,6 +426,8 @@ void Application::BindLightingPass()
 
 	gfx.SetPSConstantBuffers(0,1, m_lightparams.GetAddressOf()); 
 	CameraInfoConstantBuffer.data.CameraPosition = PlayerCamera.GetPositionFloat3();
+	CameraInfoConstantBuffer.data.InvProj = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetProjectionMatrix()));
+	CameraInfoConstantBuffer.data.InvView = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetViewMatrix()));
 	CameraInfoConstantBuffer.ApplyChanges();
 	gfx.SetPSConstantBuffers(1,1, CameraInfoConstantBuffer.GetAddressOf());
 	gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
@@ -464,12 +481,22 @@ void Application::BindLightingPass()
 	}*/
 void Application::DrawHDRI()
 {
-	HDRIViewProj.data.Projection = camera.GetProjectionMatrix();
-	HDRIViewProj.data.View = camera.GetViewMatrix();
-	HDRIViewProj.ApplyChanges();
+	D3D11_VIEWPORT hdviewport = {};
+	hdviewport.TopLeftX = 0;
+	hdviewport.TopLeftY = 0;
+	hdviewport.Width = 512;
+	hdviewport.Height = 512;
+	hdviewport.MinDepth = 0.0f;
+	hdviewport.MaxDepth = 1.0f;
+
 	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	gfx.ClearView(bgcolor);
+	gfx.ClearDepthStencil(gfx.depthStencilView.Get());
 	gfx.deviceContext->PSSetSamplers(0,1,gfx.HDRIsamplerState.GetAddressOf());
+
 	gfx.SetInputLayout(this->m_EquiToHDRI_VS.GetInputLayout());
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
 	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.HDRIdepthStencilStateDisabled.Get(), 0);
 	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	gfx.GetDeviceContext()->VSSetShader(m_EquiToHDRI_VS.GetShader(), NULL, 0);
@@ -478,25 +505,168 @@ void Application::DrawHDRI()
 	gfx.GetDeviceContext()->PSSetShaderResources(0, 1, gfx.HDRISRV.GetAddressOf());
 
 	gfx.SetVSConstantBuffers(0,1, HDRIViewProj.GetAddressOf());
+	XMMATRIX views[6] = {
+	 XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // +X
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // -X
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0)), // +Y
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0)), // -Y
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0)),  // +Z
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 1, 0, 0)), // -Z
+	};
+
+	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 10.0f);
+
+	for (int i = 0; i < 6; i++)
+	{
+		gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.HDRIFramebufferRTV[i].GetAddressOf(), nullptr);
+		gfx.GetDeviceContext()->ClearRenderTargetView(gfx.HDRIFramebufferRTV[i].Get(), bgcolor);
+		gfx.GetDeviceContext()->RSSetViewports(1, &hdviewport);
+
+		// Set camera matrices (your constant buffer)
+		HDRIViewProj.data.View = XMMatrixTranspose(views[i]);
+		HDRIViewProj.data.Projection = XMMatrixTranspose(proj);
+		HDRIViewProj.ApplyChanges();
+	
+		gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
+		gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+	
+	}
+
+	ID3D11RenderTargetView* nullRTVs[1] = { nullptr};
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, nullRTVs, nullptr);
+	ID3D11SamplerState* nullSampler[1] = { nullptr };
+	gfx.GetDeviceContext()->PSSetSamplers(0, 1, nullSampler);
+	ID3D11Buffer* nullBuffer = nullptr;
+	gfx.SetVSConstantBuffers(0, 1, &nullBuffer);
+
+}
+
+void Application::IrradianceConvolution()
+{
+
+	D3D11_VIEWPORT irrviewport = {};
+	irrviewport.TopLeftX = 0;
+	irrviewport.TopLeftY = 0;
+	irrviewport.Width = 32;
+	irrviewport.Height = 32;
+	irrviewport.MinDepth = 0.0f;
+	irrviewport.MaxDepth = 1.0f;
+
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	gfx.ClearView(bgcolor);
+	gfx.ClearDepthStencil(gfx.depthStencilView.Get());
+	gfx.deviceContext->PSSetSamplers(0, 1, gfx.HDRIsamplerState.GetAddressOf());
+
+	gfx.SetInputLayout(this->m_EquiToHDRI_VS.GetInputLayout());
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.ClearDepthStencil(gfx.irradiancedepthStencilView.Get());
+	
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.HDRIdepthStencilStateDisabled.Get(), 0);
+	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gfx.GetDeviceContext()->VSSetShader(m_EquiToHDRI_VS.GetShader(), NULL, 0);
+	gfx.GetDeviceContext()->PSSetShader(m_IrradianceConvolution_PS.GetShader(), NULL, 0);
+
+	gfx.GetDeviceContext()->PSSetShaderResources(0, 1, gfx.HDRIFramebufferSRV.GetAddressOf());
+
+	gfx.SetVSConstantBuffers(0, 1, HDRIViewProj.GetAddressOf());
+	XMMATRIX views[6] = {
+	 XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // +X
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // -X
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0)), // +Y
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0)), // -Y
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0)),  // +Z
+	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 1, 0, 0)), // -Z
+	};
+
+	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 10.0f);
+
+	for (int i = 0; i < 6; i++)
+	{
+		gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.irradianceRTVs[i].GetAddressOf(), gfx.irradiancedepthStencilView.Get());
+		gfx.GetDeviceContext()->ClearRenderTargetView(gfx.irradianceRTVs[i].Get(), bgcolor);
+		gfx.GetDeviceContext()->RSSetViewports(1, &irrviewport);
+
+		// Set camera matrices (your constant buffer)
+		HDRIViewProj.data.View = XMMatrixTranspose(views[i]);
+		HDRIViewProj.data.Projection = XMMatrixTranspose(proj);
+		HDRIViewProj.ApplyChanges();
+
+		gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
+		gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+
+	}
+
+	ID3D11RenderTargetView* nullRTVs[1] = { nullptr };
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, nullRTVs, nullptr);
+	ID3D11SamplerState* nullSampler[1] = { nullptr };
+	gfx.GetDeviceContext()->PSSetSamplers(0, 1, nullSampler);
+	ID3D11Buffer* nullBuffer = nullptr;
+	gfx.SetVSConstantBuffers(0, 1, &nullBuffer);
+}
+void Application::Prefiltering()
+{
+
+}
+void Application::BackgroundCubeMap()
+{
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(),nullptr);
+	gfx.GetDeviceContext()->ClearRenderTargetView(gfx.renderTargetView.Get(), bgcolor);
+	gfx.ClearDepthStencil(gfx.depthStencilView.Get());
+
+	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilSkyboxState.Get(), 0);
+	gfx.GetDeviceContext()->PSSetSamplers(0, 1, gfx.HDRIsamplerState.GetAddressOf());
+
+	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gfx.GetDeviceContext()->VSSetShader(m_BackgroundCubemap_VS.GetShader(), NULL, 0);
+	gfx.GetDeviceContext()->PSSetShader(m_BackgroundCubemap_PS.GetShader(), NULL, 0);
 
 
+
+	gfx.GetDeviceContext()->PSSetShaderResources(0, 1, gfx.HDRIFramebufferSRV.GetAddressOf());
+	
+	gfx.SetVSConstantBuffers(0,1,HDRIViewProj.GetAddressOf());
+
+	HDRIViewProj.data.Projection = camera.GetProjectionMatrix();
+	XMMATRIX view = camera.GetViewMatrix();
+	view.r[3] = XMVectorSet(0, 0, 0, 1); // zero translation
+	HDRIViewProj.data.View = XMMatrixTranspose(view);
+	HDRIViewProj.ApplyChanges();
+
+
+	gfx.SetInputLayout(this->m_BackgroundCubemap_VS.GetInputLayout());
 
 	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
 	gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
-
-
 }
+
 void Application::RenderFrame()
 {
 
-	
+	if (RenderIrradianceandHDRI)
+	{
+		DrawHDRI();
+		IrradianceConvolution();
+		RenderIrradianceandHDRI = false;
+
+	}
 	
 	//Square
+	
 	BindGBufferPass();
+	BackgroundCubeMap();
 	BindLightingPass();
-	DrawHDRI();
 	//ForwardRender();
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();

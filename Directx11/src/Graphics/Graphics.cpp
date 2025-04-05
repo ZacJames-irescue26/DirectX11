@@ -12,6 +12,15 @@ namespace Engine
 Microsoft::WRL::ComPtr<ID3D11Device> Graphics::device = nullptr;
 
 
+Graphics::~Graphics()
+{
+	/*for (int i = 0; i < 6; i++)
+	{
+		delete HDRIFramebufferRTV[i];
+	}
+	delete[] HDRIFramebufferRTV;*/
+}
+
 bool Graphics::Initialize(HWND hwnd, int width, int height)
 {
 	
@@ -52,57 +61,13 @@ void Graphics::Present()
 
 void Graphics::RenderFrame()
 {
-	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	//this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), bgcolor);
-	//this->deviceContext->ClearDepthStencilView(this->depthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	//this->deviceContext->IASetInputLayout(this->m_vertexShader.GetInputLayout());
-	//this->deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//this->deviceContext->RSSetState(this->rasterizerstate.Get());
-	//this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
-	//this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
-	//this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
-	//this->deviceContext->VSSetShader(m_vertexShader.GetShader(), NULL, 0);
-	//this->deviceContext->PSSetShader(m_pixelShader.GetShader(), NULL, 0);
-	//
-	//this->deviceContext->PSSetConstantBuffers(0, 1, lightConstantBuffer.GetAddressOf());
-	//
-	//this->lightConstantBuffer.data.dynamicLightColor = light.lightColor;
-	//this->lightConstantBuffer.data.dynamicLightStrength = light.lightStrength;
-	//this->lightConstantBuffer.data.dynamicLightPosition = light.GetPositionFloat3();
-	//this->lightConstantBuffer.ApplyChanges();
-	//
-	//RVec3 pos = physicsController.GetPosition(gameObject.GetID());
-	//gameObject.SetPosition(pos.GetX(), pos.GetY(), pos.GetZ());
-	//{
-	//	this->gameObject.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
-	//	floor.Draw(camera.GetViewMatrix() * camera.GetProjectionMatrix());
-	//}
-
-	//Square
-
-	// Start the Dear ImGui frame
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	//Create ImGui Test Window
-	ImGui::Begin("Light Controls");
-	ImGui::DragFloat3("Ambient Light Color", &this->lightConstantBuffer.data.ambientLightColor.x, 0.01f, 0.0f, 1.0f);
-	ImGui::DragFloat("Ambient Light Strength", &this->lightConstantBuffer.data.ambientLightStrength, 0.01f, 0.0f, 1.0f);
-	//static float Scale[3] = {1.0,1.0,1.0};
-	//ImGui::DragFloat3("Scale",&Scale[0], 0.01, 0.0f, 10.0f);
-	//floor.SetScale(XMFLOAT3(Scale[0], Scale[1], Scale[2]));
-	this->lightConstantBuffer.ApplyChanges();
-	ImGui::End();
-	//Assemble Together Draw Data
-	ImGui::Render();
-	//Render Draw Data
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	this->swapchain->Present(0, NULL);
 }
 
 bool Graphics::InitializeDirectX(HWND hwnd)
 {
+	camera.SetPosition(0.0f, 0.0f, -2.0f);
+	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 10000.0f);
 	std::vector<AdapterData> adapters = AdapterReader::GetAdapters();
 
 	if (adapters.size() < 1)
@@ -271,13 +236,7 @@ bool Graphics::InitializeShaders()
 bool Graphics::InitializeScene()
 {
 
-	
-
-	camera.SetPosition(0.0f, 0.0f, -2.0f);
-	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
-	//physicsController.Optimize();
-	//
-
+	//GBuffer--------------------------------------------------------------
 	// Common settings for G-buffer textures
 	D3D11_TEXTURE2D_DESC textureDesc = {};
 	textureDesc.Width = windowWidth;
@@ -352,17 +311,150 @@ bool Graphics::InitializeScene()
 	depthStencilDesc.StencilEnable = FALSE; // Optional — disables stencil too
 
 	 HRESULT hr = device->CreateDepthStencilState(&depthStencilDesc, &depthStencilStateDisabled);
+	//HDRI-----------------------------------------
+	// D3D11_SAMPLER_DESC samplerDesc = {};
+	// samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	// samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;  
+	// samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;  
+	// samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;  
+	// samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	// samplerDesc.MinLOD = 0;
+	// samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	//hr = device->CreateSamplerState(&samplerDesc, &HDRIsamplerState);
+	
 	
 	D3D11_DEPTH_STENCIL_DESC HDRIdepthStencilDesc = {};
 	HDRIdepthStencilDesc.DepthEnable = TRUE;
 	HDRIdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 	HDRIdepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	
+	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
+	
+	D3D11_TEXTURE2D_DESC texDesc = {};
+	texDesc.Width = 512; // e.g., 512
+	texDesc.Height = 512;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 6; // 6 faces
+	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
+	texDesc.SampleDesc.Count = 1;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	texDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+
+	
+	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
+
+	for (int i = 0; i < 6; ++i)
+	{
+		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+		rtvDesc.Format = texDesc.Format;
+		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+		rtvDesc.Texture2DArray.MipSlice = 0;
+		rtvDesc.Texture2DArray.FirstArraySlice = i;
+		rtvDesc.Texture2DArray.ArraySize = 1;
+
+		device->CreateRenderTargetView(HDRIFramebufferTexture.Get(), &rtvDesc, &HDRIFramebufferRTV[i]);
+	}
+	D3D11_SHADER_RESOURCE_VIEW_DESC HDRIsrvDesc = {};
+	HDRIsrvDesc.Format = texDesc.Format;
+	HDRIsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+	HDRIsrvDesc.TextureCube.MipLevels = 1;
+	HDRIsrvDesc.TextureCube.MostDetailedMip = 0;
+
+	hr = device->CreateShaderResourceView(HDRIFramebufferTexture.Get(), &HDRIsrvDesc, HDRIFramebufferSRV.GetAddressOf());
+	
+	D3D11_TEXTURE2D_DESC irradiancetexDesc = {};
+	irradiancetexDesc.Width = 32; 
+	irradiancetexDesc.Height = 32;
+	irradiancetexDesc.MipLevels = 1;
+	irradiancetexDesc.ArraySize = 6; // 6 faces
+	irradiancetexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
+	irradiancetexDesc.SampleDesc.Count = 1;
+	irradiancetexDesc.Usage = D3D11_USAGE_DEFAULT;
+	irradiancetexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	irradiancetexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+	
+	hr = device->CreateTexture2D(&irradiancetexDesc, nullptr, IrradiancemapTexture.GetAddressOf());
+	
+	D3D11_SHADER_RESOURCE_VIEW_DESC irradiancesrvDesc = {};
+	irradiancesrvDesc.Format = texDesc.Format;
+	irradiancesrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+	irradiancesrvDesc.TextureCube.MipLevels = 1;
+	irradiancesrvDesc.TextureCube.MostDetailedMip = 0;
+
+	hr = device->CreateShaderResourceView(IrradiancemapTexture.Get(), &irradiancesrvDesc, IrradianceMapSRV.GetAddressOf());
+	
+	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+	rtvDesc.Format = texDesc.Format;
+	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+	rtvDesc.Texture2DArray.MipSlice = 0;
+	rtvDesc.Texture2DArray.ArraySize = 1;
+
+	for (UINT i = 0; i < 6; ++i)
+	{
+		rtvDesc.Texture2DArray.FirstArraySlice = i;
+		hr = device->CreateRenderTargetView(IrradiancemapTexture.Get(), &rtvDesc, irradianceRTVs[i].GetAddressOf());
+		if (FAILED(hr)) {
+			// handle error
+		}
+	}
+
+	
+
+	D3D11_TEXTURE2D_DESC irradiancedepthDesc = {};
+	irradiancedepthDesc.Width = 32;
+	irradiancedepthDesc.Height = 32;
+	irradiancedepthDesc.MipLevels = 1;
+	irradiancedepthDesc.ArraySize = 1;
+	irradiancedepthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	irradiancedepthDesc.SampleDesc.Count = 1;
+	irradiancedepthDesc.Usage = D3D11_USAGE_DEFAULT;
+	irradiancedepthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	hr = device->CreateTexture2D(&irradiancedepthDesc, nullptr, irradiancedepthStencilBuffer.GetAddressOf());
+	hr = device->CreateDepthStencilView(irradiancedepthStencilBuffer.Get(), nullptr, irradiancedepthStencilView.GetAddressOf());
+	
+	D3D11_DEPTH_STENCIL_DESC IrradiancedepthStencilDesc = {};
+	IrradiancedepthStencilDesc.DepthEnable = TRUE;
+	IrradiancedepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	IrradiancedepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
 
 
 	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
+
+	D3D11_DEPTH_STENCIL_DESC skyboxdepthStencilDesc = {};
+	skyboxdepthStencilDesc.DepthEnable = TRUE;
+	skyboxdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // 
+	skyboxdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	device->CreateDepthStencilState(&skyboxdepthStencilDesc, &depthStencilSkyboxState);
 	
 	
-	
+	D3D11_TEXTURE2D_DESC texDesc = {};
+	texDesc.Width = 512; // e.g., 512
+	texDesc.Height = 512;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 6; // 6 faces
+	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
+	texDesc.SampleDesc.Count = 1;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	texDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+
+
+	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
+
+	for (int i = 0; i < 6; ++i)
+	{
+		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+		rtvDesc.Format = texDesc.Format;
+		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+		rtvDesc.Texture2DArray.MipSlice = 0;
+		rtvDesc.Texture2DArray.FirstArraySlice = i;
+		rtvDesc.Texture2DArray.ArraySize = 1;
+
+		device->CreateRenderTargetView(HDRIFramebufferTexture.Get(), &rtvDesc, &HDRIFramebufferRTV[i]);
+	}
 	
 	assert(SUCCEEDED(hr));
 	return true;

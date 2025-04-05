@@ -26,6 +26,8 @@ struct CB_FS_LightPos
 };
 struct CameraInfo
 {
+	XMMATRIX InvProj;
+	XMMATRIX InvView;
 	XMFLOAT3 CameraPosition;
 	float padding=0.0;
 };

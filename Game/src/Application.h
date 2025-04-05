@@ -13,6 +13,9 @@ public:
 	void BindGBufferPass();
 	void BindLightingPass();
 	void DrawHDRI();
+	void IrradianceConvolution();
+	void Prefiltering();
+	void BackgroundCubeMap();
 	void RenderFrame();
 	void ForwardRender();
 	void OnUserInput();
@@ -71,7 +74,13 @@ private:
 	// HDRI
 	VertexShader m_EquiToHDRI_VS;
 	PixelShader m_EquiToHdri_PS;
+	PixelShader m_IrradianceConvolution_PS;
 	VertexBuffer<CubeWPos> m_HdriVertex;
 	IndexBuffer m_HdriIndex;
+	bool RenderIrradianceandHDRI = true;
+
+	//backGround cubemap
+	VertexShader m_BackgroundCubemap_VS;
+	PixelShader m_BackgroundCubemap_PS;
 
 };

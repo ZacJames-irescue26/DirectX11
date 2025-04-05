@@ -146,6 +146,16 @@
     <ClCompile Include="src\Gamepch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\BackgroundCubemap_p.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\BackgroundCubemap_v.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
     <FxCompile Include="Shader\DefferedPixel_p.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.0</ShaderModel>
@@ -157,12 +167,14 @@
       <EntryPointName>main</EntryPointName>
     </FxCompile>
     <FxCompile Include="Shader\EquiToHdri_p.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
     </FxCompile>
     <FxCompile Include="Shader\EquiToHdri_v.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
     </FxCompile>
     <FxCompile Include="Shader\GBufferPixel_p.hlsl">
       <ShaderType>Pixel</ShaderType>
@@ -171,6 +183,11 @@
     </FxCompile>
     <FxCompile Include="Shader\GBufferVert_v.hlsl">
       <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\IrradianceConvolution_p.hlsl">
+      <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.0</ShaderModel>
       <EntryPointName>main</EntryPointName>
     </FxCompile>

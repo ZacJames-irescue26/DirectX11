@@ -14,6 +14,8 @@ class Graphics
 {
 
 public:
+
+	~Graphics();
 	bool Initialize(HWND hwnd, int width, int height);
 	void PhysicsUpdate();
 	void Present();
@@ -94,10 +96,24 @@ public:
 	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> SpecularRTV;
 	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> SpecularSRV;
 
+	//HDRI
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilStateDisabled;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> HDRIdepthStencilStateDisabled;
 	Microsoft::WRL::ComPtr < ID3D11Texture2D> HDRITexture;
 	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> HDRISRV;
 
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> HDRIFramebufferTexture;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> HDRIFramebufferRTV[6];
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> HDRIFramebufferSRV;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> IrradiancemapTexture;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> IrradianceMapSRV;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> irradianceRTVs[6];
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> irradiancedepthStencilBuffer;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> irradiancedepthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> IrradiancedepthStencilStateDisabled;
+
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilSkyboxState;
 };
 }

@@ -96,7 +96,9 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& tran
 		if (mesh->mTextureCoords[0])
 		{
 			vertex.texCoord.x = mesh->mTextureCoords[0][i].x;
-			vertex.texCoord.y = 1.0f - mesh->mTextureCoords[0][i].y;
+			//vertex.texCoord.y = 1.0f - mesh->mTextureCoords[0][i].y;
+			vertex.texCoord.y = mesh->mTextureCoords[0][i].y;
+
 		}
 		else
 			vertex.texCoord = {0.0,0.0};

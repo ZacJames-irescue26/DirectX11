@@ -2,8 +2,12 @@
 Texture2D NormalTexture: register( t0);  
 Texture2D DiffuseAlbedoTexture: register( t1);  
 Texture2D SpecularAlbedoTexture: register( t2);  
-Texture2D PositionTexture: register( t3);  
+Texture2D PositionTexture: register( t3); 
+TextureCube irradianceMap : register(t4);
+TextureCube SkyBoxMap : register(t5);
+
 SamplerState objSamplerState : SAMPLER : register(s0);
+SamplerState irradianceSamplerstate : SAMPLER : register(s1);
 #define PI 3.141595
 // Constants  
 cbuffer LightParams : register(b0)
@@ -16,6 +20,8 @@ cbuffer LightParams : register(b0)
 
 cbuffer CameraParams : register(b1) 
 {  
+    float4x4 InvProj;
+    float4x4 InvView;
     float3 CameraPos; 
     float padding2;
 };  
@@ -75,9 +81,9 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
     return ggx1 * ggx2;
 }
 // ----------------------------------------------------------------------------
-float3 fresnelSchlick(float cosTheta, float3 F0)
+float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
 {
-    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+    return F0 + (max(float3(1.0 - roughness, 1.0 - roughness, 1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 // Lighting pixel shader 
 
@@ -88,13 +94,34 @@ struct FSInput
 	float2 OutTexCoord : TEXCOORD;
 
 };
- 
+float3 ReconstructViewDir(float2 UV)
+{
+    float2 ndc = UV * 2.0f - 1.0f; // from [0,1] to [-1,1]
+    // Reconstruct clip space position
+    float4 clipPos = float4(ndc.x, -ndc.y, 1.0f, 1.0f); // Z = 1 for far plane
+
+// Reconstruct view space position
+    float4 viewDir4 = mul(clipPos, InvProj);
+    float3 viewDir = normalize(viewDir4.xyz / viewDir4.w);
+    float4 worldDir4 = mul(float4(viewDir, 0.0f), InvView);
+    float3 worldDir = normalize(worldDir4.xyz);
+    return worldDir;
+}
+
 float4 main( FSInput screenPos): SV_Target0  
 {  
     float3 N, P, albedo, spec;
     float roughness, metalness;
 
     GetGBufferAttributes(screenPos.OutTexCoord, N, P, albedo, spec, metalness);
+    
+    if (length(P.xyz) == 0.0f)
+    {
+    // No geometry, output skybox sample
+        return SkyBoxMap.Sample(
+        irradianceSamplerstate, ReconstructViewDir(screenPos.OutTexCoord));
+    }
+    
     roughness = spec.g;
     metalness = 0.0f;
     float3 V = normalize(CameraPos - P);
@@ -116,10 +143,10 @@ float4 main( FSInput screenPos): SV_Target0
 		// Cook-Torrance BRDF
         float NDF = DistributionGGX(N, H, roughness);
         float G = GeometrySmith(N, V, L, roughness);
-        float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+        float3 F = fresnelSchlickRoughness(max(dot(H, V), 0.0), F0, roughness);
 
         float3 numerator = NDF * G * F;
-        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+        float denominator = mul(mul(4, max(dot(N, V), 0.0)), max(dot(N, L), 0.0)) + 0.0001; // + 0.0001 to prevent divide by zero
         float3 specular = numerator / denominator;
 
 		// kS is equal to Fresnel
@@ -142,13 +169,19 @@ float4 main( FSInput screenPos): SV_Target0
 
 	// ambient lighting (note that the next IBL tutorial will replace 
 	// this ambient lighting with environment lighting).
-    float3 ambient = 0.3 * albedo;
+    // ambient lighting (we now use IBL as the ambient term)
+    float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
+    float3 kD = 1.0 - kS;
+    kD *= 1.0 - metalness;
+    float3 irradiance = irradianceMap.Sample(irradianceSamplerstate, N).rgb;
+    float3 diffuse = irradiance * albedo;
+    float3 ambient = (kD * diffuse) /* * ao*/;
     float3 color = Lo+ambient;
 
 	// HDR tonemapping
-    //color = color / (color + float3(1.0, 1.0, 1.0));
+    color = color / (color + float3(1.0, 1.0, 1.0));
 	// gamma correct
-    //color = pow(color, float3((1.0 / 2.2), (1.0 / 2.2), (1.0 / 2.2)));
+    color = pow(color, float3((1.0 / 2.2), (1.0 / 2.2), (1.0 / 2.2)));
 
     return float4(color, 1.0);
 }
