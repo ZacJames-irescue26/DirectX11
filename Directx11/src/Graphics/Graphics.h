@@ -77,6 +77,7 @@ private:
 public:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> HDRIsamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> PrefilteredsamplerState;
 	//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 
 
@@ -115,5 +116,14 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> IrradiancedepthStencilStateDisabled;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilSkyboxState;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> PrefilteringTexture;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> PrefilteringSRV;
+	std::vector<std::vector<Microsoft::WRL::ComPtr<ID3D11RenderTargetView>>> PrefilteringRTVs;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> BRDFTexture;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> BRDFSRV;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> BRDFRTVs;
+	
 };
 }

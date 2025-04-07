@@ -7,6 +7,12 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BRDF_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BRDF_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BackgroundCubemap_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -38,6 +44,9 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelShader_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\Prefiltering_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexPBR_v.cso</FullPath>

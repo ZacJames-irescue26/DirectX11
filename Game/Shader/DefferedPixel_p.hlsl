@@ -5,6 +5,8 @@ Texture2D SpecularAlbedoTexture: register( t2);
 Texture2D PositionTexture: register( t3); 
 TextureCube irradianceMap : register(t4);
 TextureCube SkyBoxMap : register(t5);
+TextureCube prefilterMap : register(t6);
+Texture2D brdfLUT : register(t7);
 
 SamplerState objSamplerState : SAMPLER : register(s0);
 SamplerState irradianceSamplerstate : SAMPLER : register(s1);
@@ -81,6 +83,11 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
     return ggx1 * ggx2;
 }
 // ----------------------------------------------------------------------------
+float3 fresnelSchlick(float cosTheta, float3 F0)
+{
+    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+// ----------------------------------------------------------------------------
 float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
 {
     return F0 + (max(float3(1.0 - roughness, 1.0 - roughness, 1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
@@ -125,6 +132,7 @@ float4 main( FSInput screenPos): SV_Target0
     roughness = spec.g;
     metalness = 0.0f;
     float3 V = normalize(CameraPos - P);
+    float3 R = reflect(-V, N);
    	// calculate reflectance at normal incidence; if dia-electric (like plastic) use F0 
 	// of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)    
     float3 F0 = float3(0.04, 0.04, 0.04);
@@ -143,7 +151,7 @@ float4 main( FSInput screenPos): SV_Target0
 		// Cook-Torrance BRDF
         float NDF = DistributionGGX(N, H, roughness);
         float G = GeometrySmith(N, V, L, roughness);
-        float3 F = fresnelSchlickRoughness(max(dot(H, V), 0.0), F0, roughness);
+        float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
         float3 numerator = NDF * G * F;
         float denominator = mul(mul(4, max(dot(N, V), 0.0)), max(dot(N, L), 0.0)) + 0.0001; // + 0.0001 to prevent divide by zero
@@ -166,7 +174,7 @@ float4 main( FSInput screenPos): SV_Target0
 		// add to outgoing radiance Lo
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
     }
-
+    float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
 	// ambient lighting (note that the next IBL tutorial will replace 
 	// this ambient lighting with environment lighting).
     // ambient lighting (we now use IBL as the ambient term)
@@ -175,9 +183,16 @@ float4 main( FSInput screenPos): SV_Target0
     kD *= 1.0 - metalness;
     float3 irradiance = irradianceMap.Sample(irradianceSamplerstate, N).rgb;
     float3 diffuse = irradiance * albedo;
-    float3 ambient = (kD * diffuse) /* * ao*/;
-    float3 color = Lo+ambient;
 
+        // sample both the pre-filter map and the BRDF lut and combine them together as per the Split-Sum approximation to get the IBL specular part.
+    const float MAX_REFLECTION_LOD = 4.0;
+    float3 prefilteredColor = prefilterMap.SampleLevel(irradianceSamplerstate, R, roughness * MAX_REFLECTION_LOD).rgb;
+
+
+    float2 brdf = brdfLUT.Sample(objSamplerState, float2(max(dot(N, V), 0.0), roughness)).rg;
+    float3 specular = prefilteredColor * (F * brdf.x + brdf.y);
+    float3 ambient = (kD * diffuse + specular) /* * ao*/;
+    float3 color = Lo+ambient;
 	// HDR tonemapping
     color = color / (color + float3(1.0, 1.0, 1.0));
 	// gamma correct

@@ -26,6 +26,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\BRDF_p.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BRDF_v.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
     <FxCompile Include="Shader\BackgroundCubemap_p.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -57,6 +63,9 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\PixelShader_p.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Prefiltering_p.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\VertexPBR_v.hlsl">

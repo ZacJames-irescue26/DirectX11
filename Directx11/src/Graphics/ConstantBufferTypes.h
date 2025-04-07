@@ -40,5 +40,10 @@ struct DirectionalLightParams
 	float padding1 = 0.0;
 };
 
+struct PrefilteringParams
+{
+	float roughness;
+	DirectX::XMFLOAT3 padding;
+};
 
 }

@@ -223,7 +223,18 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 		std::cout << "Failed to make hdri sampler" << std::endl;
 	}
 
+	D3D11_SAMPLER_DESC presamplerDesc = {};
+	presamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;         // Smooth trilinear filtering
+	presamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;           // Clamp to edge to avoid seams
+	presamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	presamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	presamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	presamplerDesc.MinLOD = 0;
+	presamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	presamplerDesc.MipLODBias = 0.0f;
+	presamplerDesc.MaxAnisotropy = 1;
 
+	hr = device->CreateSamplerState(&presamplerDesc, &PrefilteredsamplerState);
 
 	return true;
 }
@@ -334,13 +345,13 @@ bool Graphics::InitializeScene()
 	D3D11_TEXTURE2D_DESC texDesc = {};
 	texDesc.Width = 512; // e.g., 512
 	texDesc.Height = 512;
-	texDesc.MipLevels = 1;
+	texDesc.MipLevels = 0; // 0 = generate full mip chain
 	texDesc.ArraySize = 6; // 6 faces
 	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
 	texDesc.SampleDesc.Count = 1;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	texDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+	texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
+	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET; //
 
 	
 	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
@@ -350,7 +361,8 @@ bool Graphics::InitializeScene()
 		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 		rtvDesc.Format = texDesc.Format;
 		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-		rtvDesc.Texture2DArray.MipSlice = 0;
+		srvDesc.TextureCube.MipLevels = -1;
+		srvDesc.TextureCube.MostDetailedMip = 0;
 		rtvDesc.Texture2DArray.FirstArraySlice = i;
 		rtvDesc.Texture2DArray.ArraySize = 1;
 
@@ -359,7 +371,7 @@ bool Graphics::InitializeScene()
 	D3D11_SHADER_RESOURCE_VIEW_DESC HDRIsrvDesc = {};
 	HDRIsrvDesc.Format = texDesc.Format;
 	HDRIsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	HDRIsrvDesc.TextureCube.MipLevels = 1;
+	HDRIsrvDesc.TextureCube.MipLevels = -1;
 	HDRIsrvDesc.TextureCube.MostDetailedMip = 0;
 
 	hr = device->CreateShaderResourceView(HDRIFramebufferTexture.Get(), &HDRIsrvDesc, HDRIFramebufferSRV.GetAddressOf());
@@ -430,32 +442,75 @@ bool Graphics::InitializeScene()
 	device->CreateDepthStencilState(&skyboxdepthStencilDesc, &depthStencilSkyboxState);
 	
 	
-	D3D11_TEXTURE2D_DESC texDesc = {};
-	texDesc.Width = 512; // e.g., 512
-	texDesc.Height = 512;
-	texDesc.MipLevels = 1;
-	texDesc.ArraySize = 6; // 6 faces
-	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
-	texDesc.SampleDesc.Count = 1;
-	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	texDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+	const UINT baseSize = 128;
+	const UINT mipLevels = static_cast<UINT>(std::floor(std::log2(baseSize))) + 1;
 
+	D3D11_TEXTURE2D_DESC pretexDesc = {};
+	pretexDesc.Width = baseSize;
+	pretexDesc.Height = baseSize;
+	pretexDesc.MipLevels = mipLevels;
+	pretexDesc.ArraySize = 6; // Cube has 6 faces
+	pretexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+	pretexDesc.SampleDesc.Count = 1;
+	pretexDesc.Usage = D3D11_USAGE_DEFAULT;
+	pretexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	pretexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
 
-	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
+	device->CreateTexture2D(&texDesc, nullptr, &PrefilteringTexture);
 
-	for (int i = 0; i < 6; ++i)
+	hr = device->CreateTexture2D(&pretexDesc, nullptr, PrefilteringTexture.GetAddressOf());
+	PrefilteringRTVs.resize(mipLevels);
+	for (int i = 0 ; i < PrefilteringRTVs.size(); i++)
 	{
-		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-		rtvDesc.Format = texDesc.Format;
-		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-		rtvDesc.Texture2DArray.MipSlice = 0;
-		rtvDesc.Texture2DArray.FirstArraySlice = i;
-		rtvDesc.Texture2DArray.ArraySize = 1;
-
-		device->CreateRenderTargetView(HDRIFramebufferTexture.Get(), &rtvDesc, &HDRIFramebufferRTV[i]);
+		PrefilteringRTVs[i].resize(6);
 	}
-	
+
+	for (UINT mip = 0; mip < mipLevels; ++mip)
+	{
+		for (UINT face = 0; face < 6; ++face)
+		{
+			D3D11_RENDER_TARGET_VIEW_DESC prertvDesc = {};
+			prertvDesc.Format = pretexDesc.Format;
+			prertvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
+			prertvDesc.Texture2DArray.MipSlice = mip;
+			prertvDesc.Texture2DArray.FirstArraySlice = face;
+			prertvDesc.Texture2DArray.ArraySize = 1;
+
+			if (FAILED(device->CreateRenderTargetView(PrefilteringTexture.Get(), &prertvDesc, PrefilteringRTVs[mip][face].GetAddressOf())))
+			{
+				assert(false);
+			}
+		}
+	}
+	D3D11_SHADER_RESOURCE_VIEW_DESC presrvDesc = {};
+	presrvDesc.Format = pretexDesc.Format;
+	presrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+	presrvDesc.TextureCube.MipLevels = mipLevels;
+	presrvDesc.TextureCube.MostDetailedMip = 0;
+
+	device->CreateShaderResourceView(PrefilteringTexture.Get(), &presrvDesc, &PrefilteringSRV);
+
+	D3D11_TEXTURE2D_DESC BRDFDesc = {};
+	BRDFDesc.Width = 512; 
+	BRDFDesc.Height = 512;
+	BRDFDesc.MipLevels = 1;
+	BRDFDesc.ArraySize = 1; 
+	BRDFDesc.Format = DXGI_FORMAT_R16G16_FLOAT;
+	BRDFDesc.SampleDesc.Count = 1;
+	BRDFDesc.Usage = D3D11_USAGE_DEFAULT;
+	BRDFDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+
+	hr = device->CreateTexture2D(&BRDFDesc, nullptr, BRDFTexture.GetAddressOf());
+
+		D3D11_RENDER_TARGET_VIEW_DESC BRDFrtvDesc = {};
+		BRDFrtvDesc.Format = BRDFDesc.Format;
+		BRDFrtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		BRDFrtvDesc.Texture2DArray.MipSlice = 0;
+		BRDFrtvDesc.Texture2DArray.ArraySize = 1;
+
+	hr = device->CreateRenderTargetView(BRDFTexture.Get(), &BRDFrtvDesc, &BRDFRTVs);
+
 	assert(SUCCEEDED(hr));
 	return true;
 

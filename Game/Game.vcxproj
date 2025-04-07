@@ -146,6 +146,16 @@
     <ClCompile Include="src\Gamepch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\BRDF_p.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\BRDF_v.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
     <FxCompile Include="Shader\BackgroundCubemap_p.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.0</ShaderModel>
@@ -197,6 +207,11 @@
       <EntryPointName>main</EntryPointName>
     </FxCompile>
     <FxCompile Include="Shader\PixelShader_p.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\Prefiltering_p.hlsl">
       <ShaderType>Pixel</ShaderType>
       <ShaderModel>5.0</ShaderModel>
       <EntryPointName>main</EntryPointName>

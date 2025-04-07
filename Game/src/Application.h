@@ -15,6 +15,7 @@ public:
 	void DrawHDRI();
 	void IrradianceConvolution();
 	void Prefiltering();
+	void BRDF();
 	void BackgroundCubeMap();
 	void RenderFrame();
 	void ForwardRender();
@@ -43,6 +44,7 @@ private:
 	ConstantBuffer<CB_VS_vertexShader> floorConstantBuffer;
 	ConstantBuffer<CameraInfo> CameraInfoConstantBuffer;
 	ConstantBuffer<CB_VS_ViewProj> HDRIViewProj;
+	ConstantBuffer<PrefilteringParams>m_PrefilteringParams;
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
@@ -82,5 +84,11 @@ private:
 	//backGround cubemap
 	VertexShader m_BackgroundCubemap_VS;
 	PixelShader m_BackgroundCubemap_PS;
+
+	//prefiltering
+	PixelShader m_Prefiltering_PS;
+	//BRDF
+	VertexShader m_BRDF_VS;
+	PixelShader m_BRDF_PS;
 
 };

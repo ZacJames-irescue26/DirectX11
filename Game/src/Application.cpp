@@ -31,7 +31,10 @@ void Application::OnCreate()
 
 	hr = m_lightparams.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
+	
+	hr = m_PrefilteringParams.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	
 	this->lightConstantBuffer.data.ambientLightColor = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
 
@@ -290,6 +293,18 @@ void Application::InitializeShaders()
 	{
 		return;
 	}
+	if (!m_Prefiltering_PS.Initialize(gfx.device, L"CompiledShaders/Prefiltering_p.cso"))
+	{
+		return;
+	}
+	if (!m_BRDF_VS.Initialize(gfx.device, L"CompiledShaders/BRDF_v.cso", FullScreenRectlayout, ARRAYSIZE(FullScreenRectlayout)))
+	{
+		return;
+	}	
+	if (!m_BRDF_PS.Initialize(gfx.device, L"CompiledShaders/BRDF_p.cso"))
+	{
+		return;
+	}
 }
 void Application::OnUpdate()
 {
@@ -418,7 +433,9 @@ void Application::BindLightingPass()
 		gfx.SpecularSRV.Get(),
 		gfx.positionSRV.Get(),
 		gfx.IrradianceMapSRV.Get(),
-		gfx.HDRIFramebufferSRV.Get()
+		gfx.HDRIFramebufferSRV.Get(),
+		gfx.PrefilteringSRV.Get(),
+		gfx.BRDFSRV.Get()
 	};
 
 	gfx.GetDeviceContext()->PSSetShaderResources(0, shaderresources.size(), shaderresources.data());
@@ -533,7 +550,7 @@ void Application::DrawHDRI()
 		gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
 	
 	}
-
+	gfx.GetDeviceContext()->GenerateMips(gfx.HDRIFramebufferSRV.Get());
 	ID3D11RenderTargetView* nullRTVs[1] = { nullptr};
 	gfx.GetDeviceContext()->OMSetRenderTargets(1, nullRTVs, nullptr);
 	ID3D11SamplerState* nullSampler[1] = { nullptr };
@@ -611,6 +628,110 @@ void Application::IrradianceConvolution()
 void Application::Prefiltering()
 {
 
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	const UINT baseSize = 128;
+	const UINT mipLevels = static_cast<UINT>(std::floor(std::log2(baseSize))) + 1;
+	UINT baseResolution = 128;
+	gfx.deviceContext->PSSetSamplers(0, 1, gfx.PrefilteredsamplerState.GetAddressOf());
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.HDRIdepthStencilStateDisabled.Get(), 0);
+
+	gfx.SetInputLayout(this->m_EquiToHDRI_VS.GetInputLayout());
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.GetDeviceContext()->VSSetShader(m_EquiToHDRI_VS.GetShader(), NULL, 0);
+	gfx.GetDeviceContext()->PSSetShader(m_Prefiltering_PS.GetShader(), NULL, 0);
+
+	for (UINT mip = 0; mip < mipLevels; ++mip)
+	{
+		UINT mipWidth = static_cast<UINT>(baseResolution * std::pow(0.5f, mip));
+		UINT mipHeight = static_cast<UINT>(baseResolution * std::pow(0.5f, mip));
+
+		// Resize viewport
+		D3D11_VIEWPORT previewport = {};
+		previewport.TopLeftX = 0;
+		previewport.TopLeftY = 0;
+		previewport.Width = mipWidth;
+		previewport.Height = mipHeight;
+		previewport.MinDepth = 0.0f;
+		previewport.MaxDepth = 1.0f;
+		gfx.GetDeviceContext()->RSSetViewports(1, &previewport);
+		gfx.GetDeviceContext()->PSSetShaderResources(0,1, gfx.HDRIFramebufferSRV.GetAddressOf());
+		gfx.GetDeviceContext()->PSSetConstantBuffers(0, 1, m_PrefilteringParams.GetAddressOf());
+		float roughness = (float)mip / (float)(mipLevels - 1);
+		m_PrefilteringParams.data.roughness = roughness;
+		m_PrefilteringParams.ApplyChanges();
+
+
+
+
+		for (UINT face = 0; face < 6; ++face)
+		{
+			XMMATRIX views[6] = {
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // +X
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(-1, 0, 0, 0), XMVectorSet(0, 1, 0, 0)), // -X
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 1, 0, 0), XMVectorSet(0, 0, -1, 0)), // +Y
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, -1, 0, 0), XMVectorSet(0, 0, 1, 0)), // -Y
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, 1, 0), XMVectorSet(0, 1, 0, 0)),  // +Z
+				XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 1, 0, 0)), // -Z
+			};
+
+			XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 10.0f);
+			// Set view matrix for that face
+			HDRIViewProj.data.View = XMMatrixTranspose(views[face]);
+			HDRIViewProj.data.Projection = XMMatrixTranspose(proj);
+			HDRIViewProj.ApplyChanges();
+			gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, HDRIViewProj.GetAddressOf());
+
+			// Bind the correct mip level and face
+
+
+			gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.PrefilteringRTVs[mip][face].GetAddressOf(), nullptr);
+			gfx.GetDeviceContext()->ClearRenderTargetView(gfx.PrefilteringRTVs[mip][face].Get(), bgcolor);
+
+
+			gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
+			gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+			gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+		}
+	}
+	ID3D11RenderTargetView* nullRTVs[1] = { nullptr };
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, nullRTVs, nullptr);
+	ID3D11SamplerState* nullSampler[1] = { nullptr };
+	gfx.GetDeviceContext()->PSSetSamplers(0, 1, nullSampler);
+	ID3D11Buffer* nullBuffer = nullptr;
+	gfx.SetVSConstantBuffers(0, 1, &nullBuffer);
+}
+void Application::BRDF()
+{
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	// Resize viewport
+	D3D11_VIEWPORT BRDFviewport = {};
+	BRDFviewport.TopLeftX = 0;
+	BRDFviewport.TopLeftY = 0;
+	BRDFviewport.Width = 512;
+	BRDFviewport.Height = 512;
+	BRDFviewport.MinDepth = 0.0f;
+	BRDFviewport.MaxDepth = 1.0f;
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.BRDFRTVs.GetAddressOf(), nullptr);
+
+	gfx.GetDeviceContext()->RSSetViewports(1, &BRDFviewport);
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(), 0);
+	gfx.SetInputLayout(this->m_BRDF_VS.GetInputLayout());
+
+	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gfx.GetDeviceContext()->VSSetShader(m_BRDF_VS.GetShader(), NULL, 0);
+	gfx.GetDeviceContext()->PSSetShader(m_BRDF_PS.GetShader(), NULL, 0);
+
+	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
+	gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+	gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+
+
+
 }
 void Application::BackgroundCubeMap()
 {
@@ -658,6 +779,8 @@ void Application::RenderFrame()
 	{
 		DrawHDRI();
 		IrradianceConvolution();
+		Prefiltering();
+		BRDF();
 		RenderIrradianceandHDRI = false;
 
 	}
