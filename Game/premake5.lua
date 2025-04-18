@@ -41,6 +41,10 @@ shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 		shadertype "Vertex"
 		shadermodel "5.0"
 		shaderentry "main"
+		filter { "files:**_g.hlsl" }
+		shadertype "Geometry"
+		shadermodel "5.0"
+		shaderentry "main"
 	filter { "system:windows", "configurations:Debug or configurations:Debug-AS" }
 		postbuildcommands {
 			'{COPY} "../Dependances/assimp/bin/windows/Debug/assimp-vc143-mtd.dll" "%{cfg.targetdir}"',

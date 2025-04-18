@@ -24,6 +24,7 @@ public:
 	
 	Texture(ID3D11Device* device, aiTexture* texture, size_t size, aiTextureType type);
 	aiTextureType GetType();
+	ID3D11Texture2D* GetRawTexture();
 	ID3D11ShaderResourceView* GetTextureResourceView();
 	ID3D11ShaderResourceView** GetTextureResourceViewAddress();
 

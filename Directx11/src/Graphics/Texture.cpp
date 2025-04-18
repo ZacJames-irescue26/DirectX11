@@ -31,12 +31,24 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 	// create texture
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex = nullptr;
 	{
+
 		D3D11_TEXTURE2D_DESC texture_desc = {};
 		texture_desc.Width = img_width;
 		texture_desc.Height = img_height;
 		texture_desc.MipLevels = 1;
 		texture_desc.ArraySize = 1;
+	if (type == aiTextureType_DIFFUSE)
+	{
+		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	}
+	else if( type == aiTextureType_NORMALS)
+	{
 		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	}
+	else if (type == aiTextureType_DIFFUSE_ROUGHNESS)
+	{
+		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	}
 		texture_desc.SampleDesc.Count = 1;
 		texture_desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 		texture_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
@@ -52,17 +64,17 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 			ErrorLogger::Log(hr, L"Failed to create texture 2d\n");
 
 		}
-	}
+	
 
 	// create texture view
-	{
+	
 		D3D11_SHADER_RESOURCE_VIEW_DESC view_desc = {};
-		view_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		view_desc.Format = texture_desc.Format;
 		view_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		view_desc.Texture2D.MipLevels = -1;
 		view_desc.Texture2D.MostDetailedMip = 0;
 		
-		HRESULT hr = device->CreateShaderResourceView(tex.Get(), &view_desc, textureView.GetAddressOf());
+		hr = device->CreateShaderResourceView(tex.Get(), &view_desc, textureView.GetAddressOf());
 		if (FAILED(hr))
 		{
 			ErrorLogger::Log(hr, L"Failed to create render target view\n");
@@ -143,6 +155,20 @@ Texture::Texture(ID3D11Device* device, aiTexture* intexture, size_t size, aiText
 aiTextureType Texture::GetType()
 {
 	return this->type;
+}
+
+ID3D11Texture2D* Texture::GetRawTexture()
+{
+	ID3D11Texture2D* pTexture = nullptr;
+
+	// Step 1: Query the resource for a texture interface
+	HRESULT hr = texture->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pTexture));
+	if (FAILED(hr) || !pTexture)
+	{
+		ErrorLogger::Log(hr, "Failed to query texture");
+		return nullptr;
+	}
+	return pTexture;
 }
 
 ID3D11ShaderResourceView* Texture::GetTextureResourceView()

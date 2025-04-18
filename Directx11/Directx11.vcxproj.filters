@@ -4,6 +4,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Acceleration">
+      <UniqueIdentifier>{E67E1F0D-D277-3E5F-FBA9-23E4E7011E6B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Acceleration\Octree">
+      <UniqueIdentifier>{77B9A4BF-E3F0-EC56-ECFA-507A58B11350}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Game">
       <UniqueIdentifier>{F6C81ECF-E295-79DA-0BAF-6782F7DAAE68}</UniqueIdentifier>
     </Filter>
@@ -16,6 +22,9 @@
     <Filter Include="src\Keyboard">
       <UniqueIdentifier>{4DC29C63-3925-2C08-E2AA-64BECEECF78A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{261422CF-12E1-7CDA-3BFA-6A822726B268}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mouse">
       <UniqueIdentifier>{454C6CB3-B1B6-202A-FAF4-D1CF669EFE7E}</UniqueIdentifier>
     </Filter>
@@ -25,9 +34,15 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{0A06D2B3-7670-862A-BFAE-37D02B58647F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\illumination">
+      <UniqueIdentifier>{F1C464E6-DDBD-8338-06F0-68BDF2476344}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\Acceleration\Octree\Octree.h">
+      <Filter>src\Acceleration\Octree</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -118,6 +133,15 @@
     <ClInclude Include="src\Keyboard\KeyboardEvent.h">
       <Filter>src\Keyboard</Filter>
     </ClInclude>
+    <ClInclude Include="src\Math\AABB.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Ray.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Triangle.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mouse\MouseClass.h">
       <Filter>src\Mouse</Filter>
     </ClInclude>
@@ -142,6 +166,12 @@
     <ClInclude Include="src\WindowContainer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\illumination\Surfel.h">
+      <Filter>src\illumination</Filter>
+    </ClInclude>
+    <ClInclude Include="src\illumination\SurfelGenerator.h">
+      <Filter>src\illumination</Filter>
+    </ClInclude>
     <ClInclude Include="src\resource.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -151,6 +181,9 @@
     <ClCompile Include="STB_Image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="src\Acceleration\Octree\Octree.cpp">
+      <Filter>src\Acceleration\Octree</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -229,6 +262,15 @@
     <ClCompile Include="src\Keyboard\KeyboardEvent.cpp">
       <Filter>src\Keyboard</Filter>
     </ClCompile>
+    <ClCompile Include="src\Math\AABB.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Ray.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Triangle.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mouse\MouseClass.cpp">
       <Filter>src\Mouse</Filter>
     </ClCompile>
@@ -252,6 +294,12 @@
     </ClCompile>
     <ClCompile Include="src\WindowContainer.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\illumination\Surfel.cpp">
+      <Filter>src\illumination</Filter>
+    </ClCompile>
+    <ClCompile Include="src\illumination\SurfelGenerator.cpp">
+      <Filter>src\illumination</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

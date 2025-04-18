@@ -67,7 +67,7 @@ void Graphics::RenderFrame()
 bool Graphics::InitializeDirectX(HWND hwnd)
 {
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
-	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 10000.0f);
+	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
 	std::vector<AdapterData> adapters = AdapterReader::GetAdapters();
 
 	if (adapters.size() < 1)
@@ -495,7 +495,7 @@ bool Graphics::InitializeScene()
 	BRDFDesc.Height = 512;
 	BRDFDesc.MipLevels = 1;
 	BRDFDesc.ArraySize = 1; 
-	BRDFDesc.Format = DXGI_FORMAT_R16G16_FLOAT;
+	BRDFDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
 	BRDFDesc.SampleDesc.Count = 1;
 	BRDFDesc.Usage = D3D11_USAGE_DEFAULT;
 	BRDFDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
@@ -511,6 +511,163 @@ bool Graphics::InitializeScene()
 
 	hr = device->CreateRenderTargetView(BRDFTexture.Get(), &BRDFrtvDesc, &BRDFRTVs);
 
+	D3D11_SHADER_RESOURCE_VIEW_DESC BRDFsrvDesc = {};
+	BRDFsrvDesc.Format = BRDFDesc.Format;
+	BRDFsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	BRDFsrvDesc.Texture2D.MipLevels = 1;
+	
+	hr = device->CreateShaderResourceView(BRDFTexture.Get(), &BRDFsrvDesc, &BRDFSRV);
+
+	//CASCADED SHADOW MAPS----------------------------------------
+	for (int i = 0; i < NUM_CASCADES; ++i)
+	{
+		D3D11_TEXTURE2D_DESC desc = {};
+		desc.Width = depthMapResolution;
+		desc.Height = depthMapResolution;
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		desc.Format = DXGI_FORMAT_R32_TYPELESS;
+		desc.SampleDesc.Count = 1;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+
+		shadowTex.resize(NUM_CASCADES);
+		hr = device->CreateTexture2D(&desc, nullptr, shadowTex[i].GetAddressOf());
+		shadowDSVs.resize(NUM_CASCADES);
+		// Depth view
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+		dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+		dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		hr = device->CreateDepthStencilView(shadowTex[i].Get(), &dsvDesc, &shadowDSVs[i]);
+		shadowSRVs.resize(NUM_CASCADES);
+		// SRV for shader access
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MipLevels = 1;
+		hr = device->CreateShaderResourceView(shadowTex[i].Get(), &srvDesc, &shadowSRVs[i]);
+	}
+	
+	D3D11_DEPTH_STENCIL_DESC ShadowdepthStencilDesc = {};
+	ShadowdepthStencilDesc.DepthEnable = TRUE;                                 // Enable depth testing
+	ShadowdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;        // Allow depth writes
+	ShadowdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;            // Standard comparison
+
+	ShadowdepthStencilDesc.StencilEnable = FALSE;                              // We don’t use stencil here
+
+	 hr = device->CreateDepthStencilState(&ShadowdepthStencilDesc, shadowDepthStencilState.GetAddressOf());
+
+
+	 D3D11_BLEND_DESC blendDesc = {};
+	 blendDesc.AlphaToCoverageEnable = FALSE;
+	 blendDesc.IndependentBlendEnable = FALSE;
+
+	 D3D11_RENDER_TARGET_BLEND_DESC rtBlend = {};
+	 rtBlend.BlendEnable = TRUE;
+	 rtBlend.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	 rtBlend.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	 rtBlend.BlendOp = D3D11_BLEND_OP_ADD;
+	 rtBlend.SrcBlendAlpha = D3D11_BLEND_ONE;
+	 rtBlend.DestBlendAlpha = D3D11_BLEND_ZERO;
+	 rtBlend.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	 rtBlend.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	 blendDesc.RenderTarget[0] = rtBlend;
+
+	 hr = device->CreateBlendState(&blendDesc, transparentBlendState.GetAddressOf());
+
+	/* D3D11_RASTERIZER_DESC rasterizerDesc;
+	 ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
+
+	 rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+	 rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+	 
+	 hr = this->device->CreateRasterizerState(&rasterizerDesc, this->DebugLineState.GetAddressOf());*/
+	 //D3D11_TEXTURE2D_DESC ShadowtexDesc = {};
+	 //ShadowtexDesc.Width = depthMapResolution;
+	 //ShadowtexDesc.Height = depthMapResolution;
+	 //ShadowtexDesc.MipLevels = 1;
+	 //ShadowtexDesc.ArraySize = shadowSRVs.size();
+	 //ShadowtexDesc.Format = DXGI_FORMAT_R32_TYPELESS; // Or your format
+	 //ShadowtexDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
+	 //ShadowtexDesc.MiscFlags = 0;
+	 //ShadowtexDesc.Usage = D3D11_USAGE_DEFAULT;
+	 //ShadowtexDesc.SampleDesc.Count = 1;
+
+	 //
+	 //device->CreateTexture2D(&ShadowtexDesc, nullptr, &ShadowtextureArray);
+
+
+	 //for (UINT i = 0; i < shadowSRVs.size(); ++i)
+	 //{
+		// UINT dstSubresource = D3D11CalcSubresource(0, i, 1);
+		// deviceContext->CopySubresourceRegion(
+		//	 ShadowtextureArray.Get(), dstSubresource, 0, 0, 0,
+		//	 shadowTex[i].Get(), 0, nullptr);
+	 //}
+
+	 //D3D11_SHADER_RESOURCE_VIEW_DESC ShadowsrvDesc = {};
+	 //ShadowsrvDesc.Format = DXGI_FORMAT_R32_FLOAT; // Or matching your data
+	 //ShadowsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+	 //ShadowsrvDesc.Texture2DArray.MostDetailedMip = 0;
+	 //ShadowsrvDesc.Texture2DArray.MipLevels = 1;
+	 //ShadowsrvDesc.Texture2DArray.FirstArraySlice = 0;
+	 //ShadowsrvDesc.Texture2DArray.ArraySize = shadowSRVs.size();
+
+	 //
+	 //device->CreateShaderResourceView(ShadowtextureArray.Get(), &ShadowsrvDesc, &ShadowtextureArraySRV);
+
+	 D3D11_SAMPLER_DESC sampDesc = {};
+	 sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	 sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	 sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	 sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	 sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	 sampDesc.BorderColor[0] = 1.0f;
+	 sampDesc.BorderColor[1] = 1.0f;
+	 sampDesc.BorderColor[2] = 1.0f;
+	 sampDesc.BorderColor[3] = 1.0f;
+
+	 
+	hr = device->CreateSamplerState(&sampDesc, &shadowSampler);
+	
+	
+	
+	 D3D11_TEXTURE2D_DESC desc = {};
+	 desc.Width = depthMapResolution;
+	 desc.Height = depthMapResolution;
+	 desc.MipLevels = 1;
+	 desc.ArraySize = 1;
+	 desc.Format = DXGI_FORMAT_R32_TYPELESS;
+	 desc.SampleDesc.Count = 1;
+	 desc.Usage = D3D11_USAGE_DEFAULT;
+	 desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+
+	 hr = device->CreateTexture2D(&desc, nullptr, DirectionalshadowTex.GetAddressOf());
+	 // Depth view
+	 D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	 dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	 dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	 hr = device->CreateDepthStencilView(DirectionalshadowTex.Get(), &dsvDesc, &DirectionalshadowDSVs);
+	 // SRV for shader access
+	 srvDesc = {};
+	 srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	 srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	 srvDesc.Texture2D.MipLevels = 1;
+	 hr = device->CreateShaderResourceView(DirectionalshadowTex.Get(), &srvDesc, &DirectionalshadowSRVs);
+	
+	 D3D11_RASTERIZER_DESC rasterDesc = {};
+	 rasterDesc.FillMode = D3D11_FILL_SOLID;
+	 rasterDesc.CullMode = D3D11_CULL_FRONT; // Cull front faces
+	 rasterDesc.DepthClipEnable = true;
+
+	 
+	 device->CreateRasterizerState(&rasterDesc, shadowRasterState.GetAddressOf());
+	
+	
+	
+	
+	
 	assert(SUCCEEDED(hr));
 	return true;
 
@@ -518,8 +675,169 @@ bool Graphics::InitializeScene()
 
 
 }
+std::vector<XMFLOAT3> Graphics::GetFrustumCornersWorldSpace(const XMMATRIX& viewProj)
+{
+	XMMATRIX inv = XMMatrixInverse(nullptr, viewProj);
+
+	std::vector<XMFLOAT3> frustumCorners;
+	frustumCorners.reserve(8);
+
+	for (int x = 0; x < 2; ++x)
+	{
+		for (int y = 0; y < 2; ++y)
+		{
+			for (int z = 0; z < 2; ++z)
+			{
+				XMVECTOR corner = XMVectorSet(
+					x == 0 ? -1.0f : 1.0f,
+					y == 0 ? -1.0f : 1.0f,
+					z == 0 ? -1.0f : 1.0f,  // DirectX clip space z: [0, 1]
+					1.0f
+				);
+
+				XMVECTOR world = XMVector4Transform(corner, inv);
+				world = XMVectorDivide(world, XMVectorSplatW(world));
+
+				XMFLOAT3 pt;
+				XMStoreFloat3(&pt, world);
+				frustumCorners.push_back(pt);
+			}
+		}
+	}
+	return frustumCorners;
+}
 
 
+std::vector<XMFLOAT3> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view)
+{
+	return GetFrustumCornersWorldSpace( view * proj);
+}
+
+XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPlane)
+{
+	// 1. Camera frustum corners in world space
+	const XMMATRIX cameraProj = XMMatrixPerspectiveFovLH(
+		XMConvertToRadians(90.0f),
+		static_cast<float>(windowWidth) / static_cast<float>(windowHeight),
+		nearPlane, farPlane);
+
+	const XMMATRIX viewProj = camera.GetViewMatrix() * cameraProj;
+	std::vector<XMFLOAT3> corners = GetFrustumCornersWorldSpace(viewProj);
+
+	// 2. Calculate frustum center
+	XMVECTOR center = XMVectorZero();
+	for (const auto& pt : corners)
+		center += XMLoadFloat3(&pt);
+	center /= static_cast<float>(corners.size());
+
+	// 3. Setup light view matrix
+	XMVECTOR lightDir = XMVector3Normalize(XMLoadFloat3(&LightDir));
+	XMVECTOR lightPos = center - lightDir * 100.0f;
+	XMVECTOR up = XMVectorSet(0, 1, 0, 0);
+	XMMATRIX lightView = XMMatrixLookAtLH(lightPos, center, up);
+
+	// 4. Transform frustum corners into light space
+	float minX = FLT_MAX, maxX = -FLT_MAX;
+	float minY = FLT_MAX, maxY = -FLT_MAX;
+	float minZ = FLT_MAX, maxZ = -FLT_MAX;
+
+	for (const auto& corner : corners)
+	{
+		XMVECTOR cornerVec = XMLoadFloat3(&corner);
+		XMVECTOR trf = XMVector3TransformCoord(cornerVec, lightView);
+		XMFLOAT3 pt;
+		XMStoreFloat3(&pt, trf);
+
+		minX = std::min(minX, pt.x); maxX = std::max(maxX, pt.x);
+		minY = std::min(minY, pt.y); maxY = std::max(maxY, pt.y);
+		minZ = std::min(minZ, pt.z); maxZ = std::max(maxZ, pt.z);
+	}
+
+	// 5. Snap orthographic bounds to shadow map texel size
+	const float worldUnitsPerTexel = (maxX - minX) / static_cast<float>(depthMapResolution);
+
+	minX = std::floor(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
+	maxX = std::floor(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
+	minY = std::floor(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
+	maxY = std::floor(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
+
+	// 6. Optional clamp if area is too small (prevents light-space collapse)
+	const float minSize = 100.0f;
+	if ((maxX - minX) < minSize)
+	{
+		float cx = 0.5f * (minX + maxX);
+		minX = cx - minSize * 0.5f;
+		maxX = cx + minSize * 0.5f;
+	}
+	if ((maxY - minY) < minSize)
+	{
+		float cy = 0.5f * (minY + maxY);
+		minY = cy - minSize * 0.5f;
+		maxY = cy + minSize * 0.5f;
+	}
+
+	// 7. Expand Z range
+	const float zMult = 10.0f;
+	if (minZ < 0) minZ *= zMult; else minZ /= zMult;
+	if (maxZ < 0) maxZ /= zMult; else maxZ *= zMult;
+
+	// 8. Final orthographic projection
+	XMMATRIX lightProj = XMMatrixOrthographicOffCenterLH(minX, maxX, minY, maxY, minZ, maxZ);
+
+	return XMMatrixTranspose(lightView * lightProj); // Transposed for HLSL
+}
+
+std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
+{
+	std::vector<XMMATRIX> ret;
+	for (size_t i = 0; i < NUM_CASCADES; i++)
+	{
+		if (i == 0)
+		{
+			ret.push_back(getLightSpaceMatrix(0.1, shadowCascadeLevels[i]));
+		}
+		else if (i < NUM_CASCADES-1)
+		{
+			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
+		}
+		else
+		{
+			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 1000));
+		}
+	}
+	return ret;
+}
+std::vector<XMVECTOR> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& projview)
+{
+	XMMATRIX inv = XMMatrixInverse(nullptr, projview);
+	std::vector<XMVECTOR> frustumCorners;
+	frustumCorners.reserve(8);
+
+	for (unsigned int x = 0; x < 2; ++x)
+	{
+		for (unsigned int y = 0; y < 2; ++y)
+		{
+			for (unsigned int z = 0; z < 2; ++z)
+			{
+				// Clip space point
+				XMVECTOR pt = XMVectorSet(
+					2.0f * x - 1.0f,
+					2.0f * y - 1.0f,
+					2.0f * z - 1.0f,
+					1.0f
+				);
+
+				// Transform to world space
+				XMVECTOR world = XMVector4Transform(pt, inv);
+				world = XMVectorDivide(world, XMVectorSplatW(world)); // Divide by w
+
+				frustumCorners.push_back(world);
+			}
+		}
+	}
+
+	return frustumCorners;
+}
 void Graphics::ClearDepthStencil(ID3D11DepthStencilView* stencil)
 {
 	this->deviceContext->ClearDepthStencilView(stencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);

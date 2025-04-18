@@ -29,7 +29,7 @@ VS_OUTPUT main(VS_INPUT input)
     VS_OUTPUT output;
 
     float4 worldPos = mul(float4(input.inPos, 1.0f), worldMatrix);
-    output.outPosition = mul(worldPos, wvpMatrix);
+    output.outPosition = mul(float4(input.inPos, 1.0f), wvpMatrix);
     output.outTexCoord = input.inTexCoord;
     output.outWorldPos = worldPos.xyz;
     

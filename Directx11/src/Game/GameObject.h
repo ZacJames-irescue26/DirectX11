@@ -10,6 +10,7 @@ public:
 	bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
 	void Draw(const XMMATRIX& viewProjectionMatrix);
 
+	void DrawWithOutCBuffer();
 	const XMVECTOR& GetPositionVector() const;
 	const XMFLOAT3& GetPositionFloat3() const;
 	const XMVECTOR& GetRotationVector() const;
@@ -35,11 +36,15 @@ public:
 	const XMVECTOR& GetLeftVector();
 
 	void SetParent(GameObject* parent);
+	XMMATRIX worldMatrix = XMMatrixIdentity();
+	inline Model& GetModel()
+	{
+		return model;
+	}
 protected:
 	Model model;
 	void UpdateWorldMatrix();
 
-	XMMATRIX worldMatrix = XMMatrixIdentity();
 
 	XMVECTOR posVector;
 	XMVECTOR rotVector;

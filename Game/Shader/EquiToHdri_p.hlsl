@@ -12,9 +12,8 @@ struct FS_INPUT
 
 float2 SampleSphericalMap(float3 v)
 {
-    const float2 invAtan = float2(0.1591, 0.3183);
     float2 uv = float2(atan2(v.z, v.x), asin(v.y));
-    uv *= invAtan;
+    uv *= float2(0.1591, 0.3183); // 1 / (2PI), 1 / PI
     uv += 0.5;
     return uv;
 }
@@ -25,7 +24,7 @@ struct PS_OUTPUT
 };
 
 
- PS_OUTPUT main(FS_INPUT input) : SV_TARGET
+ PS_OUTPUT main(FS_INPUT input)
 {
     PS_OUTPUT output;
     float2 uv = SampleSphericalMap(normalize(input.localPos)); // make sure to normalize localPos

@@ -4,6 +4,9 @@
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui_impl_dx11.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 void Application::Initialize(HINSTANCE hInstance, std::string window_title, std::string window_class, int width, int height)
 {
 	EngineInit::Initialize(hInstance, window_title, window_class, width, height);
@@ -35,6 +38,26 @@ void Application::OnCreate()
 	hr = m_PrefilteringParams.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
 	
+	hr = m_LightSpace.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+
+	hr = m_ObjectModel.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	
+	hr = m_ViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+
+	hr = m_DebugColors.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+
+	hr = m_CastLight.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	m_CastLight.data.light.position = XMFLOAT3(0.0,5.0,0.0);
+	m_CastLight.data.light.intensity = XMFLOAT3(1.0, 1.0, 1.0);
+	m_CastLight.data.light.direction = XMFLOAT3(0.0, -1.0, 0.0);
+	m_CastLight.data.light.cutOff = 0.9;
+	m_CastLight.ApplyChanges();
+
 	this->lightConstantBuffer.data.ambientLightColor = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
 
@@ -67,8 +90,9 @@ void Application::OnCreate()
 		return;
 	}*/
 	helmet.SetScale({10,10,10});
-	floor.SetPosition(XMVECTOR{0.0f,-0.0,0.0});
-	floor.SetScale({1,1,1});
+	helmet.SetPosition(XMFLOAT3{0.0,10.0,0.0});
+	floor.SetPosition(XMVECTOR{0.0f,-0.1,0.0});
+	floor.SetScale({0.1,0.1,0.1});
 	/*MiscItems.SetPosition(XMVECTOR{0.0,-2.0,0.0});
 	MiscItems.SetScale({10,10,10});*/
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
@@ -175,8 +199,8 @@ void Application::OnCreate()
 	viewport.MaxDepth = 1.0f;
 
 	gameObject.SetPosition(XMFLOAT3{0,0,0});
-	m_lightparams.data.LightColor = DirectX::XMFLOAT3(0.0, 0.0, 100.0);
-	m_lightparams.data.LightDirection = DirectX::XMFLOAT3(0.0, 4.0, 0.0);
+	m_lightparams.data.LightColor = DirectX::XMFLOAT3(10.0, 10.0, 10.0);
+	m_lightparams.data.LightDirection = DirectX::XMFLOAT3(0.0, -4.8, -1.0);
 	m_lightparams.ApplyChanges();
 
 
@@ -213,6 +237,22 @@ void Application::OnCreate()
 
 	gfx.device->CreateShaderResourceView(gfx.HDRITexture.Get(), &srvDesc, gfx.HDRISRV.GetAddressOf());
 
+	AABB testbox = AABB(XMFLOAT3{-15.0,-5.0,-15.0},{15.0,15.0,15.0});
+	Octree* octree = new Octree(&testbox,3);
+	std::vector<GameObject> objects = {floor};
+	SurfelGenerator* gen = new SurfelGenerator(gfx.GetDevice(), gfx.GetDeviceContext(), octree, objects );
+
+	std::vector<SurfelVB> svb;
+	for (const auto& surf : gen->GeneratedSurfels)
+	{
+		SurfelVB vb;
+		vb.pos = surf->position;
+		vb.norm = surf->normal;
+		vb.color = surf->albedo;
+		vb.radius = surf->radius;
+		svb.push_back(vb);
+	}
+	SurfelVertexBuffer.Initialize(gfx.device.Get(), svb.data(), svb.size());
 
 }
 void Application::InitializeShaders()
@@ -238,6 +278,18 @@ void Application::InitializeShaders()
 	D3D11_INPUT_ELEMENT_DESC posDesc[]=
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0},
+	};
+	D3D11_INPUT_ELEMENT_DESC ModelPos[] = 
+	{
+		{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0, offsetof(Vertex, pos), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0}
+	};
+
+	D3D11_INPUT_ELEMENT_DESC Surfelvb[] =
+	{
+		{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0, offsetof(SurfelVB, pos), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0},
+		{ "NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0, offsetof(SurfelVB, norm), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0 },
+		{ "COLOR",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0, offsetof(SurfelVB, color), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0 },
+		{ "RADIUS",0,DXGI_FORMAT_R32_FLOAT,0, offsetof(SurfelVB, radius), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0 }
 	};
 
 	UINT numElements = ARRAYSIZE(layout);
@@ -302,6 +354,26 @@ void Application::InitializeShaders()
 		return;
 	}	
 	if (!m_BRDF_PS.Initialize(gfx.device, L"CompiledShaders/BRDF_p.cso"))
+	{
+		return;
+	}
+	if (!m_ShadowDepth_VS.Initialize(gfx.device, L"CompiledShaders/ShadowMapDepth_v.cso", ModelPos, ARRAYSIZE(ModelPos)))
+	{
+		return;
+	}
+	if (!m_ShadowDepth_GS.Initialize(gfx.device, L"CompiledShaders/ShadowMapDepth_g.cso"))
+	{
+		return;
+	}
+	if (!m_DebugCascade_VS.Initialize(gfx.device, L"CompiledShaders/DebugCascade_v.cso", ModelPos, ARRAYSIZE(ModelPos)))
+	{
+		return;
+	}
+	if (!m_DebugCascade_PS.Initialize(gfx.device, L"CompiledShaders/DebugCascade_p.cso"))
+	{
+		return;
+	}
+	if (!m_DebugDrawShadowMap_PS.Initialize(gfx.device, L"CompiledShaders/DrawShadowMap_p.cso"))
 	{
 		return;
 	}
@@ -421,6 +493,7 @@ void Application::BindLightingPass()
 	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(),0);
 	gfx.SetSamplers();
 	gfx.GetDeviceContext()->PSSetSamplers(1, 1, gfx.HDRIsamplerState.GetAddressOf());
+	gfx.GetDeviceContext()->PSSetSamplers(2, 1, gfx.shadowSampler.GetAddressOf());
 	gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
 
 	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -435,19 +508,27 @@ void Application::BindLightingPass()
 		gfx.IrradianceMapSRV.Get(),
 		gfx.HDRIFramebufferSRV.Get(),
 		gfx.PrefilteringSRV.Get(),
-		gfx.BRDFSRV.Get()
+		gfx.BRDFSRV.Get(),
+		gfx.DirectionalshadowSRVs.Get(),
 	};
 
 	gfx.GetDeviceContext()->PSSetShaderResources(0, shaderresources.size(), shaderresources.data());
+	
+	m_lightparams.data.LightSpaceMatrices = lightMatrices;
+	m_lightparams.data.farPlane = 1000;
 	m_lightparams.ApplyChanges();
 
 	gfx.SetPSConstantBuffers(0,1, m_lightparams.GetAddressOf()); 
 	CameraInfoConstantBuffer.data.CameraPosition = PlayerCamera.GetPositionFloat3();
 	CameraInfoConstantBuffer.data.InvProj = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetProjectionMatrix()));
 	CameraInfoConstantBuffer.data.InvView = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetViewMatrix()));
+	CameraInfoConstantBuffer.data.View = XMMatrixTranspose(camera.GetViewMatrix());
 	CameraInfoConstantBuffer.ApplyChanges();
 	gfx.SetPSConstantBuffers(1,1, CameraInfoConstantBuffer.GetAddressOf());
 	gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
+	gfx.SetPSConstantBuffers(2, 1, m_CastLight.GetAddressOf());
+	m_CastLight.ApplyChanges();
+
 
 	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_FullScreenVertex.GetAddressOf(), this->m_FullScreenVertex.StridePtr(), &offset);
 	gfx.GetDeviceContext()->IASetIndexBuffer(m_FullScreenIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
@@ -531,7 +612,7 @@ void Application::DrawHDRI()
 	XMMatrixLookAtLH(XMVectorZero(), XMVectorSet(0, 0, -1, 0), XMVectorSet(0, 1, 0, 0)), // -Z
 	};
 
-	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 10.0f);
+	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.01f, 100.0f);
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -725,10 +806,10 @@ void Application::BRDF()
 	gfx.GetDeviceContext()->VSSetShader(m_BRDF_VS.GetShader(), NULL, 0);
 	gfx.GetDeviceContext()->PSSetShader(m_BRDF_PS.GetShader(), NULL, 0);
 
-	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_HdriVertex.GetAddressOf(), this->m_HdriVertex.StridePtr(), &offset);
-	gfx.GetDeviceContext()->IASetIndexBuffer(m_HdriIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_FullScreenVertex.GetAddressOf(), this->m_FullScreenVertex.StridePtr(), &offset);
+	gfx.GetDeviceContext()->IASetIndexBuffer(m_FullScreenIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-	gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+	gfx.GetDeviceContext()->DrawIndexed(6, 0, 0);
 
 
 
@@ -752,6 +833,7 @@ void Application::BackgroundCubeMap()
 	gfx.GetDeviceContext()->PSSetShader(m_BackgroundCubemap_PS.GetShader(), NULL, 0);
 
 
+	gfx.deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	gfx.GetDeviceContext()->PSSetShaderResources(0, 1, gfx.HDRIFramebufferSRV.GetAddressOf());
 	
@@ -772,6 +854,211 @@ void Application::BackgroundCubeMap()
 	gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
 }
 
+void Application::ShadowDepthPass()
+{
+	const std::vector<XMMATRIX> lightMatrices = gfx.getLightSpaceMatrices();
+	for (UINT i = 0; i < gfx.NUM_CASCADES; i++)
+	{
+		D3D11_VIEWPORT shadowViewport = {};
+		shadowViewport.TopLeftX = 0;
+		shadowViewport.TopLeftY = 0;
+		shadowViewport.Width = gfx.depthMapResolution;
+		shadowViewport.Height = gfx.depthMapResolution;
+		shadowViewport.MinDepth = 0.0f;
+		shadowViewport.MaxDepth = 1.0f;
+		// 1. Set viewport (matching your shadow map resolution)
+
+		// 2. Set depth-only render target for this cascade
+		gfx.GetDeviceContext()->OMSetRenderTargets(0, nullptr, gfx.shadowDSVs[i].Get());
+
+		gfx.SetRasterizerState();
+		gfx.SetBlendState();
+		gfx.GetDeviceContext()->RSSetViewports(1, &shadowViewport);
+		// 3. Clear depth buffer
+		gfx.GetDeviceContext()->ClearDepthStencilView(gfx.shadowDSVs[i].Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+		gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.shadowDepthStencilState.Get(), 0);
+
+		// 4. Set shaders
+		gfx.GetDeviceContext()->VSSetShader(m_ShadowDepth_VS.GetShader(), nullptr, 0);
+		gfx.GetDeviceContext()->GSSetShader(nullptr, nullptr, 0); // Optional: geometry shader to set gl_Layer
+		gfx.SetInputLayout(this->m_ShadowDepth_VS.GetInputLayout());
+		gfx.GetDeviceContext()->PSSetShader(nullptr, nullptr, 0);           // No pixel shader for depth-only
+		//gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_LightSpace.GetAddressOf());
+		gfx.GetDeviceContext()->VSSetConstantBuffers(1,1, m_LightSpace.GetAddressOf());
+		// 5. Set view/projection matrix for this cascade
+		
+		m_LightSpace.data.LightSpace = lightMatrices[i];
+	
+		m_LightSpace.ApplyChanges();
+		// 6. Draw scene
+		gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_ObjectModel.GetAddressOf());
+		
+		
+		m_ObjectModel.data.Model = XMMatrixTranspose(helmet.worldMatrix);
+		gfx.deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		m_ObjectModel.ApplyChanges();
+		this->helmet.DrawWithOutCBuffer();
+		m_ObjectModel.data.Model = XMMatrixTranspose(floor.worldMatrix);
+		m_ObjectModel.ApplyChanges();
+		floor.DrawWithOutCBuffer();
+
+	}
+
+	gfx.GetDeviceContext()->GSSetShader(nullptr, nullptr, 0);
+}
+void Application::DrawDebugCascade()
+{
+	DWORD cascadeindices[] = {
+		0, 2, 3,
+		0, 3, 1,
+		4, 6, 2,
+		4, 2, 0,
+		5, 7, 6,
+		5, 6, 4,
+		1, 3, 7,
+		1, 7, 5,
+		6, 7, 3,
+		6, 3, 2,
+		1, 5, 4,
+		0, 1, 4
+	};
+	m_DebugCascade.resize(8);
+	for (int i = 0; i < gfx.NUM_CASCADES; i++)
+	{
+		const auto corners = gfx.getFrustumCornersWorldSpace(gfx.getLightSpaceMatrices()[i]);
+		std::vector<CubeWPos> vec3s;
+		vec3s.resize(corners.size());
+		for (int i = 0; i < corners.size(); i++)
+		{
+			XMFLOAT3 pos;
+			XMStoreFloat3(&pos, corners[i]);
+			vec3s[i].pos = pos;
+		}
+
+		m_DebugCascade[i].Initialize(gfx.device.Get(), vec3s.data(), vec3s.size());
+
+	}
+	m_CascadeIndex.Initialize(gfx.device.Get(), cascadeindices, 36);
+	float blendFactor[4] = { 0, 0, 0, 0 }; // usually ignored unless BlendFactor used
+	UINT sampleMask = 0xffffffff;
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	gfx.SetInputLayout(m_DebugCascade_VS.GetInputLayout());
+	gfx.SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gfx.SetDepthStencilState();
+	gfx.GetDeviceContext()->OMSetBlendState(gfx.transparentBlendState.Get(),blendFactor, sampleMask);
+	gfx.SetSamplers();
+	gfx.SetVSShader(m_DebugCascade_VS.GetShader());
+	gfx.SetPSShader(m_DebugCascade_PS.GetShader());
+
+	gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_ViewProj.GetAddressOf());
+
+	m_ViewProj.data.View = XMMatrixTranspose(camera.GetViewMatrix());
+	m_ViewProj.data.Projection = XMMatrixTranspose(camera.GetProjectionMatrix());
+	m_ViewProj.ApplyChanges();
+	gfx.GetDeviceContext()->PSSetConstantBuffers(0,1, m_DebugColors.GetAddressOf());
+	gfx.deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+
+
+	for (int i = 0; i < gfx.NUM_CASCADES; i++)
+	{
+		m_DebugColors.data.index = i;
+		m_DebugColors.ApplyChanges();
+		gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_DebugCascade[i].GetAddressOf(), this->m_DebugCascade[i].StridePtr(), &offset);
+		gfx.GetDeviceContext()->IASetIndexBuffer(m_CascadeIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+		gfx.GetDeviceContext()->DrawIndexed(36, 0, 0);
+	}
+
+}
+void Application::DrawShadowMaps()
+{
+	float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(), nullptr);
+	gfx.GetDeviceContext()->ClearRenderTargetView(gfx.renderTargetView.Get(), clearColor);
+
+	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(), 0);
+	gfx.SetSamplers();
+	gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
+
+	gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gfx.GetDeviceContext()->VSSetShader(m_DeferredvertexShader.GetShader(), NULL, 0);
+	gfx.GetDeviceContext()->PSSetShader(m_DebugDrawShadowMap_PS.GetShader(), NULL, 0);
+
+
+	gfx.GetDeviceContext()->PSSetShaderResources(0, 1,gfx.DirectionalshadowSRVs.GetAddressOf());
+
+	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_FullScreenVertex.GetAddressOf(), this->m_FullScreenVertex.StridePtr(), &offset);
+	gfx.GetDeviceContext()->IASetIndexBuffer(m_FullScreenIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+	gfx.GetDeviceContext()->DrawIndexed(6, 0, 0);
+}
+void Application::DirectionalShadowMap()
+{
+
+	if (gfx.LightDir.y == 0.0)
+	{
+		return ;
+	}
+	 //XMMATRIX ShadowProj = XMMatrixPerspectiveFovLH(
+		//XMConvertToRadians(60.0f),
+		//1.77,
+		//0.1, farplane);
+	XMMATRIX ShadowOrtho = XMMatrixOrthographicOffCenterLH(-30.0f, 30.00, -30.0f, 30.0f, 0.01, farplane);
+	float theta = M_PI * Sky.x;
+	float phi = 2 * M_PI * Sky.y;
+	direction = XMFLOAT3(sin(theta) * sin(phi), cos(theta), sin(theta) * cos(phi));
+	XMFLOAT3 up_vec = XMFLOAT3(0.0, 1.0, 0.0);
+	if (Sky.x < -0.1 || Sky.x > -0.9) up_vec = XMFLOAT3(0.0, 0.0, 1.0);
+	// Move light x units away from the target along lightDir
+	XMVECTOR target = XMLoadFloat3(&TargetVec);
+	XMMATRIX lightView = XMMatrixLookAtLH(shadowDirstance * XMLoadFloat3(&direction), target, XMLoadFloat3(&up_vec));
+		lightMatrices = lightView * ShadowOrtho;
+		
+	lightMatrices = XMMatrixTranspose(lightMatrices);
+
+	D3D11_VIEWPORT shadowViewport = {};
+	shadowViewport.TopLeftX = 0;
+	shadowViewport.TopLeftY = 0;
+	shadowViewport.Width = gfx.depthMapResolution;
+	shadowViewport.Height = gfx.depthMapResolution;
+	shadowViewport.MinDepth = 0.0f;
+	shadowViewport.MaxDepth = 1.0f;
+	// 1. Set viewport (matching your shadow map resolution)
+	// 2. Set depth-only render target for this cascade
+	gfx.GetDeviceContext()->OMSetRenderTargets(0, nullptr, gfx.DirectionalshadowDSVs.Get());
+	gfx.SetRasterizerState();
+	gfx.SetBlendState();
+	gfx.GetDeviceContext()->RSSetViewports(1, &shadowViewport);
+	// 3. Clear depth buffer
+	gfx.GetDeviceContext()->ClearDepthStencilView(gfx.DirectionalshadowDSVs.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.shadowDepthStencilState.Get(), 0);
+	// 4. Set shaders
+	gfx.GetDeviceContext()->VSSetShader(m_ShadowDepth_VS.GetShader(), nullptr, 0);
+	gfx.SetInputLayout(this->m_ShadowDepth_VS.GetInputLayout());
+	gfx.GetDeviceContext()->PSSetShader(nullptr, nullptr, 0);           // No pixel shader for depth-only
+	//gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_LightSpace.GetAddressOf());
+	gfx.GetDeviceContext()->VSSetConstantBuffers(1, 1, m_LightSpace.GetAddressOf());
+	// 5. Set view/projection matrix for this cascade
+	m_LightSpace.data.LightSpace = lightMatrices;
+	m_LightSpace.ApplyChanges();
+	// 6. Draw scene
+	gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_ObjectModel.GetAddressOf());
+	m_ObjectModel.data.Model = XMMatrixTranspose(helmet.worldMatrix);
+	gfx.deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_ObjectModel.ApplyChanges();
+	this->helmet.DrawWithOutCBuffer();
+	m_ObjectModel.data.Model = XMMatrixTranspose(floor.worldMatrix);
+	m_ObjectModel.ApplyChanges();
+	floor.DrawWithOutCBuffer();
+
+	
+}
 void Application::RenderFrame()
 {
 
@@ -786,21 +1073,53 @@ void Application::RenderFrame()
 	}
 	
 	//Square
-	
+	//ShadowDepthPass();
+	DirectionalShadowMap();
 	BindGBufferPass();
 	BackgroundCubeMap();
 	BindLightingPass();
+	//DrawShadowMaps();
+	//DrawDebugCascade();
+
 	//ForwardRender();
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	//Create ImGui Test Window
+	gfx.LightDir = m_lightparams.data.LightDirection;
 	ImGui::Begin("Light Controls");
-	ImGui::DragFloat3("Light direction", &m_lightparams.data.LightDirection.x, 0.1f, 0.0f, 1000.0f);
-	ImGui::DragFloat3("Light color ", &m_lightparams.data.LightColor.x, 0.1f, 0.0f, 1000.0f);
-	ImGui::Checkbox("Player camera", &playercam);
+	m_lightparams.data.LightDirection = direction;
+	if (ImGui::TreeNode("Dir Light"))
+	{
+		//ImGui::DragFloat3("Light direction", &m_lightparams.data.LightDirection.x, 0.1f, -1000.0f, 1000.0f);
+		ImGui::DragFloat3("TargetVec", &TargetVec.x, 0.1f, -1000.0f, 1000.0f);
+		ImGui::DragFloat3("Light color ", &m_lightparams.data.LightColor.x, 0.1f, -0.0f, 1000.0f);
+		ImGui::DragFloat2("SkyDir", &Sky.x, 0.001, -1, 1);
+		static XMFLOAT3 helpos = {0.0,10.0,0.0};
+		ImGui::DragFloat3("helmet pos", &helpos.x, 0.1, -10, 1000);
+		helmet.SetPosition(helpos);
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Spot Light"))
+	{
+		ImGui::DragFloat3("Light Position", &m_CastLight.data.light.position.x, 0.1f, -1000.0f, 1000.0f);
+		ImGui::DragFloat3("Light direction", &m_CastLight.data.light.direction.x, 0.1f, -1000.0f, 1000.0f);
+		ImGui::DragFloat3("Light Intensity", &m_CastLight.data.light.intensity.x, 0.1f, 1.0f, 1000.0f);
+		ImGui::DragFloat("Light CutOff", &m_CastLight.data.light.cutOff, 0.1, 0.0, 100.0);
+		m_CastLight.ApplyChanges();
+		ImGui::TreePop();
+	}
+	ImGui::DragInt("Shadowmap index ", &shadowmapIndex, 1, 0, 3);
+	ImGui::DragFloat("shadow distance ", &shadowDirstance, 1, 1, 10000);
 	
+	ImGui::DragFloat("farplane ", &farplane, 1, 10, 10000);
+	ImGui::Checkbox("Player camera", &playercam);
+	ImGui::Image((ImTextureID)gfx.DirectionalshadowSRVs.Get(), { 200,200 });
+	/*ImGui::Image((ImTextureID)gfx.shadowSRVs[0].Get(), { 50,50 });
+	ImGui::Image((ImTextureID)gfx.shadowSRVs[1].Get(), { 50,50 });
+	ImGui::Image((ImTextureID)gfx.shadowSRVs[2].Get(), { 50,50 });
+	ImGui::Image((ImTextureID)gfx.shadowSRVs[3].Get(), { 50,50 });*/
 	ImGui::Image((ImTextureID)gfx.positionSRV.Get(), {25,25 });
 	ImGui::Image((ImTextureID)gfx.NormalSRV.Get(), { 25,25 });
 	ImGui::Image((ImTextureID)gfx.DiffuseSRV.Get(), { 25,25 });

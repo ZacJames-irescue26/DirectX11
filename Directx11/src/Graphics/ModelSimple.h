@@ -9,6 +9,11 @@ class Model
 public:
 	bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
 	void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix);
+	void Draw();
+	inline std::vector<Mesh>& GetMeshes()
+	{
+		return meshes;
+	}
 private:
 	std::vector<Mesh> meshes;
 	bool LoadModel(const std::string& filePath);

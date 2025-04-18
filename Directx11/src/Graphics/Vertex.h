@@ -35,4 +35,17 @@ struct CubeWPos
 	XMFLOAT3 pos;
 
 };
+
+struct SurfelVB
+{
+	SurfelVB() {}
+	SurfelVB(XMFLOAT3 position, XMFLOAT3 normal, XMFLOAT4 color, float radius)
+		: pos(position), norm(normal), color(color), radius(radius) {}
+
+
+	XMFLOAT3 pos;
+	XMFLOAT3 norm;
+	XMFLOAT4 color;
+	float radius;
+};
 }

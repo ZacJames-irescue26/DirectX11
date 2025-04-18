@@ -4,6 +4,12 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{FC0C0CD1-E8AE-36A7-D169-4AFBBDAABDF7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\CSM">
+      <UniqueIdentifier>{CE181D62-BAD0-5EAF-23D8-370B0FAFF99F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\illumination">
+      <UniqueIdentifier>{205F8C87-8CC0-6995-152E-B047818EA054}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -37,6 +43,21 @@
     </FxCompile>
     <FxCompile Include="Shader\BackgroundCubemap_v.hlsl">
       <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CSM\DebugCascade_p.hlsl">
+      <Filter>Shader\CSM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CSM\DebugCascade_v.hlsl">
+      <Filter>Shader\CSM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CSM\DrawShadowMap_p.hlsl">
+      <Filter>Shader\CSM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CSM\ShadowMapDepth_g.hlsl">
+      <Filter>Shader\CSM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CSM\ShadowMapDepth_v.hlsl">
+      <Filter>Shader\CSM</Filter>
     </FxCompile>
     <FxCompile Include="Shader\DefferedPixel_p.hlsl">
       <Filter>Shader</Filter>
@@ -73,6 +94,15 @@
     </FxCompile>
     <FxCompile Include="Shader\VertexShader_v.hlsl">
       <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\illumination\SurfelDebug_g.hlsl">
+      <Filter>Shader\illumination</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\illumination\SurfelDebug_p.hlsl">
+      <Filter>Shader\illumination</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\illumination\SurfelDebug_v.hlsl">
+      <Filter>Shader\illumination</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

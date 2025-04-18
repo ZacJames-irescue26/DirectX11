@@ -27,7 +27,6 @@ float2 Hammersley(uint i, uint N)
 float3 ImportanceSampleGGX(float2 Xi, float3 N, float roughness)
 {
     const float PI = 3.14159265359;
-    
     float a = roughness * roughness;
 	
     float phi = 2.0 * PI * Xi.x;

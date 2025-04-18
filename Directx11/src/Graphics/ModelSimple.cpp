@@ -44,7 +44,15 @@ void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatr
 		meshes[i].Draw();
 	}
 }
+void Model::Draw()
+{
+	for (int i = 0; i < meshes.size(); i++)
+	{
+		//Update Constant buffer with WVP Matrix
 
+		meshes[i].DrawJustMesh();
+	}
+}
 bool Model::LoadModel(const std::string& filePath)
 {
 	

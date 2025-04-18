@@ -22,6 +22,10 @@ void GameObject::Draw(const XMMATRIX& viewProjectionMatrix)
 {
 	model.Draw(worldMatrix, viewProjectionMatrix);
 }
+void GameObject::DrawWithOutCBuffer()
+{
+	model.Draw();
+}
 
 
 void GameObject::UpdateWorldMatrix()

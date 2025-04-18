@@ -88,6 +88,39 @@ ID3D10Blob* PixelShader::GetBuffer()
 {
 	return this->shader_buffer.Get();
 }
+bool GeometryShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath)
+{
+	HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
+	if (FAILED(hr))
+	{
+		std::wstring errorMsg = L"Failed to load shader: ";
+		errorMsg += shaderpath;
+		ErrorLogger::Log(hr, errorMsg);
+		return false;
+	}
+
+	hr = device->CreateGeometryShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
+	if (FAILED(hr))
+	{
+		std::wstring errorMsg = L"Failed to create Geometry shader: ";
+		errorMsg += shaderpath;
+		ErrorLogger::Log(hr, errorMsg);
+		return false;
+	}
+
+	return true;
+}
+
+ID3D11GeometryShader* GeometryShader::GetShader()
+{
+	return this->shader.Get();
+}
+
+ID3D10Blob* GeometryShader::GetBuffer()
+{
+	return this->shader_buffer.Get();
+}
+
 }
 
 

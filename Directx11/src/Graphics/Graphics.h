@@ -65,6 +65,10 @@ private:
 
 
 
+	std::vector<XMFLOAT3> GetFrustumCornersWorldSpace(const XMMATRIX& viewProj);
+	std::vector<XMFLOAT3> GetFrustumCornersWorldSpaceViewProj(const XMMATRIX& projView);
+	std::vector<XMFLOAT3> getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view);
+	XMMATRIX getLightSpaceMatrix(const float nearPlane, const float farPlane);
 	VertexShader m_vertexShader;
 	PixelShader m_pixelShader;
 	
@@ -124,6 +128,29 @@ public:
 	Microsoft::WRL::ComPtr < ID3D11Texture2D> BRDFTexture;
 	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> BRDFSRV;
 	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> BRDFRTVs;
-	
+	//CSM -----------------------------------------------------------------------------
+	const int NUM_CASCADES = 4;
+	std::vector<float> shadowCascadeLevels{ 1000 / 50.0f, 1000 / 25.0f, 1000 / 10.0f, 1000 / 2.0f };
+	const unsigned int depthMapResolution = 4098;
+	std::vector<Microsoft::WRL::ComPtr<ID3D11DepthStencilView>> shadowDSVs;
+	std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> shadowSRVs;
+	std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> shadowTex;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> shadowDepthStencilState;
+
+	XMFLOAT3 LightDir;
+	std::vector<XMMATRIX> getLightSpaceMatrices();
+
+	std::vector<XMVECTOR> getFrustumCornersWorldSpace(const XMMATRIX& projview);
+
+	Microsoft::WRL::ComPtr<ID3D11BlendState> transparentBlendState;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> DebugLineState;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> ShadowtextureArray;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShadowtextureArraySRV;
+	Microsoft::WRL::ComPtr < ID3D11SamplerState> shadowSampler = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DirectionalshadowDSVs;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> DirectionalshadowSRVs;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> DirectionalshadowTex;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> shadowRasterState;
 };
 }

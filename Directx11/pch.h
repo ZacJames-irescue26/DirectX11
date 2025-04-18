@@ -34,6 +34,7 @@
 #include <map>
 #include <cmath>
 #include <thread>
+#include <array>
 // Link library dependencies
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
