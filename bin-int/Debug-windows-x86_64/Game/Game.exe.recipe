@@ -69,6 +69,15 @@
     <ContentFile>
       <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexShader_v.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_g.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_v.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

@@ -21,6 +21,7 @@ public:
 	void DrawDebugCascade();
 	void DrawShadowMaps();
 	void DirectionalShadowMap();
+	void DrawSurfels();
 	void RenderFrame();
 	void ForwardRender();
 	void OnUserInput();
@@ -118,6 +119,12 @@ private:
 	int shadowmapIndex = 0;
 
 	// surfels
-	VertexBuffer<SurfelVB> SurfelVertexBuffer;
+	SurfelGenerator* gen;
+	Octree* octree;
 
+	VertexBuffer<SurfelVB> SurfelVertexBuffer;
+	VertexShader m_SurfelDebug_VS;
+	PixelShader m_SurfelDebug_PS;
+	GeometryShader m_SureflDebug_GS;
+	bool drawsurfeldebug = false;
 };

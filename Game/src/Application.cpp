@@ -238,9 +238,9 @@ void Application::OnCreate()
 	gfx.device->CreateShaderResourceView(gfx.HDRITexture.Get(), &srvDesc, gfx.HDRISRV.GetAddressOf());
 
 	AABB testbox = AABB(XMFLOAT3{-15.0,-5.0,-15.0},{15.0,15.0,15.0});
-	Octree* octree = new Octree(&testbox,3);
+	octree = new Octree(&testbox,3);
 	std::vector<GameObject> objects = {floor};
-	SurfelGenerator* gen = new SurfelGenerator(gfx.GetDevice(), gfx.GetDeviceContext(), octree, objects );
+	gen = new SurfelGenerator(gfx.GetDevice(), gfx.GetDeviceContext(), octree, objects );
 
 	std::vector<SurfelVB> svb;
 	for (const auto& surf : gen->GeneratedSurfels)
@@ -377,6 +377,20 @@ void Application::InitializeShaders()
 	{
 		return;
 	}
+
+	if (!m_SurfelDebug_VS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_v.cso", Surfelvb, ARRAYSIZE(Surfelvb)))
+	{
+		return;
+	}
+	if (!m_SurfelDebug_PS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_p.cso"))
+	{
+		return;
+	}
+	if (!m_SureflDebug_GS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_g.cso"))
+	{
+		return;
+	}
+
 }
 void Application::OnUpdate()
 {
@@ -1059,6 +1073,33 @@ void Application::DirectionalShadowMap()
 
 	
 }
+void Application::DrawSurfels()
+{
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(), nullptr);
+	gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(), 0);
+	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
+	gfx.SetBlendState();
+	gfx.SetDepthStencilState();
+	gfx.SetInputLayout(m_SurfelDebug_VS.GetInputLayout());
+	gfx.SetRasterizerState();
+	gfx.SetTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+	gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->SurfelVertexBuffer.GetAddressOf(), this->SurfelVertexBuffer.StridePtr(), &offset);
+	gfx.GetDeviceContext()->VSSetConstantBuffers(0, 1, m_ViewProj.GetAddressOf());
+	gfx.GetDeviceContext()->GSSetConstantBuffers(0, 1, m_ViewProj.GetAddressOf());
+	
+	m_ViewProj.data.Projection = XMMatrixTranspose(gfx.camera.GetProjectionMatrix());
+	m_ViewProj.data.View = XMMatrixTranspose(gfx.camera.GetViewMatrix());
+	m_ViewProj.ApplyChanges();
+	gfx.SetVSShader(m_SurfelDebug_VS.GetShader());
+	gfx.SetPSShader(m_SurfelDebug_PS.GetShader());
+	gfx.GetDeviceContext()->GSSetShader(m_SureflDebug_GS.GetShader(), nullptr, 0);
+
+	gfx.GetDeviceContext()->Draw(gen->GeneratedSurfels.size(), 0);
+	gfx.GetDeviceContext()->GSSetShader(nullptr, nullptr, 0);
+
+}
 void Application::RenderFrame()
 {
 
@@ -1078,6 +1119,10 @@ void Application::RenderFrame()
 	BindGBufferPass();
 	BackgroundCubeMap();
 	BindLightingPass();
+	if (drawsurfeldebug)
+	{
+		DrawSurfels();
+	}
 	//DrawShadowMaps();
 	//DrawDebugCascade();
 
@@ -1115,6 +1160,7 @@ void Application::RenderFrame()
 	
 	ImGui::DragFloat("farplane ", &farplane, 1, 10, 10000);
 	ImGui::Checkbox("Player camera", &playercam);
+	ImGui::Checkbox("Draw Surfels", &drawsurfeldebug);
 	ImGui::Image((ImTextureID)gfx.DirectionalshadowSRVs.Get(), { 200,200 });
 	/*ImGui::Image((ImTextureID)gfx.shadowSRVs[0].Get(), { 50,50 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[1].Get(), { 50,50 });
