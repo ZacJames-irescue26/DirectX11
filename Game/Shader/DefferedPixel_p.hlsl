@@ -367,7 +367,7 @@ float4 main( FSInput screenPos): SV_Target0
 
 		// add to outgoing radiance Lo
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
-        Lo *= (1.0f - ShadowCalculation1(P, N, LightDirection));
+        Lo *= (1.0f-ShadowCalculation1(P, N, LightDirection));
         
     }
     float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);

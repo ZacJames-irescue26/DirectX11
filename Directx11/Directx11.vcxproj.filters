@@ -16,6 +16,21 @@
     <Filter Include="src\Graphics">
       <UniqueIdentifier>{0D564864-F9B8-D708-A23E-10BF8E80A38B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Graphics\Raytracing">
+      <UniqueIdentifier>{F08511ED-5CBD-5984-65C7-BDA7D17D807D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Graphics\Raytracing\gdt">
+      <UniqueIdentifier>{3E875E85-AA94-8C6B-337B-88569F875822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Graphics\Raytracing\gdt\math">
+      <UniqueIdentifier>{F7AEBA0C-E3FF-A54E-0C64-9410F81339B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Graphics\Raytracing\gdt\math\vec">
+      <UniqueIdentifier>{A41BF337-9002-B52F-3953-1B4D25192E96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Graphics\Raytracing\gdt\random">
+      <UniqueIdentifier>{4EC7C831-3A03-CC9B-A315-E4928F7074B6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\ImGui">
       <UniqueIdentifier>{170E22B3-8378-D629-CCB6-87CF3860B47E}</UniqueIdentifier>
     </Filter>
@@ -176,6 +191,24 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h" />
+    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h" />
+    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h" />
+    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h" />
+    <ClInclude Include="src\Graphics\Raytracing\Optix.h" />
+    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -301,5 +334,9 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp" />
+    <ClCompile Include="src\Graphics\Raytracing\embedded_ptx_code.c" />
+    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp" />
+    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp" />
   </ItemGroup>
 </Project>

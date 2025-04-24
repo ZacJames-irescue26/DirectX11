@@ -11,6 +11,7 @@ public:
 	void InitializeShaders();
 	void OnUpdate();
 	void BindGBufferPass();
+	void RenderToRaytraceToSRV();
 	void BindLightingPass();
 	void DrawHDRI();
 	void IrradianceConvolution();
@@ -127,4 +128,9 @@ private:
 	PixelShader m_SurfelDebug_PS;
 	GeometryShader m_SureflDebug_GS;
 	bool drawsurfeldebug = false;
+
+	//Raytracing 
+	std::vector<uint32_t> RaytacedPixels;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> raytracetex;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> raytraceSRV;
 };

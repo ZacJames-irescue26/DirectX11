@@ -19,12 +19,15 @@ project "DirectX11"
 	}
 	includedirs  {
 		"src/",
-		"src/../"
+		"src/../",
+		"C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0/include",
+		"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
+		"src/Graphics/Raytracing"
 	}
 	IncludeDependencies()
 
 	defines { "GLM_FORCE_DEPTH_ZERO_TO_ONE", }
-	filter "files:src/ImGui/**.cpp or STB_Image.cpp"
+	filter "files:src/ImGui/**.cpp or STB_Image.cpp or src/Graphics/Raytracing/embedded_ptx_code.c"
 	flags { "NoPCH" }
 
 	filter { "files:**.hlslh" }

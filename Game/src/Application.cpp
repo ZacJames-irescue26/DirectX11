@@ -7,6 +7,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#define RUNOPTIX
 void Application::Initialize(HINSTANCE hInstance, std::string window_title, std::string window_class, int width, int height)
 {
 	EngineInit::Initialize(hInstance, window_title, window_class, width, height);
@@ -62,9 +63,11 @@ void Application::OnCreate()
 	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
 
 	HDRIViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	auto start_time = std::chrono::steady_clock::now();
 
 	if (!helmet.Initialize("Assets/DamagedHelmet/gLTF/DamagedHelmet.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
 		return;
+	
 
 	/*if (!light.Initialize(gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
 	{}*/
@@ -82,7 +85,15 @@ void Application::OnCreate()
 	{
 		return;
 	}
-	
+	//9s without threading
+	//2.9s after threading
+	auto end_time = std::chrono::steady_clock::now();
+
+	auto frame_time = end_time - start_time;
+
+	auto frame_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(frame_time);
+
+	std::cout << "Time to create Meshes: " << frame_time_ms.count() << " ms" << std::endl;
 	/*if (!MiscItems.Initialize(
 		"Assets/MiscItems.gltf", gfx.GetDevice(),
 		gfx.GetDeviceContext(), this->floorConstantBuffer))
@@ -239,7 +250,8 @@ void Application::OnCreate()
 
 	AABB testbox = AABB(XMFLOAT3{-15.0,-5.0,-15.0},{15.0,15.0,15.0});
 	octree = new Octree(&testbox,3);
-	std::vector<GameObject> objects = {floor};
+	std::vector<GameObject> objects;
+	objects.push_back(floor);
 	gen = new SurfelGenerator(gfx.GetDevice(), gfx.GetDeviceContext(), octree, objects );
 
 	std::vector<SurfelVB> svb;
@@ -253,6 +265,43 @@ void Application::OnCreate()
 		svb.push_back(vb);
 	}
 	SurfelVertexBuffer.Initialize(gfx.device.Get(), svb.data(), svb.size());
+
+#ifdef RUNOPTIX
+	osc::SampleRenderer sample = {objects};
+	
+	
+	sample.render();
+	RaytacedPixels.resize(1920*1080);
+	sample.downloadPixels(RaytacedPixels.data());
+
+	D3D11_TEXTURE2D_DESC textureDesc = {};
+	textureDesc.Width = 1920;
+	textureDesc.Height = 1080;
+	textureDesc.MipLevels = 1;
+	textureDesc.ArraySize = 1;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	
+	D3D11_SUBRESOURCE_DATA subresource_data = {};
+	subresource_data.pSysMem = RaytacedPixels.data();
+	subresource_data.SysMemPitch = 1920 * 4;
+	
+	gfx.device->CreateTexture2D(&textureDesc, &subresource_data, raytracetex.GetAddressOf());
+	
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc1 = {};
+	srvDesc1.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	srvDesc1.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srvDesc1.Texture2D.MipLevels = 1;
+	srvDesc1.Texture2D.MostDetailedMip = 0;
+
+	gfx.device->CreateShaderResourceView(raytracetex.Get(), &srvDesc1, raytraceSRV.GetAddressOf());
+
+#endif
+
+
+
 
 }
 void Application::InitializeShaders()
@@ -494,6 +543,66 @@ void Application::BindGBufferPass()
 
 }
 UINT offset = 0;
+void Application::RenderToRaytraceToSRV()
+{
+	//float bgcolor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	//gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(), nullptr);
+
+	//gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
+	//gfx.SetRasterizerState();
+	//gfx.SetBlendState();
+	//gfx.GetDeviceContext()->OMSetDepthStencilState(gfx.depthStencilStateDisabled.Get(), 0);
+	//gfx.SetSamplers();
+	//gfx.GetDeviceContext()->PSSetSamplers(1, 1, gfx.HDRIsamplerState.GetAddressOf());
+	//gfx.GetDeviceContext()->PSSetSamplers(2, 1, gfx.shadowSampler.GetAddressOf());
+	//gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
+
+	//gfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//gfx.GetDeviceContext()->VSSetShader(m_DeferredvertexShader.GetShader(), NULL, 0);
+	//gfx.GetDeviceContext()->PSSetShader(m_DeferredpixelShader.GetShader(), NULL, 0);
+
+	//std::vector< ID3D11ShaderResourceView*> shaderresources = {
+	//	gfx.NormalSRV.Get(),
+	//	gfx.DiffuseSRV.Get(),
+	//	gfx.SpecularSRV.Get(),
+	//	gfx.positionSRV.Get(),
+	//	gfx.IrradianceMapSRV.Get(),
+	//	gfx.HDRIFramebufferSRV.Get(),
+	//	gfx.PrefilteringSRV.Get(),
+	//	gfx.BRDFSRV.Get(),
+	//	gfx.DirectionalshadowSRVs.Get(),
+	//};
+
+	//gfx.GetDeviceContext()->PSSetShaderResources(0, shaderresources.size(), shaderresources.data());
+
+	//m_lightparams.data.LightSpaceMatrices = lightMatrices;
+	//m_lightparams.data.farPlane = 1000;
+	//m_lightparams.ApplyChanges();
+
+	//gfx.SetPSConstantBuffers(0, 1, m_lightparams.GetAddressOf());
+	//CameraInfoConstantBuffer.data.CameraPosition = PlayerCamera.GetPositionFloat3();
+	//CameraInfoConstantBuffer.data.InvProj = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetProjectionMatrix()));
+	//CameraInfoConstantBuffer.data.InvView = XMMatrixTranspose(XMMatrixInverse(nullptr, camera.GetViewMatrix()));
+	//CameraInfoConstantBuffer.data.View = XMMatrixTranspose(camera.GetViewMatrix());
+	//CameraInfoConstantBuffer.ApplyChanges();
+	//gfx.SetPSConstantBuffers(1, 1, CameraInfoConstantBuffer.GetAddressOf());
+	//gfx.SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
+	//gfx.SetPSConstantBuffers(2, 1, m_CastLight.GetAddressOf());
+	//m_CastLight.ApplyChanges();
+
+
+	//gfx.GetDeviceContext()->IASetVertexBuffers(0, 1, this->m_FullScreenVertex.GetAddressOf(), this->m_FullScreenVertex.StridePtr(), &offset);
+	//gfx.GetDeviceContext()->IASetIndexBuffer(m_FullScreenIndex.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+	//gfx.GetDeviceContext()->DrawIndexed(6, 0, 0);
+
+	//ID3D11ShaderResourceView* nullSRVs[4] = { nullptr, nullptr, nullptr, nullptr };
+	//gfx.GetDeviceContext()->PSSetShaderResources(0, 4, nullSRVs);
+	//ID3D11SamplerState* nullSampler[1] = { nullptr };
+	//gfx.GetDeviceContext()->PSSetSamplers(0, 1, nullSampler);
+
+}
 void Application::BindLightingPass()
 {
 
@@ -1162,6 +1271,10 @@ void Application::RenderFrame()
 	ImGui::Checkbox("Player camera", &playercam);
 	ImGui::Checkbox("Draw Surfels", &drawsurfeldebug);
 	ImGui::Image((ImTextureID)gfx.DirectionalshadowSRVs.Get(), { 200,200 });
+	
+	#ifdef RUNOPTIX
+	ImGui::Image((ImTextureID)raytraceSRV.Get(), { 200,200 });
+	#endif
 	/*ImGui::Image((ImTextureID)gfx.shadowSRVs[0].Get(), { 50,50 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[1].Get(), { 50,50 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[2].Get(), { 50,50 });

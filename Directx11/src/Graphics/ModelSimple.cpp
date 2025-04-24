@@ -3,6 +3,9 @@
 #include "ErrorLogger.h"
 #include "ConstantBuffer.h"
 #include "Color.h"
+
+static std::shared_mutex ModelWriteMeshMutex;
+
 namespace Engine
 {
 bool Model::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* devicecontext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader)
@@ -73,20 +76,27 @@ bool Model::LoadModel(const std::string& filePath)
 void Model::ProcessNode(aiNode* node, const aiScene* scene, const XMMATRIX& parentTransformMatrix)
 {
 	XMMATRIX nodeTransformMatrix = XMMatrixIdentity();
-
+	std::vector<std::thread> threads;
 	for (UINT i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(this->ProcessMesh(mesh, scene, nodeTransformMatrix));
+		threads.emplace_back([=]() {
+			this->ProcessMesh(mesh, scene, nodeTransformMatrix);
+		});
 	}
-
+	// Wait for threads to finish
+	for (auto& thread : threads)
+	{
+		if (thread.joinable())
+			thread.join();
+	}
 	for (UINT i = 0; i < node->mNumChildren; i++)
 	{
 		this->ProcessNode(node->mChildren[i], scene, nodeTransformMatrix);
 	}
 }
 
-Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& transformMatrix)
+void Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& transformMatrix)
 {
 	// Data to fill
 	std::vector<Vertex> vertices;
@@ -152,7 +162,15 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& tran
 	textures.insert(textures.end(), RoughnessTextures.begin(), RoughnessTextures.end());
 	//textures.insert(textures.end(), MetalnessTextures.begin(), MetalnessTextures.end());
 
-	return Mesh(this->device, this->deviceContext, vertices, indices, textures, transformMatrix);
+	CreateMesh(vertices, indices, textures, transformMatrix);
+}
+
+void Model::CreateMesh(std::vector<Vertex> vertices, std::vector<DWORD> indices, std::vector<Texture> tex, const XMMATRIX transformMatrix)
+{
+	std::lock_guard<std::shared_mutex> lck_guard(ModelWriteMeshMutex);
+	meshes.push_back(Mesh(this->device, this->deviceContext, vertices, indices, tex, transformMatrix));
+
+
 }
 
 TextureStorageType Model::DetermineTextureStorageType(const aiScene* pScene, aiMaterial* pMat, unsigned int index, aiTextureType textureType)

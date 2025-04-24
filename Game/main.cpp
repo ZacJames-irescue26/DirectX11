@@ -8,7 +8,7 @@ int APIENTRY main(_In_ HINSTANCE hInstance,
 
 {
 	Application app;
-	app.Initialize(hInstance, "Title", "MyWindowClass", 800, 600);
+	app.Initialize(hInstance, "Title", "MyWindowClass", 1920, 1080);
 	app.OnCreate();
 	app.OnUpdate();
 	return 0;

@@ -41,8 +41,8 @@ public:
 	{
 		return model;
 	}
-protected:
 	Model model;
+protected:
 	void UpdateWorldMatrix();
 
 

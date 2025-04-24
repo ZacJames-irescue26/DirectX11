@@ -7,3 +7,4 @@
 #include "Graphics/ThirdPersonCamera.h"
 #include "Acceleration/Octree/Octree.h"
 #include "illumination/SurfelGenerator.h"
+#include "Graphics/Raytracing/SampleRenderer.h"

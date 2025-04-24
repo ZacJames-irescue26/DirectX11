@@ -143,7 +143,7 @@ bool ComputeShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std
 	return true;
 }
 
-ID3D11GeometryShader* ComputeShader::GetShader()
+ID3D11ComputeShader* ComputeShader::GetShader()
 {
 	return this->shader.Get();
 }

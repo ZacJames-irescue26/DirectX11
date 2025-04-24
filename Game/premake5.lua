@@ -6,7 +6,10 @@ objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
 shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 
 	links { "DirectX11","d3d12.lib",
-        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib", }
+        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib", "cudart_static.lib","cuda.lib"}
+
+
+	libdirs { "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64"}
 
 	defines { "GLM_FORCE_DEPTH_ZERO_TO_ONE", }
 
@@ -26,6 +29,8 @@ shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 		"src/",
 		"../Directx11/src",
 		"../Directx11",
+		"C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0/include",
+		"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
 	}
 
 	filter { "files:**.hlslh" }

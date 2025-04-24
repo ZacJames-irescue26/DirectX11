@@ -219,7 +219,7 @@ namespace Engine
 						XMFLOAT3 norm;
 						XMStoreFloat3(&norm, Normal);
 
-						Surfel* candidate = new Surfel(pos, norm, albedo, 10.0);
+						Surfel* candidate = new Surfel(pos, norm, albedo, 5.0);
 						std::array<OctreeNode*, 7> ContainingNode = { octree->FindSmallestAABB(octree->Root(), candidate->position),
 						octree->FindSmallestAABB(octree->Root(), { candidate->position.x + 10, candidate->position.y, candidate->position.z }),
 						octree->FindSmallestAABB(octree->Root(), { candidate->position.x - 10, candidate->position.y, candidate->position.z }),

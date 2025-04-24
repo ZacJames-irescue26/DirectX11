@@ -17,6 +17,7 @@ public:
 	void Draw();
 	const XMMATRIX& GetTransformMatrix();
 	std::vector<Vertex> vertices;
+	std::vector<DWORD> indices;
 	std::vector<Texture> textures;
 private:
 	VertexBuffer<Vertex> vertexbuffer;

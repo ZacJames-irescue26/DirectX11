@@ -2,81 +2,81 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\DirectX GameEngine\DirectX11\bin\Debug-windows-x86_64\Game\Game.exe</FullPath>
+      <FullPath>C:\DirectX11\bin\Debug-windows-x86_64\Game\Game.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BRDF_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\BRDF_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BRDF_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\BRDF_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BackgroundCubemap_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\BackgroundCubemap_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\BackgroundCubemap_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\BackgroundCubemap_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DebugCascade_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\DebugCascade_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DebugCascade_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\DebugCascade_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DrawShadowMap_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\DrawShadowMap_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\ShadowMapDepth_g.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\ShadowMapDepth_g.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\ShadowMapDepth_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\ShadowMapDepth_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DefferedPixel_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\DefferedPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\DefferedVert_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\DefferedVert_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\EquiToHdri_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\EquiToHdri_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\EquiToHdri_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\EquiToHdri_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\GBufferPixel_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\GBufferPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\GBufferVert_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\GBufferVert_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\IrradianceConvolution_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\IrradianceConvolution_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelPBR_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\PixelPBR_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\PixelShader_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\PixelShader_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\Prefiltering_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\Prefiltering_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexPBR_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\VertexPBR_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\VertexShader_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\VertexShader_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_g.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\SurfelDebug_g.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_p.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\SurfelDebug_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\DirectX GameEngine\DirectX11\Game\CompiledShaders\SurfelDebug_v.cso</FullPath>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\SurfelDebug_v.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

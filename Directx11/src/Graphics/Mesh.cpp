@@ -12,6 +12,10 @@ Mesh::Mesh(ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::vector
 	{
 		this->vertices.push_back(vert);
 	}
+	for (const auto& indi: indices)
+	{
+		this->indices.push_back(indi);
+	}
 	HRESULT hr = this->vertexbuffer.Initialize(device, vertices.data(), vertices.size());
 	COM_ERROR_IF_FAILED(hr, "Failed to initialize vertex buffer for mesh.");
 
@@ -75,6 +79,8 @@ Mesh::Mesh(const Mesh& mesh)
 	this->indexbuffer = mesh.indexbuffer;
 	this->vertexbuffer = mesh.vertexbuffer;
 	this->textures = mesh.textures;
+	this->indices = mesh.indices;
+
 }
 void Mesh::DrawJustMesh()
 {

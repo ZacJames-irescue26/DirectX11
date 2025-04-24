@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;_DEBUG;ACL_ON_ASSERT_ABORT;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -102,7 +102,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;NDEBUG;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -128,7 +128,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -167,6 +167,23 @@
     <ClInclude Include="src\Graphics\Light.h" />
     <ClInclude Include="src\Graphics\Mesh.h" />
     <ClInclude Include="src\Graphics\ModelSimple.h" />
+    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h" />
+    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h" />
+    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h" />
+    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h" />
+    <ClInclude Include="src\Graphics\Raytracing\Optix.h" />
+    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Graphics\Texture.h" />
     <ClInclude Include="src\Graphics\ThirdPersonCamera.h" />
@@ -197,8 +214,15 @@
     <ClInclude Include="src\illumination\SurfelGenerator.h" />
     <ClInclude Include="src\resource.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Graphics\Raytracing\embedded_ptx_code.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp" />
+    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp" />
+    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
