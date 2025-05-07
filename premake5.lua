@@ -17,7 +17,6 @@ workspace "DOEDirectX11"
 
 	flags { "MultiProcessorCompile" }
 
-	-- NOTE(Peter): Don't remove this. Please never use Annex K functions ("secure", e.g _s) functions.
 	defines {
 		"_CRT_SECURE_NO_WARNINGS",
 		"NOMINMAX",
@@ -47,6 +46,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 group "Dependencies"
 include "Dependances/JoltPhysics/JoltPhysicsPremake.lua"
 include "Dependances/JoltPhysics/JoltViewerPremake.lua"
+include "Dependances/NVRHI/Premake5.lua"
 group ""
 
 group "Core"

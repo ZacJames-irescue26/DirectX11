@@ -49,7 +49,16 @@
 //	}
 //
 //}
-
+#define CUDA_CHECK_MSG(cmd) do {                              \
+  cudaError_t e = cmd;                                        \
+  if (e != cudaSuccess) {                                     \
+    std::cerr << #cmd << " failed: "                          \
+              << cudaGetErrorString(e)                        \
+              << " at " << __FILE__ << ":" << __LINE__        \
+              << std::endl;                                   \
+    std::terminate();                                         \
+  }                                                           \
+} while(0)
 #define CUDA_CHECK(call)							\
     {									\
       cudaError_t rc = cuda##call;                                      \
@@ -57,11 +66,22 @@
         std::stringstream txt;                                          \
         cudaError_t err =  rc; /*cudaGetLastError();*/                  \
         txt << "CUDA Error " << cudaGetErrorName(err)                   \
+            << " (" << cudaGetErrorString(err) << ")" << __FILE__<< " : " << __LINE__;                  \
+       std::cerr << txt.str() << std::endl;                           \
+      }                                                                 \
+    }
+#define CUDA_CHECKstdOut(call)							\
+    {									\
+      cudaError_t rc = cuda##call;                                      \
+      if (rc != cudaSuccess) {                                          \
+        std::stringstream txt;                                          \
+        cudaError_t err =  rc; /*cudaGetLastError();*/                  \
+        txt << "CUDA Error " << cudaGetErrorName(err)                   \
             << " (" << cudaGetErrorString(err) << ")";                  \
+        std::cout << txt << std::endl;                                  \
         throw std::runtime_error(txt.str());                            \
       }                                                                 \
     }
-
 #define CUDA_CHECK_NOEXCEPT(call)                                        \
     {									\
       cuda##call;                                                       \

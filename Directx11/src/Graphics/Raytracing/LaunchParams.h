@@ -1,5 +1,5 @@
 #pragma once
-
+#include "cuda_d3d11_interop.h"
 #include "optix_types.h"
 #include "gdt/gdt.h"
 #include "gdt/math/vec.h"
@@ -22,7 +22,25 @@ namespace osc {
 		
 	};
 
-	struct LaunchParams
+
+	struct alignas(16) LaunchParams
+	{
+		OptixTraversableHandle tlas;
+		float Packing;
+		float packing1;
+		vec4f* irrAccum; 
+		cudaSurfaceObject_t   irrSurf;  
+		float Packing2;
+		int curSlice = 0;        
+		const vec3f* probePos;
+		float Packing3;
+		uint32_t              probeCount = 0;
+		uint32_t              frameID = 0;
+		uint32_t              texels = 0;    // = probeCount * 6 * 36
+		
+	};
+
+	/*struct LaunchParams
 	{
 		struct {
 			uint32_t* colorBuffer;
@@ -42,6 +60,6 @@ namespace osc {
 		} light;
 
 		OptixTraversableHandle traversable;
-	};
+	};*/
 
 } // ::osc

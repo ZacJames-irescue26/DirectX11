@@ -23,6 +23,7 @@ public:
 	void DrawShadowMaps();
 	void DirectionalShadowMap();
 	void DrawSurfels();
+	void DDGIIradianceDebug();
 	void RenderFrame();
 	void ForwardRender();
 	void OnUserInput();
@@ -53,17 +54,17 @@ private:
 	
 	//Constant Buffers-----------------------------------------------
 	
-	ConstantBuffer<CB_VS_vertexShader> constantBuffer;
-	ConstantBuffer<CB_FS_LightPos> lightConstantBuffer;
-	ConstantBuffer<CB_VS_vertexShader> floorConstantBuffer;
-	ConstantBuffer<CameraInfo> CameraInfoConstantBuffer;
-	ConstantBuffer<CB_VS_ViewProj> HDRIViewProj;
-	ConstantBuffer<PrefilteringParams> m_PrefilteringParams;
-	ConstantBuffer<LightSpaceMatrices> m_LightSpace;
-	ConstantBuffer<ModelOnly> m_ObjectModel;
-	ConstantBuffer<CB_VS_ViewProj>m_ViewProj;
-	ConstantBuffer<DebugColors> m_DebugColors;
-	ConstantBuffer<Lights> m_CastLight;
+	nvrhi::BufferHandle  constantBuffer;
+	nvrhi::BufferHandle  lightConstantBuffer;
+	nvrhi::BufferHandle  floorConstantBuffer;
+	nvrhi::BufferHandle  CameraInfoConstantBuffer;
+	nvrhi::BufferHandle  HDRIViewProj;
+	nvrhi::BufferHandle  m_PrefilteringParams;
+	nvrhi::BufferHandle  m_LightSpace;
+	nvrhi::BufferHandle  m_ObjectModel;
+	nvrhi::BufferHandle  m_ViewProj;
+	nvrhi::BufferHandle  m_DebugColors;
+	nvrhi::BufferHandle  m_CastLight;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 	data data;
@@ -133,4 +134,6 @@ private:
 	std::vector<uint32_t> RaytacedPixels;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> raytracetex;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> raytraceSRV;
+	ComputeShader m_IrradianceDebug_CS;
+	
 };

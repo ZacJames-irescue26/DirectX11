@@ -16,12 +16,19 @@
 
 #pragma once
 
+#include "cuda.h"
+#include "cudaD3D11.h"
+#include "cuda_d3d11_interop.h"
 // our own classes, partly shared between host and device
 #include "CUDABuffer.h"
 #include "LaunchParams.h"
 #include "../ModelSimple.h"
 #include "src/Game/GameObject.h"
+#include "../Graphics.h"
+#include "optix.h"
+#include <vector>
 /*! \namespace osc - Optix Siggraph Course */
+
 namespace osc {
 
 
@@ -49,21 +56,13 @@ namespace osc {
     public:
         /*! constructor - performs all setup, including initializing
           optix, creates module, pipeline, programs, SBT, etc. */
-        SampleRenderer(std::vector<Engine::GameObject> objects);
+        SampleRenderer(Microsoft::WRL::ComPtr < ID3D11Device>& dev, Microsoft::WRL::ComPtr < ID3D11DeviceContext>& devcontext, Microsoft::WRL::ComPtr<ID3D11Texture2D>& textureToLink, std::vector<Engine::GameObject> objects);
 
         
         /*! render one frame */
         void render();
 
-        /*! resize frame buffer to given resolution */
-        void resize(const gdt::vec2i& newSize);
-
-        /*! download the rendered color buffer */
-        void downloadPixels(uint32_t h_pixels[]);
-
-        void downloadLightPixels(uint32_t h_Lightpixels[]);
-        void setCamera(const Camera& camera);
-
+        static Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> irrSRV;
     protected:
         // ------------------------------------------------------------------
         // internal helper functions
@@ -99,10 +98,15 @@ namespace osc {
         /*! constructs the shader binding table */
         void buildSBT();
 
-        void Draw();
-
-
     protected:
+
+		ID3D11Device* d3dDevice = nullptr;
+		ID3D11DeviceContext* d3dContext = nullptr;
+		// shareable atlas
+		ID3D11Texture2D* irrTexDX = nullptr;
+		cudaGraphicsResource*   irrResCUDA = nullptr;
+		cudaSurfaceObject_t  irrSurfCuda = 0;
+       
         bool IsCreated = false;
         bool IsExported = false;
         std::unique_ptr<Engine::Model> model;
@@ -120,8 +124,8 @@ namespace osc {
 		CUDABuffer asBuffer;
 
 
-	    unsigned int SCREEN_WIDTH = 1920;
-	    unsigned int SCREEN_HEIGHT = 1080;
+	    unsigned int SCREEN_WIDTH = 16;
+	    unsigned int SCREEN_HEIGHT = 16;
 
         /*! @{ CUDA device context and stream that optix pipeline will run
             on, as well as device properties for this device */
@@ -138,10 +142,14 @@ namespace osc {
         OptixPipelineCompileOptions pipelineCompileOptions = {};
         OptixPipelineLinkOptions    pipelineLinkOptions = {};
         /*! @} */
-
+        OptixPipeline pipelinePack;
+		OptixPipelineCompileOptions pipelineCompileOptions1 = {};
+		OptixPipelineLinkOptions    pipelineLinkOptions1 = {};
         /*! @{ the module that contains out device programs */
-        OptixModule                 module;
+		OptixModule                 module;
+		OptixModule                 Packmodule;
         OptixModuleCompileOptions   moduleCompileOptions = {};
+        OptixModuleCompileOptions   moduleCompileOptions1 = {};
         /* @} */
 
         /*! vector of all our program(group)s, and the SBT built around
@@ -153,7 +161,7 @@ namespace osc {
         std::vector<OptixProgramGroup> hitgroupPGs;
         CUDABuffer hitgroupRecordsBuffer;
         OptixShaderBindingTable sbt = {};
-
+        OptixShaderBindingTable sbtPack = {};
         /*! @{ our launch parameters, on the host, and the buffer to store
             them on the device */
         LaunchParams launchParams;
@@ -176,6 +184,14 @@ namespace osc {
 		std::vector<cudaArray_t>         textureArrays;
 		std::vector<cudaTextureObject_t> textureObjects;
 
+        std::vector<vec3f> ProbePositions;
+
+        Microsoft::WRL::ComPtr<ID3D11Texture2D> irrTex;
+        Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> irrUAV;
+        CUDABuffer probePosBuffer;
+        CUDABuffer          irrAccumBuffer;
+        void* cudaLinearMemory;
+        size_t pitch;
     };
 
 } // ::osc

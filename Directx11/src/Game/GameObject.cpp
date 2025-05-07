@@ -3,9 +3,10 @@
 
 #include "pch.h"
 #include "ErrorLogger.h"
+#include "nvrhi\d3d12.h"
 namespace Engine
 {
-bool GameObject::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader)
+bool GameObject::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader)
 {
 	if (!model.Initialize(filePath, device, deviceContext, cb_vs_vertexshader))
 	{

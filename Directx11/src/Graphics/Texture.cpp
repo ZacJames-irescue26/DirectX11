@@ -2,20 +2,22 @@
 #include "Texture.h"
 #include "stb_image.h"
 #include "..\\ErrorLogger.h"
+#include "nvrhi\nvrhi.h"
 namespace Engine
 {
-Texture::Texture(ID3D11Device* device, const Color& color, aiTextureType type)
+Texture::Texture(nvrhi::DeviceHandle device, const Color& color, aiTextureType type)
 {
 	this->Initialize1x1ColorTexture(device, color, type);
 }
 
-Texture::Texture(ID3D11Device* device, const Color* colorData, UINT width, UINT height, aiTextureType type)
+Texture::Texture(nvrhi::DeviceHandle device, const Color* colorData, UINT width, UINT height, aiTextureType type)
 {
 	this->InitializeColorTexture(device, colorData, width, height, type);
 }
 
-Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::string& filePath, aiTextureType type)
+Texture::Texture(nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, const std::string& filePath, aiTextureType type)
 {
+
 	this->type = type;
 
 	// load image
@@ -32,57 +34,38 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex = nullptr;
 	{
 
-		D3D11_TEXTURE2D_DESC texture_desc = {};
-		texture_desc.Width = img_width;
-		texture_desc.Height = img_height;
-		texture_desc.MipLevels = 1;
-		texture_desc.ArraySize = 1;
+		nvrhi::TextureDesc texture_desc = {};
+		texture_desc.width = img_width;
+		texture_desc.height = img_height;
+		texture_desc.mipLevels = -1;
+		texture_desc.arraySize = 1;
 	if (type == aiTextureType_DIFFUSE)
 	{
-		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+		
+		texture_desc.format = nvrhi::Format::SRGBA8_UNORM;
 	}
 	else if( type == aiTextureType_NORMALS)
 	{
-		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		texture_desc.format = nvrhi::Format::RGBA8_UNORM;
 	}
 	else if (type == aiTextureType_DIFFUSE_ROUGHNESS)
 	{
-		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		texture_desc.format = nvrhi::Format::RGBA8_UNORM;
 	}
-		texture_desc.SampleDesc.Count = 1;
-		texture_desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+		texture_desc.sampleDesc.Count = 1;
+		texture_desc.= D3D11_RESOURCE_MISC_GENERATE_MIPS;
 		texture_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 		texture_desc.MipLevels = 0; // 0 = generate all mip levels
 
 		//D3D11_SUBRESOURCE_DATA subresource_data = {};
 		//subresource_data.pSysMem = data;
 		//subresource_data.SysMemPitch = img_width * 4;
-
-		HRESULT hr = device->CreateTexture2D(&texture_desc, nullptr, tex.GetAddressOf());
-		if (FAILED(hr))
-		{
-			ErrorLogger::Log(hr, L"Failed to create texture 2d\n");
-
-		}
+		texture = device->createTexture()
 	
 
-	// create texture view
 	
-		D3D11_SHADER_RESOURCE_VIEW_DESC view_desc = {};
-		view_desc.Format = texture_desc.Format;
-		view_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		view_desc.Texture2D.MipLevels = -1;
-		view_desc.Texture2D.MostDetailedMip = 0;
-		
-		hr = device->CreateShaderResourceView(tex.Get(), &view_desc, textureView.GetAddressOf());
-		if (FAILED(hr))
-		{
-			ErrorLogger::Log(hr, L"Failed to create render target view\n");
-
-		}
-		deviceContext->UpdateSubresource(tex.Get(), 0, nullptr, data, img_width * 4, 0);
-		deviceContext->GenerateMips(textureView.Get());
 	}
+
 	texture = tex;
 	tex->Release();
 	stbi_image_free(data);
@@ -157,36 +140,18 @@ aiTextureType Texture::GetType()
 	return this->type;
 }
 
-ID3D11Texture2D* Texture::GetRawTexture()
+nvrhi::TextureHandle Texture::GetRawTexture()
 {
-	ID3D11Texture2D* pTexture = nullptr;
-
-	// Step 1: Query the resource for a texture interface
-	HRESULT hr = texture->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&pTexture));
-	if (FAILED(hr) || !pTexture)
-	{
-		ErrorLogger::Log(hr, "Failed to query texture");
-		return nullptr;
-	}
-	return pTexture;
+	return texture
 }
 
-ID3D11ShaderResourceView* Texture::GetTextureResourceView()
-{
-	return this->textureView.Get();
-}
 
-ID3D11ShaderResourceView** Texture::GetTextureResourceViewAddress()
-{
-	return this->textureView.GetAddressOf();
-}
-
-void Texture::Initialize1x1ColorTexture(ID3D11Device* device, const Color& colorData, aiTextureType type)
+void Texture::Initialize1x1ColorTexture(nvrhi::DeviceHandle device, const Color& colorData, aiTextureType type)
 {
 	InitializeColorTexture(device, &colorData, 1, 1, type);
 }
 
-void Texture::InitializeColorTexture(ID3D11Device* device, const Color* colorData, UINT width, UINT height, aiTextureType type)
+void Texture::InitializeColorTexture(nvrhi::DeviceHandle device, const Color* colorData, UINT width, UINT height, aiTextureType type)
 {
 	this->type = type;
 	CD3D11_TEXTURE2D_DESC textureDesc(DXGI_FORMAT_R8G8B8A8_UNORM, width, height);

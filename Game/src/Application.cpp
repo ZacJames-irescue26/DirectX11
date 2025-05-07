@@ -6,8 +6,10 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Graphics/Raytracing/SampleRenderer.h"
+#include "include/nvrhi/nvrhi.h"
+std::unique_ptr<osc::SampleRenderer> sample;
 
-#define RUNOPTIX
 void Application::Initialize(HINSTANCE hInstance, std::string window_title, std::string window_class, int width, int height)
 {
 	EngineInit::Initialize(hInstance, window_title, window_class, width, height);
@@ -18,51 +20,54 @@ void Application::Initialize(HINSTANCE hInstance, std::string window_title, std:
 void Application::OnCreate()
 {
 	InitializeShaders();
-
+	nvrhi::BufferDesc bufdesc;
+	bufdesc.byteSize = sizeof(CB_VS_vertexShader);
+	bufdesc.isConstantBuffer = true;
+	bufdesc.isVolatile = true;
+	constantBuffer = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 	//Initialize Constant Buffer(s)
-	HRESULT hr = this->constantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
 
-	hr = this->floorConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	floorConstantBuffer = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 
+	bufdesc.byteSize = sizeof(CB_FS_LightPos);
+	lightConstantBuffer = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 
-	hr = this->lightConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(CameraInfo);
+	CameraInfoConstantBuffer = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 
-	hr = this->CameraInfoConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(DirectionalLightParams);
+	m_lightparams = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 
-	hr = m_lightparams.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(PrefilteringParams);
+	m_PrefilteringParams = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 	
-	hr = m_PrefilteringParams.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(LightSpaceMatrices);
+	m_LightSpace = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 	
-	hr = m_LightSpace.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	hr = m_ObjectModel.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(ModelOnly);
+	m_ObjectModel = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 	
-	hr = m_ViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(CB_VS_ViewProj);
+	m_ViewProj = gfx.m_NvrhiDevice->createBuffer(bufdesc);
+	
+	bufdesc.byteSize = sizeof(DebugColors);
+	m_DebugColors = gfx.m_NvrhiDevice->createBuffer(bufdesc);
+	
+	bufdesc.byteSize = sizeof(Lights);
+	m_CastLight = gfx.m_NvrhiDevice->createBuffer(bufdesc);
 
-	hr = m_DebugColors.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	bufdesc.byteSize = sizeof(CB_VS_ViewProj);
+	HDRIViewProj = gfx.m_NvrhiDevice->createBuffer(bufdesc);
+	
+	gfx.m_CommandList->beginMarker("DeferredLighting");
+	Lights data;
+	data.light.position = XMFLOAT3(0.0, 5.0, 0.0);
+	data.light.intensity = XMFLOAT3(1.0, 1.0, 1.0);
+	data.light.direction = XMFLOAT3(0.0, -1.0, 0.0);
+	data.light.cutOff = 0.9;
+	gfx.m_CommandList->writeBuffer(m_CastLight, &data, sizeof(Lights));
 
-	hr = m_CastLight.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-	m_CastLight.data.light.position = XMFLOAT3(0.0,5.0,0.0);
-	m_CastLight.data.light.intensity = XMFLOAT3(1.0, 1.0, 1.0);
-	m_CastLight.data.light.direction = XMFLOAT3(0.0, -1.0, 0.0);
-	m_CastLight.data.light.cutOff = 0.9;
-	m_CastLight.ApplyChanges();
 
-	this->lightConstantBuffer.data.ambientLightColor = XMFLOAT3(1.0f, 1.0f, 1.0f);
-	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
-
-	HDRIViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	auto start_time = std::chrono::steady_clock::now();
 
 	if (!helmet.Initialize("Assets/DamagedHelmet/gLTF/DamagedHelmet.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
@@ -267,39 +272,16 @@ void Application::OnCreate()
 	SurfelVertexBuffer.Initialize(gfx.device.Get(), svb.data(), svb.size());
 
 #ifdef RUNOPTIX
-	osc::SampleRenderer sample = {objects};
+	sample = std::make_unique<osc::SampleRenderer>(gfx.device, gfx.deviceContext, gfx.irrTexDX, objects);
 	
-	
-	sample.render();
-	RaytacedPixels.resize(1920*1080);
-	sample.downloadPixels(RaytacedPixels.data());
-
-	D3D11_TEXTURE2D_DESC textureDesc = {};
-	textureDesc.Width = 1920;
-	textureDesc.Height = 1080;
-	textureDesc.MipLevels = 1;
-	textureDesc.ArraySize = 1;
-	textureDesc.SampleDesc.Count = 1;
-	textureDesc.Usage = D3D11_USAGE_DEFAULT;
-	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	
-	D3D11_SUBRESOURCE_DATA subresource_data = {};
-	subresource_data.pSysMem = RaytacedPixels.data();
-	subresource_data.SysMemPitch = 1920 * 4;
-	
-	gfx.device->CreateTexture2D(&textureDesc, &subresource_data, raytracetex.GetAddressOf());
-	
-	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc1 = {};
-	srvDesc1.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	srvDesc1.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srvDesc1.Texture2D.MipLevels = 1;
-	srvDesc1.Texture2D.MostDetailedMip = 0;
-
-	gfx.device->CreateShaderResourceView(raytracetex.Get(), &srvDesc1, raytraceSRV.GetAddressOf());
-
 #endif
+	end_time = std::chrono::steady_clock::now();
 
+	frame_time = end_time - start_time;
+
+	frame_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(frame_time);
+
+	std::cout << "Time to raytrace one probe in : " << frame_time_ms.count() << " ms" << std::endl;
 
 
 
@@ -439,7 +421,10 @@ void Application::InitializeShaders()
 	{
 		return;
 	}
-
+	if (!m_IrradianceDebug_CS.Initialize(gfx.device, L"CompiledShaders/IrradianceTextureDebug_c.cso"))
+	{
+		return;
+	}
 }
 void Application::OnUpdate()
 {
@@ -1209,6 +1194,25 @@ void Application::DrawSurfels()
 	gfx.GetDeviceContext()->GSSetShader(nullptr, nullptr, 0);
 
 }
+
+void Application::DDGIIradianceDebug()
+{
+	UINT w = 36 * 6;
+	UINT h = 36 * 250;
+	UINT tg = 8;
+	gfx.GetDeviceContext()->CSSetShader(m_IrradianceDebug_CS.GetShader(), nullptr, 0);
+	gfx.GetDeviceContext()->CSSetShaderResources(0, 1, osc::SampleRenderer::irrSRV.GetAddressOf());
+	gfx.GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, gfx.irrUAV.GetAddressOf(), nullptr);
+	gfx.GetDeviceContext()->Dispatch((w + tg - 1) / tg,
+		(h + tg - 1) / tg,
+		1);
+
+	// Unbind it (so you can bind it elsewhere later):
+	static ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
+	gfx.deviceContext->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+	gfx.GetDeviceContext()->CSSetShader(nullptr, nullptr, 0);
+}
+
 void Application::RenderFrame()
 {
 
@@ -1219,11 +1223,13 @@ void Application::RenderFrame()
 		Prefiltering();
 		BRDF();
 		RenderIrradianceandHDRI = false;
+		gfx.deviceContext->Flush();
+		sample->render();
 
 	}
-	
 	//Square
 	//ShadowDepthPass();
+	DDGIIradianceDebug();
 	DirectionalShadowMap();
 	BindGBufferPass();
 	BackgroundCubeMap();
@@ -1273,7 +1279,7 @@ void Application::RenderFrame()
 	ImGui::Image((ImTextureID)gfx.DirectionalshadowSRVs.Get(), { 200,200 });
 	
 	#ifdef RUNOPTIX
-	ImGui::Image((ImTextureID)raytraceSRV.Get(), { 200,200 });
+	ImGui::Image((ImTextureID)gfx.irratlasSRV.Get(), {200,200});
 	#endif
 	/*ImGui::Image((ImTextureID)gfx.shadowSRVs[0].Get(), { 50,50 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[1].Get(), { 50,50 });

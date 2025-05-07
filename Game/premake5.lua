@@ -6,10 +6,10 @@ objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
 shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 
 	links { "DirectX11","d3d12.lib",
-        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib", "cudart_static.lib","cuda.lib"}
+        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib", "NVRHI-D3D12.lib"}
 
 
-	libdirs { "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64"}
+	libdirs { }
 
 	defines { "GLM_FORCE_DEPTH_ZERO_TO_ONE", }
 
@@ -29,8 +29,6 @@ shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 		"src/",
 		"../Directx11/src",
 		"../Directx11",
-		"C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0/include",
-		"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
 	}
 
 	filter { "files:**.hlslh" }
@@ -46,10 +44,15 @@ shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 		shadertype "Vertex"
 		shadermodel "5.0"
 		shaderentry "main"
-		filter { "files:**_g.hlsl" }
+	filter { "files:**_g.hlsl" }
 		shadertype "Geometry"
 		shadermodel "5.0"
 		shaderentry "main"
+	filter { "files:**_c.hlsl" }
+		shadertype "Compute"
+		shadermodel "5.0"
+		shaderentry "main"
+
 	filter { "system:windows", "configurations:Debug or configurations:Debug-AS" }
 		postbuildcommands {
 			'{COPY} "../Dependances/assimp/bin/windows/Debug/assimp-vc143-mtd.dll" "%{cfg.targetdir}"',

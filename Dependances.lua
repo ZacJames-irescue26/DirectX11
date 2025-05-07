@@ -54,6 +54,15 @@ Dependencies = {
 		LibName = "JoltPhysics",
 		IncludeDir = "%{wks.location}/Dependances/JoltPhysics/JoltPhysics",
 	},
+
+	NVRHI = {
+		 LibName = "NVRHI-D3D12",
+		IncludeDir = "%{wks.location}/Dependances/NVRHI",
+	},
+
+	ImGui = {
+
+	},
 }
 
 

@@ -4,13 +4,14 @@
 #include <comdef.h>
 
 // DirectX includes
-#include <d3d11.h>
+#include <d3d12.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 #include <DirectXColors.h>
 #include<wrl.h>
 #include <direct.h>
-
+#include <dxgi1_5.h>
+#include <dxgidebug.h>
 
 // STL includes
 #include <intsafe.h>
@@ -36,12 +37,13 @@
 #include <thread>
 #include <array>
 // Link library dependencies
-#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "winmm.lib")
 
-
+#include "NVRHI/include/nvrhi/d3d12.h"
+#include <NVRHI/include/nvrhi/validation.h>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>

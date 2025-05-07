@@ -3,17 +3,16 @@
 #include "ErrorLogger.h"
 #include "ConstantBuffer.h"
 #include "Color.h"
-
+#include "nvrhi/d3d12.h"
 static std::shared_mutex ModelWriteMeshMutex;
 
 namespace Engine
 {
-bool Model::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* devicecontext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader)
+bool Model::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader)
 {
 	this->device = device;
-	this->deviceContext = devicecontext;
+	this->deviceContext = deviceContext;
 	this->cb_vs_vertexshader = &cb_vs_vertexshader;
-
 	try
 	{
 		if (!this->LoadModel(filePath))
@@ -29,22 +28,23 @@ bool Model::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11
 
 void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
 {
-
-	this->deviceContext->VSSetConstantBuffers(0, 1, this->cb_vs_vertexshader->GetAddressOf());
-		this->cb_vs_vertexshader->data.wvpMatrix = worldMatrix * viewProjectionMatrix; //Calculate World-View-Projection Matrix
-		this->cb_vs_vertexshader->data.worldMatrix = worldMatrix; //Calculate World
-		this->cb_vs_vertexshader->data.wvpMatrix = XMMatrixTranspose(this->cb_vs_vertexshader->data.wvpMatrix);
-		this->cb_vs_vertexshader->data.worldMatrix = XMMatrixTranspose(this->cb_vs_vertexshader->data.worldMatrix);		
-		cb_vs_vertexshader->data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
+	
 		
-		this->cb_vs_vertexshader->ApplyChanges();
+	CB_VS_vertexShader data;
+	data.wvpMatrix = worldMatrix * viewProjectionMatrix; //Calculate World-View-Projection Matrix
+	data.worldMatrix = worldMatrix; //Calculate World
+	data.wvpMatrix = XMMatrixTranspose(data.wvpMatrix);
+	data.worldMatrix = XMMatrixTranspose(data.worldMatrix);		
+	data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
+		
+	this->deviceContext->writeBuffer(cb_vs_vertexshader, &data, sizeof(CB_VS_vertexShader));
 
 
 	for (int i = 0; i < meshes.size(); i++)
 	{
 		//Update Constant buffer with WVP Matrix
 		
-		meshes[i].Draw();
+		meshes[i].Draw(deviceContext);
 	}
 }
 void Model::Draw()

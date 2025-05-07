@@ -82,7 +82,7 @@ Mesh::Mesh(const Mesh& mesh)
 	this->indices = mesh.indices;
 
 }
-void Mesh::DrawJustMesh()
+void Mesh::DrawJustMesh(nvrhi::CommandListHandle commandList)
 {
 	UINT offset = 0;
 
@@ -90,7 +90,7 @@ void Mesh::DrawJustMesh()
 	deviceContext->IASetIndexBuffer(indexbuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	deviceContext->DrawIndexed(indexbuffer.BufferSize(), 0, 0);
 }
-void Mesh::Draw()
+void Mesh::Draw(nvrhi::CommandListHandle commandList)
 {
 	UINT offset = 0;
 

@@ -15,6 +15,8 @@
 // ======================================================================== //
 #include "pch.h"
 
+
+
 #include <iostream>
 #include "SampleRenderer.h"
 // this include may only appear in a single source file:
@@ -23,15 +25,18 @@
 #include "stb_image_write.h"
 #include "Game/GameObject.h"
 
-
 /*! \namespace osc - Optix Siggraph Course */
+
+
+
+
 namespace osc {
 
-
-
+	
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SampleRenderer::irrSRV = nullptr;
 
     extern "C" char imageBytes[];
-
+	extern "C" char imageBytesPack[];
 	/*! SBT record for a raygen program */
 	struct __align__(OPTIX_SBT_RECORD_ALIGNMENT) RaygenRecord
 	{
@@ -56,18 +61,23 @@ namespace osc {
 		__align__(OPTIX_SBT_RECORD_ALIGNMENT) char header[OPTIX_SBT_RECORD_HEADER_SIZE];
 		TriangleMeshSBTData data;
 	};
-
+	
     /*! constructor - performs all setup, including initializing
       optix, creates module, pipeline, programs, SBT, etc. */
-    SampleRenderer::SampleRenderer(std::vector<Engine::GameObject> objects)
+    SampleRenderer::SampleRenderer(Microsoft::WRL::ComPtr < ID3D11Device>& dev, 
+	Microsoft::WRL::ComPtr < ID3D11DeviceContext>& devcontext, 
+	Microsoft::WRL::ComPtr<ID3D11Texture2D>& textureToLink, 
+	std::vector<Engine::GameObject> objects)
     {
 
         initOptix();
 		model = std::make_unique<Engine::Model>(objects[0].model);
-		launchParams.light.origin = {-1000.00000, 1000.000000, 1000.000000 };
-		launchParams.light.du = {400.000000, 400.00000000, 400.00000000};
-		launchParams.light.dv = {400.00000000, 400.00000000, 400.000000};
-		launchParams.light.power = {0.0,0.0,0.0};
+		//launchParams.light.origin = {-1000.00000, 1000.000000, 1000.000000 };
+		//launchParams.light.du = {400.000000, 400.00000000, 400.00000000};
+		//launchParams.light.dv = {400.00000000, 400.00000000, 400.000000};
+		//launchParams.light.power = {0.0,0.0,0.0};
+		
+
 
 
 
@@ -84,117 +94,119 @@ namespace osc {
         std::cout << "#osc: creating hitgroup programs ..." << std::endl;
         createHitgroupPrograms();
 
-        launchParams.traversable = buildAccel(objects);
+        launchParams.tlas = buildAccel(objects);
+		float ProbeSpacingX = 1.0;
+		float 	ProbeSpacingY = 2.5;      
+		float 	ProbeSpacingZ = 1.0;
 
-        std::cout << "#osc: setting up optix pipeline ..." << std::endl;
+		for (int x = -5; x < 5; x++)
+		{
+			for (int y = 0; y < 5; y++)
+			{
+				for (int z = 0; z < 5; z++)
+				{
+					ProbePositions.push_back({x*ProbeSpacingX,y*ProbeSpacingY,z*ProbeSpacingZ});
+				}
+			}
+		}
+
+
+
+		const size_t texels = ProbePositions.size() * 6 /*faces*/ * 36 /*6×6*/;
+		irrAccumBuffer.alloc(texels * sizeof(vec4f));   // one-time allocation
+		launchParams.probeCount = ProbePositions.size();
+		launchParams.texels = static_cast<uint32_t>(ProbePositions.size() * 6 * 36);
+		                             
+		probePosBuffer.alloc_and_upload(ProbePositions);       // malloc + memcpy
+		launchParams.probePos = reinterpret_cast<vec3f*>(probePosBuffer.d_pointer());
+		launchParams.irrAccum = reinterpret_cast<vec4f*>(irrAccumBuffer.d_pointer());
+		// 1) after you have filled ProbePositions …
+		const UINT probeCount = static_cast<UINT>(ProbePositions.size());   // N?probes
+		const UINT facesPerProbe = 6;
+		const UINT faceRes = 6;                       // 6×6 texels per face
+		const UINT arraySize = probeCount * facesPerProbe;   // one slice = one face
+		//--------------------------------------------------------------------
+ // 2) 2-D array texture (CUDA/OptiX writes R32_UINT)
+ //--------------------------------------------------------------------
+		D3D11_TEXTURE2D_DESC texDesc = {};
+		texDesc.Width = faceRes;
+		texDesc.Height = faceRes;
+		texDesc.MipLevels = 1;
+		texDesc.ArraySize = arraySize;                    //  derived – never hard-code
+		texDesc.Format = DXGI_FORMAT_R32_UINT;         // 32-bit uint  (CUDA OK)
+		texDesc.SampleDesc = { 1, 0 };                     // no MSAA
+		texDesc.Usage = D3D11_USAGE_DEFAULT;
+		texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE |  // we’ll read it in shaders
+			D3D11_BIND_UNORDERED_ACCESS;  // OptiX/CUDA write via UAV
+		texDesc.MiscFlags = D3D11_RESOURCE_MISC_SHARED;                            // same-process, no sharing
+		
+		dev->CreateTexture2D(&texDesc, nullptr, irrTex.GetAddressOf());
+
+		//--------------------------------------------------------------------
+		// 3) UAV     (OptiX writes through CUDA surface  UAV binding not used
+		//             by D3D11 itself but required for REGISTER_RESOURCE)
+		//--------------------------------------------------------------------
+		D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+		uavDesc.Format = texDesc.Format;
+		uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2DARRAY;
+		uavDesc.Texture2DArray.MipSlice = 0;
+		uavDesc.Texture2DArray.FirstArraySlice = 0;
+		uavDesc.Texture2DArray.ArraySize = arraySize;
+		
+		dev->CreateUnorderedAccessView(irrTex.Get(), &uavDesc, &irrUAV);
+
+		//--------------------------------------------------------------------
+		// 4) SRV     (show one particular face in ImGui or the debugger)
+		//--------------------------------------------------------------------
+		UINT probeToShow = 100;          // choose a probe 0 probeCount-1
+		UINT faceToShow = 0;            // 0=+X,1=?X,2=+Y,3=?Y,4=+Z,5=?Z
+		UINT slice = probeToShow * facesPerProbe + faceToShow;
+
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+		srvDesc.Format = texDesc.Format;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+		srvDesc.Texture2DArray.MipLevels = 1;
+		srvDesc.Texture2DArray.MostDetailedMip = 0;
+		srvDesc.Texture2DArray.FirstArraySlice = 0;      // just that slice
+		srvDesc.Texture2DArray.ArraySize = arraySize;
+		
+		dev->CreateShaderResourceView(irrTex.Get(), &srvDesc, irrSRV.GetAddressOf());
+
+		//--------------------------------------------------------------------
+		// 5) CUDA / OptiX registration  (once, after texture creation)
+		//--------------------------------------------------------------------
+		
+		CUDA_CHECK(GraphicsD3D11RegisterResource(
+			&irrResCUDA,
+			irrTex.Get(),                        // the texture
+			CU_GRAPHICS_REGISTER_FLAGS_SURFACE_LDST));
+
+	   std::cout << "#osc: setting up optix pipeline ..." << std::endl;
         createPipeline();
 
         std::cout << "#osc: building SBT ..." << std::endl;
         buildSBT();
 
-        launchParamsBuffer.alloc(sizeof(launchParams));
+        launchParamsBuffer.alloc(sizeof(LaunchParams));
         std::cout << "#osc: context, module, pipeline, etc, all set up ..." << std::endl;
 
        
         std::cout << "#osc: Optix 7 Sample fully set up" << std::endl;
-        resize(gdt::vec2i(SCREEN_WIDTH, SCREEN_HEIGHT));
+		//for (int i = 0; i < launchParams.texels; i++)
+		//{
+		//	unsigned flat = i;
+		//	unsigned probe = flat / (6u * 36u);
+		//	unsigned face = (flat / 36u) % 6u;
+		//	unsigned texel = flat % 36u;
+		//	unsigned u = texel % 6u;
+		//	unsigned v = texel / 6u;
+		//	unsigned layer = probe * 6u + face;
+		//	unsigned idx = layer * 36u + v * 6u + u;
+
+		//	std::cout << "layer: " << layer << " idx: "  << idx << " u: " << u << " v " << v << std::endl;
+
+		//}
     }
-
-	//void SampleRenderer::createTextures()
-	//{
-
-	//	int numTextures = 0;
-	//	for (const auto& mesh : model->GetMeshes())
-	//	{
-	//		numTextures += mesh.textures.size();
-	//	}
-
-	//	textureArrays.resize(numTextures);
-	//	textureObjects.resize(numTextures);
-	//	uint32_t textureid = 0;
-	//	for ( auto& mesh : model->meshes)
-	//	{
-	//	for ( auto& texture: mesh.textures) {
-	//		std::string filename = std::string(texture.path);
-	//		filename = texture.Directory + '/' + filename;
-
-	//		int m_width, m_height, nrComponents;
-	//		uint8_t* data = stbi_load(filename.c_str(), &m_width, &m_height, &nrComponents, 4);
-
-	//		cudaResourceDesc res_desc = {};
-
-	//		cudaChannelFormatDesc channel_desc;
-	//		int32_t width = m_width;
-	//		int32_t height = m_height;
-	//		int32_t numComponents = 4;
-	//		int32_t pitch = width * numComponents * sizeof(uint8_t);
-	//		channel_desc = cudaCreateChannelDesc<uchar4>();
-	//		cudaArray_t& pixelArray = textureArrays[textureid];
-	//		switch (texture.type)
-	//		{
-	//		case Radiant::TextureType::Diffuse:
-	//			pixelArray = mesh.DiffuseTexture;
-	//			break;
-
-	//		case Radiant::TextureType::Normal:
-	//			pixelArray = mesh.NormaltextureArrays;
-	//			break;
-	//		case Radiant::TextureType::Roughness:
-	//			pixelArray = mesh.RoughnesstextureArrays;
-	//			break;
-
-	//		}
-	//		CUDA_CHECK(MallocArray(&pixelArray,
-	//			&channel_desc,
-	//			width, height));
-
-	//		CUDA_CHECK(Memcpy2DToArray(pixelArray,
-	//			/* offset */0, 0,
-	//			data,
-	//			pitch, pitch, height,
-	//			cudaMemcpyHostToDevice));
-
-	//		res_desc.resType = cudaResourceTypeArray;
-	//		res_desc.res.array.array = pixelArray;
-
-	//		cudaTextureDesc tex_desc = {};
-	//		tex_desc.addressMode[0] = cudaAddressModeWrap;
-	//		tex_desc.addressMode[1] = cudaAddressModeWrap;
-	//		tex_desc.filterMode = cudaFilterModeLinear;
-	//		tex_desc.readMode = cudaReadModeNormalizedFloat;
-	//		tex_desc.normalizedCoords = 1;
-	//		tex_desc.maxAnisotropy = 1;
-	//		tex_desc.maxMipmapLevelClamp = 99;
-	//		tex_desc.minMipmapLevelClamp = 0;
-	//		tex_desc.mipmapFilterMode = cudaFilterModePoint;
-	//		tex_desc.borderColor[0] = 1.0f;
-	//		tex_desc.sRGB = 0;
-
-	//		// Create texture object
-	//		cudaTextureObject_t cuda_tex = 0;
-	//		CUDA_CHECK(CreateTextureObject(&cuda_tex, &res_desc, &tex_desc, nullptr));
-	//		textureObjects[textureid] = cuda_tex;
-	//		auto& cuda = cuda_tex;
-	//		switch (texture.type)
-	//		{
-	//		case Radiant::TextureType::Diffuse:
-	//			mesh.DiffusetextureObjects = cuda_tex;
-	//			break;
-
-	//		case Radiant::TextureType::Normal:
-	//			mesh.NormaltextureObjects = cuda_tex;
-	//			break;
-	//		case Radiant::TextureType::Roughness:
-	//			mesh.RoughnesstextureObjects = cuda_tex;
-	//			break;
-
-	//		}
-	//		textureid++;
-	//		stbi_image_free(data);
-	//	}
-	//	}
-
-	//}
 
     
     /*! helper function that initializes optix and checks for errors */
@@ -249,60 +261,7 @@ namespace osc {
         OPTIX_CHECK(optixDeviceContextSetLogCallback
         (optixContext, context_log_cb, nullptr, 4));
     }
-	//void SampleRenderer::createTextures()
-	//{
-	//	int numTextures = (int)model->meshes[0].textures.size();
-
-	//	textureArrays.resize(numTextures);
-	//	textureObjects.resize(numTextures);
-	//	for (const auto& meshes : model->meshes)
-	//	{
-	//		for (int textureID = 0; textureID < numTextures; textureID++) {
-	//			auto texture = model->meshes[0].textures[textureID];
-
-	//			cudaResourceDesc res_desc = {};
-
-	//			cudaChannelFormatDesc channel_desc;
-	//			int32_t width = texture->resolution.x;
-	//			int32_t height = texture->resolution.y;
-	//			int32_t numComponents = 4;
-	//			int32_t pitch = width * numComponents * sizeof(uint8_t);
-	//			channel_desc = cudaCreateChannelDesc<uchar4>();
-
-	//			cudaArray_t& pixelArray = textureArrays[textureID];
-	//			CUDA_CHECK(MallocArray(&pixelArray,
-	//				&channel_desc,
-	//				width, height));
-
-	//			CUDA_CHECK(Memcpy2DToArray(pixelArray,
-	//				/* offset */0, 0,
-	//				texture->pixel,
-	//				pitch, pitch, height,
-	//				cudaMemcpyHostToDevice));
-
-	//			res_desc.resType = cudaResourceTypeArray;
-	//			res_desc.res.array.array = pixelArray;
-
-	//			cudaTextureDesc tex_desc = {};
-	//			tex_desc.addressMode[0] = cudaAddressModeWrap;
-	//			tex_desc.addressMode[1] = cudaAddressModeWrap;
-	//			tex_desc.filterMode = cudaFilterModeLinear;
-	//			tex_desc.readMode = cudaReadModeNormalizedFloat;
-	//			tex_desc.normalizedCoords = 1;
-	//			tex_desc.maxAnisotropy = 1;
-	//			tex_desc.maxMipmapLevelClamp = 99;
-	//			tex_desc.minMipmapLevelClamp = 0;
-	//			tex_desc.mipmapFilterMode = cudaFilterModePoint;
-	//			tex_desc.borderColor[0] = 1.0f;
-	//			tex_desc.sRGB = 0;
-
-	//			// Create texture object
-	//			cudaTextureObject_t cuda_tex = 0;
-	//			CUDA_CHECK(CreateTextureObject(&cuda_tex, &res_desc, &tex_desc, nullptr));
-	//			textureObjects[textureID] = cuda_tex;
-	//		}
-	//	}
-	//	}
+	
 	OptixTraversableHandle SampleRenderer::buildAccel(std::vector<Engine::GameObject> objects)
 	{
 
@@ -537,22 +496,35 @@ namespace osc {
         single .cu file, using a single embedded ptx string */
     void SampleRenderer::createModule()
     {
-        moduleCompileOptions.maxRegisterCount = 50;
+        moduleCompileOptions.maxRegisterCount = 0;
         moduleCompileOptions.optLevel = OPTIX_COMPILE_OPTIMIZATION_DEFAULT;
-        moduleCompileOptions.debugLevel = OPTIX_COMPILE_DEBUG_LEVEL_NONE;
-
+        moduleCompileOptions.debugLevel = OPTIX_COMPILE_DEBUG_LEVEL_DEFAULT;
         pipelineCompileOptions = {};
         pipelineCompileOptions.traversableGraphFlags = OPTIX_TRAVERSABLE_GRAPH_FLAG_ALLOW_SINGLE_GAS;
         pipelineCompileOptions.usesMotionBlur = false;
-        pipelineCompileOptions.numPayloadValues = 2;
+        pipelineCompileOptions.numPayloadValues = 3;
         pipelineCompileOptions.numAttributeValues = 2;
         pipelineCompileOptions.exceptionFlags = OPTIX_EXCEPTION_FLAG_NONE;
-        pipelineCompileOptions.pipelineLaunchParamsVariableName = "optixLaunchParams";
+        pipelineCompileOptions.pipelineLaunchParamsVariableName = "lp";
 
         pipelineLinkOptions.maxTraceDepth = 2;
 		
-        const std::string ptxCode = imageBytes;
+		moduleCompileOptions1.maxRegisterCount = 0;
+		moduleCompileOptions1.optLevel = OPTIX_COMPILE_OPTIMIZATION_DEFAULT;
+		moduleCompileOptions1.debugLevel = OPTIX_COMPILE_DEBUG_LEVEL_DEFAULT;
+		pipelineCompileOptions1 = {};
+		pipelineCompileOptions1.traversableGraphFlags = OPTIX_TRAVERSABLE_GRAPH_FLAG_ALLOW_SINGLE_GAS;
+		pipelineCompileOptions1.usesMotionBlur = false;
+		pipelineCompileOptions1.numPayloadValues = 3;
+		pipelineCompileOptions1.numAttributeValues = 2;
+		pipelineCompileOptions1.exceptionFlags = OPTIX_EXCEPTION_FLAG_NONE;
+		pipelineCompileOptions1.pipelineLaunchParamsVariableName = "lp";
 
+		pipelineLinkOptions1.maxTraceDepth = 2;
+
+
+        const std::string ptxCode = imageBytes;
+		const std::string PackptxCOde = imageBytesPack;
         char log[2048];
         size_t sizeof_log = sizeof(log);
 #if OPTIX_VERSION >= 70700
@@ -564,6 +536,16 @@ namespace osc {
             log, &sizeof_log,
             &module
         ));
+        if (sizeof_log > 1) PRINT(log);
+
+		OPTIX_CHECK(optixModuleCreate(optixContext,
+			&moduleCompileOptions1,
+			&pipelineCompileOptions1,
+			PackptxCOde.c_str(),
+			PackptxCOde.size(),
+			log, &sizeof_log,
+			&Packmodule
+		));
 #else
         OPTIX_CHECK(optixModuleCreateFromPTX(optixContext,
             &moduleCompileOptions,
@@ -575,7 +557,6 @@ namespace osc {
             &module
         ));
 #endif
-        if (sizeof_log > 1) PRINT(log);
     }
 
 
@@ -584,13 +565,13 @@ namespace osc {
     void SampleRenderer::createRaygenPrograms()
     {
         // we do a single ray gen program in this example:
-        raygenPGs.resize(1);
+        raygenPGs.resize(2);
 
         OptixProgramGroupOptions pgOptions = {};
         OptixProgramGroupDesc pgDesc = {};
         pgDesc.kind = OPTIX_PROGRAM_GROUP_KIND_RAYGEN;
         pgDesc.raygen.module = module;
-        pgDesc.raygen.entryFunctionName = "__raygen__renderFrame";
+        pgDesc.raygen.entryFunctionName = "__raygen__ddgi_accum";
 
         // OptixProgramGroup raypg;
         char log[2048];
@@ -602,6 +583,18 @@ namespace osc {
             log, &sizeof_log,
             &raygenPGs[0]
         ));
+
+
+		pgDesc = {};
+		pgDesc.kind = OPTIX_PROGRAM_GROUP_KIND_RAYGEN;
+		pgDesc.raygen.module = Packmodule;
+		pgDesc.raygen.entryFunctionName = "__raygen__pack_texels";
+
+		
+		OPTIX_CHECK(optixProgramGroupCreate(optixContext,
+			&pgDesc, 1, &pgOptions, log, &sizeof_log, &raygenPGs[1]));
+		   // now raygenPGs.size() == 2
+
         if (sizeof_log > 1) PRINT(log);
     }
 
@@ -633,74 +626,67 @@ namespace osc {
     /*! does all setup for the hitgroup program(s) we are going to use */
     void SampleRenderer::createHitgroupPrograms()
     {
-		// for this simple example, we set up a single hit group
-		hitgroupPGs.resize(RAY_TYPE_COUNT);
+		hitgroupPGs.resize(RAY_TYPE_COUNT);          // 2 ray-types
 
-		char log[2048];
+		char  log[2048];
 		size_t sizeof_log = sizeof(log);
+		OptixProgramGroupOptions pgOpts = {};
 
-		OptixProgramGroupOptions pgOptions = {};
-		OptixProgramGroupDesc    pgDesc = {};
-		pgDesc.kind = OPTIX_PROGRAM_GROUP_KIND_HITGROUP;
-		pgDesc.hitgroup.moduleCH = module;
-		pgDesc.hitgroup.moduleAH = module;
+		// helper lambda: creates one PG and stores handle in vector
+		auto makePG = [&](int rtSlot,
+			OptixModule modCH, const char* nameCH,
+			OptixModule modAH, const char* nameAH)
+			{
+				OptixProgramGroupDesc pgDesc = {};
+				pgDesc.kind = OPTIX_PROGRAM_GROUP_KIND_HITGROUP;
 
-		// -------------------------------------------------------
-		// radiance rays
-		// -------------------------------------------------------
-		pgDesc.hitgroup.entryFunctionNameCH = "__closesthit__radiance";
-		pgDesc.hitgroup.entryFunctionNameAH = "__anyhit__radiance";
+				pgDesc.hitgroup.moduleIS = nullptr;   // built-in triangles
+				pgDesc.hitgroup.entryFunctionNameIS = nullptr;
 
-		OPTIX_CHECK(optixProgramGroupCreate(optixContext,
-			&pgDesc,
-			1,
-			&pgOptions,
-			log, &sizeof_log,
-			&hitgroupPGs[RADIANCE_RAY_TYPE]
-		));
-		if (sizeof_log > 1) PRINT(log);
+				pgDesc.hitgroup.moduleCH = modCH;
+				pgDesc.hitgroup.entryFunctionNameCH = nameCH;
 
-		// -------------------------------------------------------
-		// shadow rays: technically we don't need this hit group,
-		// since we just use the miss shader to check if we were not
-		// in shadow
-		// -------------------------------------------------------
-		pgDesc.hitgroup.entryFunctionNameCH = "__closesthit__shadow";
-		pgDesc.hitgroup.entryFunctionNameAH = "__anyhit__shadow";
+				pgDesc.hitgroup.moduleAH = modAH;
+				pgDesc.hitgroup.entryFunctionNameAH = nameAH;
 
-		OPTIX_CHECK(optixProgramGroupCreate(optixContext,
-			&pgDesc,
-			1,
-			&pgOptions,
-			log, &sizeof_log,
-			&hitgroupPGs[SHADOW_RAY_TYPE]
-		));
-		if (sizeof_log > 1) PRINT(log);
+				OPTIX_CHECK(optixProgramGroupCreate(optixContext,
+					&pgDesc, 1, &pgOpts, log, &sizeof_log,
+					&hitgroupPGs[rtSlot]));
+				if (sizeof_log > 1) PRINT(log);
+			};
 
-    }
+		// ---------------- radiance ray-type ----------------------------
+		makePG(/*rtSlot*/ RADIANCE_RAY_TYPE,
+			/*CH*/ module, "__closesthit__radiance",
+			/*AH*/ nullptr, nullptr);                // no any-hit
+
+		// ---------------- shadow ray-type ------------------------------
+		makePG(/*rtSlot*/ SHADOW_RAY_TYPE,
+			/*CH*/ nullptr, nullptr,                 // no closest-hit
+			/*AH*/ nullptr, nullptr);                // no any-hit
+	}
 
 
     /*! assembles the full pipeline of all programs */
     void SampleRenderer::createPipeline()
     {
-        std::vector<OptixProgramGroup> programGroups;
-        for (auto pg : raygenPGs)
-            programGroups.push_back(pg);
-        for (auto pg : missPGs)
-            programGroups.push_back(pg);
-        for (auto pg : hitgroupPGs)
-            programGroups.push_back(pg);
+		std::vector<OptixProgramGroup> programGroups;
+			programGroups.push_back(raygenPGs[0]);
+		for (auto pg : missPGs)
+			programGroups.push_back(pg);
+		for (auto pg : hitgroupPGs)
+			programGroups.push_back(pg);
 
-        char log[2048];
-        size_t sizeof_log = sizeof(log);
-        OPTIX_CHECK(optixPipelineCreate(optixContext,
-            &pipelineCompileOptions,
-            &pipelineLinkOptions,
-            programGroups.data(),
-            (int)programGroups.size(),
-            log, &sizeof_log,
-            &pipeline
-        ));
+		char log[2048];
+		size_t sizeof_log = sizeof(log);
+		OPTIX_CHECK(optixPipelineCreate(optixContext,
+			&pipelineCompileOptions,
+			&pipelineLinkOptions,
+			programGroups.data(),
+			(int)programGroups.size(),
+			log, &sizeof_log,
+			&pipeline
+		));
         if (sizeof_log > 1) PRINT(log);
 
         OPTIX_CHECK(optixPipelineSetStackSize
@@ -717,6 +703,17 @@ namespace osc {
             /* [in] The maximum depth of a traversable graph
                passed to trace. */
             1));
+		std::vector<OptixProgramGroup> programGroups1;
+		programGroups1.push_back(raygenPGs[1]);
+		for (auto pg : missPGs)
+			programGroups1.push_back(pg);
+		for (auto pg : hitgroupPGs)
+			programGroups1.push_back(pg);
+		OPTIX_CHECK(optixPipelineCreate(optixContext,
+			&pipelineCompileOptions1, &pipelineLinkOptions1,
+			programGroups1.data(), (int)programGroups1.size(),
+			log, &sizeof_log, &pipelinePack));
+
         if (sizeof_log > 1) PRINT(log);
     }
 
@@ -726,6 +723,7 @@ namespace osc {
     {
 		// --- Raygen ---
 		std::vector<RaygenRecord> raygenRecords;
+
 		for (int i = 0; i < raygenPGs.size(); i++) {
 			RaygenRecord rec = {};
 			OPTIX_CHECK(optixSbtRecordPackHeader(raygenPGs[i], &rec));
@@ -771,117 +769,99 @@ namespace osc {
 		sbt.hitgroupRecordBase = hitgroupRecordsBuffer.d_pointer();
 		sbt.hitgroupRecordStrideInBytes = sizeof(HitgroupRecord);
 		sbt.hitgroupRecordCount = (int)hitgroupRecords.size(); // meshCount * RAY_TYPE_COUNT
+
+		// --------------------------------------------------------------------
+	// D) fill TWO OptixShaderBindingTable structs
+	// --------------------------------------------------------------------
+		CUdeviceptr rgBase = raygenRecordsBuffer.d_pointer();
+		CUdeviceptr msBase = missRecordsBuffer.d_pointer();
+		CUdeviceptr hgBase = hitgroupRecordsBuffer.d_pointer();
+
+		const uint32_t msStride = sizeof(MissRecord);
+		const uint32_t hgStride = sizeof(HitgroupRecord);
+		const uint32_t msCount = static_cast<uint32_t>(missRecords.size());
+		const uint32_t hgCount = static_cast<uint32_t>(hitgroupRecords.size());
+		OptixShaderBindingTable sbtAccum;
+		// ---- SBT 0 : accumulate pass ---------------------------------------
+		sbtAccum = {};
+		sbtAccum.raygenRecord = rgBase;            // record 0
+		sbtAccum.missRecordBase = msBase;
+		sbtAccum.missRecordStrideInBytes = msStride;
+		sbtAccum.missRecordCount = msCount;
+		sbtAccum.hitgroupRecordBase = hgBase;
+		sbtAccum.hitgroupRecordStrideInBytes = hgStride;
+		sbtAccum.hitgroupRecordCount = hgCount;
+
+		// ---- SBT 1 : packing pass ------------------------------------------
+		sbtPack = sbtAccum;       // copy common fields
+		sbtPack.raygenRecord = rgBase + sizeof(RaygenRecord);  // record 1
     }
 
-	//void SampleRenderer::Draw()
-	//{
-	//	
- //       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 
-	//	
-	//	downloadPixels(pixels.data());
-	//	if (!IsCreated)			
-	//		glGenTextures(1, &fbTexture); IsCreated = true; ;
 
-	//	glBindTexture(GL_TEXTURE_2D, fbTexture);
-	//	GLenum texFormat = GL_RGBA;
-	//	GLenum texelType = GL_UNSIGNED_BYTE;
-	//	glTexImage2D(GL_TEXTURE_2D, 0, texFormat, launchParams.frame.size.x, launchParams.frame.size.y, 0, GL_RGBA,
-	//		texelType, pixels.data());
-	//	
-	//	
-	//	glClearColor(0.2,0.2,0.2,1.0);
-
-	//	glEnable(GL_TEXTURE_2D);
-	//	glBindTexture(GL_TEXTURE_2D, fbTexture);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//	glDisable(GL_DEPTH_TEST);
-
-	//	glViewport(0, 0, launchParams.frame.size.x, launchParams.frame.size.y);
- //      
- //      FullScreenProgram->bind();
-	//   FullScreenProgram->setInt("tex", 0);
- //      glActiveTexture(GL_TEXTURE0);
- //      glBindTexture(GL_TEXTURE_2D, fbTexture);
- //      ScreenQuad->Bind();
- //      ScreenQuad->Draw();
-	//    
-	//}
 
 	/*! render one frame */
     void SampleRenderer::render()
     {
-		// sanity check: make sure we launch only after first resize is
-		 // already done:
-		if (launchParams.frame.size.x == 0) return;
+		// 0) update params + clear accumulation
+		CUDA_CHECK(MemsetAsync(
+			reinterpret_cast<void*>(irrAccumBuffer.d_pointer()),
+			0,
+			irrAccumBuffer.sizeInBytes,
+			stream));
 
+		// 1) map D3D11 texture get CUarray
+		CUDA_CHECK(GraphicsMapResources(1, &irrResCUDA, stream));
+		
+		
+		// 2) fetch the *layered* array handle (this is key!)
+		cudaMipmappedArray_t mipmappedArray = nullptr;
+		CUDA_CHECK(GraphicsResourceGetMappedMipmappedArray(
+			&mipmappedArray,
+			irrResCUDA));
+
+		cudaArray_t layeredArray = nullptr;
+		// level 0 of the mipmapped array is the full texture2DArray
+		CUDA_CHECK(GetMipmappedArrayLevel(&layeredArray, mipmappedArray, 0));
+
+
+
+		// 3) build your surface object once per frame
+		cudaResourceDesc rdesc = {};
+		rdesc.resType = cudaResourceTypeArray;
+		rdesc.res.array.array = layeredArray;
+		// 2) create a fresh surface object for this CUarray
+		cudaSurfaceObject_t surfObj = 0;
+		CUDA_CHECK(CreateSurfaceObject(&surfObj, &rdesc));
+
+		// 3) patch your params to point at it
+		launchParams.irrSurf = surfObj;
+		launchParams.irrAccum = reinterpret_cast<vec4f*>(irrAccumBuffer.d_pointer());
+		static_assert(offsetof(LaunchParams, irrSurf) % alignof(cudaSurfaceObject_t) == 0,
+			"irrSurf must be 8-byte aligned!");
 		launchParamsBuffer.upload(&launchParams, 1);
-
-		OPTIX_CHECK(optixLaunch(/*! pipeline we're launching launch: */
-			pipeline, stream,
-			/*! parameters and SBT */
+		// 4) do your two OptiX launches
+		dim3 dimA(256, launchParams.probeCount, 1);
+		optixLaunch(pipeline, stream,
 			launchParamsBuffer.d_pointer(),
-			launchParamsBuffer.sizeInBytes,
-			&sbt,
-			/*! dimensions of the launch: */
-			launchParams.frame.size.x,
-			launchParams.frame.size.y,
-			1
-		));
-		// sync - make sure the frame is rendered before we download and
-		// display (obviously, for a high-performance application you
-		// want to use streams and double-buffering, but for this simple
-		// example, this will have to do)
-		CUDA_SYNC_CHECK();
+			sizeof(LaunchParams), &sbt,
+			dimA.x, dimA.y, dimA.z);
+
+		dim3 dimP(launchParams.texels, 1, 1);
+		optixLaunch(pipelinePack, stream,
+			launchParamsBuffer.d_pointer(),
+			sizeof(LaunchParams), &sbtPack,
+			dimP.x, dimP.y, dimP.z);
+
+		// 5) tear down: destroy surface + unmap
+		CUDA_CHECK(DestroySurfaceObject(surfObj));
+		CUDA_CHECK(GraphicsUnmapResources(1, &irrResCUDA, stream));
+
+		// 6) wait for everything to finish before next frame
+		CUDA_CHECK(StreamSynchronize(stream));
+		launchParams.frameID++;
     }
 
-    /*! resize frame buffer to given resolution */
-    void SampleRenderer::resize(const gdt::vec2i& newSize)
-    {
-		// if window minimized
-		if (newSize.x == 0 | newSize.y == 0) return;
-
-		// resize our cuda frame buffer
-		colorBuffer.resize(newSize.x * newSize.y * sizeof(uint32_t));
-		
-
-		// update the launch parameters that we'll pass to the optix
-		// launch:
-		launchParams.frame.size = newSize;
-		launchParams.frame.colorBuffer = (uint32_t*)colorBuffer.d_pointer();
-        pixels.resize(newSize.x * newSize.y);
-		// and re-set the camera, since aspect may have changed
-		
-		Camera camera = Camera (vec3f(-1293.07f, 154.681f, -0.7304f),
-	        vec3f(10.f, 10.f, 10.f),
-	        vec3f(0.f, 1.f, 0.f));
-        setCamera(camera);
-
-    }
-
-    /*! download the rendered color buffer */
-    void SampleRenderer::downloadPixels(uint32_t h_pixels[])
-    {
-		
-		colorBuffer.download(h_pixels,
-			launchParams.frame.size.x * launchParams.frame.size.y);
-    }
-	/*! set camera to render with */
-	void SampleRenderer::setCamera(const Camera& camera)
-	{
-		lastSetCamera = camera;
-		launchParams.camera.position = camera.from;
-		launchParams.camera.direction = normalize(camera.at - camera.from);
-		const float cosFovy = 0.66f;
-		const float aspect = launchParams.frame.size.x / float(launchParams.frame.size.y);
-		launchParams.camera.horizontal
-			= cosFovy * aspect * normalize(cross(launchParams.camera.direction,
-				camera.up));
-		launchParams.camera.vertical
-			= cosFovy * normalize(cross(launchParams.camera.horizontal,
-				launchParams.camera.direction));
-	}
-
+  
 } // ::osc

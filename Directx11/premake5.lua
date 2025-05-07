@@ -22,25 +22,16 @@ project "DirectX11"
 		"src/../",
 		"C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0/include",
 		"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
-		"src/Graphics/Raytracing"
+		"src/Graphics/Raytracing",
+		"C:/DirectX11/Dependances/NVRHI/include"
 	}
 	IncludeDependencies()
 
 	defines { "GLM_FORCE_DEPTH_ZERO_TO_ONE", }
-	filter "files:src/ImGui/**.cpp or STB_Image.cpp or src/Graphics/Raytracing/embedded_ptx_code.c"
+	filter "files:src/ImGui/**.cpp or STB_Image.cpp or src/Graphics/Raytracing/Accu_embedded_ptx_code.c or Pack_embedded_ptx_code.c"
 	flags { "NoPCH" }
 
-	filter { "files:**.hlslh" }
-	flags "ExcludeFromBuild"
-	shadermodel "6.0"
-	filter { "files:**-p.hlsl" }
-	shadertype "Pixel"
-	shadermodel "6.0"
-	shaderentry "main"
-	filter { "files:**-v.hlsl" }
-	shadertype "Vertex"
-	shadermodel "6.0"
-	shaderentry "main"
+
 
 	filter { "configurations:Debug or configurations:Debug-AS or configurations:Release" }
 		defines {

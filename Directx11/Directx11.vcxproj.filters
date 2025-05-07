@@ -103,6 +103,57 @@
     <ClInclude Include="src\Graphics\ModelSimple.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\OptixCommands.h">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h">
+      <Filter>src\Graphics\Raytracing\gdt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h">
+      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h">
+      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h">
+      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h">
+      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h">
+      <Filter>src\Graphics\Raytracing\gdt\random</Filter>
+    </ClInclude>
     <ClInclude Include="src\Graphics\Shader.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
@@ -125,6 +176,9 @@
       <Filter>src\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\ImGui\imgui_impl_dx11.h">
+      <Filter>src\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImGui\imgui_impl_dx12.h">
       <Filter>src\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\ImGui\imgui_impl_win32.h">
@@ -192,23 +246,6 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h" />
-    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h" />
-    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h" />
-    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h" />
-    <ClInclude Include="src\Graphics\Raytracing\Optix.h" />
-    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -256,6 +293,21 @@
     <ClCompile Include="src\Graphics\ModelSimple.cpp">
       <Filter>src\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\Accu_embedded_ptx_code.c">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\Pack_embedded_ptx_code.c">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp">
+      <Filter>src\Graphics\Raytracing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp">
+      <Filter>src\Graphics\Raytracing\gdt</Filter>
+    </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp">
       <Filter>src\Graphics</Filter>
     </ClCompile>
@@ -278,6 +330,9 @@
       <Filter>src\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\imgui_impl_dx11.cpp">
+      <Filter>src\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImGui\imgui_impl_dx12.cpp">
       <Filter>src\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGui\imgui_impl_win32.cpp">
@@ -334,9 +389,5 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp" />
-    <ClCompile Include="src\Graphics\Raytracing\embedded_ptx_code.c" />
-    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp" />
-    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp" />
   </ItemGroup>
 </Project>
