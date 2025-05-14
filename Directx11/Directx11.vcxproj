@@ -167,23 +167,6 @@
     <ClInclude Include="src\Graphics\Light.h" />
     <ClInclude Include="src\Graphics\Mesh.h" />
     <ClInclude Include="src\Graphics\ModelSimple.h" />
-    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h" />
-    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h" />
-    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h" />
-    <ClInclude Include="src\Graphics\Raytracing\OptixCommands.h" />
-    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h" />
-    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Graphics\Texture.h" />
     <ClInclude Include="src\Graphics\ThirdPersonCamera.h" />
@@ -239,13 +222,6 @@
     <ClCompile Include="src\Graphics\Light.cpp" />
     <ClCompile Include="src\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Graphics\ModelSimple.cpp" />
-    <ClCompile Include="src\Graphics\Raytracing\Accu_embedded_ptx_code.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp" />
-    <ClCompile Include="src\Graphics\Raytracing\Pack_embedded_ptx_code.c" />
-    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp" />
-    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\ThirdPersonCamera.cpp" />

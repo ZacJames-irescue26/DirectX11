@@ -11,11 +11,12 @@
 #include "nvrhi/utils.h"
 #include "nvrhi/d3d12.h"
 #include "nvrhi/validation.h"
+#include "nvrhi/common/resource.h"
+#include "directx/d3d12.h"
 
 namespace Engine
 {
 #define HR_RETURN(hr) if(FAILED(hr)) ErrorLogger::Log(hr, "FAILED"); return false;
-Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Graphics::irrSRV;
 DefaultMessageCallback& DefaultMessageCallback::GetInstance()
 {
 	static DefaultMessageCallback Instance;
@@ -546,7 +547,12 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	ImGui_ImplWin32_Init(hwnd);
-	//ImGui_ImplDX12_Init(this->device.Get(), this->deviceContext.Get());
+	ImGui_ImplDX12_Init((ID3D12Device*)(m_NvrhiDevice->getNativeObject(nvrhi::ObjectTypes::D3D12_Device)).pointer, 
+		2, 
+		DXGI_FORMAT_B8G8R8A8_UNORM, 
+		ImguiHeap.Get(),
+		ImguiHeap->GetCPUDescriptorHandleForHeapStart(),
+		ImguiHeap->GetGPUDescriptorHandleForHeapStart());
 	ImGui::StyleColorsDark();
 
 
@@ -568,26 +574,40 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 {
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
 	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
-
-
+	CreateDevice();
 	m_CommandList = m_NvrhiDevice->createCommandList();
-	D3D11_SAMPLER_DESC HDRIsampDesc = {};
-	 HDRIsampDesc.Filter = D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
-	 HDRIsampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	 HDRIsampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	 HDRIsampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	nvrhi::BindingLayoutDesc Binddesc;
+	Binddesc.bindings = {
+		nvrhi::BindingLayoutItem::Texture_SRV(0),
+		nvrhi::BindingLayoutItem::Texture_SRV(1)
+	};
+	ImguiBindingLayout = m_NvrhiDevice->createBindingLayout(Binddesc);
+
+	D3D12_DESCRIPTOR_HEAP_DESC heapdesc = {};
+	heapdesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	heapdesc.NumDescriptors = 1;                        // at least 1 for the font texture
+	heapdesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	heapdesc.NodeMask = 0;
 
 
-	D3D11_SAMPLER_DESC presamplerDesc = {};
-	presamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;         // Smooth trilinear filtering
-	presamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;           // Clamp to edge to avoid seams
-	presamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	presamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	presamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	presamplerDesc.MinLOD = 0;
-	presamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	presamplerDesc.MipLODBias = 0.0f;
-	presamplerDesc.MaxAnisotropy = 1;
+	m_Device12->CreateDescriptorHeap(&heapdesc, IID_PPV_ARGS(&ImguiHeap));
+	// D3D11_SAMPLER_DESC HDRIsampDesc = {};
+	// HDRIsampDesc.Filter = D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
+	// HDRIsampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	// HDRIsampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	// HDRIsampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+
+	//D3D11_SAMPLER_DESC presamplerDesc = {};
+	//presamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;         // Smooth trilinear filtering
+	//presamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;           // Clamp to edge to avoid seams
+	//presamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	//presamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	//presamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	//presamplerDesc.MinLOD = 0;
+	//presamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	//presamplerDesc.MipLODBias = 0.0f;
+	//presamplerDesc.MaxAnisotropy = 1;
 
 
 	return true;
@@ -668,41 +688,18 @@ bool Graphics::InitializeScene()
 	GBUfferFrameBuffer = m_NvrhiDevice->createFramebuffer(fbdesc);
 
 	// Position SRV
-	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	nvrhi::BindingLayoutDesc layout;
-	layout.addItem();
-	m_NvrhiDevice->createBindingLayout();
-	m_NvrhiDevice->createDescriptorTable();
-	m_NvrhiDevice->getNativeObject(nvrhi::ObjectTypes::D3D12_Device);
 
-	device->CreateShaderResourceView(positionTexture.Get(), &srvDesc, &positionSRV);
-
-	srvDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateShaderResourceView(NormalTexture.Get(), &srvDesc, &NormalSRV);
-
-
-	// Specular SRV
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(SpecularTexture.Get(), &srvDesc, &SpecularSRV);
-
-	// Diffuse SRV
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(DiffuseTexture.Get(), &srvDesc, &DiffuseSRV);
+	
 	
 
+	//D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+	//depthStencilDesc.DepthEnable = FALSE;              
+	//depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; 
+	//depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS; 
 
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-	depthStencilDesc.DepthEnable = FALSE;              
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; 
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS; 
+	//depthStencilDesc.StencilEnable = FALSE; // Optional — disables stencil too
 
-	depthStencilDesc.StencilEnable = FALSE; // Optional — disables stencil too
-
-	 HRESULT hr = device->CreateDepthStencilState(&depthStencilDesc, &depthStencilStateDisabled);
+	// HRESULT hr = device->CreateDepthStencilState(&depthStencilDesc, &depthStencilStateDisabled);
 	//HDRI-----------------------------------------
 	// D3D11_SAMPLER_DESC samplerDesc = {};
 	// samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -716,246 +713,191 @@ bool Graphics::InitializeScene()
 	//hr = device->CreateSamplerState(&samplerDesc, &HDRIsamplerState);
 	
 	
-	D3D11_DEPTH_STENCIL_DESC HDRIdepthStencilDesc = {};
-	HDRIdepthStencilDesc.DepthEnable = TRUE;
-	HDRIdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	HDRIdepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	//D3D11_DEPTH_STENCIL_DESC HDRIdepthStencilDesc = {};
+	//HDRIdepthStencilDesc.DepthEnable = TRUE;
+	//HDRIdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	//HDRIdepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	//
+	//hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
 	
-	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
-	
-	D3D11_TEXTURE2D_DESC texDesc = {};
-	texDesc.Width = 512; // e.g., 512
-	texDesc.Height = 512;
-	texDesc.MipLevels = 0; // 0 = generate full mip chain
-	texDesc.ArraySize = 6; // 6 faces
-	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
-	texDesc.SampleDesc.Count = 1;
-	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
-	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET; //
 
-	
-	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
+	nvrhi::TextureDesc texdesc = {};
+	texdesc.width = 512;
+	texdesc.height = 512;
+	texdesc.mipLevels = 0;// 0 = generate full mip chain
+	texdesc.arraySize = 6;// 6 faces
+	texdesc.format = nvrhi::Format::RGBA16_FLOAT;// HDR-capable
+	texdesc.isShaderResource = true;
+	texdesc.isRenderTarget = true;
+	texdesc.dimension = nvrhi::TextureDimension::TextureCube;
+	HDRIFramebufferTexture = m_NvrhiDevice->createTexture(texdesc);
 
-	for (int i = 0; i < 6; ++i)
+	for (uint32_t face = 0; face < 6; ++face)
 	{
-		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-		rtvDesc.Format = texDesc.Format;
-		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-		srvDesc.TextureCube.MipLevels = -1;
-		srvDesc.TextureCube.MostDetailedMip = 0;
-		rtvDesc.Texture2DArray.FirstArraySlice = i;
-		rtvDesc.Texture2DArray.ArraySize = 1;
-
-		device->CreateRenderTargetView(HDRIFramebufferTexture.Get(), &rtvDesc, &HDRIFramebufferRTV[i]);
+		nvrhi::FramebufferDesc fbDesc;
+		nvrhi::FramebufferAttachment fbattach = {};
+		fbattach.format = texdesc.format;
+		fbattach.texture = HDRIFramebufferTexture;
+		fbattach.setArraySlice(face);
+		fbDesc.addColorAttachment(fbattach);
+		faceFbs[face] = m_NvrhiDevice->createFramebuffer(fbDesc);
 	}
-	D3D11_SHADER_RESOURCE_VIEW_DESC HDRIsrvDesc = {};
-	HDRIsrvDesc.Format = texDesc.Format;
-	HDRIsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	HDRIsrvDesc.TextureCube.MipLevels = -1;
-	HDRIsrvDesc.TextureCube.MostDetailedMip = 0;
+	
+	nvrhi::TextureDesc irradiancetexDesc = {};
+	irradiancetexDesc.width = 32; 
+	irradiancetexDesc.height = 32;
+	irradiancetexDesc.mipLevels = 1;
+	irradiancetexDesc.arraySize = 6; // 6 faces
+	irradiancetexDesc.format = nvrhi::Format::RGBA16_FLOAT; // HDR-capable
+	irradiancetexDesc.isShaderResource = true;
+	irradiancetexDesc.isRenderTarget = true;
+	irradiancetexDesc.dimension = nvrhi::TextureDimension::TextureCube;
+	IrradiancemapTexture = m_NvrhiDevice->createTexture(irradiancetexDesc);
 
-	hr = device->CreateShaderResourceView(HDRIFramebufferTexture.Get(), &HDRIsrvDesc, HDRIFramebufferSRV.GetAddressOf());
 	
-	D3D11_TEXTURE2D_DESC irradiancetexDesc = {};
-	irradiancetexDesc.Width = 32; 
-	irradiancetexDesc.Height = 32;
-	irradiancetexDesc.MipLevels = 1;
-	irradiancetexDesc.ArraySize = 6; // 6 faces
-	irradiancetexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
-	irradiancetexDesc.SampleDesc.Count = 1;
-	irradiancetexDesc.Usage = D3D11_USAGE_DEFAULT;
-	irradiancetexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	irradiancetexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
-	
-	hr = device->CreateTexture2D(&irradiancetexDesc, nullptr, IrradiancemapTexture.GetAddressOf());
-	
-	D3D11_SHADER_RESOURCE_VIEW_DESC irradiancesrvDesc = {};
-	irradiancesrvDesc.Format = texDesc.Format;
-	irradiancesrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	irradiancesrvDesc.TextureCube.MipLevels = 1;
-	irradiancesrvDesc.TextureCube.MostDetailedMip = 0;
-
-	hr = device->CreateShaderResourceView(IrradiancemapTexture.Get(), &irradiancesrvDesc, IrradianceMapSRV.GetAddressOf());
-	
-	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-	rtvDesc.Format = texDesc.Format;
-	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-	rtvDesc.Texture2DArray.MipSlice = 0;
-	rtvDesc.Texture2DArray.ArraySize = 1;
-
-	for (UINT i = 0; i < 6; ++i)
+	for (uint32_t face = 0; face < 6; ++face)
 	{
-		rtvDesc.Texture2DArray.FirstArraySlice = i;
-		hr = device->CreateRenderTargetView(IrradiancemapTexture.Get(), &rtvDesc, irradianceRTVs[i].GetAddressOf());
-		if (FAILED(hr)) {
-			// handle error
-		}
+		nvrhi::FramebufferDesc fbDesc;
+		nvrhi::FramebufferAttachment fbattach = {};
+		fbattach.format = irradiancetexDesc.format;
+		fbattach.setArraySlice(face);
+		fbDesc.addColorAttachment(fbattach);
+		irradianceFBs[face] = m_NvrhiDevice->createFramebuffer(fbDesc);
 	}
 
 	
 
-	D3D11_TEXTURE2D_DESC irradiancedepthDesc = {};
-	irradiancedepthDesc.Width = 32;
-	irradiancedepthDesc.Height = 32;
-	irradiancedepthDesc.MipLevels = 1;
-	irradiancedepthDesc.ArraySize = 1;
-	irradiancedepthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	irradiancedepthDesc.SampleDesc.Count = 1;
-	irradiancedepthDesc.Usage = D3D11_USAGE_DEFAULT;
-	irradiancedepthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	nvrhi::TextureDesc irradiancedepthDesc = {};
+	irradiancedepthDesc.width = 32;
+	irradiancedepthDesc.height = 32;
+	irradiancedepthDesc.mipLevels = 1;
+	irradiancedepthDesc.arraySize = 1;
+	irradiancedepthDesc.format = nvrhi::Format::D24S8;
+	irradiancedepthDesc.isShaderResource = false;
+	irradiancedepthDesc.isRenderTarget = false;
 
-	hr = device->CreateTexture2D(&irradiancedepthDesc, nullptr, irradiancedepthStencilBuffer.GetAddressOf());
-	hr = device->CreateDepthStencilView(irradiancedepthStencilBuffer.Get(), nullptr, irradiancedepthStencilView.GetAddressOf());
+	irradiancedepthStencilBuffer = m_NvrhiDevice->createTexture(irradiancedepthDesc);
+
 	
-	D3D11_DEPTH_STENCIL_DESC IrradiancedepthStencilDesc = {};
+	/*D3D11_DEPTH_STENCIL_DESC IrradiancedepthStencilDesc = {};
 	IrradiancedepthStencilDesc.DepthEnable = TRUE;
 	IrradiancedepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	IrradiancedepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	IrradiancedepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;*/
 
 
-	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
+	//hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
 
-	D3D11_DEPTH_STENCIL_DESC skyboxdepthStencilDesc = {};
-	skyboxdepthStencilDesc.DepthEnable = TRUE;
-	skyboxdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // 
-	skyboxdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-	device->CreateDepthStencilState(&skyboxdepthStencilDesc, &depthStencilSkyboxState);
+	//D3D11_DEPTH_STENCIL_DESC skyboxdepthStencilDesc = {};
+	//skyboxdepthStencilDesc.DepthEnable = TRUE;
+	//skyboxdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // 
+	//skyboxdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	//device->CreateDepthStencilState(&skyboxdepthStencilDesc, &depthStencilSkyboxState);
 	
 	
 	const UINT baseSize = 128;
 	const UINT mipLevels = static_cast<UINT>(std::floor(std::log2(baseSize))) + 1;
 
-	D3D11_TEXTURE2D_DESC pretexDesc = {};
-	pretexDesc.Width = baseSize;
-	pretexDesc.Height = baseSize;
-	pretexDesc.MipLevels = mipLevels;
-	pretexDesc.ArraySize = 6; // Cube has 6 faces
-	pretexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	pretexDesc.SampleDesc.Count = 1;
-	pretexDesc.Usage = D3D11_USAGE_DEFAULT;
-	pretexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	pretexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+	nvrhi::TextureDesc pretexDesc = {};
+	pretexDesc.width = baseSize;
+	pretexDesc.height = baseSize;
+	pretexDesc.mipLevels = mipLevels;
+	pretexDesc.arraySize = 6; // Cube has 6 faces
+	pretexDesc.format = nvrhi::Format::RGBA16_FLOAT;
+	
+	pretexDesc.isRenderTarget = true;
+	pretexDesc.isShaderResource = true;
+	pretexDesc.dimension = nvrhi::TextureDimension::TextureCube;
+	PrefilteringTexture = m_NvrhiDevice->createTexture(pretexDesc);
 
-	device->CreateTexture2D(&texDesc, nullptr, &PrefilteringTexture);
-
-	hr = device->CreateTexture2D(&pretexDesc, nullptr, PrefilteringTexture.GetAddressOf());
-	PrefilteringRTVs.resize(mipLevels);
-	for (int i = 0 ; i < PrefilteringRTVs.size(); i++)
+	PrefilteringFBs.resize(mipLevels);
+	for (int i = 0 ; i < PrefilteringFBs.size(); i++)
 	{
-		PrefilteringRTVs[i].resize(6);
+		PrefilteringFBs[i].resize(6);
 	}
 
 	for (UINT mip = 0; mip < mipLevels; ++mip)
 	{
 		for (UINT face = 0; face < 6; ++face)
 		{
-			D3D11_RENDER_TARGET_VIEW_DESC prertvDesc = {};
-			prertvDesc.Format = pretexDesc.Format;
-			prertvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-			prertvDesc.Texture2DArray.MipSlice = mip;
-			prertvDesc.Texture2DArray.FirstArraySlice = face;
-			prertvDesc.Texture2DArray.ArraySize = 1;
 
-			if (FAILED(device->CreateRenderTargetView(PrefilteringTexture.Get(), &prertvDesc, PrefilteringRTVs[mip][face].GetAddressOf())))
-			{
-				assert(false);
-			}
+			nvrhi::FramebufferDesc fbDesc;
+			nvrhi::FramebufferAttachment fbattach = {};
+			fbattach.format = pretexDesc.format;
+			fbattach.texture = PrefilteringTexture;
+			fbattach.subresources.baseArraySlice = face;
+			fbattach.subresources.baseMipLevel = mip;
+			fbattach.setArraySlice(face);
+			fbDesc.addColorAttachment(fbattach);
+			PrefilteringFBs[mip][face] = m_NvrhiDevice->createFramebuffer(fbDesc);
 		}
 	}
-	D3D11_SHADER_RESOURCE_VIEW_DESC presrvDesc = {};
-	presrvDesc.Format = pretexDesc.Format;
-	presrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	presrvDesc.TextureCube.MipLevels = mipLevels;
-	presrvDesc.TextureCube.MostDetailedMip = 0;
 
-	device->CreateShaderResourceView(PrefilteringTexture.Get(), &presrvDesc, &PrefilteringSRV);
+	nvrhi::TextureDesc BRDFDesc = {};
+	BRDFDesc.width = 512; 
+	BRDFDesc.height = 512;
+	BRDFDesc.mipLevels = 1;
+	BRDFDesc.arraySize = 1; 
+	BRDFDesc.format = nvrhi::Format::RG32_FLOAT;
+	BRDFDesc.isShaderResource = true;
+	BRDFDesc.isRenderTarget = true;
 
-	D3D11_TEXTURE2D_DESC BRDFDesc = {};
-	BRDFDesc.Width = 512; 
-	BRDFDesc.Height = 512;
-	BRDFDesc.MipLevels = 1;
-	BRDFDesc.ArraySize = 1; 
-	BRDFDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
-	BRDFDesc.SampleDesc.Count = 1;
-	BRDFDesc.Usage = D3D11_USAGE_DEFAULT;
-	BRDFDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	BRDFTexture = m_NvrhiDevice->createTexture(BRDFDesc);
 
+	////CASCADED SHADOW MAPS----------------------------------------
+	//for (int i = 0; i < NUM_CASCADES; ++i)
+	//{
+	//	D3D11_TEXTURE2D_DESC desc = {};
+	//	desc.Width = depthMapResolution;
+	//	desc.Height = depthMapResolution;
+	//	desc.MipLevels = 1;
+	//	desc.ArraySize = 1;
+	//	desc.Format = DXGI_FORMAT_R32_TYPELESS;
+	//	desc.SampleDesc.Count = 1;
+	//	desc.Usage = D3D11_USAGE_DEFAULT;
+	//	desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 
-	hr = device->CreateTexture2D(&BRDFDesc, nullptr, BRDFTexture.GetAddressOf());
-
-		D3D11_RENDER_TARGET_VIEW_DESC BRDFrtvDesc = {};
-		BRDFrtvDesc.Format = BRDFDesc.Format;
-		BRDFrtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		BRDFrtvDesc.Texture2DArray.MipSlice = 0;
-		BRDFrtvDesc.Texture2DArray.ArraySize = 1;
-
-	hr = device->CreateRenderTargetView(BRDFTexture.Get(), &BRDFrtvDesc, &BRDFRTVs);
-
-	D3D11_SHADER_RESOURCE_VIEW_DESC BRDFsrvDesc = {};
-	BRDFsrvDesc.Format = BRDFDesc.Format;
-	BRDFsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	BRDFsrvDesc.Texture2D.MipLevels = 1;
+	//	shadowTex.resize(NUM_CASCADES);
+	//	hr = device->CreateTexture2D(&desc, nullptr, shadowTex[i].GetAddressOf());
+	//	shadowDSVs.resize(NUM_CASCADES);
+	//	// Depth view
+	//	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	//	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	//	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	//	hr = device->CreateDepthStencilView(shadowTex[i].Get(), &dsvDesc, &shadowDSVs[i]);
+	//	shadowSRVs.resize(NUM_CASCADES);
+	//	// SRV for shader access
+	//	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+	//	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
+	//	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	//	srvDesc.Texture2D.MipLevels = 1;
+	//	hr = device->CreateShaderResourceView(shadowTex[i].Get(), &srvDesc, &shadowSRVs[i]);
+	//}
 	
-	hr = device->CreateShaderResourceView(BRDFTexture.Get(), &BRDFsrvDesc, &BRDFSRV);
+	//D3D11_DEPTH_STENCIL_DESC ShadowdepthStencilDesc = {};
+	//ShadowdepthStencilDesc.DepthEnable = TRUE;                                 // Enable depth testing
+	//ShadowdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;        // Allow depth writes
+	//ShadowdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;            // Standard comparison
 
-	//CASCADED SHADOW MAPS----------------------------------------
-	for (int i = 0; i < NUM_CASCADES; ++i)
-	{
-		D3D11_TEXTURE2D_DESC desc = {};
-		desc.Width = depthMapResolution;
-		desc.Height = depthMapResolution;
-		desc.MipLevels = 1;
-		desc.ArraySize = 1;
-		desc.Format = DXGI_FORMAT_R32_TYPELESS;
-		desc.SampleDesc.Count = 1;
-		desc.Usage = D3D11_USAGE_DEFAULT;
-		desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+	//ShadowdepthStencilDesc.StencilEnable = FALSE;                              // We don’t use stencil here
 
-		shadowTex.resize(NUM_CASCADES);
-		hr = device->CreateTexture2D(&desc, nullptr, shadowTex[i].GetAddressOf());
-		shadowDSVs.resize(NUM_CASCADES);
-		// Depth view
-		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-		dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-		dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-		hr = device->CreateDepthStencilView(shadowTex[i].Get(), &dsvDesc, &shadowDSVs[i]);
-		shadowSRVs.resize(NUM_CASCADES);
-		// SRV for shader access
-		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
-		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		srvDesc.Texture2D.MipLevels = 1;
-		hr = device->CreateShaderResourceView(shadowTex[i].Get(), &srvDesc, &shadowSRVs[i]);
-	}
-	
-	D3D11_DEPTH_STENCIL_DESC ShadowdepthStencilDesc = {};
-	ShadowdepthStencilDesc.DepthEnable = TRUE;                                 // Enable depth testing
-	ShadowdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;        // Allow depth writes
-	ShadowdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;            // Standard comparison
-
-	ShadowdepthStencilDesc.StencilEnable = FALSE;                              // We don’t use stencil here
-
-	 hr = device->CreateDepthStencilState(&ShadowdepthStencilDesc, shadowDepthStencilState.GetAddressOf());
+	// hr = device->CreateDepthStencilState(&ShadowdepthStencilDesc, shadowDepthStencilState.GetAddressOf());
 
 
-	 D3D11_BLEND_DESC blendDesc = {};
-	 blendDesc.AlphaToCoverageEnable = FALSE;
-	 blendDesc.IndependentBlendEnable = FALSE;
+	// D3D11_BLEND_DESC blendDesc = {};
+	// blendDesc.AlphaToCoverageEnable = FALSE;
+	// blendDesc.IndependentBlendEnable = FALSE;
 
-	 D3D11_RENDER_TARGET_BLEND_DESC rtBlend = {};
-	 rtBlend.BlendEnable = TRUE;
-	 rtBlend.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	 rtBlend.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	 rtBlend.BlendOp = D3D11_BLEND_OP_ADD;
-	 rtBlend.SrcBlendAlpha = D3D11_BLEND_ONE;
-	 rtBlend.DestBlendAlpha = D3D11_BLEND_ZERO;
-	 rtBlend.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	 rtBlend.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	// D3D11_RENDER_TARGET_BLEND_DESC rtBlend = {};
+	// rtBlend.BlendEnable = TRUE;
+	// rtBlend.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	// rtBlend.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	// rtBlend.BlendOp = D3D11_BLEND_OP_ADD;
+	// rtBlend.SrcBlendAlpha = D3D11_BLEND_ONE;
+	// rtBlend.DestBlendAlpha = D3D11_BLEND_ZERO;
+	// rtBlend.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	// rtBlend.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	 blendDesc.RenderTarget[0] = rtBlend;
-
-	 hr = device->CreateBlendState(&blendDesc, transparentBlendState.GetAddressOf());
+	// blendDesc.RenderTarget[0] = rtBlend;
 
 	/* D3D11_RASTERIZER_DESC rasterizerDesc;
 	 ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
@@ -998,103 +940,35 @@ bool Graphics::InitializeScene()
 	 //
 	 //device->CreateShaderResourceView(ShadowtextureArray.Get(), &ShadowsrvDesc, &ShadowtextureArraySRV);
 
-	 D3D11_SAMPLER_DESC sampDesc = {};
-	 sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
-	 sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	 sampDesc.BorderColor[0] = 1.0f;
-	 sampDesc.BorderColor[1] = 1.0f;
-	 sampDesc.BorderColor[2] = 1.0f;
-	 sampDesc.BorderColor[3] = 1.0f;
+	/*nvrhi::SamplerDesc sampDesc = {};
+	sampDesc.minFilter = true;
+	sampDesc.magFilter = true;
+	sampDesc.addressU = nvrhi::SamplerAddressMode::Border;
+	sampDesc.addressV = nvrhi::SamplerAddressMode::Border;
+	sampDesc.addressW = nvrhi::SamplerAddressMode::Border;
+	sampDesc.reductionType = nvrhi::SamplerReductionType::Comparison;
+	sampDesc.borderColor = {1.0,1.0,1.0,1.0};
+	shadowSampler = m_NvrhiDevice->createSampler(sampDesc)*/
+	
+	
+	
+	 nvrhi::TextureDesc desc = {};
+	 desc.width = depthMapResolution;
+	 desc.height = depthMapResolution;
+	 desc.mipLevels = 1;
+	 desc.arraySize = 1;
+	 desc.format = nvrhi::Format::R32_FLOAT;
+	 desc.isShaderResource = true;
+	 desc.isRenderTarget = true;
+	 DirectionalshadowTex = m_NvrhiDevice->createTexture(desc);
 
-	 
-	hr = device->CreateSamplerState(&sampDesc, &shadowSampler);
-	
-	
-	
-	 D3D11_TEXTURE2D_DESC desc = {};
-	 desc.Width = depthMapResolution;
-	 desc.Height = depthMapResolution;
-	 desc.MipLevels = 1;
-	 desc.ArraySize = 1;
-	 desc.Format = DXGI_FORMAT_R32_TYPELESS;
-	 desc.SampleDesc.Count = 1;
-	 desc.Usage = D3D11_USAGE_DEFAULT;
-	 desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
-
-	 hr = device->CreateTexture2D(&desc, nullptr, DirectionalshadowTex.GetAddressOf());
 	 // Depth view
-	 D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	/* D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	 dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	 dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	 hr = device->CreateDepthStencilView(DirectionalshadowTex.Get(), &dsvDesc, &DirectionalshadowDSVs);
+	 hr = device->CreateDepthStencilView(DirectionalshadowTex.Get(), &dsvDesc, &DirectionalshadowDSVs);*/
 	 // SRV for shader access
-	 srvDesc = {};
-	 srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
-	 srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	 srvDesc.Texture2D.MipLevels = 1;
-	 hr = device->CreateShaderResourceView(DirectionalshadowTex.Get(), &srvDesc, &DirectionalshadowSRVs);
-	
-	 D3D11_RASTERIZER_DESC rasterDesc = {};
-	 rasterDesc.FillMode = D3D11_FILL_SOLID;
-	 rasterDesc.CullMode = D3D11_CULL_FRONT; // Cull front faces
-	 rasterDesc.DepthClipEnable = true;
 
-	 
-	 device->CreateRasterizerState(&rasterDesc, shadowRasterState.GetAddressOf());
-	
-	//OPTIX TEXTURE
-	 UINT       probeCount = 250;     // e.g. 10*5*5
-	 UINT       facesPerProbe = 6;
-	 UINT       faceRes = 6;
-	 UINT       arraySize = probeCount * facesPerProbe; // = 1500
-	
-	irrSRV = osc::SampleRenderer::irrSRV;
-
-
-	// 2) atlas dimensions: tile each probe’s 6 faces in a 6×250 grid
-	const UINT atlasCols = facesPerProbe;
-	const UINT atlasRows = probeCount;
-	const UINT atlasW = faceRes * atlasCols;  // 6 * 6  = 36
-	const UINT atlasH = faceRes * atlasRows;  // 6 * 250 = 1500
-
-	// 3) create the atlas texture (1 slice)
-	D3D11_TEXTURE2D_DESC td = {};
-	td.Width = atlasW;
-	td.Height = atlasH;
-	td.MipLevels = 1;
-	td.ArraySize = 1;
-	td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;      // match your R32_UINT format
-	td.SampleDesc = { 1,0 };
-	td.Usage = D3D11_USAGE_DEFAULT;
-	td.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE; // only need SRV
-	td.MiscFlags = 0;
-
-	
-	hr = device->CreateTexture2D(&td, nullptr, &irratlasTex);
-
-	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
-	uavDesc.Format = td.Format;
-	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
-	uavDesc.Texture2D.MipSlice = 0;
-	hr = device->CreateUnorderedAccessView(irratlasTex.Get(), &uavDesc, &irrUAV);
-
-	// 4) create a plain SRV for the atlas
-	D3D11_SHADER_RESOURCE_VIEW_DESC svd = {};
-	svd.Format = td.Format;
-	svd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	svd.Texture2D.MipLevels = 1;
-	svd.Texture2D.MostDetailedMip = 0;
-
-	
-	hr = device->CreateShaderResourceView(irratlasTex.Get(), &svd, &irratlasSRV);
-
-
-
-
-	assert(SUCCEEDED(hr));
 	return true;
 
 
@@ -1215,23 +1089,23 @@ XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPla
 
 std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
 {
-	std::vector<XMMATRIX> ret;
-	for (size_t i = 0; i < NUM_CASCADES; i++)
-	{
-		if (i == 0)
-		{
-			ret.push_back(getLightSpaceMatrix(0.1, shadowCascadeLevels[i]));
-		}
-		else if (i < NUM_CASCADES-1)
-		{
-			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
-		}
-		else
-		{
-			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 1000));
-		}
-	}
-	return ret;
+	//std::vector<XMMATRIX> ret;
+	//for (size_t i = 0; i < NUM_CASCADES; i++)
+	//{
+	//	if (i == 0)
+	//	{
+	//		ret.push_back(getLightSpaceMatrix(0.1, shadowCascadeLevels[i]));
+	//	}
+	//	else if (i < NUM_CASCADES-1)
+	//	{
+	//		ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
+	//	}
+	//	else
+	//	{
+	//		ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 1000));
+	//	}
+	//}
+	//return ret;
 }
 std::vector<XMVECTOR> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& projview)
 {
@@ -1264,57 +1138,59 @@ std::vector<XMVECTOR> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj
 
 	return frustumCorners;
 }
-void Graphics::ClearDepthStencil(ID3D11DepthStencilView* stencil)
-{
-	this->deviceContext->ClearDepthStencilView(stencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+//void Graphics::ClearDepthStencil(nvrhi::TextureHandle stencil)
+//{
+//	this->m_CommandList->clearDepthStencilTexture(stencil,, 1.0f, 0);
+//
+//}
+//void Graphics::SetInputLayout(ID3D11InputLayout* layout)
+//{
+//	this->deviceContext->IASetInputLayout(layout);
+//
+//}
+//void Graphics::SetTopology(D3D11_PRIMITIVE_TOPOLOGY top)
+//{
+//	this->deviceContext->IASetPrimitiveTopology(top);
+//}
+//void Graphics::SetRasterizerState()
+//{
+//	this->deviceContext->RSSetState(this->rasterizerstate.Get());
+//}
+//void Graphics::SetDepthStencilState()
+//{
+//	this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
+//}
+//void Graphics::SetBlendState()
+//{
+//	this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
+//}
+//void Graphics::SetSamplers()
+//{
+//	this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
+//}
+//void Graphics::SetPSShader(ID3D11PixelShader* shader)
+//{
+//	this->deviceContext->PSSetShader(shader, NULL, 0);
+//}
+//void Graphics::SetVSShader(ID3D11VertexShader* shader)
+//{
+//	this->deviceContext->VSSetShader(shader, NULL, 0);
+//}
+//
+//void Graphics::SetPSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer*const* ppBuffer)
+//{
+//	this->deviceContext->PSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
+//}
+//void Graphics::SetVSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer)
+//{
+//	this->deviceContext->VSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
+//}
+//void Graphics::ClearView(float color[4])
+//{
+//	this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), color);
+//}
 
-}
-void Graphics::SetInputLayout(ID3D11InputLayout* layout)
-{
-	this->deviceContext->IASetInputLayout(layout);
 
-}
-void Graphics::SetTopology(D3D11_PRIMITIVE_TOPOLOGY top)
-{
-	this->deviceContext->IASetPrimitiveTopology(top);
-}
-void Graphics::SetRasterizerState()
-{
-	this->deviceContext->RSSetState(this->rasterizerstate.Get());
-}
-void Graphics::SetDepthStencilState()
-{
-	this->deviceContext->OMSetDepthStencilState(this->depthStencilState.Get(), 0);
-}
-void Graphics::SetBlendState()
-{
-	this->deviceContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
-}
-void Graphics::SetSamplers()
-{
-	this->deviceContext->PSSetSamplers(0, 1, this->samplerState.GetAddressOf());
-}
-void Graphics::SetPSShader(ID3D11PixelShader* shader)
-{
-	this->deviceContext->PSSetShader(shader, NULL, 0);
-}
-void Graphics::SetVSShader(ID3D11VertexShader* shader)
-{
-	this->deviceContext->VSSetShader(shader, NULL, 0);
-}
-
-void Graphics::SetPSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer*const* ppBuffer)
-{
-	this->deviceContext->PSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
-}
-void Graphics::SetVSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer)
-{
-	this->deviceContext->VSSetConstantBuffers(startSlot, NumOfBuffers, ppBuffer);
-}
-void Graphics::ClearView(float color[4])
-{
-	this->deviceContext->ClearRenderTargetView(this->renderTargetView.Get(), color);
-}
-
+nvrhi::DeviceHandle Graphics::m_NvrhiDevice;
 
 }

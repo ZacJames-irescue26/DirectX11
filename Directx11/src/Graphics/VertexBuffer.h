@@ -1,4 +1,5 @@
 #pragma once
+#include <nvrhi/d3d12.h>
 namespace Engine
 {
 template<class T>
@@ -7,7 +8,7 @@ class VertexBuffer
 private:
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+	nvrhi::BufferHandle buffer;
 	UINT stride = sizeof(T);
 	UINT bufferSize = 0;
 
@@ -27,12 +28,12 @@ public:
 		this->stride = rhs.stride;
 	}
 
-	ID3D11Buffer* Get()const
+	nvrhi::BufferHandle Get()const
 	{
 		return buffer.Get();
 	}
 
-	ID3D11Buffer* const* GetAddressOf()const
+	nvrhi::IBuffer* const* GetAddressOf()const
 	{
 		return buffer.GetAddressOf();
 	}
@@ -52,7 +53,7 @@ public:
 		return &stride;
 	}
 
-	HRESULT Initialize(ID3D11Device* device, T* data, UINT numVertices)
+	HRESULT Initialize(nvrhi::DeviceHandle* device, nvrhi::CommandListHandle commandlist, T* data, UINT numVertices)
 	{
 		if (buffer.Get() != nullptr)
 		{
@@ -60,21 +61,15 @@ public:
 		}
 		this->bufferSize = numVertices;
 
-		D3D11_BUFFER_DESC vertexBufferDesc;
-		ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
+		nvrhi::BufferDesc vertexBufferDesc;
+		vertexBufferDesc.byteSize = sizeof(T)* numVertices;
+		vertexBufferDesc.isVertexBuffer = true;
 
-		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		vertexBufferDesc.ByteWidth = sizeof(T) * numVertices;
-		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		vertexBufferDesc.CPUAccessFlags = 0;
-		vertexBufferDesc.MiscFlags = 0;
-
-		D3D11_SUBRESOURCE_DATA vertexBufferData;
-		ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-		vertexBufferData.pSysMem = data;
-
-		HRESULT hr = device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, this->buffer.GetAddressOf());
-		return hr;
+		buffer = device->CreateBuffer(vertexBufferDesc);
+		
+		commandlist->writeBuffer(buffer, data, numVertices)
+		
+		return 0;
 	}
 };
 }

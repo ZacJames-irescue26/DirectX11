@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "Shader.h"
+#include <nvrhi/d3d12.h>
+#include <nvrhi/nvrhi.h>
 
 namespace Engine
 {
-bool VertexShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, LPCWSTR shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutdesc, UINT elements)
+bool VertexShader::Initialize(nvrhi::DeviceHandle device, LPCWSTR shaderpath, std::vector<nvrhi::VertexAttributeDesc> desc, UINT elements)
 {
-
 	HRESULT hr = D3DReadFileToBlob(shaderpath, this->shader_buffer.GetAddressOf());
 	if (FAILED(hr))
 	{
@@ -23,25 +24,17 @@ bool VertexShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, LPCW
 		ErrorLogger::Log(hr, errorMsg);
 		return false;
 	}
+	nvrhi::ShaderDesc shaderdesc;
+	shaderdesc.shaderType = nvrhi::ShaderType::Vertex;
+	shaderdesc.entryName = "main";
 
-	hr = device->CreateVertexShader(this->shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), NULL, this->shader.GetAddressOf());
-	if (FAILED(hr))
-	{
-		std::wstring errorMsg = L"Failed to create vertex shader: ";
-		errorMsg += shaderpath;
-		ErrorLogger::Log(hr, errorMsg);
-		return false;
-	}
-	hr = device->CreateInputLayout(layoutdesc, elements, shader_buffer->GetBufferPointer(), this->shader_buffer->GetBufferSize(), this->inputLayout.GetAddressOf());
-	if (FAILED(hr))
-	{
-		ErrorLogger::Log(hr, "Failed to create input layout.");
-		return false;
-	}
+	shader = device->createShader(shaderdesc, shader_buffer.Get()->GetBufferPointer(), shader_buffer.Get()->GetBufferSize());
+
+	inputLayout = device->createInputLayout(desc.data(), elements, shader);
 	return true;
 }
 
-ID3D11VertexShader* VertexShader::GetShader()
+nvrhi::ShaderHandle VertexShader::GetShader()
 {
 	return this->shader.Get();
 }
@@ -51,12 +44,12 @@ ID3D10Blob* VertexShader::GetBuffer()
 	return this->shader_buffer.Get();
 }
 
-ID3D11InputLayout* VertexShader::GetInputLayout()
+nvrhi::InputLayoutHandle VertexShader::GetInputLayout()
 {
 	return inputLayout.Get();
 }
 
-bool PixelShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath)
+bool PixelShader::Initialize(nvrhi::DeviceHandle device, std::wstring shaderpath)
 {
 	HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 	if (FAILED(hr))
@@ -66,20 +59,16 @@ bool PixelShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::
 		ErrorLogger::Log(hr, errorMsg);
 		return false;
 	}
-
-	hr = device->CreatePixelShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
-	if (FAILED(hr))
-	{
-		std::wstring errorMsg = L"Failed to create pixel shader: ";
-		errorMsg += shaderpath;
-		ErrorLogger::Log(hr, errorMsg);
-		return false;
-	}
+	nvrhi::ShaderDesc desc;
+	desc.entryName = "main";
+	desc.shaderType = nvrhi::ShaderType::Pixel;
+	
+	shader = device->createShader(desc, this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize());
 
 	return true;
 }
 
-ID3D11PixelShader* PixelShader::GetShader()
+nvrhi::ShaderHandle PixelShader::GetShader()
 {
 	return this->shader.Get();
 }
@@ -88,7 +77,7 @@ ID3D10Blob* PixelShader::GetBuffer()
 {
 	return this->shader_buffer.Get();
 }
-bool GeometryShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath)
+bool GeometryShader::Initialize(nvrhi::DeviceHandle device, std::wstring shaderpath)
 {
 	HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 	if (FAILED(hr))
@@ -99,19 +88,16 @@ bool GeometryShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, st
 		return false;
 	}
 
-	hr = device->CreateGeometryShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
-	if (FAILED(hr))
-	{
-		std::wstring errorMsg = L"Failed to create Geometry shader: ";
-		errorMsg += shaderpath;
-		ErrorLogger::Log(hr, errorMsg);
-		return false;
-	}
+	nvrhi::ShaderDesc desc;
+	desc.entryName = "main";
+	desc.shaderType = nvrhi::ShaderType::Geometry;
+
+	shader = device->createShader(desc, this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize());
 
 	return true;
 }
 
-ID3D11GeometryShader* GeometryShader::GetShader()
+nvrhi::ShaderHandle GeometryShader::GetShader()
 {
 	return this->shader.Get();
 }
@@ -120,7 +106,7 @@ ID3D10Blob* GeometryShader::GetBuffer()
 {
 	return this->shader_buffer.Get();
 }
-bool ComputeShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath)
+bool ComputeShader::Initialize(nvrhi::DeviceHandle device, std::wstring shaderpath)
 {
 	HRESULT hr = D3DReadFileToBlob(shaderpath.c_str(), this->shader_buffer.GetAddressOf());
 	if (FAILED(hr))
@@ -131,19 +117,16 @@ bool ComputeShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std
 		return false;
 	}
 
-	hr = device->CreateComputeShader(this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize(), NULL, this->shader.GetAddressOf());
-	if (FAILED(hr))
-	{
-		std::wstring errorMsg = L"Failed to create Geometry shader: ";
-		errorMsg += shaderpath;
-		ErrorLogger::Log(hr, errorMsg);
-		return false;
-	}
+	nvrhi::ShaderDesc desc;
+	desc.entryName = "main";
+	desc.shaderType = nvrhi::ShaderType::Compute;
+
+	shader = device->createShader(desc, this->shader_buffer.Get()->GetBufferPointer(), this->shader_buffer.Get()->GetBufferSize());
 
 	return true;
 }
 
-ID3D11ComputeShader* ComputeShader::GetShader()
+nvrhi::ShaderHandle ComputeShader::GetShader()
 {
 	return this->shader.Get();
 }

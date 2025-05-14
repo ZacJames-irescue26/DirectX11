@@ -7,8 +7,8 @@ namespace Engine
 class GameObject
 {
 public:
-	bool Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader);
-	void Draw(const XMMATRIX& viewProjectionMatrix);
+	bool Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
+	void Draw(const XMMATRIX& viewProjectionMatrix, nvrhi::BindingSetDesc desc);
 
 	void DrawWithOutCBuffer();
 	const XMVECTOR& GetPositionVector() const;

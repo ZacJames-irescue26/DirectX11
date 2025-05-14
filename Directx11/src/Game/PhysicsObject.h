@@ -25,7 +25,7 @@ namespace Engine
 class PhysicsObject : public GameObject
 {
 public:
-	bool Initialize(BodyID id, const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
+	bool Initialize(BodyID id, const std::string& filePath, nvrhi::DeviceHandle* device, nvrhi::CommandListHandle* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
 	BodyID GetID()
 	{return Id;}
 private:

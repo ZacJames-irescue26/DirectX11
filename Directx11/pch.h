@@ -42,8 +42,8 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "winmm.lib")
 
-#include "NVRHI/include/nvrhi/d3d12.h"
-#include <NVRHI/include/nvrhi/validation.h>
+#include "nvrhi/d3d12.h"
+#include <nvrhi/validation.h>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>

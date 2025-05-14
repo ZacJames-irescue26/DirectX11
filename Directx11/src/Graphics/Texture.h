@@ -1,6 +1,7 @@
 #pragma once
 #include "Color.h"
 #include <assimp/material.h>
+#include <nvrhi/nvrhi.h>
 namespace Engine
 {
 enum class TextureStorageType
@@ -29,7 +30,7 @@ public:
 private:
 	void Initialize1x1ColorTexture(nvrhi::DeviceHandle device, const Color& colorData, aiTextureType type);
 	void InitializeColorTexture(nvrhi::DeviceHandle device, const Color* colorData, UINT width, UINT height, aiTextureType type);
-	nvrhi::TextureHandle texture = nullptr;
+	nvrhi::TextureHandle texture;
 	aiTextureType type = aiTextureType::aiTextureType_UNKNOWN;
 };
 }

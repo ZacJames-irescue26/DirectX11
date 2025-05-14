@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "SurfelGenerator.h"
+#include "Acceleration\Octree\Octree.h"
+#include "nvrhi\nvrhi.h"
 
 namespace Engine
 {
@@ -44,77 +46,69 @@ namespace Engine
 	//	return distanceSquared <= radiiSum * radiiSum;
 	//}
 
-	std::vector<BYTE> retreiveTexture(ID3D11Device* device, ID3D11DeviceContext* devicecontext, ID3D11Texture2D* pSourceTexture, int& outWidth, int& outHeight)
+	std::vector<BYTE> retreiveTexture(nvrhi::DeviceHandle device, nvrhi::CommandListHandle devicecontext, nvrhi::TextureHandle pSourceTexture, int& outWidth, int& outHeight)
 	{
-		// 1. Create a staging texture
-		D3D11_TEXTURE2D_DESC sourceDesc;
-		pSourceTexture->GetDesc(&sourceDesc);
-		ID3D11Texture2D* pStagingTexture;
-		D3D11_TEXTURE2D_DESC stagingDesc = {};
-		stagingDesc.Width = sourceDesc.Width;
-		stagingDesc.Height = sourceDesc.Height;
-		stagingDesc.MipLevels = sourceDesc.MipLevels;
-		stagingDesc.ArraySize = 1;
-		stagingDesc.Format = sourceDesc.Format;
-		stagingDesc.SampleDesc.Count = 1;
-		stagingDesc.SampleDesc.Quality = 0;
-		stagingDesc.Usage = D3D11_USAGE_STAGING;
-		stagingDesc.BindFlags = 0;
-		stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-		stagingDesc.MiscFlags = 0;
-		HRESULT hr = device->CreateTexture2D(&stagingDesc, NULL, &pStagingTexture);
+		//// 1. Create a staging texture
+		//nvrhi::TextureDesc sourceDesc;
+		//sourceDesc = pSourceTexture->Get()->getDesc();
+		//nvrhi::StagingTextureHandle pStagingTexture;
+		//nvrhi::TextureDesc stagingDesc = {};
+		//stagingDesc.width = sourceDesc.width;
+		//stagingDesc.height = sourceDesc.height;
+		//stagingDesc.mipLevels = sourceDesc.mipLevels;
+		//stagingDesc.arraySize = 1;
+		//stagingDesc.format = sourceDesc.format;
+		//pStagingTexture = device->createStagingTexture(stagingDesc, nvrhi::CpuAccessMode::Read);
 
-		// 2. Copy the texture data to the staging texture
-		D3D11_BOX srcBox;
-		srcBox.left = 0;
-		srcBox.right = sourceDesc.Width;
-		srcBox.top = 0;
-		srcBox.bottom = sourceDesc.Height;
-		srcBox.front = 0;
-		srcBox.back = 1;
-		devicecontext->CopySubresourceRegion(pStagingTexture, 0, 0, 0, 0, pSourceTexture, 0, &srcBox);
+		//// 2. Copy the texture data to the staging texture
+		//nvrhi::TextureSlice srcBox;
+		//srcBox.width = sourceDesc.width;
+		//srcBox.height = sourceDesc.height;
+		//
+		//devicecontext->copyTexture(pStagingTexture, srcBox, pSourceTexture, srcBox);
+		//// 3. Map the staging texture
+		//pStagingTexture.
+		//D3D11_MAPPED_SUBRESOURCE mappedResource;
+		//hr = devicecontext->Map(pStagingTexture, 0, D3D11_MAP_READ, 0, &mappedResource);
+		//if (FAILED(hr)) {
+		//	// Handle error
+		//}
 
-		// 3. Map the staging texture
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		hr = devicecontext->Map(pStagingTexture, 0, D3D11_MAP_READ, 0, &mappedResource);
-		if (FAILED(hr)) {
-			// Handle error
-		}
-
-		// 4. Access the albedo data
-		// Assuming the texture format is DXGI_FORMAT_R8G8B8A8_UNORM (8-bit RGBA)
-		outWidth = sourceDesc.Width;
-		outHeight = sourceDesc.Height;
+		//// 4. Access the albedo data
+		//// Assuming the texture format is DXGI_FORMAT_R8G8B8A8_UNORM (8-bit RGBA)
+		//outWidth = sourceDesc.Width;
+		//outHeight = sourceDesc.Height;
 
 
-		std::vector<BYTE> OutTex;
-		size_t rowPitch = sourceDesc.Width * 4; // Assuming DXGI_FORMAT_R8G8B8A8_UNORM
-		OutTex.resize(outWidth * outHeight * 4);
-		BYTE* dstPtr = OutTex.data();
-		BYTE* srcPtr = static_cast<BYTE*>(mappedResource.pData);
-		// Copy row by row (handle RowPitch != Width * 4)
-		for (UINT row = 0; row < sourceDesc.Height; ++row)
-		{
-			memcpy(dstPtr + row * rowPitch, srcPtr + row * mappedResource.RowPitch, rowPitch);
-		}
+		//std::vector<BYTE> OutTex;
+		//size_t rowPitch = sourceDesc.Width * 4; // Assuming DXGI_FORMAT_R8G8B8A8_UNORM
+		//OutTex.resize(outWidth * outHeight * 4);
+		//BYTE* dstPtr = OutTex.data();
+		//BYTE* srcPtr = static_cast<BYTE*>(mappedResource.pData);
+		//// Copy row by row (handle RowPitch != Width * 4)
+		//for (UINT row = 0; row < sourceDesc.Height; ++row)
+		//{
+		//	memcpy(dstPtr + row * rowPitch, srcPtr + row * mappedResource.RowPitch, rowPitch);
+		//}
 
 
-		// 5. Unmap the staging texture
-		devicecontext->Unmap(pStagingTexture, 0);
+		//// 5. Unmap the staging texture
+		//devicecontext->Unmap(pStagingTexture, 0);
 
-		// Release the staging texture
-		pStagingTexture->Release();
+		//// Release the staging texture
+		//pStagingTexture->Release();
 
-		return OutTex;
+		//return OutTex;
+		return {0,0,0,0};
 	}
 
-	SurfelGenerator::SurfelGenerator(ID3D11Device* device, ID3D11DeviceContext* devicecontext, Octree* octree,  std::vector<GameObject>& Meshes)
+	SurfelGenerator::SurfelGenerator(nvrhi::DeviceHandle* device, nvrhi::CommandListHandle* devicecontext, Octree* octree,  std::vector<GameObject>& Meshes)
 	{
 
 		GenerateSurfelsOnMesh(device, devicecontext, octree, Meshes);
 	}
 
-	SurfelGenerator::SurfelGenerator(ID3D11Device* device, ID3D11DeviceContext* devicecontext, const std::string& filename)
+	SurfelGenerator::SurfelGenerator(nvrhi::DeviceHandle* device, nvrhi::CommandListHandle* devicecontext, const std::string& filename)
 	{
 		if (!ReadSurfels(filename))
 		{
@@ -157,7 +151,7 @@ namespace Engine
 		return false;
 	}
 
-	void SurfelGenerator::GenerateSurfelsOnMesh(ID3D11Device* device, ID3D11DeviceContext* devicecontext, Octree* octree,  std::vector<GameObject>& Meshes)
+	void SurfelGenerator::GenerateSurfelsOnMesh(nvrhi::DeviceHandle* device, nvrhi::CommandListHandle* devicecontext, Octree* octree,  std::vector<GameObject>& Meshes)
 	{
 		float surfelDensityFactor = 1;
 		std::vector<Triangle> triangles;

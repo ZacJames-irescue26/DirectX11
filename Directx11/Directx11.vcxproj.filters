@@ -103,57 +103,6 @@
     <ClInclude Include="src\Graphics\ModelSimple.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\CUDABuffer.h">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\ErrorChecking.h">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\LaunchParams.h">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\OptixCommands.h">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\SampleRenderer.h">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\gdt.h">
-      <Filter>src\Graphics\Raytracing\gdt</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\AffineSpace.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\LinearSpace.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\Quaternion.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\box.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\constants.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\fixedpoint.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec.h">
-      <Filter>src\Graphics\Raytracing\gdt\math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\compare.h">
-      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\functors.h">
-      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\math\vec\rotate.h">
-      <Filter>src\Graphics\Raytracing\gdt\math\vec</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Raytracing\gdt\random\random.h">
-      <Filter>src\Graphics\Raytracing\gdt\random</Filter>
-    </ClInclude>
     <ClInclude Include="src\Graphics\Shader.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
@@ -292,21 +241,6 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\ModelSimple.cpp">
       <Filter>src\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\Accu_embedded_ptx_code.c">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\LaunchParams.cpp">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\Pack_embedded_ptx_code.c">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\SampleRenderer.cpp">
-      <Filter>src\Graphics\Raytracing</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Raytracing\gdt\gdt.cpp">
-      <Filter>src\Graphics\Raytracing\gdt</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp">
       <Filter>src\Graphics</Filter>

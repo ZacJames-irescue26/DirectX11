@@ -10,6 +10,7 @@
 
 #include "nvrhi/d3d12.h"
 #include "nvrhi/validation.h"
+#include "directx/d3d12.h"
 
 namespace Engine
 {
@@ -127,7 +128,7 @@ public:
 	bool Present();
 	void RenderFrame();
 	Camera camera;
-	void ClearDepthStencil(ID3D11DepthStencilView* stencil);
+	/*void ClearDepthStencil(ID3D11DepthStencilView* stencil);
 	void SetInputLayout(ID3D11InputLayout* layout);
 	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY top);
 	void SetRasterizerState();
@@ -138,13 +139,23 @@ public:
 	void SetVSShader(ID3D11VertexShader* shader);
 	void SetPSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer);
 	void SetVSConstantBuffers(UINT startSlot, UINT NumOfBuffers, ID3D11Buffer* const* ppBuffer);
-	void ClearView(float color[4]);
-	nvrhi::DeviceHandle                             m_NvrhiDevice;
-private:
+	void ClearView(float color[4]);*/
+static 	nvrhi::DeviceHandle                             m_NvrhiDevice;
+
+
+	static nvrhi::DeviceHandle GetDevice()
+	{
+		return m_NvrhiDevice;
+	}
 	Light light;
 	PhysicsObject floor;
 	PhysicsObject gameObject;
 	PhysicsEngine physicsController;
+	int windowWidth = 1920;
+	int windowHeight = 1080;
+	nvrhi::BindingLayoutHandle ImguiBindingLayout;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ImguiHeap;
+private:
 	nvrhi::RefCountPtr<IDXGIFactory2>               m_DxgiFactory2;
 	nvrhi::RefCountPtr<ID3D12Device>                m_Device12;
 	nvrhi::RefCountPtr<ID3D12CommandQueue>          m_GraphicsQueue;
@@ -168,8 +179,7 @@ private:
 
 	std::string                                     m_RendererString;
 	
-	int windowWidth = 0;
-	int windowHeight = 0;
+
 
 	bool enableGPUValidation = false;
 	bool enableDebugRuntime = _DEBUG;
@@ -216,81 +226,65 @@ public:
 	nvrhi::TextureHandle DepthTexture;
 
 	nvrhi::TextureHandle positionTexture;
-	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> positionRTV;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> positionSRV;
+	
 
 	nvrhi::TextureHandle NormalTexture;
-	Microsoft::WRL::ComPtr < ID3D11RenderTargetView>  NormalRTV;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView>  NormalSRV;
+
 
 	nvrhi::TextureHandle DiffuseTexture;
-	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> DiffuseRTV;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> DiffuseSRV;
+
 
 	nvrhi::TextureHandle SpecularTexture;
-	Microsoft::WRL::ComPtr < ID3D11RenderTargetView> SpecularRTV;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> SpecularSRV;
+
 	nvrhi::FramebufferHandle GBUfferFrameBuffer;
 
 	//HDRI
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilStateDisabled;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> HDRIdepthStencilStateDisabled;
-	Microsoft::WRL::ComPtr < ID3D11Texture2D> HDRITexture;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> HDRISRV;
 
-	Microsoft::WRL::ComPtr < ID3D11Texture2D> HDRIFramebufferTexture;
-	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> HDRIFramebufferRTV[6];
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> HDRIFramebufferSRV;
+	nvrhi::TextureHandle HDRITexture;
 
-	Microsoft::WRL::ComPtr < ID3D11Texture2D> IrradiancemapTexture;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> IrradianceMapSRV;
-	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> irradianceRTVs[6];
+	nvrhi::TextureHandle HDRIFramebufferTexture;
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> irradiancedepthStencilBuffer;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> irradiancedepthStencilView;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> IrradiancedepthStencilStateDisabled;
+	std::array<nvrhi::FramebufferHandle, 6> faceFbs;
 
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilSkyboxState;
+	nvrhi::TextureHandle IrradiancemapTexture;
+	std::array<nvrhi::FramebufferHandle, 6> irradianceFBs;
+	nvrhi::TextureHandle irradiancedepthStencilBuffer;
+	//Microsoft::WRL::ComPtr<ID3D11DepthStencilView> irradiancedepthStencilView;
+	//Microsoft::WRL::ComPtr<ID3D11DepthStencilState> IrradiancedepthStencilStateDisabled;
 
-	Microsoft::WRL::ComPtr < ID3D11Texture2D> PrefilteringTexture;
-	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> PrefilteringSRV;
-	std::vector<std::vector<Microsoft::WRL::ComPtr<ID3D11RenderTargetView>>> PrefilteringRTVs;
+	//Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilSkyboxState;
 
-	Microsoft::WRL::ComPtr < ID3D11Texture2D> BRDFTexture;
+	nvrhi::TextureHandle PrefilteringTexture;
+	std::vector<std::vector<nvrhi::FramebufferHandle>> PrefilteringFBs;
+	nvrhi::TextureHandle BRDFTexture;
 	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> BRDFSRV;
 	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> BRDFRTVs;
 	//CSM -----------------------------------------------------------------------------
-	const int NUM_CASCADES = 4;
-	std::vector<float> shadowCascadeLevels{ 1000 / 50.0f, 1000 / 25.0f, 1000 / 10.0f, 1000 / 2.0f };
-	const unsigned int depthMapResolution = 4098;
-	std::vector<Microsoft::WRL::ComPtr<ID3D11DepthStencilView>> shadowDSVs;
-	std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> shadowSRVs;
-	std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> shadowTex;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> shadowDepthStencilState;
+	//const int NUM_CASCADES = 4;
+	//std::vector<float> shadowCascadeLevels{ 1000 / 50.0f, 1000 / 25.0f, 1000 / 10.0f, 1000 / 2.0f };
+	const unsigned int depthMapResolution = 2048;
+	//std::vector<Microsoft::WRL::ComPtr<ID3D11DepthStencilView>> shadowDSVs;
+	//std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> shadowSRVs;
+	//std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> shadowTex;
+	//Microsoft::WRL::ComPtr<ID3D11DepthStencilState> shadowDepthStencilState;*/
 
 	XMFLOAT3 LightDir;
 	std::vector<XMMATRIX> getLightSpaceMatrices();
 
 	std::vector<XMVECTOR> getFrustumCornersWorldSpace(const XMMATRIX& projview);
 
-	Microsoft::WRL::ComPtr<ID3D12BlendState> transparentBlendState;
+	/*Microsoft::WRL::ComPtr<ID3D12BlendState> transparentBlendState;
 	Microsoft::WRL::ComPtr<ID3D12RasterizerState> DebugLineState;
-	Microsoft::WRL::ComPtr<ID3D12Texture2D> ShadowtextureArray;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShadowtextureArraySRV;
-	Microsoft::WRL::ComPtr < ID3D11SamplerState> shadowSampler = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Texture2D> ShadowtextureArray;*/
+	//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShadowtextureArraySRV;
+	//Microsoft::WRL::ComPtr < ID3D11SamplerState> shadowSampler = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DirectionalshadowDSVs;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> DirectionalshadowSRVs;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> DirectionalshadowTex;
+	nvrhi::TextureHandle DirectionalshadowTex;
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> shadowRasterState;
 
-	//OPTIX TEXTURE
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> irrTexDX;
-
-	static Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> irrSRV;
-
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> irratlasTex;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> irratlasSRV;
-	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> irrUAV;
 };
 }

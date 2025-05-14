@@ -2,14 +2,15 @@
 #include "Mesh.h"
 #include <thread>
 #include <shared_mutex>
+#include <nvrhi/nvrhi.h>
 
 namespace Engine
 {
 class Model
 {
 public:
-	bool Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader);
-	void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix);
+	bool Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);
+	void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix, nvrhi::BindingSetDesc& desc);
 	void Draw();
 	inline std::vector<Mesh>& GetMeshes()
 	{
@@ -26,9 +27,9 @@ private:
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* pMaterial, aiTextureType textureType, const aiScene* pScene);
 
 	int GetTextureIndex(aiString* pStr);
-	nvrhi::DeviceHandle device = nullptr;
-	nvrhi::CommandListHandle deviceContext = nullptr;
-	nvrhi::BufferHandle cb_vs_vertexshader = nullptr;
+	nvrhi::DeviceHandle device;
+	nvrhi::CommandListHandle deviceContext;
+	ConstantBuffer<CB_VS_vertexShader>* cb_vs_vertexshader = nullptr;
 	std::string directory = "";
 	
 

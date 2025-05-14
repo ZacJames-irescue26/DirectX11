@@ -8,7 +8,7 @@ static std::shared_mutex ModelWriteMeshMutex;
 
 namespace Engine
 {
-bool Model::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader)
+bool Model::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader)
 {
 	this->device = device;
 	this->deviceContext = deviceContext;
@@ -26,25 +26,24 @@ bool Model::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, 
 	return true;
 }
 
-void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
+void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix, nvrhi::BindingSetDesc& desc)
 {
 	
-		
-	CB_VS_vertexShader data;
-	data.wvpMatrix = worldMatrix * viewProjectionMatrix; //Calculate World-View-Projection Matrix
-	data.worldMatrix = worldMatrix; //Calculate World
-	data.wvpMatrix = XMMatrixTranspose(data.wvpMatrix);
-	data.worldMatrix = XMMatrixTranspose(data.worldMatrix);		
-	data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
-		
-	this->deviceContext->writeBuffer(cb_vs_vertexshader, &data, sizeof(CB_VS_vertexShader));
+	
+	this->cb_vs_vertexshader->data.wvpMatrix = worldMatrix * viewProjectionMatrix; //Calculate World-View-Projection Matrix
+	this->cb_vs_vertexshader->data.worldMatrix = worldMatrix; //Calculate World
+	this->cb_vs_vertexshader->data.wvpMatrix = XMMatrixTranspose(this->cb_vs_vertexshader->data.wvpMatrix);
+	this->cb_vs_vertexshader->data.worldMatrix = XMMatrixTranspose(this->cb_vs_vertexshader->data.worldMatrix);
+	cb_vs_vertexshader->data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
 
+	this->cb_vs_vertexshader->ApplyChanges();
+	desc.bindings.push_back(nvrhi::BindingSetItem::ConstantBuffer(0, cb_vs_vertexshader->Get()));
 
 	for (int i = 0; i < meshes.size(); i++)
 	{
 		//Update Constant buffer with WVP Matrix
 		
-		meshes[i].Draw(deviceContext);
+		meshes[i].Draw(device, deviceContext, desc);
 	}
 }
 void Model::Draw()
@@ -53,7 +52,7 @@ void Model::Draw()
 	{
 		//Update Constant buffer with WVP Matrix
 
-		meshes[i].DrawJustMesh();
+		meshes[i].DrawJustMesh(deviceContext);
 	}
 }
 bool Model::LoadModel(const std::string& filePath)

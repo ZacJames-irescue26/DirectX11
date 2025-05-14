@@ -11,10 +11,10 @@ namespace Engine
 class Mesh
 {
 public:
-	Mesh(ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::vector<Vertex>& vertices, std::vector<DWORD>& indices, std::vector<Texture> tex, const XMMATRIX& transformMatrix);
+	Mesh(nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, std::vector<Vertex>& vertices, std::vector<DWORD>& indices, std::vector<Texture> tex, const XMMATRIX& transformMatrix);
 	void DrawJustMesh(nvrhi::CommandListHandle commandList);
 	Mesh(const Mesh& mesh);
-	void Draw(nvrhi::CommandListHandle commandList);
+	void Draw(nvrhi::DeviceHandle device, nvrhi::CommandListHandle commandList, nvrhi::BindingSetDesc& bindingSetDesc);
 	const XMMATRIX& GetTransformMatrix();
 	std::vector<Vertex> vertices;
 	std::vector<DWORD> indices;
@@ -22,7 +22,7 @@ public:
 private:
 	VertexBuffer<Vertex> vertexbuffer;
 	IndexBuffer indexbuffer;
-	ID3D11DeviceContext* deviceContext;
+	nvrhi::CommandListHandle deviceContext;
 	XMMATRIX transformMatrix;
 };
 }

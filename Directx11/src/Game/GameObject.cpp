@@ -6,7 +6,7 @@
 #include "nvrhi\d3d12.h"
 namespace Engine
 {
-bool GameObject::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, nvrhi::BufferHandle cb_vs_vertexshader)
+bool GameObject::Initialize(const std::string& filePath, nvrhi::DeviceHandle device, nvrhi::CommandListHandle deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader)
 {
 	if (!model.Initialize(filePath, device, deviceContext, cb_vs_vertexshader))
 	{
@@ -19,9 +19,9 @@ bool GameObject::Initialize(const std::string& filePath, nvrhi::DeviceHandle dev
 	return true;
 }
 
-void GameObject::Draw(const XMMATRIX& viewProjectionMatrix)
+void GameObject::Draw(const XMMATRIX& viewProjectionMatrix, nvrhi::BindingSetDesc desc)
 {
-	model.Draw(worldMatrix, viewProjectionMatrix);
+	model.Draw(worldMatrix, viewProjectionMatrix, desc);
 }
 void GameObject::DrawWithOutCBuffer()
 {
