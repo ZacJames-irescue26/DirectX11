@@ -268,7 +268,8 @@ void Application::OnCreate()
 
 // init GBUFFER varibles
 
-
+	gfx.m_CommandList->close();
+	gfx.m_NvrhiDevice->executeCommandList(gfx.m_CommandList);
 
 }
 void Application::InitializeShaders()
@@ -423,6 +424,7 @@ void Application::InitializeShaders()
 		pipelineDesc.VS = m_GBuffervertexShader.GetShader();
 		pipelineDesc.PS = m_GBufferpixelShader.GetShader();
 		pipelineDesc.primType = nvrhi::PrimitiveType::TriangleList;
+		
 		nvrhi::RenderState rs ={};
 		nvrhi::BlendState blendstate = {};
 		nvrhi::BlendState::RenderTarget rt = {};
@@ -443,13 +445,23 @@ void Application::InitializeShaders()
 		layoutDesc.visibility = nvrhi::ShaderType::Pixel;
 		layoutDesc.bindings = {
 			nvrhi::BindingLayoutItem::VolatileConstantBuffer(0),
+			nvrhi::BindingLayoutItem::VolatileConstantBuffer(1),
+			nvrhi::BindingLayoutItem::VolatileConstantBuffer(2),
 			nvrhi::BindingLayoutItem::Texture_SRV(0),
 			nvrhi::BindingLayoutItem::Texture_SRV(1),
 			nvrhi::BindingLayoutItem::Texture_SRV(2),
+			nvrhi::BindingLayoutItem::Texture_SRV(3),
+			nvrhi::BindingLayoutItem::Texture_SRV(4),
+			nvrhi::BindingLayoutItem::Texture_SRV(5),
+			nvrhi::BindingLayoutItem::Texture_SRV(6),
+			nvrhi::BindingLayoutItem::Texture_SRV(7),
+			nvrhi::BindingLayoutItem::Texture_SRV(8),
 			nvrhi::BindingLayoutItem::Sampler(0),
+			nvrhi::BindingLayoutItem::Sampler(1),
+			nvrhi::BindingLayoutItem::Sampler(2),
 		};
 		nvrhi::BindingLayoutHandle m_BindingLayout = gfx.m_NvrhiDevice->createBindingLayout(layoutDesc);
-
+		
 		nvrhi::GraphicsPipelineDesc pipelineDesc;
 		pipelineDesc.bindingLayouts = { m_BindingLayout };
 		pipelineDesc.inputLayout = layout;
@@ -469,7 +481,7 @@ void Application::InitializeShaders()
 		nvrhi::RasterState raststate = {};
 		rs.rasterState = raststate;
 		pipelineDesc.renderState = rs;
-		m_LightingPassPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc, gfx.GBUfferFrameBuffer);
+		m_LightingPassPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc);
 	}
 
 	// HRDI
@@ -500,21 +512,17 @@ void Application::InitializeShaders()
 		rs.blendState = blendstate;
 		nvrhi::DepthStencilState dst = {};
 		rs.depthStencilState = dst;
-		dst.depthTestEnable = false;
 		nvrhi::RasterState raststate = {};
 		rs.rasterState = raststate;
 		pipelineDesc.renderState = rs;
-		m_HDRIPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc, gfx.sw);
+		m_HDRIPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc);
 	}
 	// Irradiance convolution
 	{
 		nvrhi::BindingLayoutDesc layoutDesc;
 		layoutDesc.visibility = nvrhi::ShaderType::Pixel;
 		layoutDesc.bindings = {
-			nvrhi::BindingLayoutItem::VolatileConstantBuffer(0),
 			nvrhi::BindingLayoutItem::Texture_SRV(0),
-			nvrhi::BindingLayoutItem::Texture_SRV(1),
-			nvrhi::BindingLayoutItem::Texture_SRV(2),
 			nvrhi::BindingLayoutItem::Sampler(0),
 		};
 		nvrhi::BindingLayoutHandle m_BindingLayout = gfx.m_NvrhiDevice->createBindingLayout(layoutDesc);
@@ -534,11 +542,41 @@ void Application::InitializeShaders()
 		rs.blendState = blendstate;
 		nvrhi::DepthStencilState dst = {};
 		rs.depthStencilState = dst;
-		dst.depthTestEnable = false;
 		nvrhi::RasterState raststate = {};
 		rs.rasterState = raststate;
 		pipelineDesc.renderState = rs;
 		m_IrradianceConvolutionPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc);
+	}
+
+	// prefiltering convolution
+	{
+		nvrhi::BindingLayoutDesc layoutDesc;
+		layoutDesc.visibility = nvrhi::ShaderType::Pixel;
+		layoutDesc.bindings = {
+			nvrhi::BindingLayoutItem::Texture_SRV(0),
+			nvrhi::BindingLayoutItem::Sampler(0),
+		};
+		nvrhi::BindingLayoutHandle m_BindingLayout = gfx.m_NvrhiDevice->createBindingLayout(layoutDesc);
+
+		nvrhi::GraphicsPipelineDesc pipelineDesc;
+		pipelineDesc.bindingLayouts = { m_BindingLayout };
+		pipelineDesc.inputLayout = layout;
+		pipelineDesc.VS = m_DeferredvertexShader.GetShader();
+		pipelineDesc.PS = m_DeferredpixelShader.GetShader();
+		pipelineDesc.primType = nvrhi::PrimitiveType::TriangleList;
+		nvrhi::RenderState rs = {};
+		nvrhi::BlendState blendstate = {};
+		nvrhi::BlendState::RenderTarget rt = {};
+
+		blendstate.setRenderTarget(0, rt);
+
+		rs.blendState = blendstate;
+		nvrhi::DepthStencilState dst = {};
+		rs.depthStencilState = dst;
+		nvrhi::RasterState raststate = {};
+		rs.rasterState = raststate;
+		pipelineDesc.renderState = rs;
+		m_PrefilteringPipeline = gfx.GetDevice()->createGraphicsPipeline(pipelineDesc);
 	}
 }
 void Application::OnUpdate()
@@ -592,26 +630,18 @@ void Application::BindGBufferPass()
 	float red[] = { 1.0, 0.0, 0.0, 1.0 };
 	float green[] = { 0.0, 1.0, 0.0, 1.0 };
 	float blue[] = { 0.0, 0.0, 1.0, 1.0 };
- 
-	nvrhi::GraphicsState state;
-	state.
-	gfx.ClearView(bgcolor);
-	gfx.ClearDepthStencil(gfx.depthStencilView.Get());
-	gfx.SetInputLayout(this->m_GBuffervertexShader.GetInputLayout());
-	gfx.SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	gfx.SetRasterizerState();
-	gfx.SetDepthStencilState();
-	gfx.SetBlendState();
-	gfx.SetSamplers(); 
-	gfx.SetVSShader(m_GBuffervertexShader.GetShader());
-	gfx.SetPSShader(m_GBufferpixelShader.GetShader());
-	gfx.GetDeviceContext()->RSSetViewports(1, &viewport);
-	gfx.GetDeviceContext()->OMSetRenderTargets(renderTargets.size(), renderTargets.data(), gfx.depthStencilView.Get());
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[0], bgcolor);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[1], bgcolor);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[2], bgcolor);
-	gfx.GetDeviceContext()->ClearRenderTargetView(renderTargets[3], bgcolor);
+	// Clear and set framebuffer
 
+	const nvrhi::FormatInfo& depthFormatInfo = nvrhi::getFormatInfo(gfx.DepthTexture->getDesc().format);
+	gfx.m_CommandList->setFramebuffer(gfx.GBUfferFrameBuffer);
+	gfx.m_CommandList->clearDepthStencilTexture(gfx.DepthTexture, nvrhi::AllSubresources, true, 1.0f, depthFormatInfo.hasStencil, 0);
+	gfx.m_CommandList->clearTextureFloat(gfx.positionTexture, nvrhi::AllSubresources, nvrhi::Color(0.f));
+	gfx.m_CommandList->clearTextureFloat(gfx.NormalTexture, nvrhi::AllSubresources, nvrhi::Color(0.f));
+	gfx.m_CommandList->clearTextureFloat(gfx.DiffuseTexture, nvrhi::AllSubresources, nvrhi::Color(0.f));
+	gfx.m_CommandList->clearTextureFloat(gfx.SpecularTexture, nvrhi::AllSubresources, nvrhi::Color(0.f));
+
+	nvrhi::GraphicsState graphicsstate ={};
+	graphicsstate.
 
 
 	RVec3 pos = gfx.physicsController.GetPosition(gameObject.GetID());
