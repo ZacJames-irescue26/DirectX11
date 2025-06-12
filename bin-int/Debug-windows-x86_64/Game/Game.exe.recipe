@@ -34,6 +34,12 @@
       <FullPath>C:\DirectX11\Game\CompiledShaders\ShadowMapDepth_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\RealtimeShadows_c.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\ShadowBake_c.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX11\Game\CompiledShaders\DefferedPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -44,6 +50,12 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX11\Game\CompiledShaders\EquiToHdri_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\FullScreen_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\FullScreen_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX11\Game\CompiledShaders\GBufferPixel_p.cso</FullPath>

@@ -10,5 +10,5 @@ cbuffer ViewProj
 float4 main( float3 pos : POSITION ) : SV_POSITION
 {
     float4 worldPos = float4(pos, 1.0f);
-    return mul(worldPos, mul(view, proj));
+    return mul(worldPos, mul(proj, view));
 }

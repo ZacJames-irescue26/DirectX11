@@ -7,6 +7,9 @@
     <Filter Include="Shader\CSM">
       <UniqueIdentifier>{CE181D62-BAD0-5EAF-23D8-370B0FAFF99F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Compute">
+      <UniqueIdentifier>{08BD4B2D-F48A-3F33-DD1E-B059C98B1B98}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Shader\illumination">
       <UniqueIdentifier>{205F8C87-8CC0-6995-152E-B047818EA054}</UniqueIdentifier>
     </Filter>
@@ -59,6 +62,12 @@
     <FxCompile Include="Shader\CSM\ShadowMapDepth_v.hlsl">
       <Filter>Shader\CSM</Filter>
     </FxCompile>
+    <FxCompile Include="Shader\Compute\RealtimeShadows_c.hlsl">
+      <Filter>Shader\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Compute\ShadowBake_c.hlsl">
+      <Filter>Shader\Compute</Filter>
+    </FxCompile>
     <FxCompile Include="Shader\DefferedPixel_p.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
@@ -69,6 +78,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\EquiToHdri_v.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\FullScreen_p.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\FullScreen_v.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\GBufferPixel_p.hlsl">

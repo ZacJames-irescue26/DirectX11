@@ -38,7 +38,22 @@ namespace Engine
 		XMVECTOR getCentroid() const {
 			return 0.5f * (min + max);
 		}
-
+		XMVECTOR Min()
+		{
+			return min;
+		}
+		XMVECTOR Max()
+		{
+			return max;
+		}
+		XMFLOAT3 Minf()
+		{
+			return minf;
+		}
+		XMFLOAT3 Maxf()
+		{
+			return maxf;
+		}
 	protected:
 
 

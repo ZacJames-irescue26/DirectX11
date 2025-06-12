@@ -39,8 +39,13 @@ struct DirectionalLightParams
 	DirectX::XMFLOAT3 LightColor;
 	float padding = 0.0;
 	DirectX::XMFLOAT3 LightDirection;
-	float farPlane;
-	XMMATRIX LightSpaceMatrices;
+	float farplane =1000;
+	XMFLOAT4 cascadePlaneDistances;
+	XMMATRIX LightSpaceMatrices0;
+	XMMATRIX LightSpaceMatrices1;
+	XMMATRIX LightSpaceMatrices2;
+	XMMATRIX LightSpaceMatrices3;
+	
 };
 
 struct PrefilteringParams
@@ -78,4 +83,25 @@ struct Lights
 {
 	CastLight light;
 };
+
+struct ShadowlightingInfo
+{
+	XMMATRIX LightViewProj; // same as your raster shadow’s VP
+	XMMATRIX InvLightViewProj; // inverse of the above
+	float Bias; // depth bias
+	uint MapSize; // resolution
+	uint NumNodes;
+	uint NumTris;
+	XMFLOAT3 LightDir;
+	float pad;
+};
+struct alignas(16) BaseCB{ 
+
+	uint32_t NumBases;
+	XMFLOAT3 pad;
+
+};
+
+
+
 }

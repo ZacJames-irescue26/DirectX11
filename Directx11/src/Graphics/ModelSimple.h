@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include <thread>
 #include <shared_mutex>
+#include "Math\Triangle.h"
 
 namespace Engine
 {
@@ -30,7 +31,7 @@ private:
 	ID3D11DeviceContext* deviceContext = nullptr;
 	ConstantBuffer<CB_VS_vertexShader>* cb_vs_vertexshader = nullptr;
 	std::string directory = "";
-	
+	std::vector<Engine::Triangle> ExtractTriangles();
 
 };
 }

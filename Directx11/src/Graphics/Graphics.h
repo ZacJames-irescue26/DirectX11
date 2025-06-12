@@ -54,6 +54,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerstate;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> DepthBuffer;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	int windowWidth = 0;
 	int windowHeight = 0;
@@ -65,8 +66,9 @@ private:
 
 
 
-	std::vector<XMFLOAT3> GetFrustumCornersWorldSpace(const XMMATRIX& viewProj);
-	std::vector<XMFLOAT3> GetFrustumCornersWorldSpaceViewProj(const XMMATRIX& projView);
+	
+	//std::vector<XMFLOAT3> GetFrustumCornersWorldSpace(const XMMATRIX& viewProj);
+	//std::vector<XMFLOAT3> GetFrustumCornersWorldSpaceViewProj(const XMMATRIX& projView);
 	std::vector<XMFLOAT3> getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view);
 	XMMATRIX getLightSpaceMatrix(const float nearPlane, const float farPlane);
 	VertexShader m_vertexShader;
@@ -130,8 +132,9 @@ public:
 	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> BRDFRTVs;
 	//CSM -----------------------------------------------------------------------------
 	const int NUM_CASCADES = 4;
-	std::vector<float> shadowCascadeLevels{ 1000 / 50.0f, 1000 / 25.0f, 1000 / 10.0f, 1000 / 2.0f };
-	const unsigned int depthMapResolution = 4098;
+	std::vector<float> shadowCascadeLevels{ 0.01, 0.1, 1, 5, 10, 100 };
+	const unsigned int depthMapResolution = 2048;
+	const int DownSampleMultiplier = 4;
 	std::vector<Microsoft::WRL::ComPtr<ID3D11DepthStencilView>> shadowDSVs;
 	std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> shadowSRVs;
 	std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> shadowTex;
@@ -152,5 +155,16 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> DirectionalshadowSRVs;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DirectionalshadowTex;
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> shadowRasterState;
+
+	Microsoft::WRL::ComPtr < ID3D11Texture2D> RaytracedshadowTex;
+	Microsoft::WRL::ComPtr < ID3D11UnorderedAccessView> shadowUAV;
+	Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> RaytracedShadowSRV;
+
+	std::vector<XMMATRIX> m_CascadeLightVP;
+	void CalcCascadeOrthoProjs();
+	XMFLOAT2 Sky = { 0.2,0.2 };
+	XMFLOAT3 direction = { 0.0,-1.0,0.0 };
+	float shadowDirstance = 257.0;
+
 };
 }

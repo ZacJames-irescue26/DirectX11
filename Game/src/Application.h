@@ -1,8 +1,11 @@
 #pragma once
 #include <memory>
 #include "EngineInclude.h"
+#include "Acceleration\BVH\BVH.h"
+
 
 using namespace Engine;
+
 class Application : public EngineInit
 {
 public:
@@ -23,27 +26,22 @@ public:
 	void DrawShadowMaps();
 	void DirectionalShadowMap();
 	void DrawSurfels();
+	void RayTraceShadows();
 	void RenderFrame();
 	void ForwardRender();
-	void OnUserInput();
 	Light light;
 	PhysicsObject floor;
 	PhysicsObject gameObject;
 	GameObject helmet;
-	Camera camera;
 	ThirdPersonCamera PlayerCamera;
 	GameObject MiscItems;
 	XMFLOAT3 TargetVec ={0.0,0.0,0.0};
-	float shadowDirstance = 257.0;
+
 	float farplane = 250;
 	XMMATRIX lightMatrices;
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerstate;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
+	
 	VertexShader m_vertexShader;
 	PixelShader m_pixelShader;
 
@@ -64,6 +62,9 @@ private:
 	ConstantBuffer<CB_VS_ViewProj>m_ViewProj;
 	ConstantBuffer<DebugColors> m_DebugColors;
 	ConstantBuffer<Lights> m_CastLight;
+	ConstantBuffer< ShadowlightingInfo> lcb;
+	ConstantBuffer< BaseCB> m_BaseCB;
+
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 	data data;
@@ -71,8 +72,6 @@ private:
 	int windowWidth = 0;
 	int windowHeight = 0;
 
-	XMFLOAT2 Sky = {0.2,0.2};
-	XMFLOAT3 direction = {0.0,0.0,0.0};
 	//GBuffer
 	VertexShader m_GBuffervertexShader;
 	PixelShader m_GBufferpixelShader;
@@ -129,8 +128,19 @@ private:
 	GeometryShader m_SureflDebug_GS;
 	bool drawsurfeldebug = false;
 
-	//Raytracing 
-	std::vector<uint32_t> RaytacedPixels;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> raytracetex;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> raytraceSRV;
+	Microsoft::WRL::ComPtr< ID3D11ShaderResourceView > nodeSRV = nullptr;
+	Microsoft::WRL::ComPtr < ID3D11Buffer > nodeBuffer = nullptr;
+	Microsoft::WRL::ComPtr< ID3D11ShaderResourceView > TrianglesSRV = nullptr;
+	Microsoft::WRL::ComPtr < ID3D11Buffer > TrianglesBuffer = nullptr;
+	ComputeShader m_Shadow_CS;
+	std::unique_ptr<Engine::ModelAccel> accel;
+	std::vector<FlatNode> Flat;
+	std::vector<Engine::TriangleJustPos> triangles;
+	bool ifRaytraceShadows = true;
+	bool TakeShot;
+
+	XMMATRIX shadowlightMatrices;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> baseRootBuffer;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> baseRootSRV;
+	std::vector<uint32_t> baseRoots;
 };

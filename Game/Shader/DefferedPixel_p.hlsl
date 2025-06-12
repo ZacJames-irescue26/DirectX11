@@ -8,7 +8,10 @@ TextureCube SkyBoxMap : register(t5);
 TextureCube prefilterMap : register(t6);
 Texture2D brdfLUT : register(t7);
 Texture2D Depthtexture0 : register(t8);
-
+Texture2D Depthtexture1 : register(t9);
+Texture2D Depthtexture2 : register(t10);
+Texture2D Depthtexture3 : register(t11);
+Texture2D DepthBuffer : register(t12);
 SamplerState objSamplerState : SAMPLER : register(s0);
 SamplerState irradianceSamplerstate : SAMPLER : register(s1);
 SamplerComparisonState ShadowSampler : register(s2);
@@ -20,11 +23,15 @@ SamplerComparisonState ShadowSampler : register(s2);
 
 cbuffer LightParams : register(b0)
 {   
-    float3 LightColor; 
+    float3 LightColor;
     float padding;
-    float3 LightDirection;  
+    float3 LightDirection;
     float farPlane;
-    float4x4 LightSpaceMatrices;
+    float4 cascadePlaneDistances;
+    float4x4 LightSpaceMatrices0;
+    float4x4 LightSpaceMatrices1;
+    float4x4 LightSpaceMatrices2;
+    float4x4 LightSpaceMatrices3;
     
 }; 
 
@@ -52,24 +59,27 @@ cbuffer Lights :register(b2)
 {
     CastLight light;
 };
-/*float ShadowCalculation(float3 fragPosWorld, float3 normal, float4x4 view)
+float ShadowCalculation(float3 fragPosWorld, float3 normal, float4x4 view)
 {
     float shadow = 0.0f;
 
     // Transform to view space to determine cascade
-    float4 fragView = mul(float4(fragPosWorld, 1.0f), view);
-    float depthValue = abs(fragView.z);
+    float viewZ = -mul(float4(fragPosWorld, 1.0f), View).z;
 
     int cascadeIndex = NUM_CASCADES - 1;
     for (int i = 0; i < NUM_CASCADES; ++i)
     {
-        if (depthValue < cascadePlaneDistances[i])
+        if (viewZ < cascadePlaneDistances[i])
         {
             cascadeIndex = i;
             break;
         }
     }
-
+    float4x4 LightSpaceMatrices[4];
+    LightSpaceMatrices[0] = LightSpaceMatrices0;
+    LightSpaceMatrices[1] = LightSpaceMatrices1;
+    LightSpaceMatrices[2] = LightSpaceMatrices2;
+    LightSpaceMatrices[3] = LightSpaceMatrices3;
     float4 fragLightSpace = mul(float4(fragPosWorld, 1.0f), LightSpaceMatrices[cascadeIndex]);
     float3 projCoords = fragLightSpace.xyz / fragLightSpace.w;
     projCoords = projCoords * 0.5f + 0.5f;
@@ -120,45 +130,8 @@ cbuffer Lights :register(b2)
 
     shadow = shadowSum / 9.0f;
     return 1.0f - shadow; // Shadow amount (1 = fully shadowed, 0 = lit)
-}*/
-
-float ShadowCalculation(float3 fragPosWorld, float3 normal, float3 lightDir)
-{
-    // Transform to light space
-    float4 fragLightSpace = mul(float4(fragPosWorld, 1.0f), LightSpaceMatrices);
-
-    // Perspective divide
-    float3 projCoords = fragLightSpace.xyz / fragLightSpace.w;
-
-    // Transform to [0, 1] range
-    projCoords = projCoords * 0.5f + 0.5f;
-
-    // If outside the shadow map
-    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0 || projCoords.z > 1.0)
-        return 0.0f;
-
-    // Calculate bias
-    float bias = max(0.05f * (1.0f - dot(normalize(normal), normalize(lightDir))), 0.1f);
-    bias = 0.005f;
-    // PCF
-    float2 texelSize = 1.0f / float2(2048.0f, 2048.0f); // Replace with your actual resolution
-    float shadow = 0.0f;
-
-    [unroll]
-    for (int x = -1; x <= 1; ++x)
-    {
-        [unroll]
-        for (int y = -1; y <= 1; ++y)
-        {
-            float2 offset = float2(x, y) * texelSize;
-            shadow += Depthtexture0.SampleCmpLevelZero(ShadowSampler, projCoords.xy + offset, projCoords.z - bias);
-        }
-    }
-
-    shadow /= 9.0f; 
-
-    return 1.0f - shadow; // 1 = shadowed, 0 = lit
 }
+
 
 float3 Eval_CastLight(const CastLight light, const float3 Pos, const float3 N)
 {
@@ -181,45 +154,6 @@ float3 Eval_ParalLight(float3 lightdir, const float3 N)
     float3 L = normalize(lightdir); // Light direction *to* the surface
     float NdotL = max(dot(N, L), 0.0);
     return LightColor * NdotL;
-}
-
-float ShadowCalculation1(float3 fragPos, float3 Normal, float3 lightdir)
-{
-    float4 fragPosLightSpace = mul(LightSpaceMatrices, float4(fragPos, 1.0f));
-    // perform perspective divide
-   float3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    // transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0)
-        return 0.0;
-    
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float closestDepth = Depthtexture0.Sample(objSamplerState, projCoords.xy).r;
-    // get depth of current fragment from light's perspective
-    float currentDepth = projCoords.z;
-    // calculate bias (based on depth map resolution and slope)
-    float3 normal = normalize(Normal);
-    float3 lightDir = normalize(lightdir);
-    float bias = 0.1 * max(0.05 * (1.0 - dot(normal, lightDir)), 0.01);
-    // check whether current frag pos is in shadow
-    // float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;
-    // PCF
-    float shadow = 0.0;
-    uint width, height;
-    Depthtexture0.GetDimensions(width, height);
-    shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
-    //float2 texelSize = 1.0 / float2(width, height);
-    //for (int x = -1; x <= 1; ++x)
-   // {
-    //    for (int y = -1; y <= 1; ++y)
-    //    {
-    //        float pcfDepth = Depthtexture0.Sample(objSamplerState, projCoords.xy + float2(x, y) * texelSize).r;
-    //        shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
-    //    }
-    //}
-   // shadow /= 9.0;
-
-    return shadow;
 }
 
 
@@ -308,6 +242,36 @@ float3 ReconstructViewDir(float2 UV)
     float3 worldDir = normalize(worldDir4.xyz);
     return worldDir;
 }
+float LinearizeDepth(float d)
+{
+    // d ? [0,1], nearPlane & farPlane in view-space units
+    // formula: viewZ = near*far / (far - d*(far - near))
+    return (0.1 * 50) /
+           (50 - d * (50 - 0.1));
+}
+
+// 2) Reconstruct full view-space (or world-space) position
+float3 ReconstructViewPos(float2 uv)
+{
+    // sample the stored depth
+    float dNonLin = DepthBuffer.Sample(objSamplerState, uv).r;
+
+    // linear view-space Z
+    float viewZ = LinearizeDepth(dNonLin);
+
+    // reconstruct clip-space XY ? [–1,1]
+    float2 ndcXY = uv * 2.0f - 1.0f;
+
+    // build a clip-space position (w = 1 after proj)
+    float4 clipPos = float4(ndcXY, dNonLin, 1.0f);
+
+    // unproject into view space
+    float4 viewH = mul(clipPos, InvView);
+    viewH /= viewH.w;
+
+    // view-space position is viewH.xyz
+    return viewH.xyz;
+}
 
 float4 main( FSInput screenPos): SV_Target0  
 {  
@@ -315,7 +279,7 @@ float4 main( FSInput screenPos): SV_Target0
     float roughness, metalness, ao;
 
     GetGBufferAttributes(screenPos.OutTexCoord, N, P, albedo, spec, metalness);
-    
+    P = mul(float4(ReconstructViewPos(screenPos.OutTexCoord), 1.0f), InvView);
     if (length(P.xyz) == 0.0f)
     {
     // No geometry, output skybox sample
@@ -367,9 +331,43 @@ float4 main( FSInput screenPos): SV_Target0
 
 		// add to outgoing radiance Lo
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
-        Lo *= (1.0f-ShadowCalculation1(P, N, LightDirection));
+       
+        Lo *= (ShadowCalculation(P, N, View));
         
     }
+    float cascadearray[4];
+    cascadearray[0] = cascadePlaneDistances.x;
+    cascadearray[1] = cascadePlaneDistances.y;
+    cascadearray[2] = cascadePlaneDistances.z;
+    cascadearray[3] = cascadePlaneDistances.w;
+    
+    float4 CascadeIndicator = float4(0.0, 0.0, 0.0, 0.0);
+    
+    float3 viewPos = mul(float4(ReconstructViewPos(screenPos.OutTexCoord),1.0f), InvView);
+    
+    float4x4 LSM[4];
+    LSM[0] = LightSpaceMatrices0;
+    LSM[1] = LightSpaceMatrices1;
+    LSM[2] = LightSpaceMatrices2;
+    LSM[3] = LightSpaceMatrices3;
+    for (int j = 0; j < NUM_CASCADES; j++)
+    {
+        if (viewPos.z <= cascadearray[j])
+        {
+            
+            if (j == 0) 
+                CascadeIndicator = float4(0.1, 0.0, 0.0, 0.0);
+            else if (j == 1)
+                CascadeIndicator = float4(0.0, 0.1, 0.0, 0.0);
+            else if (j == 2)
+                CascadeIndicator = float4(0.0, 0.0, 0.1, 0.0);
+            else if (j == 3)
+                CascadeIndicator = float4(0.1, 0.1, 0.0, 0.0);
+
+            break;
+        }
+    }
+    
     float3 F = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
 	// ambient lighting (note that the next IBL tutorial will replace 
 	// this ambient lighting with environment lighting).
@@ -395,16 +393,7 @@ float4 main( FSInput screenPos): SV_Target0
     color = color / (color + float3(1.0, 1.0, 1.0));
 	// gamma correct
     color = pow(color, float3((1.0 / 2.2), (1.0 / 2.2), (1.0 / 2.2)));
-    float4 fragPosLightSpace = mul(LightSpaceMatrices, float4(P, 1.0f));
-    if (fragPosLightSpace.w == 0.0f)
-        return float4(1, 0, 0, 1); // Debug fallback
-    // perform perspective divide
-    float3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    // transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-    projCoords = clamp(projCoords * 0.5f + 0.5f, 0.0f, 1.0f);
-    float current = projCoords.z;
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float closestDepth = Depthtexture0.Sample(objSamplerState, projCoords.xy).r;
+    
+   // return float4(viewPos + CascadeIndicator.xyz, 1.0);
     return float4(color, 1.0);
 }

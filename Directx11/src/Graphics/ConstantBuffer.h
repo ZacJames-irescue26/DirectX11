@@ -42,7 +42,14 @@ public:
 		desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		desc.MiscFlags = 0;
-		desc.ByteWidth = static_cast<UINT>(sizeof(T) + (16 - (sizeof(T) % 16)));
+		if (sizeof(T) % 16 == 0)
+		{
+			desc.ByteWidth = static_cast<UINT>(sizeof(T));
+		}
+		else
+		{
+			desc.ByteWidth = static_cast<UINT>(sizeof(T) + (16 - (sizeof(T) % 16)));
+		}
 		desc.StructureByteStride = 0;
 
 		HRESULT hr = device->CreateBuffer(&desc, 0, buffer.GetAddressOf());

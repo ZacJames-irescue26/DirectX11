@@ -6,6 +6,8 @@
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui_impl_dx11.h"
 #include "Jolt/Physics/Collision/Shape/BoxShape.h"
+#include "Acceleration/BVH/BVH.h"
+#define M_PI       3.14159265358979323846
 
 namespace Engine
 {
@@ -67,7 +69,7 @@ void Graphics::RenderFrame()
 bool Graphics::InitializeDirectX(HWND hwnd)
 {
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
-	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 1000.0f);
+	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 1.0f, 100.0f);
 	std::vector<AdapterData> adapters = AdapterReader::GetAdapters();
 
 	if (adapters.size() < 1)
@@ -139,11 +141,11 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 	depthStencilDesc.Height = windowHeight;
 	depthStencilDesc.MipLevels = 1;
 	depthStencilDesc.ArraySize = 1;
-	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	depthStencilDesc.SampleDesc.Count = 1;
 	depthStencilDesc.SampleDesc.Quality = 0;
 	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 	depthStencilDesc.CPUAccessFlags = 0;
 	depthStencilDesc.MiscFlags = 0;
 
@@ -153,22 +155,26 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 		ErrorLogger::Log(hr, "Failed to create depth stencil buffer.");
 		return false;
 	}
-
-	hr = this->device->CreateDepthStencilView(this->depthStencilBuffer.Get(), NULL, this->depthStencilView.GetAddressOf());
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;   // Stencil-capable view
+	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsvDesc.Texture2D.MipSlice = 0;
+	
+	hr = this->device->CreateDepthStencilView(this->depthStencilBuffer.Get(), &dsvDesc, this->depthStencilView.GetAddressOf());
 	if (FAILED(hr)) //If error occurred
 	{
 		ErrorLogger::Log(hr, "Failed to create depth stencil view.");
 		return false;
 	}
-	this->deviceContext->OMSetRenderTargets(1, this->renderTargetView.GetAddressOf(), depthStencilView.Get());
+	//this->deviceContext->OMSetRenderTargets(1, this->renderTargetView.GetAddressOf(), depthStencilView.Get());
 	
 	//Create depth stencil state
 	D3D11_DEPTH_STENCIL_DESC depthstencildesc;
 	ZeroMemory(&depthstencildesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 
 	depthstencildesc.DepthEnable = true;
-	depthstencildesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
-	depthstencildesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
+	depthstencildesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthstencildesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 	hr = this->device->CreateDepthStencilState(&depthstencildesc, this->depthStencilState.GetAddressOf());
 	if (FAILED(hr))
@@ -197,7 +203,7 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
 
 	rasterizerDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
-	rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+	rasterizerDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
 	hr = this->device->CreateRasterizerState(&rasterizerDesc, this->rasterizerstate.GetAddressOf());
 	if (FAILED(hr))
 	{
@@ -664,8 +670,37 @@ bool Graphics::InitializeScene()
 	 
 	 device->CreateRasterizerState(&rasterDesc, shadowRasterState.GetAddressOf());
 	
+	 D3D11_TEXTURE2D_DESC td = {};
+	 td.Width = windowWidth / DownSampleMultiplier;
+	 td.Height = windowHeight / DownSampleMultiplier;
+	 td.MipLevels = 1;
+	 td.ArraySize = 1;
+	 td.Format = DXGI_FORMAT_R32_FLOAT;
+	 td.SampleDesc.Count = 1;
+	 td.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
+	 
+	 device->CreateTexture2D(&td, nullptr, RaytracedshadowTex.GetAddressOf());
+
+	 D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
+	 uavd.Format = td.Format;
+	 uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+	 uavd.Texture2D.MipSlice = 0;
+	 
+	 device->CreateUnorderedAccessView(RaytracedshadowTex.Get(), &uavd, shadowUAV.GetAddressOf());
 	
+	D3D11_SHADER_RESOURCE_VIEW_DESC rsrv = {};
+	rsrv.Format = srvDesc.Format;
+	rsrv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;    // a single 2D map
+	rsrv.Texture2D.MipLevels = 1;
+	rsrv.Texture2D.MostDetailedMip = 0;
+	hr = device->CreateShaderResourceView(RaytracedshadowTex.Get(), &srvDesc, RaytracedShadowSRV.GetAddressOf());
 	
+	D3D11_SHADER_RESOURCE_VIEW_DESC DsrvDesc = {};
+	DsrvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS; // Depth only
+	DsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	DsrvDesc.Texture2D.MostDetailedMip = 0;
+	DsrvDesc.Texture2D.MipLevels = 1;
+	hr = device->CreateShaderResourceView(depthStencilBuffer.Get(), &DsrvDesc, DepthBuffer.GetAddressOf());
 	
 	
 	assert(SUCCEEDED(hr));
@@ -675,76 +710,136 @@ bool Graphics::InitializeScene()
 
 
 }
-std::vector<XMFLOAT3> Graphics::GetFrustumCornersWorldSpace(const XMMATRIX& viewProj)
+
+void Graphics::CalcCascadeOrthoProjs()
 {
-	XMMATRIX inv = XMMatrixInverse(nullptr, viewProj);
+	// 1) Inverse of camera view
+	XMMATRIX invCamView = XMMatrixInverse(nullptr, camera.GetViewMatrix());
 
-	std::vector<XMFLOAT3> frustumCorners;
-	frustumCorners.reserve(8);
+	// 2) Build a "light view" matrix looking along m_LightDir from the origin
+	//    (for directional light we treat eye at 0,0,0)
+	XMVECTOR eyePos = XMVectorSet(camera.GetPositionFloat3().x, camera.GetPositionFloat3().y, camera.GetPositionFloat3().z,0.0);
+	XMVECTOR lightFwd = XMVector3Normalize(XMVectorSet(direction.x, direction.y, direction.z,1.0));
+	XMVECTOR lightUp = XMVectorSet(0, 1, 0, 0);
+	// if lightDir is (almost) colinear with up, pick another up…
+	if (fabsf(XMVectorGetX(XMVector3Dot(lightFwd, lightUp))) > 0.99f)
+		lightUp = XMVectorSet(1, 0, 0, 0);
+	XMMATRIX lightView = XMMatrixLookAtLH(eyePos, lightFwd, lightUp);
 
-	for (int x = 0; x < 2; ++x)
+	// 3) Precompute FOV tangents
+	//    NOTE: m_CameraProj was built with XMMatrixPerspectiveFovLH(fov, aspect, near, far)
+	//    So half-vertical FOV = fov/2, and aspect = width/height.
+	float fov = 2.0f * atanf(1.0f / XMVectorGetX(camera.GetProjectionMatrix().r[1])); // recover fov from proj
+	float aspect = XMVectorGetX(camera.GetProjectionMatrix().r[1]) / XMVectorGetX(camera.GetProjectionMatrix().r[0]);
+	float tanHFOV = tanf(fov * 0.5f);
+	float tanVFOV = tanHFOV / aspect;
+	m_CascadeLightVP.resize(NUM_CASCADES);
+	// 4) For each cascade slice…
+	for (int i = 0; i < NUM_CASCADES; ++i)
 	{
-		for (int y = 0; y < 2; ++y)
+		float zn = shadowCascadeLevels[i];
+		float zf = shadowCascadeLevels[i + 1];
+
+		// view?space frustum extents at those depths
+		float xn = zn * tanHFOV, xf = zf * tanHFOV;
+		float yn = zn * tanVFOV, yf = zf * tanVFOV;
+
+		// the 8 corners in view space
+		XMVECTOR frustumVS[8] = {
+			// near plane
+			XMVectorSet(xn,  yn, zn, 1),
+			XMVectorSet(-xn,  yn, zn, 1),
+			XMVectorSet(xn, -yn, zn, 1),
+			XMVectorSet(-xn, -yn, zn, 1),
+			// far plane
+			XMVectorSet(xf,  yf, zf, 1),
+			XMVectorSet(-xf,  yf, zf, 1),
+			XMVectorSet(xf, -yf, zf, 1),
+			XMVectorSet(-xf, -yf, zf, 1),
+		};
+
+		// transform into light?space and find AABB
+		float minX = +FLT_MAX, maxX = -FLT_MAX;
+		float minY = +FLT_MAX, maxY = -FLT_MAX;
+		float minZ = +FLT_MAX, maxZ = -FLT_MAX;
+
+		for (int c = 0; c < 8; ++c)
 		{
-			for (int z = 0; z < 2; ++z)
-			{
-				XMVECTOR corner = XMVectorSet(
-					x == 0 ? -1.0f : 1.0f,
-					y == 0 ? -1.0f : 1.0f,
-					z == 0 ? -1.0f : 1.0f,  // DirectX clip space z: [0, 1]
-					1.0f
-				);
+			// view ? world
+			XMVECTOR cornerWS = XMVector3TransformCoord(frustumVS[c], invCamView);
+			// world ? light
+			XMVECTOR cornerLS = XMVector3TransformCoord(cornerWS, lightView);
 
-				XMVECTOR world = XMVector4Transform(corner, inv);
-				world = XMVectorDivide(world, XMVectorSplatW(world));
-
-				XMFLOAT3 pt;
-				XMStoreFloat3(&pt, world);
-				frustumCorners.push_back(pt);
-			}
+			minX = min(minX, XMVectorGetX(cornerLS));
+			maxX = max(maxX, XMVectorGetX(cornerLS));
+			minY = min(minY, XMVectorGetY(cornerLS));
+			maxY = max(maxY, XMVectorGetY(cornerLS));
+			minZ = min(minZ, XMVectorGetZ(cornerLS));
+			maxZ = max(maxZ, XMVectorGetZ(cornerLS));
 		}
+
+		// 5) (Optional) Snap to texel grid to reduce shimmering
+		float worldUnitsPerTexel = (maxX - minX) / depthMapResolution;
+		minX = floorf(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
+		maxX = floorf(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
+		worldUnitsPerTexel = (maxY - minY) / depthMapResolution;
+		minY = floorf(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
+		maxY = floorf(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
+
+		// 6) Build the cascade?specific ortho proj
+		XMMATRIX cascadeProj = XMMatrixOrthographicOffCenterLH(
+			minX, maxX,
+			minY, maxY,
+			minZ, maxZ);
+
+		// 7) Store view×proj for use when rendering this cascade
+		m_CascadeLightVP[i] = cascadeProj * lightView;
 	}
-	return frustumCorners;
 }
-
-
-std::vector<XMFLOAT3> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view)
-{
-	return GetFrustumCornersWorldSpace( view * proj);
-}
+//std::vector<XMFLOAT3> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view)
+//{
+//	return GetFrustumCornersWorldSpace( view * proj);
+//}
 
 XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPlane)
 {
-	// 1. Camera frustum corners in world space
-	const XMMATRIX cameraProj = XMMatrixPerspectiveFovLH(
+	// 1. Build split projection matrix for the cascade range
+	const float aspect = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
+	XMMATRIX splitProj = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(90.0f),
-		static_cast<float>(windowWidth) / static_cast<float>(windowHeight),
+		aspect,
 		nearPlane, farPlane);
 
-	const XMMATRIX viewProj = camera.GetViewMatrix() * cameraProj;
-	std::vector<XMFLOAT3> corners = GetFrustumCornersWorldSpace(viewProj);
+	XMMATRIX view = camera.GetViewMatrix();
+	XMMATRIX viewProj = view * splitProj;
 
-	// 2. Calculate frustum center
+	std::vector<XMVECTOR> corners = getFrustumCornersWorldSpace(viewProj);
+
+	// 2. Compute frustum center
 	XMVECTOR center = XMVectorZero();
 	for (const auto& pt : corners)
-		center += XMLoadFloat3(&pt);
+		center += pt;
 	center /= static_cast<float>(corners.size());
 
-	// 3. Setup light view matrix
-	XMVECTOR lightDir = XMVector3Normalize(XMLoadFloat3(&LightDir));
-	XMVECTOR lightPos = center - lightDir * 100.0f;
-	XMVECTOR up = XMVectorSet(0, 1, 0, 0);
-	XMMATRIX lightView = XMMatrixLookAtLH(lightPos, center, up);
+	// 3. Compute light direction
+	float theta = M_PI * Sky.x;
+	float phi = 2 * M_PI * Sky.y;
+	direction = XMFLOAT3(sin(theta) * sin(phi), cos(theta), sin(theta) * cos(phi));
 
-	// 4. Transform frustum corners into light space
+	XMVECTOR lightDir = XMVector3Normalize(XMLoadFloat3(&direction));
+	XMVECTOR eye = center - lightDir * shadowDirstance;
+
+	XMFLOAT3 up_vec = (Sky.x < -0.1f || Sky.x > -0.9f) ? XMFLOAT3(0, 0, 1) : XMFLOAT3(0, 1, 0);
+	XMMATRIX lightView = XMMatrixLookAtLH(eye, center, XMLoadFloat3(&up_vec));
+
+	// 4. Build AABB in light space
 	float minX = FLT_MAX, maxX = -FLT_MAX;
 	float minY = FLT_MAX, maxY = -FLT_MAX;
 	float minZ = FLT_MAX, maxZ = -FLT_MAX;
 
 	for (const auto& corner : corners)
 	{
-		XMVECTOR cornerVec = XMLoadFloat3(&corner);
-		XMVECTOR trf = XMVector3TransformCoord(cornerVec, lightView);
+		XMVECTOR trf = XMVector3TransformCoord(corner, lightView);
 		XMFLOAT3 pt;
 		XMStoreFloat3(&pt, trf);
 
@@ -753,40 +848,21 @@ XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPla
 		minZ = std::min(minZ, pt.z); maxZ = std::max(maxZ, pt.z);
 	}
 
-	// 5. Snap orthographic bounds to shadow map texel size
+	// 5. Snap to texel grid
 	const float worldUnitsPerTexel = (maxX - minX) / static_cast<float>(depthMapResolution);
-
 	minX = std::floor(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
 	maxX = std::floor(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
 	minY = std::floor(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
 	maxY = std::floor(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
 
-	// 6. Optional clamp if area is too small (prevents light-space collapse)
-	const float minSize = 100.0f;
-	if ((maxX - minX) < minSize)
-	{
-		float cx = 0.5f * (minX + maxX);
-		minX = cx - minSize * 0.5f;
-		maxX = cx + minSize * 0.5f;
-	}
-	if ((maxY - minY) < minSize)
-	{
-		float cy = 0.5f * (minY + maxY);
-		minY = cy - minSize * 0.5f;
-		maxY = cy + minSize * 0.5f;
-	}
+	// 6. Clamp depth
+	minZ = std::max(minZ, -farPlane);
+	maxZ = std::min(maxZ, farPlane);
 
-	// 7. Expand Z range
-	const float zMult = 10.0f;
-	if (minZ < 0) minZ *= zMult; else minZ /= zMult;
-	if (maxZ < 0) maxZ /= zMult; else maxZ *= zMult;
-
-	// 8. Final orthographic projection
+	// 7. Final ortho projection
 	XMMATRIX lightProj = XMMatrixOrthographicOffCenterLH(minX, maxX, minY, maxY, minZ, maxZ);
-
-	return XMMatrixTranspose(lightView * lightProj); // Transposed for HLSL
+	return XMMatrixTranspose(lightView * lightProj);
 }
-
 std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
 {
 	std::vector<XMMATRIX> ret;
@@ -794,7 +870,7 @@ std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
 	{
 		if (i == 0)
 		{
-			ret.push_back(getLightSpaceMatrix(0.1, shadowCascadeLevels[i]));
+			ret.push_back(getLightSpaceMatrix(0.01, shadowCascadeLevels[i]));
 		}
 		else if (i < NUM_CASCADES-1)
 		{
@@ -802,7 +878,7 @@ std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
 		}
 		else
 		{
-			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 1000));
+			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 50));
 		}
 	}
 	return ret;

@@ -80,16 +80,16 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene, const XMMATRIX& pare
 	for (UINT i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		threads.emplace_back([=]() {
-			this->ProcessMesh(mesh, scene, nodeTransformMatrix);
-		});
+	/*	threads.emplace_back([=]() {
+		});*/
+		this->ProcessMesh(mesh, scene, nodeTransformMatrix);
 	}
 	// Wait for threads to finish
-	for (auto& thread : threads)
-	{
-		if (thread.joinable())
-			thread.join();
-	}
+	//for (auto& thread : threads)
+	//{
+	//	if (thread.joinable())
+	//		thread.join();
+	//}
 	for (UINT i = 0; i < node->mNumChildren; i++)
 	{
 		this->ProcessNode(node->mChildren[i], scene, nodeTransformMatrix);
@@ -325,4 +325,5 @@ int Model::GetTextureIndex(aiString* pStr)
 	assert(pStr->length >= 2);
 	return atoi(&pStr->C_Str()[1]);
 }
+
 }
