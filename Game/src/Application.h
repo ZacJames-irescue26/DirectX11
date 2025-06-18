@@ -26,6 +26,7 @@ public:
 	void DrawShadowMaps();
 	void DirectionalShadowMap();
 	void DrawSurfels();
+	void UpdateSurfels();
 	void RayTraceShadows();
 	void RenderFrame();
 	void ForwardRender();

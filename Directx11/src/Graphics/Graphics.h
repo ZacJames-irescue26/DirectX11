@@ -132,7 +132,8 @@ public:
 	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> BRDFRTVs;
 	//CSM -----------------------------------------------------------------------------
 	const int NUM_CASCADES = 4;
-	std::vector<float> shadowCascadeLevels{ 0.01, 0.1, 1, 5, 10, 100 };
+	//std::vector<float> shadowCascadeLevels{ 0.01, 0.1, 1, 5, 10, 100 };
+	std::vector<float> shadowCascadeLevels{ 0.01, 1, 3, 8, 10, 20 };
 	const unsigned int depthMapResolution = 2048;
 	const int DownSampleMultiplier = 4;
 	std::vector<Microsoft::WRL::ComPtr<ID3D11DepthStencilView>> shadowDSVs;

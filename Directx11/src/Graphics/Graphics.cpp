@@ -729,8 +729,8 @@ void Graphics::CalcCascadeOrthoProjs()
 	// 3) Precompute FOV tangents
 	//    NOTE: m_CameraProj was built with XMMatrixPerspectiveFovLH(fov, aspect, near, far)
 	//    So half-vertical FOV = fov/2, and aspect = width/height.
-	float fov = 2.0f * atanf(1.0f / XMVectorGetX(camera.GetProjectionMatrix().r[1])); // recover fov from proj
-	float aspect = XMVectorGetX(camera.GetProjectionMatrix().r[1]) / XMVectorGetX(camera.GetProjectionMatrix().r[0]);
+	float fov = 90; // recover fov from proj
+	float aspect = windowWidth/windowHeight;
 	float tanHFOV = tanf(fov * 0.5f);
 	float tanVFOV = tanHFOV / aspect;
 	m_CascadeLightVP.resize(NUM_CASCADES);
@@ -793,7 +793,7 @@ void Graphics::CalcCascadeOrthoProjs()
 			minZ, maxZ);
 
 		// 7) Store view×proj for use when rendering this cascade
-		m_CascadeLightVP[i] = cascadeProj * lightView;
+		m_CascadeLightVP[i] = XMMatrixTranspose(cascadeProj*lightView);
 	}
 }
 //std::vector<XMFLOAT3> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view)

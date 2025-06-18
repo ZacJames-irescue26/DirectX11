@@ -694,10 +694,10 @@ void Application::BindLightingPass()
 	m_lightparams.data.LightSpaceMatrices1 = LightMatrcies[1];
 	m_lightparams.data.LightSpaceMatrices2 = LightMatrcies[2];
 	m_lightparams.data.LightSpaceMatrices3 = LightMatrcies[3];
-	m_lightparams.data.cascadePlaneDistances.x = gfx.shadowCascadeLevels[0];
-	m_lightparams.data.cascadePlaneDistances.y = gfx.shadowCascadeLevels[1];
-	m_lightparams.data.cascadePlaneDistances.z = gfx.shadowCascadeLevels[2];
-	m_lightparams.data.cascadePlaneDistances.w = gfx.shadowCascadeLevels[3];
+	m_lightparams.data.cascadePlaneDistances.x = gfx.shadowCascadeLevels[1];
+	m_lightparams.data.cascadePlaneDistances.y = gfx.shadowCascadeLevels[2];
+	m_lightparams.data.cascadePlaneDistances.z = gfx.shadowCascadeLevels[3];
+	m_lightparams.data.cascadePlaneDistances.w = gfx.shadowCascadeLevels[4];
 
 	m_lightparams.data.farplane = 1000;
 	m_lightparams.ApplyChanges();
@@ -1273,7 +1273,10 @@ void Application::DrawSurfels()
 	gfx.GetDeviceContext()->GSSetShader(nullptr, nullptr, 0);
 
 }
+void Application::UpdateSurfels()
+{ 
 
+}
 //void Application::RayTraceShadows()
 //{
 //
@@ -1392,6 +1395,7 @@ void Application::RenderFrame()
 	//ImGui::Image((ImTextureID)gfx.DirectionalshadowSRVs.Get(), { 200,200 });
 	
 	ImGui::Image((ImTextureID)gfx.DepthBuffer.Get(), {200,200});
+	ImGui::Image((ImTextureID)gfx.shadowSRVs[0].Get(), { 200,200 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[1].Get(), { 200,200 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[2].Get(), { 200,200 });
 	ImGui::Image((ImTextureID)gfx.shadowSRVs[3].Get(), { 200,200 });

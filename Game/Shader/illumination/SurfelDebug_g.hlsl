@@ -24,7 +24,7 @@ void main(point GSInput input[1], inout TriangleStream<PSInput> triStream)
     float3 center = input[0].worldPos;
     float3 normal = normalize(input[0].normal);
     float3 color = input[0].color.rgb;
-    float radius = input[0].radius;
+    float radius = 1;
 
     // Generate a local tangent/bitangent basis
     float3 tangent = normalize(cross(float3(0.0f, 1.0f, 0.0f), normal));

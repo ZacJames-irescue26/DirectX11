@@ -92,7 +92,7 @@ float ShadowCalculation(float3 fragPosWorld, float3 normal, float4x4 view)
     float bias = max(0.05f * (1.0f - dot(N, L)), 0.005f);
 
     float biasModifier = 0.5f;
-    float cascadeDepth = (cascadeIndex == NUM_CASCADES - 1) ? farPlane : cascadePlaneDistances[cascadeIndex];
+    float cascadeDepth = cascadePlaneDistances[cascadeIndex];
     bias *= 1.0f / (cascadeDepth * biasModifier);
 
     float2 texelSize;
@@ -111,19 +111,19 @@ float ShadowCalculation(float3 fragPosWorld, float3 normal, float4x4 view)
             switch (cascadeIndex)
             {
                 case 0:
-                    comparison = Depthtexture0.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
+                    comparison = Depthtexture0.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z);
                     break;
                 case 1:
-                    comparison = Depthtexture1.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
+                    comparison = Depthtexture1.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z);
                     break;
                 case 2:
-                    comparison = Depthtexture2.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
+                    comparison = Depthtexture2.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z );
                     break;
                 case 3:
-                    comparison = Depthtexture3.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
+                    comparison = Depthtexture3.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z );
                     break;
             }
-
+    
             shadowSum += comparison;
         }
     }
@@ -332,7 +332,7 @@ float4 main( FSInput screenPos): SV_Target0
 		// add to outgoing radiance Lo
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
        
-        Lo *= (ShadowCalculation(P, N, View));
+        Lo *= (1.0f-ShadowCalculation(P, N, View));
         
     }
     float cascadearray[4];
@@ -361,8 +361,7 @@ float4 main( FSInput screenPos): SV_Target0
                 CascadeIndicator = float4(0.0, 0.1, 0.0, 0.0);
             else if (j == 2)
                 CascadeIndicator = float4(0.0, 0.0, 0.1, 0.0);
-            else if (j == 3)
-                CascadeIndicator = float4(0.1, 0.1, 0.0, 0.0);
+           
 
             break;
         }
@@ -394,6 +393,6 @@ float4 main( FSInput screenPos): SV_Target0
 	// gamma correct
     color = pow(color, float3((1.0 / 2.2), (1.0 / 2.2), (1.0 / 2.2)));
     
-   // return float4(viewPos + CascadeIndicator.xyz, 1.0);
-    return float4(color, 1.0);
+    //return float4(viewPos.zzz, 1.0);
+    return float4(color + CascadeIndicator.xyz, 1.0);
 }

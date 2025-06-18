@@ -3,12 +3,12 @@
 
 namespace Engine
 {
+	#define MAXTRIANGLESPERTRIANGLE 1
 	XMVECTOR randomBarycentricCoords() {
 		float u = static_cast<float>(rand()) / RAND_MAX;
 		float v = static_cast<float>(rand()) / RAND_MAX;
 		if (u + v > 1.0f) {
-			u = 1.0f - u;
-			v = 1.0f - v;
+			randomBarycentricCoords();
 		}
 		auto coords = XMFLOAT3(u, v, 1.0f - u - v);
 		return XMLoadFloat3(&coords);
@@ -165,7 +165,7 @@ namespace Engine
 		{
 			XMMATRIX model = obj.worldMatrix;
 
-			XMMATRIX normalmatrix =XMMatrixTranspose(XMMatrixInverse(nullptr, model));
+			XMMATRIX normalmatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, model));
 			for (auto& meshes : obj.GetModel().GetMeshes())
 			{
 
@@ -173,8 +173,8 @@ namespace Engine
 				int width, height;
 				std::vector<BYTE> textureData = retreiveTexture(device,devicecontext, meshes.textures[0].GetRawTexture(), width, height);
 				
-				// Create a buffer to hold the texture data
-				 // Assuming 4 channels (RGBA)
+			
+
 
 
 				uint32_t vertexCount = meshes.vertices.size();
@@ -186,7 +186,9 @@ namespace Engine
 					tri.p0 = XMVector3Transform(XMLoadFloat3(&meshes.vertices[i].pos), model);
 					tri.p1 = XMVector3Transform(XMLoadFloat3(&meshes.vertices[i+1].pos), model);
 					tri.p2 = XMVector3Transform(XMLoadFloat3(&meshes.vertices[i+2].pos), model);
-
+					tri.p0 = XMLoadFloat3(&meshes.vertices[i].pos);
+					tri.p1 = XMLoadFloat3(&meshes.vertices[i + 1].pos);
+					tri.p2 = XMLoadFloat3(&meshes.vertices[i + 2].pos);
 					float area = tri.area();
 					
 					int SurfelDensity = static_cast<int>(area * surfelDensityFactor);
@@ -204,8 +206,16 @@ namespace Engine
 					tri.t1 = XMLoadFloat2(&meshes.vertices[i + 1].texCoord);
 					tri.t2 = XMLoadFloat2(&meshes.vertices[i + 2].texCoord);
 
-
-					for (int i = 0; i < 1; i++)
+					int numberOfSurfelsPerTriangle = area/0.01;
+					if (numberOfSurfelsPerTriangle == 0)
+					{
+						numberOfSurfelsPerTriangle++;
+					}
+					if (numberOfSurfelsPerTriangle >= MAXTRIANGLESPERTRIANGLE)
+					{
+						numberOfSurfelsPerTriangle = MAXTRIANGLESPERTRIANGLE;
+					}
+					for (int i = 0; i < numberOfSurfelsPerTriangle; i++)
 					{
 						bool isoccupied = false;
 						XMVECTOR barycentric = randomBarycentricCoords();
@@ -213,20 +223,21 @@ namespace Engine
 						XMVECTOR Normal = tri.n0 * XMVectorGetX(barycentric) + tri.n1 * XMVectorGetY(barycentric) + tri.n2 * XMVectorGetZ(barycentric);
 						XMVECTOR UV = tri.t0 * XMVectorGetX(barycentric) + tri.t1 * XMVectorGetY(barycentric) + tri.t2 * XMVectorGetZ(barycentric);
 						XMFLOAT4 albedo = sampleTexture(textureData, width, height, XMVectorGetX(UV), XMVectorGetY(UV));
-
+						
+					
 						XMFLOAT3 pos;
 						XMStoreFloat3(&pos, Position);
 						XMFLOAT3 norm;
 						XMStoreFloat3(&norm, Normal);
 
-						Surfel* candidate = new Surfel(pos, norm, albedo, 100.0);
+						Surfel* candidate = new Surfel(pos, norm, albedo, 0.1);
 						std::array<OctreeNode*, 7> ContainingNode = { octree->FindSmallestAABB(octree->Root(), candidate->position),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x + 10, candidate->position.y, candidate->position.z }),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x - 10, candidate->position.y, candidate->position.z }),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x , candidate->position.y + 10, candidate->position.z }),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x , candidate->position.y - 10, candidate->position.z }),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x, candidate->position.y, candidate->position.z + 10 }),
-						octree->FindSmallestAABB(octree->Root(), { candidate->position.x, candidate->position.y, candidate->position.z - 10 }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x + 1, candidate->position.y, candidate->position.z }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x - 1, candidate->position.y, candidate->position.z }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x , candidate->position.y + 1, candidate->position.z }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x , candidate->position.y - 1, candidate->position.z }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x, candidate->position.y, candidate->position.z + 1 }),
+						octree->FindSmallestAABB(octree->Root(), { candidate->position.x, candidate->position.y, candidate->position.z - 1 }),
 						};
 
 						for (auto node : ContainingNode)
