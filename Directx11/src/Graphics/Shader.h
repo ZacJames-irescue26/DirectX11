@@ -5,7 +5,7 @@ namespace Engine
 class VertexShader
 {
 public:
-	bool Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, LPCWSTR shaderpath, D3D11_INPUT_ELEMENT_DESC* desc, UINT elements);
+	bool Initialize(ID3D11Device* device, LPCWSTR shaderpath, D3D11_INPUT_ELEMENT_DESC* desc, UINT elements);
 	ID3D11VertexShader* GetShader();
 	ID3D10Blob* GetBuffer();
 	ID3D11InputLayout* GetInputLayout();
@@ -20,7 +20,7 @@ private:
 class PixelShader
 {
 public:
-	bool Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath);
+	bool Initialize(ID3D11Device* device, std::wstring shaderpath);
 	ID3D11PixelShader* GetShader();
 	ID3D10Blob* GetBuffer();
 private:
@@ -31,7 +31,7 @@ private:
 class GeometryShader
 {
 public:
-	bool Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath);
+	bool Initialize(ID3D11Device* device, std::wstring shaderpath);
 	ID3D11GeometryShader* GetShader();
 	ID3D10Blob* GetBuffer();
 private:
@@ -41,7 +41,7 @@ private:
 class ComputeShader
 {
 public:
-	bool Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, std::wstring shaderpath);
+	bool Initialize(ID3D11Device* device, std::wstring shaderpath);
 	ID3D11ComputeShader* GetShader();
 	ID3D10Blob* GetBuffer();
 private:

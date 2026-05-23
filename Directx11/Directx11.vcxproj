@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;_DEBUG;ACL_ON_ASSERT_ABORT;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -150,15 +150,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EngineInclude.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Acceleration\BVH\BVH.h" />
     <ClInclude Include="src\Acceleration\Octree\Octree.h" />
+    <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\EngineInclude.h" />
+    <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ErrorLogger.h" />
     <ClInclude Include="src\Game\GameObject.h" />
     <ClInclude Include="src\Game\PhysicsObject.h" />
     <ClInclude Include="src\Graphics\AdapterReader.h" />
+    <ClInclude Include="src\Graphics\AnimatedMesh.h" />
+    <ClInclude Include="src\Graphics\AnimatedModel.h" />
+    <ClInclude Include="src\Graphics\AnimationInfo.h" />
+    <ClInclude Include="src\Graphics\BoneData.h" />
     <ClInclude Include="src\Graphics\Camera.h" />
     <ClInclude Include="src\Graphics\Color.h" />
     <ClInclude Include="src\Graphics\ConstantBuffer.h" />
@@ -169,6 +175,7 @@
     <ClInclude Include="src\Graphics\Mesh.h" />
     <ClInclude Include="src\Graphics\ModelSimple.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
+    <ClInclude Include="src\Graphics\Skeleton.h" />
     <ClInclude Include="src\Graphics\Texture.h" />
     <ClInclude Include="src\Graphics\ThirdPersonCamera.h" />
     <ClInclude Include="src\Graphics\Vertex.h" />
@@ -181,6 +188,7 @@
     <ClInclude Include="src\ImGui\imstb_rectpack.h" />
     <ClInclude Include="src\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\ImGui\imstb_truetype.h" />
+    <ClInclude Include="src\InputElements.h" />
     <ClInclude Include="src\Keyboard\KeyboardClass.h" />
     <ClInclude Include="src\Keyboard\KeyboardEvent.h" />
     <ClInclude Include="src\Math\AABB.h" />
@@ -188,11 +196,21 @@
     <ClInclude Include="src\Math\Triangle.h" />
     <ClInclude Include="src\Mouse\MouseClass.h" />
     <ClInclude Include="src\Mouse\MouseEvent.h" />
+    <ClInclude Include="src\Passes\BRDFPass.h" />
+    <ClInclude Include="src\Passes\BasePass.h" />
+    <ClInclude Include="src\Passes\DrawHDRIPass.h" />
+    <ClInclude Include="src\Passes\GBufferPass.h" />
+    <ClInclude Include="src\Passes\IrradianceConvolutionPass.h" />
+    <ClInclude Include="src\Passes\LightingPass.h" />
+    <ClInclude Include="src\Passes\Prefilteringpass.h" />
+    <ClInclude Include="src\Passes\ShadowPass.h" />
+    <ClInclude Include="src\Passes\SurfelPass.h" />
     <ClInclude Include="src\Physics\PhysicsWorld.h" />
     <ClInclude Include="src\RenderWindow.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\StringConverter.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\UUID.h" />
     <ClInclude Include="src\WindowContainer.h" />
     <ClInclude Include="src\illumination\Surfel.h" />
     <ClInclude Include="src\illumination\SurfelGenerator.h" />
@@ -201,6 +219,9 @@
     <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Graphics\AnimatedMesh.cpp" />
+    <ClCompile Include="src\Graphics\AnimatedModel.cpp" />
+    <ClCompile Include="src\Graphics\Skeleton.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -255,11 +276,20 @@
     <ClCompile Include="src\Math\Triangle.cpp" />
     <ClCompile Include="src\Mouse\MouseClass.cpp" />
     <ClCompile Include="src\Mouse\MouseEvent.cpp" />
+    <ClCompile Include="src\Passes\BRDFPass.cpp" />
+    <ClCompile Include="src\Passes\DrawHDRIPass.cpp" />
+    <ClCompile Include="src\Passes\GBufferPass.cpp" />
+    <ClCompile Include="src\Passes\IrradianceConvolutionPass.cpp" />
+    <ClCompile Include="src\Passes\LightingPass.cpp" />
+    <ClCompile Include="src\Passes\PrefilteringPass.cpp" />
+    <ClCompile Include="src\Passes\ShadowPass.cpp" />
+    <ClCompile Include="src\Passes\SurfelPass.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\RenderWindow.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\StringConverter.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\UUID.cpp" />
     <ClCompile Include="src\WindowContainer.cpp" />
     <ClCompile Include="src\illumination\Surfel.cpp" />
     <ClCompile Include="src\illumination\SurfelGenerator.cpp" />

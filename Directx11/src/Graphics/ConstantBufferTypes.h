@@ -2,6 +2,16 @@
 #include <DirectXMath.h>
 namespace Engine
 {
+
+	struct CB_Anim_VS_vertexShader
+	{
+		XMMATRIX wvpMatrix;
+		XMMATRIX worldMatrix;
+		XMMATRIX worldInvTransposeMatrix;
+		XMMATRIX Bones[50];
+	};
+
+
 struct alignas(16) CB_VS_vertexShader
 {
 	// need to align to 16 bytes
@@ -45,6 +55,7 @@ struct DirectionalLightParams
 	XMMATRIX LightSpaceMatrices1;
 	XMMATRIX LightSpaceMatrices2;
 	XMMATRIX LightSpaceMatrices3;
+	XMMATRIX LSMDirectionalShadow;
 	
 };
 
@@ -102,6 +113,16 @@ struct alignas(16) BaseCB{
 
 };
 
-
+struct SurfelCSBUffer
+{
+	uint screenWidth;
+	uint screenHeight;
+	float padding;
+	float padding1;
+	XMMATRIX viewProj;
+	XMFLOAT2 screenSize;
+	uint tileCountX;
+	uint tileCountY;
+};
 
 }

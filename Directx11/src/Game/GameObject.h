@@ -1,10 +1,11 @@
 #pragma once
 #include "../Graphics/ModelSimple.h"
+#include "Components/Components.h"
 
 
 namespace Engine
 {
-class GameObject
+class GameObject : public Component
 {
 public:
 	bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_VS_vertexShader>& cb_vs_vertexshader);

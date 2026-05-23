@@ -1,0 +1,14 @@
+#pragma once
+
+#include "src/Engine.h"
+#include "src/Graphics/Graphics.h"
+#include "src/Graphics/Camera.h"
+#include "src/Graphics/ModelSimple.h"
+#include "src/Graphics/ThirdPersonCamera.h"
+#include "src/Acceleration/Octree/Octree.h"
+#include "src/illumination/SurfelGenerator.h"
+#include "src/UUID.h"
+#include "src/Scene/Scene.h"
+#include "src/Entity.h"
+#include "src/InputElements.h"
+#include "src/Passes/GBufferPass.h"

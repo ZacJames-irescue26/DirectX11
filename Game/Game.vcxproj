@@ -89,9 +89,6 @@
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
-    <FxCompile>
-      <ObjectFileOutput>CompiledShaders/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,9 +118,6 @@
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
-    <FxCompile>
-      <ObjectFileOutput>CompiledShaders/%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -136,157 +130,6 @@
       <Command>IF EXIST "..\Dependances\assimp\bin\windows\Release\assimp-vc143-mt.dll"\ (xcopy /Q /E /Y /I "..\Dependances\assimp\bin\windows\Release\assimp-vc143-mt.dll" "..\bin\Release-windows-x86_64\Game" &gt; nul) ELSE (xcopy /Q /Y /I "..\Dependances\assimp\bin\windows\Release\assimp-vc143-mt.dll" "..\bin\Release-windows-x86_64\Game" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\Gamepch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Gamepch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shader\BRDF_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\BRDF_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\BackgroundCubemap_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\BackgroundCubemap_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\CSM\DebugCascade_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\CSM\DebugCascade_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\CSM\DrawShadowMap_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\CSM\ShadowMapDepth_g.hlsl">
-      <ShaderType>Geometry</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\CSM\ShadowMapDepth_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\Compute\RealtimeShadows_c.hlsl">
-      <ShaderType>Compute</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\Compute\ShadowBake_c.hlsl">
-      <ShaderType>Compute</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\DefferedPixel_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\DefferedVert_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\EquiToHdri_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\EquiToHdri_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\FullScreen_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\FullScreen_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\GBufferPixel_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\GBufferVert_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\IrradianceConvolution_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\PixelPBR_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\PixelShader_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\Prefiltering_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\VertexPBR_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\VertexShader_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\illumination\SurfelDebug_g.hlsl">
-      <ShaderType>Geometry</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\illumination\SurfelDebug_p.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-    <FxCompile Include="Shader\illumination\SurfelDebug_v.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ShaderModel>5.0</ShaderModel>
-      <EntryPointName>main</EntryPointName>
-    </FxCompile>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Directx11\DirectX11.vcxproj">
       <Project>{5A877304-C6F1-277B-0F30-D9207BD905D0}</Project>

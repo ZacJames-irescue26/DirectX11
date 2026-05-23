@@ -33,5 +33,7 @@ private:
 	std::string directory = "";
 	std::vector<Engine::Triangle> ExtractTriangles();
 
+
+
 };
 }

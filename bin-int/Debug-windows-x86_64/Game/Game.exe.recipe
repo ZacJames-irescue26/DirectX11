@@ -82,6 +82,9 @@
       <FullPath>C:\DirectX11\Game\CompiledShaders\VertexShader_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\DirectX11\Game\CompiledShaders\GenerateSurfels_c.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX11\Game\CompiledShaders\SurfelDebug_g.cso</FullPath>
     </ContentFile>
     <ContentFile>

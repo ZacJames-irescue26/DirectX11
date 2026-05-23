@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
+#include "BoneData.h"
 namespace Engine
 {
 struct Vertex
@@ -14,7 +15,24 @@ struct Vertex
 	XMFLOAT3 Tangent;
 	XMFLOAT3 BiTangent;
 };
+struct AnimatedVertex
+{
+	AnimatedVertex() {}
+	AnimatedVertex(XMFLOAT3 position, XMFLOAT2 uv, XMFLOAT3 norm)
+		: pos(position), texCoord(uv), normal(norm) {
+	}
 
+	XMFLOAT3 pos;
+	XMFLOAT2 texCoord;
+	XMFLOAT3 normal;
+	XMFLOAT3 Tangent;
+	XMFLOAT3 BiTangent;
+	//bone indexes which will influence this vertex
+	int m_BoneIDs[MAXBONEPERVERTEX];
+	//weights from each bone
+	float m_Weights[MAXBONEPERVERTEX];
+
+};
 struct FullScreenQuad
 {
 	FullScreenQuad() {}
@@ -39,13 +57,14 @@ struct CubeWPos
 struct SurfelVB
 {
 	SurfelVB() {}
-	SurfelVB(XMFLOAT3 position, XMFLOAT3 normal, XMFLOAT4 color, float radius)
+	SurfelVB(XMFLOAT4 position, XMFLOAT4 normal, XMFLOAT4 color, float radius)
 		: pos(position), norm(normal), color(color), radius(radius) {}
 
 
-	XMFLOAT3 pos;
-	XMFLOAT3 norm;
+	XMFLOAT4 pos;
+	XMFLOAT4 norm;
 	XMFLOAT4 color;
+	XMFLOAT3 indirectRadiance;
 	float radius;
 };
 }

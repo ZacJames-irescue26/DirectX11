@@ -13,7 +13,7 @@ bool Model::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11
 	this->device = device;
 	this->deviceContext = devicecontext;
 	this->cb_vs_vertexshader = &cb_vs_vertexshader;
-
+	
 	try
 	{
 		if (!this->LoadModel(filePath))
@@ -29,7 +29,10 @@ bool Model::Initialize(const std::string& filePath, ID3D11Device* device, ID3D11
 
 void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
 {
-
+	if (this->cb_vs_vertexshader == nullptr)
+	{
+		return;
+	}
 	this->deviceContext->VSSetConstantBuffers(0, 1, this->cb_vs_vertexshader->GetAddressOf());
 		this->cb_vs_vertexshader->data.wvpMatrix = worldMatrix * viewProjectionMatrix; //Calculate World-View-Projection Matrix
 		this->cb_vs_vertexshader->data.worldMatrix = worldMatrix; //Calculate World
@@ -38,7 +41,6 @@ void Model::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatr
 		cb_vs_vertexshader->data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
 		
 		this->cb_vs_vertexshader->ApplyChanges();
-
 
 	for (int i = 0; i < meshes.size(); i++)
 	{

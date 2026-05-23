@@ -41,6 +41,9 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(this->device.Get(), this->deviceContext.Get());
 	ImGui::StyleColorsDark();
@@ -129,43 +132,35 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 		return false;
 	}
 
-	hr = this->device->CreateRenderTargetView(backBuffer.Get(), NULL, this->renderTargetView.GetAddressOf());
+	hr = device->CreateRenderTargetView(backBuffer.Get(), NULL, this->renderTargetView.GetAddressOf());
 	if (FAILED(hr)) //If error occurred
 	{
 		ErrorLogger::Log(hr, "Failed to create render target view.");
 		return false;
 	}
-	//Describe our Depth/Stencil Buffer
-	D3D11_TEXTURE2D_DESC depthStencilDesc;
-	depthStencilDesc.Width = windowWidth;
-	depthStencilDesc.Height = windowHeight;
-	depthStencilDesc.MipLevels = 1;
-	depthStencilDesc.ArraySize = 1;
-	depthStencilDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
-	depthStencilDesc.SampleDesc.Count = 1;
-	depthStencilDesc.SampleDesc.Quality = 0;
-	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
-	depthStencilDesc.CPUAccessFlags = 0;
-	depthStencilDesc.MiscFlags = 0;
 
-	hr = this->device->CreateTexture2D(&depthStencilDesc, NULL, this->depthStencilBuffer.GetAddressOf());
-	if (FAILED(hr)) //If error occurred
-	{
-		ErrorLogger::Log(hr, "Failed to create depth stencil buffer.");
-		return false;
-	}
-	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;   // Stencil-capable view
-	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	dsvDesc.Texture2D.MipSlice = 0;
+
+	//hr = this->device->CreateTexture2D(&depthStencilDesc, NULL, this->depthStencilBuffer.GetAddressOf());
+	//if (FAILED(hr)) //If error occurred
+	//{
+	//	ErrorLogger::Log(hr, "Failed to create depth stencil buffer.");
+	//	return false;
+	//}
+
 	
-	hr = this->device->CreateDepthStencilView(this->depthStencilBuffer.Get(), &dsvDesc, this->depthStencilView.GetAddressOf());
-	if (FAILED(hr)) //If error occurred
-	{
-		ErrorLogger::Log(hr, "Failed to create depth stencil view.");
-		return false;
-	}
+
+
+
+
+	//hr = this->device->CreateDepthStencilView(this->depthStencilBuffer.Get(), &dsvDesc, this->depthStencilView1.GetAddressOf());
+	//if (FAILED(hr)) //If error occurred
+	//{
+	//	ErrorLogger::Log(hr, "Failed to create depth stencil view.");
+	//	return false;
+	//}
+
+
+
 	//this->deviceContext->OMSetRenderTargets(1, this->renderTargetView.GetAddressOf(), depthStencilView.Get());
 	
 	//Create depth stencil state
@@ -218,29 +213,16 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 	device->CreateSamplerState(&sampDesc, &samplerState);
 
+	sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+	sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	device->CreateSamplerState(&sampDesc, &DepthsamplerState);
 
-	D3D11_SAMPLER_DESC HDRIsampDesc = {};
-	 HDRIsampDesc.Filter = D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
-	 HDRIsampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	 HDRIsampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	 HDRIsampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	if (FAILED(device->CreateSamplerState(&HDRIsampDesc, &HDRIsamplerState)))
-	{
-		std::cout << "Failed to make hdri sampler" << std::endl;
-	}
 
-	D3D11_SAMPLER_DESC presamplerDesc = {};
-	presamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;         // Smooth trilinear filtering
-	presamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;           // Clamp to edge to avoid seams
-	presamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	presamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	presamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	presamplerDesc.MinLOD = 0;
-	presamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	presamplerDesc.MipLODBias = 0.0f;
-	presamplerDesc.MaxAnisotropy = 1;
 
-	hr = device->CreateSamplerState(&presamplerDesc, &PrefilteredsamplerState);
+
 
 	return true;
 }
@@ -253,70 +235,7 @@ bool Graphics::InitializeShaders()
 bool Graphics::InitializeScene()
 {
 
-	//GBuffer--------------------------------------------------------------
-	// Common settings for G-buffer textures
-	D3D11_TEXTURE2D_DESC textureDesc = {};
-	textureDesc.Width = windowWidth;
-	textureDesc.Height = windowHeight;
-	textureDesc.MipLevels = 1;
-	textureDesc.ArraySize = 1;
-	textureDesc.SampleDesc.Count = 1;
-	textureDesc.Usage = D3D11_USAGE_DEFAULT;
-	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	
-	// Texture for Position (32-bit floating point RGBA format to store position accurately)
-	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	device->CreateTexture2D(&textureDesc, nullptr, &positionTexture);
-
-	// Texture for Normal (32-bit RGBA for storing normal data accurately)
-	textureDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateTexture2D(&textureDesc, nullptr, &NormalTexture);
-
-	// Texture for Normal (32-bit RGBA for storing normal data accurately)
-	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateTexture2D(&textureDesc, nullptr, &SpecularTexture);
-
-	// Texture for Albedo (8-bit RGBA as it's only color data)
-	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateTexture2D(&textureDesc, nullptr, &DiffuseTexture);
-
-	// Now create Render Target Views (RTVs) for each texture
-	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = {};
-	renderTargetViewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-	renderTargetViewDesc.Texture2D.MipSlice = 0;
-	
-	if (FAILED(device->CreateRenderTargetView(positionTexture.Get(), &renderTargetViewDesc, &positionRTV)))
-	{
-		std::cout << "Failed to create render target view" << std::endl;
-	}
-	renderTargetViewDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateRenderTargetView(NormalTexture.Get(), &renderTargetViewDesc, &NormalRTV);
-	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateRenderTargetView(DiffuseTexture.Get(), &renderTargetViewDesc, &DiffuseRTV);
-	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateRenderTargetView(SpecularTexture.Get(), &renderTargetViewDesc, &SpecularRTV);
-
-	// Position SRV
-	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-	srvDesc.Texture2D.MostDetailedMip = 0;
-	
-	device->CreateShaderResourceView(positionTexture.Get(), &srvDesc, &positionSRV);
-
-	srvDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateShaderResourceView(NormalTexture.Get(), &srvDesc, &NormalSRV);
-
-
-	// Specular SRV
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(SpecularTexture.Get(), &srvDesc, &SpecularSRV);
-
-	// Diffuse SRV
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(DiffuseTexture.Get(), &srvDesc, &DiffuseSRV);
 	
 
 
@@ -341,105 +260,7 @@ bool Graphics::InitializeScene()
 	//hr = device->CreateSamplerState(&samplerDesc, &HDRIsamplerState);
 	
 	
-	D3D11_DEPTH_STENCIL_DESC HDRIdepthStencilDesc = {};
-	HDRIdepthStencilDesc.DepthEnable = TRUE;
-	HDRIdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	HDRIdepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-	
-	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
-	
-	D3D11_TEXTURE2D_DESC texDesc = {};
-	texDesc.Width = 512; // e.g., 512
-	texDesc.Height = 512;
-	texDesc.MipLevels = 0; // 0 = generate full mip chain
-	texDesc.ArraySize = 6; // 6 faces
-	texDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
-	texDesc.SampleDesc.Count = 1;
-	texDesc.Usage = D3D11_USAGE_DEFAULT;
-	texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS | D3D11_RESOURCE_MISC_TEXTURECUBE;
-	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET; //
 
-	
-	hr = device->CreateTexture2D(&texDesc, nullptr, HDRIFramebufferTexture.GetAddressOf());
-
-	for (int i = 0; i < 6; ++i)
-	{
-		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-		rtvDesc.Format = texDesc.Format;
-		rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-		srvDesc.TextureCube.MipLevels = -1;
-		srvDesc.TextureCube.MostDetailedMip = 0;
-		rtvDesc.Texture2DArray.FirstArraySlice = i;
-		rtvDesc.Texture2DArray.ArraySize = 1;
-
-		device->CreateRenderTargetView(HDRIFramebufferTexture.Get(), &rtvDesc, &HDRIFramebufferRTV[i]);
-	}
-	D3D11_SHADER_RESOURCE_VIEW_DESC HDRIsrvDesc = {};
-	HDRIsrvDesc.Format = texDesc.Format;
-	HDRIsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	HDRIsrvDesc.TextureCube.MipLevels = -1;
-	HDRIsrvDesc.TextureCube.MostDetailedMip = 0;
-
-	hr = device->CreateShaderResourceView(HDRIFramebufferTexture.Get(), &HDRIsrvDesc, HDRIFramebufferSRV.GetAddressOf());
-	
-	D3D11_TEXTURE2D_DESC irradiancetexDesc = {};
-	irradiancetexDesc.Width = 32; 
-	irradiancetexDesc.Height = 32;
-	irradiancetexDesc.MipLevels = 1;
-	irradiancetexDesc.ArraySize = 6; // 6 faces
-	irradiancetexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT; // HDR-capable
-	irradiancetexDesc.SampleDesc.Count = 1;
-	irradiancetexDesc.Usage = D3D11_USAGE_DEFAULT;
-	irradiancetexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	irradiancetexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
-	
-	hr = device->CreateTexture2D(&irradiancetexDesc, nullptr, IrradiancemapTexture.GetAddressOf());
-	
-	D3D11_SHADER_RESOURCE_VIEW_DESC irradiancesrvDesc = {};
-	irradiancesrvDesc.Format = texDesc.Format;
-	irradiancesrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	irradiancesrvDesc.TextureCube.MipLevels = 1;
-	irradiancesrvDesc.TextureCube.MostDetailedMip = 0;
-
-	hr = device->CreateShaderResourceView(IrradiancemapTexture.Get(), &irradiancesrvDesc, IrradianceMapSRV.GetAddressOf());
-	
-	D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-	rtvDesc.Format = texDesc.Format;
-	rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-	rtvDesc.Texture2DArray.MipSlice = 0;
-	rtvDesc.Texture2DArray.ArraySize = 1;
-
-	for (UINT i = 0; i < 6; ++i)
-	{
-		rtvDesc.Texture2DArray.FirstArraySlice = i;
-		hr = device->CreateRenderTargetView(IrradiancemapTexture.Get(), &rtvDesc, irradianceRTVs[i].GetAddressOf());
-		if (FAILED(hr)) {
-			// handle error
-		}
-	}
-
-	
-
-	D3D11_TEXTURE2D_DESC irradiancedepthDesc = {};
-	irradiancedepthDesc.Width = 32;
-	irradiancedepthDesc.Height = 32;
-	irradiancedepthDesc.MipLevels = 1;
-	irradiancedepthDesc.ArraySize = 1;
-	irradiancedepthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	irradiancedepthDesc.SampleDesc.Count = 1;
-	irradiancedepthDesc.Usage = D3D11_USAGE_DEFAULT;
-	irradiancedepthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	hr = device->CreateTexture2D(&irradiancedepthDesc, nullptr, irradiancedepthStencilBuffer.GetAddressOf());
-	hr = device->CreateDepthStencilView(irradiancedepthStencilBuffer.Get(), nullptr, irradiancedepthStencilView.GetAddressOf());
-	
-	D3D11_DEPTH_STENCIL_DESC IrradiancedepthStencilDesc = {};
-	IrradiancedepthStencilDesc.DepthEnable = TRUE;
-	IrradiancedepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	IrradiancedepthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-
-
-	hr = device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled);
 
 	D3D11_DEPTH_STENCIL_DESC skyboxdepthStencilDesc = {};
 	skyboxdepthStencilDesc.DepthEnable = TRUE;
@@ -448,120 +269,13 @@ bool Graphics::InitializeScene()
 	device->CreateDepthStencilState(&skyboxdepthStencilDesc, &depthStencilSkyboxState);
 	
 	
-	const UINT baseSize = 128;
-	const UINT mipLevels = static_cast<UINT>(std::floor(std::log2(baseSize))) + 1;
-
-	D3D11_TEXTURE2D_DESC pretexDesc = {};
-	pretexDesc.Width = baseSize;
-	pretexDesc.Height = baseSize;
-	pretexDesc.MipLevels = mipLevels;
-	pretexDesc.ArraySize = 6; // Cube has 6 faces
-	pretexDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	pretexDesc.SampleDesc.Count = 1;
-	pretexDesc.Usage = D3D11_USAGE_DEFAULT;
-	pretexDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	pretexDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
-
-	device->CreateTexture2D(&texDesc, nullptr, &PrefilteringTexture);
-
-	hr = device->CreateTexture2D(&pretexDesc, nullptr, PrefilteringTexture.GetAddressOf());
-	PrefilteringRTVs.resize(mipLevels);
-	for (int i = 0 ; i < PrefilteringRTVs.size(); i++)
-	{
-		PrefilteringRTVs[i].resize(6);
-	}
-
-	for (UINT mip = 0; mip < mipLevels; ++mip)
-	{
-		for (UINT face = 0; face < 6; ++face)
-		{
-			D3D11_RENDER_TARGET_VIEW_DESC prertvDesc = {};
-			prertvDesc.Format = pretexDesc.Format;
-			prertvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-			prertvDesc.Texture2DArray.MipSlice = mip;
-			prertvDesc.Texture2DArray.FirstArraySlice = face;
-			prertvDesc.Texture2DArray.ArraySize = 1;
-
-			if (FAILED(device->CreateRenderTargetView(PrefilteringTexture.Get(), &prertvDesc, PrefilteringRTVs[mip][face].GetAddressOf())))
-			{
-				assert(false);
-			}
-		}
-	}
-	D3D11_SHADER_RESOURCE_VIEW_DESC presrvDesc = {};
-	presrvDesc.Format = pretexDesc.Format;
-	presrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
-	presrvDesc.TextureCube.MipLevels = mipLevels;
-	presrvDesc.TextureCube.MostDetailedMip = 0;
-
-	device->CreateShaderResourceView(PrefilteringTexture.Get(), &presrvDesc, &PrefilteringSRV);
-
-	D3D11_TEXTURE2D_DESC BRDFDesc = {};
-	BRDFDesc.Width = 512; 
-	BRDFDesc.Height = 512;
-	BRDFDesc.MipLevels = 1;
-	BRDFDesc.ArraySize = 1; 
-	BRDFDesc.Format = DXGI_FORMAT_R32G32_FLOAT;
-	BRDFDesc.SampleDesc.Count = 1;
-	BRDFDesc.Usage = D3D11_USAGE_DEFAULT;
-	BRDFDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
 
-	hr = device->CreateTexture2D(&BRDFDesc, nullptr, BRDFTexture.GetAddressOf());
 
-		D3D11_RENDER_TARGET_VIEW_DESC BRDFrtvDesc = {};
-		BRDFrtvDesc.Format = BRDFDesc.Format;
-		BRDFrtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		BRDFrtvDesc.Texture2DArray.MipSlice = 0;
-		BRDFrtvDesc.Texture2DArray.ArraySize = 1;
 
-	hr = device->CreateRenderTargetView(BRDFTexture.Get(), &BRDFrtvDesc, &BRDFRTVs);
 
-	D3D11_SHADER_RESOURCE_VIEW_DESC BRDFsrvDesc = {};
-	BRDFsrvDesc.Format = BRDFDesc.Format;
-	BRDFsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	BRDFsrvDesc.Texture2D.MipLevels = 1;
+
 	
-	hr = device->CreateShaderResourceView(BRDFTexture.Get(), &BRDFsrvDesc, &BRDFSRV);
-
-	//CASCADED SHADOW MAPS----------------------------------------
-	for (int i = 0; i < NUM_CASCADES; ++i)
-	{
-		D3D11_TEXTURE2D_DESC desc = {};
-		desc.Width = depthMapResolution;
-		desc.Height = depthMapResolution;
-		desc.MipLevels = 1;
-		desc.ArraySize = 1;
-		desc.Format = DXGI_FORMAT_R32_TYPELESS;
-		desc.SampleDesc.Count = 1;
-		desc.Usage = D3D11_USAGE_DEFAULT;
-		desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
-
-		shadowTex.resize(NUM_CASCADES);
-		hr = device->CreateTexture2D(&desc, nullptr, shadowTex[i].GetAddressOf());
-		shadowDSVs.resize(NUM_CASCADES);
-		// Depth view
-		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-		dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-		dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-		hr = device->CreateDepthStencilView(shadowTex[i].Get(), &dsvDesc, &shadowDSVs[i]);
-		shadowSRVs.resize(NUM_CASCADES);
-		// SRV for shader access
-		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-		srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
-		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		srvDesc.Texture2D.MipLevels = 1;
-		hr = device->CreateShaderResourceView(shadowTex[i].Get(), &srvDesc, &shadowSRVs[i]);
-	}
-	
-	D3D11_DEPTH_STENCIL_DESC ShadowdepthStencilDesc = {};
-	ShadowdepthStencilDesc.DepthEnable = TRUE;                                 // Enable depth testing
-	ShadowdepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;        // Allow depth writes
-	ShadowdepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;            // Standard comparison
-
-	ShadowdepthStencilDesc.StencilEnable = FALSE;                              // We don’t use stencil here
-
-	 hr = device->CreateDepthStencilState(&ShadowdepthStencilDesc, shadowDepthStencilState.GetAddressOf());
 
 
 	 D3D11_BLEND_DESC blendDesc = {};
@@ -623,85 +337,48 @@ bool Graphics::InitializeScene()
 	 //
 	 //device->CreateShaderResourceView(ShadowtextureArray.Get(), &ShadowsrvDesc, &ShadowtextureArraySRV);
 
-	 D3D11_SAMPLER_DESC sampDesc = {};
-	 sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
-	 sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	 sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-	 sampDesc.BorderColor[0] = 1.0f;
-	 sampDesc.BorderColor[1] = 1.0f;
-	 sampDesc.BorderColor[2] = 1.0f;
-	 sampDesc.BorderColor[3] = 1.0f;
 
-	 
-	hr = device->CreateSamplerState(&sampDesc, &shadowSampler);
 	
-	
-	
-	 D3D11_TEXTURE2D_DESC desc = {};
-	 desc.Width = depthMapResolution;
-	 desc.Height = depthMapResolution;
-	 desc.MipLevels = 1;
-	 desc.ArraySize = 1;
-	 desc.Format = DXGI_FORMAT_R32_TYPELESS;
-	 desc.SampleDesc.Count = 1;
-	 desc.Usage = D3D11_USAGE_DEFAULT;
-	 desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+	// D3D11_RASTERIZER_DESC rasterDesc = {};
+	// rasterDesc.FillMode = D3D11_FILL_SOLID;
+	// rasterDesc.CullMode = D3D11_CULL_FRONT; // Cull front faces
+	// rasterDesc.DepthClipEnable = true;
 
-	 hr = device->CreateTexture2D(&desc, nullptr, DirectionalshadowTex.GetAddressOf());
-	 // Depth view
-	 D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	 dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	 dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	 hr = device->CreateDepthStencilView(DirectionalshadowTex.Get(), &dsvDesc, &DirectionalshadowDSVs);
-	 // SRV for shader access
-	 srvDesc = {};
-	 srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
-	 srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	 srvDesc.Texture2D.MipLevels = 1;
-	 hr = device->CreateShaderResourceView(DirectionalshadowTex.Get(), &srvDesc, &DirectionalshadowSRVs);
-	
-	 D3D11_RASTERIZER_DESC rasterDesc = {};
-	 rasterDesc.FillMode = D3D11_FILL_SOLID;
-	 rasterDesc.CullMode = D3D11_CULL_FRONT; // Cull front faces
-	 rasterDesc.DepthClipEnable = true;
+	// 
+	// device->CreateRasterizerState(&rasterDesc, shadowRasterState.GetAddressOf());
+	//
+	// D3D11_TEXTURE2D_DESC td = {};
+	// td.Width = windowWidth / DownSampleMultiplier;
+	// td.Height = windowHeight / DownSampleMultiplier;
+	// td.MipLevels = 1;
+	// td.ArraySize = 1;
+	// td.Format = DXGI_FORMAT_R32_FLOAT;
+	// td.SampleDesc.Count = 1;
+	// td.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
+	// 
+	// device->CreateTexture2D(&td, nullptr, RaytracedshadowTex.GetAddressOf());
 
-	 
-	 device->CreateRasterizerState(&rasterDesc, shadowRasterState.GetAddressOf());
-	
-	 D3D11_TEXTURE2D_DESC td = {};
-	 td.Width = windowWidth / DownSampleMultiplier;
-	 td.Height = windowHeight / DownSampleMultiplier;
-	 td.MipLevels = 1;
-	 td.ArraySize = 1;
-	 td.Format = DXGI_FORMAT_R32_FLOAT;
-	 td.SampleDesc.Count = 1;
-	 td.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
-	 
-	 device->CreateTexture2D(&td, nullptr, RaytracedshadowTex.GetAddressOf());
-
-	 D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
-	 uavd.Format = td.Format;
-	 uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
-	 uavd.Texture2D.MipSlice = 0;
-	 
-	 device->CreateUnorderedAccessView(RaytracedshadowTex.Get(), &uavd, shadowUAV.GetAddressOf());
-	
-	D3D11_SHADER_RESOURCE_VIEW_DESC rsrv = {};
-	rsrv.Format = srvDesc.Format;
-	rsrv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;    // a single 2D map
-	rsrv.Texture2D.MipLevels = 1;
-	rsrv.Texture2D.MostDetailedMip = 0;
-	hr = device->CreateShaderResourceView(RaytracedshadowTex.Get(), &srvDesc, RaytracedShadowSRV.GetAddressOf());
-	
-	D3D11_SHADER_RESOURCE_VIEW_DESC DsrvDesc = {};
-	DsrvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS; // Depth only
-	DsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	DsrvDesc.Texture2D.MostDetailedMip = 0;
-	DsrvDesc.Texture2D.MipLevels = 1;
-	hr = device->CreateShaderResourceView(depthStencilBuffer.Get(), &DsrvDesc, DepthBuffer.GetAddressOf());
-	
+	// D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
+	// uavd.Format = td.Format;
+	// uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
+	// uavd.Texture2D.MipSlice = 0;
+	// 
+	// device->CreateUnorderedAccessView(RaytracedshadowTex.Get(), &uavd, shadowUAV.GetAddressOf());
+	//
+	//D3D11_SHADER_RESOURCE_VIEW_DESC rsrv = {};
+	//rsrv.Format = srvDesc.Format;
+	//rsrv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;    // a single 2D map
+	//rsrv.Texture2D.MipLevels = 1;
+	//rsrv.Texture2D.MostDetailedMip = 0;
+	//hr = device->CreateShaderResourceView(RaytracedshadowTex.Get(), &srvDesc, RaytracedShadowSRV.GetAddressOf());
+	//
+	//D3D11_SHADER_RESOURCE_VIEW_DESC DsrvDesc = {};
+	//DsrvDesc.Format = DXGI_FORMAT_R32_FLOAT; // Depth only
+	//DsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	//DsrvDesc.Texture2D.MostDetailedMip = 0;
+	//DsrvDesc.Texture2D.MipLevels = 1;
+	//hr = device->CreateShaderResourceView(depthStencilBuffer.Get(), &DsrvDesc, DepthBuffer.GetAddressOf());
+	//
 	
 	assert(SUCCEEDED(hr));
 	return true;
@@ -711,178 +388,209 @@ bool Graphics::InitializeScene()
 
 }
 
-void Graphics::CalcCascadeOrthoProjs()
-{
-	// 1) Inverse of camera view
-	XMMATRIX invCamView = XMMatrixInverse(nullptr, camera.GetViewMatrix());
-
-	// 2) Build a "light view" matrix looking along m_LightDir from the origin
-	//    (for directional light we treat eye at 0,0,0)
-	XMVECTOR eyePos = XMVectorSet(camera.GetPositionFloat3().x, camera.GetPositionFloat3().y, camera.GetPositionFloat3().z,0.0);
-	XMVECTOR lightFwd = XMVector3Normalize(XMVectorSet(direction.x, direction.y, direction.z,1.0));
-	XMVECTOR lightUp = XMVectorSet(0, 1, 0, 0);
-	// if lightDir is (almost) colinear with up, pick another up…
-	if (fabsf(XMVectorGetX(XMVector3Dot(lightFwd, lightUp))) > 0.99f)
-		lightUp = XMVectorSet(1, 0, 0, 0);
-	XMMATRIX lightView = XMMatrixLookAtLH(eyePos, lightFwd, lightUp);
-
-	// 3) Precompute FOV tangents
-	//    NOTE: m_CameraProj was built with XMMatrixPerspectiveFovLH(fov, aspect, near, far)
-	//    So half-vertical FOV = fov/2, and aspect = width/height.
-	float fov = 90; // recover fov from proj
-	float aspect = windowWidth/windowHeight;
-	float tanHFOV = tanf(fov * 0.5f);
-	float tanVFOV = tanHFOV / aspect;
-	m_CascadeLightVP.resize(NUM_CASCADES);
-	// 4) For each cascade slice…
-	for (int i = 0; i < NUM_CASCADES; ++i)
-	{
-		float zn = shadowCascadeLevels[i];
-		float zf = shadowCascadeLevels[i + 1];
-
-		// view?space frustum extents at those depths
-		float xn = zn * tanHFOV, xf = zf * tanHFOV;
-		float yn = zn * tanVFOV, yf = zf * tanVFOV;
-
-		// the 8 corners in view space
-		XMVECTOR frustumVS[8] = {
-			// near plane
-			XMVectorSet(xn,  yn, zn, 1),
-			XMVectorSet(-xn,  yn, zn, 1),
-			XMVectorSet(xn, -yn, zn, 1),
-			XMVectorSet(-xn, -yn, zn, 1),
-			// far plane
-			XMVectorSet(xf,  yf, zf, 1),
-			XMVectorSet(-xf,  yf, zf, 1),
-			XMVectorSet(xf, -yf, zf, 1),
-			XMVectorSet(-xf, -yf, zf, 1),
-		};
-
-		// transform into light?space and find AABB
-		float minX = +FLT_MAX, maxX = -FLT_MAX;
-		float minY = +FLT_MAX, maxY = -FLT_MAX;
-		float minZ = +FLT_MAX, maxZ = -FLT_MAX;
-
-		for (int c = 0; c < 8; ++c)
-		{
-			// view ? world
-			XMVECTOR cornerWS = XMVector3TransformCoord(frustumVS[c], invCamView);
-			// world ? light
-			XMVECTOR cornerLS = XMVector3TransformCoord(cornerWS, lightView);
-
-			minX = min(minX, XMVectorGetX(cornerLS));
-			maxX = max(maxX, XMVectorGetX(cornerLS));
-			minY = min(minY, XMVectorGetY(cornerLS));
-			maxY = max(maxY, XMVectorGetY(cornerLS));
-			minZ = min(minZ, XMVectorGetZ(cornerLS));
-			maxZ = max(maxZ, XMVectorGetZ(cornerLS));
-		}
-
-		// 5) (Optional) Snap to texel grid to reduce shimmering
-		float worldUnitsPerTexel = (maxX - minX) / depthMapResolution;
-		minX = floorf(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
-		maxX = floorf(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
-		worldUnitsPerTexel = (maxY - minY) / depthMapResolution;
-		minY = floorf(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
-		maxY = floorf(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
-
-		// 6) Build the cascade?specific ortho proj
-		XMMATRIX cascadeProj = XMMatrixOrthographicOffCenterLH(
-			minX, maxX,
-			minY, maxY,
-			minZ, maxZ);
-
-		// 7) Store view×proj for use when rendering this cascade
-		m_CascadeLightVP[i] = XMMatrixTranspose(cascadeProj*lightView);
-	}
-}
+//void Graphics::CalculateCascades()
+//{
+//	constexpr int SHADOW_MAP_CASCADE_COUNT = 4;
+//	m_CascadeLightVP.resize(SHADOW_MAP_CASCADE_COUNT);
+//
+//	float nearClip = 0.1f;
+//	float farClip = 100;
+//	float clipRange = farClip - nearClip;
+//
+//	float minZ = nearClip;
+//	float maxZ = nearClip + clipRange;
+//	float range = maxZ - minZ;
+//	float ratio = maxZ / minZ;
+//
+//	float cascadeSplits[SHADOW_MAP_CASCADE_COUNT];
+//
+//	// Use log-uniform blend for split distances
+//	for (uint32_t i = 0; i < SHADOW_MAP_CASCADE_COUNT; i++) {
+//		float p = (i + 1) / static_cast<float>(SHADOW_MAP_CASCADE_COUNT);
+//		float log = minZ * std::pow(ratio, p);
+//		float uniform = minZ + range * p;
+//		float d = 0.95f * (log - uniform) + uniform;
+//		cascadeSplits[i] = (d - nearClip) / clipRange;
+//	}
+//
+//	float lastSplitDist = 0.0f;
+//
+//	// Camera matrices
+//	XMMATRIX camView = camera.GetViewMatrix();
+//	XMMATRIX camProj = camera.GetProjectionMatrix();
+//	XMMATRIX invCamViewProj = XMMatrixInverse(nullptr, camView * camProj);
+//
+//	// For each cascade
+//	for (uint32_t i = 0; i < SHADOW_MAP_CASCADE_COUNT; ++i) {
+//		float splitDist = cascadeSplits[i];
+//
+//		// Frustum corners in NDC
+//		XMFLOAT3 frustumCorners[8] = {
+//			{-1,  1, -1}, { 1,  1, -1}, { 1, -1, -1}, {-1, -1, -1},
+//			{-1,  1,  1}, { 1,  1,  1}, { 1, -1,  1}, {-1, -1,  1},
+//		};
+//
+//		// Transform corners to world space
+//		for (int j = 0; j < 8; ++j) {
+//			XMVECTOR v = XMVectorSet(frustumCorners[j].x, frustumCorners[j].y, frustumCorners[j].z, 1.0f);
+//			v = XMVector4Transform(v, invCamViewProj);
+//			v /= XMVectorGetW(v);
+//			XMStoreFloat3(&frustumCorners[j], v);
+//		}
+//
+//		// Slice the frustum
+//		for (int j = 0; j < 4; ++j) {
+//			XMVECTOR cornerNear = XMLoadFloat3(&frustumCorners[j]);
+//			XMVECTOR cornerFar = XMLoadFloat3(&frustumCorners[j + 4]);
+//			XMVECTOR dir = cornerFar - cornerNear;
+//			XMLoadFloat3(&frustumCorners[j]) = cornerNear + dir * lastSplitDist;
+//			XMLoadFloat3(&frustumCorners[j + 4]) = cornerNear + dir * splitDist;
+//		}
+//
+//		lastSplitDist = splitDist;
+//
+//		// Compute frustum center
+//		XMVECTOR center = XMVectorZero();
+//		for (int j = 0; j < 8; ++j)
+//			center += XMLoadFloat3(&frustumCorners[j]);
+//		center /= 8.0f;
+//
+//		// Light direction
+//		XMVECTOR lightDir = -XMVector3Normalize(XMLoadFloat3(&direction));
+//		XMVECTOR eye = center - lightDir * 100.0f; // pull back along light direction
+//
+//		// Light view matrix
+//		XMMATRIX lightView = XMMatrixLookAtLH(eye, center, XMVectorSet(0, 0, 1, 0));
+//
+//		// Project frustum corners into light space to get bounds
+//		float minX = FLT_MAX, maxX = -FLT_MAX;
+//		float minY = FLT_MAX, maxY = -FLT_MAX;
+//		float minZ = FLT_MAX, maxZ = -FLT_MAX;
+//
+//		for (int j = 0; j < 8; ++j) {
+//			XMVECTOR cornerLS = XMVector3TransformCoord(XMLoadFloat3(&frustumCorners[j]), lightView);
+//			float x = XMVectorGetX(cornerLS);
+//			float y = XMVectorGetY(cornerLS);
+//			float z = XMVectorGetZ(cornerLS);
+//			minX = std::min(minX, x);
+//			maxX = std::max(maxX, x);
+//			minY = std::min(minY, y);
+//			maxY = std::max(maxY, y);
+//			minZ = std::min(minZ, z);
+//			maxZ = std::max(maxZ, z);
+//		}
+//
+//		// Optional: stabilize cascade to texel grid
+//		float radiusX = (maxX - minX) / 2.0f;
+//		float radiusY = (maxY - minY) / 2.0f;
+//		float centerX = (minX + maxX) / 2.0f;
+//		float centerY = (minY + maxY) / 2.0f;
+//		radiusX *= 0.1;
+//		radiusY *= 0.1;
+//		float texelSizeX = radiusX * 2.0f / depthMapResolution;
+//		float texelSizeY = radiusY * 2.0f / depthMapResolution;
+//
+//		centerX = std::floor(centerX / texelSizeX) * texelSizeX;
+//		centerY = std::floor(centerY / texelSizeY) * texelSizeY;
+//
+//		minX = centerX - radiusX;
+//		maxX = centerX + radiusX;
+//		minY = centerY - radiusY;
+//		maxY = centerY + radiusY;
+//
+//		// Final ortho projection for this cascade
+//		XMMATRIX lightProj = XMMatrixOrthographicOffCenterLH(minX, maxX, minY, maxY, minZ, maxZ);
+//
+//		m_CascadeLightVP[i] = XMMatrixTranspose(lightView * lightProj);
+//	}
+//}
 //std::vector<XMFLOAT3> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& proj, const XMMATRIX& view)
 //{
 //	return GetFrustumCornersWorldSpace( view * proj);
 //}
 
-XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPlane)
-{
-	// 1. Build split projection matrix for the cascade range
-	const float aspect = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
-	XMMATRIX splitProj = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(90.0f),
-		aspect,
-		nearPlane, farPlane);
-
-	XMMATRIX view = camera.GetViewMatrix();
-	XMMATRIX viewProj = view * splitProj;
-
-	std::vector<XMVECTOR> corners = getFrustumCornersWorldSpace(viewProj);
-
-	// 2. Compute frustum center
-	XMVECTOR center = XMVectorZero();
-	for (const auto& pt : corners)
-		center += pt;
-	center /= static_cast<float>(corners.size());
-
-	// 3. Compute light direction
-	float theta = M_PI * Sky.x;
-	float phi = 2 * M_PI * Sky.y;
-	direction = XMFLOAT3(sin(theta) * sin(phi), cos(theta), sin(theta) * cos(phi));
-
-	XMVECTOR lightDir = XMVector3Normalize(XMLoadFloat3(&direction));
-	XMVECTOR eye = center - lightDir * shadowDirstance;
-
-	XMFLOAT3 up_vec = (Sky.x < -0.1f || Sky.x > -0.9f) ? XMFLOAT3(0, 0, 1) : XMFLOAT3(0, 1, 0);
-	XMMATRIX lightView = XMMatrixLookAtLH(eye, center, XMLoadFloat3(&up_vec));
-
-	// 4. Build AABB in light space
-	float minX = FLT_MAX, maxX = -FLT_MAX;
-	float minY = FLT_MAX, maxY = -FLT_MAX;
-	float minZ = FLT_MAX, maxZ = -FLT_MAX;
-
-	for (const auto& corner : corners)
-	{
-		XMVECTOR trf = XMVector3TransformCoord(corner, lightView);
-		XMFLOAT3 pt;
-		XMStoreFloat3(&pt, trf);
-
-		minX = std::min(minX, pt.x); maxX = std::max(maxX, pt.x);
-		minY = std::min(minY, pt.y); maxY = std::max(maxY, pt.y);
-		minZ = std::min(minZ, pt.z); maxZ = std::max(maxZ, pt.z);
-	}
-
-	// 5. Snap to texel grid
-	const float worldUnitsPerTexel = (maxX - minX) / static_cast<float>(depthMapResolution);
-	minX = std::floor(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
-	maxX = std::floor(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
-	minY = std::floor(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
-	maxY = std::floor(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
-
-	// 6. Clamp depth
-	minZ = std::max(minZ, -farPlane);
-	maxZ = std::min(maxZ, farPlane);
-
-	// 7. Final ortho projection
-	XMMATRIX lightProj = XMMatrixOrthographicOffCenterLH(minX, maxX, minY, maxY, minZ, maxZ);
-	return XMMatrixTranspose(lightView * lightProj);
-}
-std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
-{
-	std::vector<XMMATRIX> ret;
-	for (size_t i = 0; i < NUM_CASCADES; i++)
-	{
-		if (i == 0)
-		{
-			ret.push_back(getLightSpaceMatrix(0.01, shadowCascadeLevels[i]));
-		}
-		else if (i < NUM_CASCADES-1)
-		{
-			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
-		}
-		else
-		{
-			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], 50));
-		}
-	}
-	return ret;
-}
+//XMMATRIX Graphics::getLightSpaceMatrix(const float nearPlane, const float farPlane)
+//{
+//	// 1. Build split projection matrix for the cascade range
+//	const float aspect = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
+//	XMMATRIX splitProj = XMMatrixPerspectiveFovLH(
+//		XMConvertToRadians(90.0f),
+//		aspect,
+//		nearPlane, farPlane);
+//
+//	XMMATRIX view = camera.GetViewMatrix();
+//	XMMATRIX viewProj = view * splitProj;
+//
+//	std::vector<XMVECTOR> corners = getFrustumCornersWorldSpace(viewProj);
+//
+//	// 2. Compute frustum center
+//	XMVECTOR center = XMVectorZero();
+//	for (const auto& pt : corners)
+//		center += pt;
+//	center /= static_cast<float>(corners.size());
+//
+//	// 3. Compute light direction
+//	float theta = M_PI * Sky.x;
+//	float phi = 2 * M_PI * Sky.y;
+//	direction = XMFLOAT3(sin(theta) * sin(phi), cos(theta), sin(theta) * cos(phi));
+//
+//	XMVECTOR lightDir = XMVector3Normalize(XMLoadFloat3(&direction));
+//	XMVECTOR eye = center - lightDir * shadowDirstance;
+//
+//	XMFLOAT3 up_vec = (Sky.x < -0.1f || Sky.x > -0.9f) ? XMFLOAT3(0, 0, 1) : XMFLOAT3(0, 1, 0);
+//	XMMATRIX lightView = XMMatrixLookAtLH(eye, center, XMLoadFloat3(&up_vec));
+//
+//	// 4. Build AABB in light space
+//	float minX = FLT_MAX, maxX = -FLT_MAX;
+//	float minY = FLT_MAX, maxY = -FLT_MAX;
+//	float minZ = FLT_MAX, maxZ = -FLT_MAX;
+//
+//	for (const auto& corner : corners)
+//	{
+//		XMVECTOR trf = XMVector3TransformCoord(corner, lightView);
+//		XMFLOAT3 pt;
+//		XMStoreFloat3(&pt, trf);
+//
+//		minX = std::min(minX, pt.x); maxX = std::max(maxX, pt.x);
+//		minY = std::min(minY, pt.y); maxY = std::max(maxY, pt.y);
+//		minZ = std::min(minZ, pt.z); maxZ = std::max(maxZ, pt.z);
+//	}
+//
+//	// 5. Snap to texel grid
+//	const float worldUnitsPerTexel = (maxX - minX) / static_cast<float>(depthMapResolution);
+//	minX = std::floor(minX / worldUnitsPerTexel) * worldUnitsPerTexel;
+//	maxX = std::floor(maxX / worldUnitsPerTexel) * worldUnitsPerTexel;
+//	minY = std::floor(minY / worldUnitsPerTexel) * worldUnitsPerTexel;
+//	maxY = std::floor(maxY / worldUnitsPerTexel) * worldUnitsPerTexel;
+//
+//	// 6. Clamp depth
+//	minZ = std::max(minZ, -farPlane);
+//	maxZ = std::min(maxZ, farPlane);
+//
+//	// 7. Final ortho projection
+//	XMMATRIX lightProj = XMMatrixOrthographicOffCenterLH(minX, maxX, minY, maxY, minZ, maxZ);
+//	return XMMatrixTranspose(lightView * lightProj);
+//}
+//std::vector<XMMATRIX> Graphics::getLightSpaceMatrices()
+//{
+//	std::vector<XMMATRIX> ret;
+//	for (size_t i = 0; i < NUM_CASCADES; i++)
+//	{
+//		if (i == 0)
+//		{
+//			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[0], shadowCascadeLevels[i]));
+//		}
+//		else if (i < NUM_CASCADES-1)
+//		{
+//			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]));
+//		}
+//		else
+//		{
+//			ret.push_back(getLightSpaceMatrix(shadowCascadeLevels[i - 1], shadowCascadeLevels[5]));
+//		}
+//	}
+//	return ret;
+//}
 std::vector<XMVECTOR> Graphics::getFrustumCornersWorldSpace(const XMMATRIX& projview)
 {
 	XMMATRIX inv = XMMatrixInverse(nullptr, projview);

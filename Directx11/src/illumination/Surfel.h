@@ -7,10 +7,9 @@ namespace Engine
 
 	struct GPUSurfel
 	{
-		XMFLOAT3 position;
-		XMFLOAT3 normal;
+		XMFLOAT4 position;
+		XMFLOAT4 normal;
 		XMFLOAT4 albedo;
-		XMFLOAT3 diffuse;
 		XMFLOAT3 indirectRadiance;
 		float radius = 0.01;
 	};

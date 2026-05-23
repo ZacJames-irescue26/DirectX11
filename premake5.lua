@@ -54,6 +54,10 @@ include "Directx11"
 group ""
 
 group "Tools"
-include "Game"
+include "Editor"
 group ""
+
+group "Game"
+include "Game"
+group""
 

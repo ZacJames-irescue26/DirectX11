@@ -13,6 +13,9 @@
     <Filter Include="src\Acceleration\Octree">
       <UniqueIdentifier>{77B9A4BF-E3F0-EC56-ECFA-507A58B11350}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{221ADC4D-0EE8-CF53-F77B-407AE3E8ABB8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Game">
       <UniqueIdentifier>{F6C81ECF-E295-79DA-0BAF-6782F7DAAE68}</UniqueIdentifier>
     </Filter>
@@ -31,6 +34,9 @@
     <Filter Include="src\Mouse">
       <UniqueIdentifier>{454C6CB3-B1B6-202A-FAF4-D1CF669EFE7E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Passes">
+      <UniqueIdentifier>{6BDFF626-5797-3874-C09E-11D0AC75D364}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Physics">
       <UniqueIdentifier>{9F8B9316-0B41-0C0C-9435-06E300EA0210}</UniqueIdentifier>
     </Filter>
@@ -42,6 +48,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EngineInclude.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Acceleration\BVH\BVH.h">
       <Filter>src\Acceleration\BVH</Filter>
@@ -49,10 +56,13 @@
     <ClInclude Include="src\Acceleration\Octree\Octree.h">
       <Filter>src\Acceleration\Octree</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\Components.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\EngineInclude.h">
+    <ClInclude Include="src\Entity.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ErrorLogger.h">
@@ -133,6 +143,9 @@
     <ClInclude Include="src\ImGui\imstb_truetype.h">
       <Filter>src\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\InputElements.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Keyboard\KeyboardClass.h">
       <Filter>src\Keyboard</Filter>
     </ClInclude>
@@ -154,6 +167,33 @@
     <ClInclude Include="src\Mouse\MouseEvent.h">
       <Filter>src\Mouse</Filter>
     </ClInclude>
+    <ClInclude Include="src\Passes\BRDFPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\BasePass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\DrawHDRIPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\GBufferPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\IrradianceConvolutionPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\LightingPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\Prefilteringpass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\ShadowPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Passes\SurfelPass.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\PhysicsWorld.h">
       <Filter>src\Physics</Filter>
     </ClInclude>
@@ -167,6 +207,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Timer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UUID.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\WindowContainer.h">
@@ -183,6 +226,11 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="src\Graphics\AnimatedMesh.h" />
+    <ClInclude Include="src\Graphics\AnimatedModel.h" />
+    <ClInclude Include="src\Graphics\BoneData.h" />
+    <ClInclude Include="src\Graphics\AnimationInfo.h" />
+    <ClInclude Include="src\Graphics\Skeleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -287,6 +335,30 @@
     <ClCompile Include="src\Mouse\MouseEvent.cpp">
       <Filter>src\Mouse</Filter>
     </ClCompile>
+    <ClCompile Include="src\Passes\BRDFPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\DrawHDRIPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\GBufferPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\IrradianceConvolutionPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\LightingPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\PrefilteringPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\ShadowPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Passes\SurfelPass.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>src\Physics</Filter>
     </ClCompile>
@@ -302,6 +374,9 @@
     <ClCompile Include="src\Timer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\UUID.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\WindowContainer.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -311,5 +386,8 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\AnimatedMesh.cpp" />
+    <ClCompile Include="src\Graphics\AnimatedModel.cpp" />
+    <ClCompile Include="src\Graphics\Skeleton.cpp" />
   </ItemGroup>
 </Project>
