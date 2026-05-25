@@ -28,7 +28,7 @@ struct AnimatedVertex
 	XMFLOAT3 Tangent;
 	XMFLOAT3 BiTangent;
 	//bone indexes which will influence this vertex
-	int m_BoneIDs[MAXBONEPERVERTEX];
+	uint32_t m_BoneIDs[MAXBONEPERVERTEX];
 	//weights from each bone
 	float m_Weights[MAXBONEPERVERTEX];
 

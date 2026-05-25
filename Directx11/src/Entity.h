@@ -42,7 +42,31 @@ namespace Engine
 				}
 			}
 		}
+		Engine::UUID GetParent() const { return m_Parent; }
 
+		void SetParent(Engine::UUID parent)
+		{
+			m_Parent = parent;
+		}
+
+		const std::vector<Engine::UUID>& GetChildren() const
+		{
+			return m_Children;
+		}
+
+		void AddChild(Engine::UUID child)
+		{
+			if (std::find(m_Children.begin(), m_Children.end(), child) == m_Children.end())
+				m_Children.push_back(child);
+		}
+
+		void RemoveChild(Engine::UUID child)
+		{
+			m_Children.erase(
+				std::remove(m_Children.begin(), m_Children.end(), child),
+				m_Children.end()
+			);
+		}
 		template<typename T>
 		T* GetComponent()
 		{
@@ -75,7 +99,7 @@ namespace Engine
 
 			return false;
 		}
-		UUID GetUUID() const
+		Engine::UUID GetUUID() const
 		{
 			return m_id;
 		}
@@ -85,9 +109,12 @@ namespace Engine
 		}
 	private:
 
-		UUID m_id;
+		Engine::UUID m_id;
 		std::string name;
 		std::vector<std::unique_ptr<Component>> m_Components;
 		std::vector<ComponentEnum> m_ComponentTypes;
+		Engine::UUID m_Parent = 0;
+		std::vector<Engine::UUID> m_Children;
+
 	};
 }

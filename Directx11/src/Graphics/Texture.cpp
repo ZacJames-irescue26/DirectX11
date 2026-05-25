@@ -112,30 +112,31 @@ Texture::Texture(ID3D11Device* device, aiTexture* intexture, size_t size, aiText
 		}
 	}
 
-	// create texture
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
+
+	D3D11_TEXTURE2D_DESC textureDesc = {};
+	textureDesc.Width = img_width;
+	textureDesc.Height = img_height;
+	textureDesc.MipLevels = 0; // full mip chain
+	textureDesc.ArraySize = 1;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.SampleDesc.Quality = 0;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	textureDesc.CPUAccessFlags = 0;
+	textureDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+
+	HRESULT hr = device->CreateTexture2D(
+		&textureDesc,
+		nullptr,
+		tex.GetAddressOf()
+	);
+
+	if (FAILED(hr))
 	{
-		D3D11_TEXTURE2D_DESC texture_desc = {};
-		texture_desc.Width = img_width;
-		texture_desc.Height = img_height;
-		texture_desc.MipLevels = 1;
-		texture_desc.ArraySize = 1;
-		texture_desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texture_desc.SampleDesc.Count = 1;
-		texture_desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
-		texture_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
-		texture_desc.MipLevels = 0; // 0 = generate all mip levels
-		D3D11_SUBRESOURCE_DATA subresource_data = {};
-		subresource_data.pSysMem = data;
-		subresource_data.SysMemPitch = img_width * 4;
-
-		HRESULT hr = device->CreateTexture2D(&texture_desc, &subresource_data, tex.GetAddressOf());
-		if (FAILED(hr))
-		{
-			ErrorLogger::Log(hr, L"Failed to create texture 2d\n");
-
-		}
-		
+		ErrorLogger::Log(hr, L"Failed to create texture 2D");
+		return;
 	}
 
 	// create texture view

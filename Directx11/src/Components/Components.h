@@ -129,6 +129,7 @@ namespace Engine
 		}
 		void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
 		{
+			
 			if (Initialized)
 			{
 				m_Model.Draw(worldMatrix, viewProjectionMatrix);
@@ -144,13 +145,22 @@ namespace Engine
 		}
 		void RemoveAnimationByName(const std::string& name)
 		{
-
+			m_Model.RemoveAnimationByName(name);
+		}
+		void Update(float deltatime)
+		{
+			if (m_PlayAnimation)
+			{
+				m_Model.SetPlayback(m_PlaybackSpeed);
+				m_Model.UpdateAnimation(deltatime);
+			}
 		}
 		AnimatedModel m_Model;
 		std::string m_filepath;
 		std::string m_AnimPath;
 		bool Initialized = false;
 		bool m_PlayAnimation;
+		float m_PlaybackSpeed= 1.0f;
 	private:
 		ID3D11Device* m_device;
 		ID3D11DeviceContext* m_deviceContext;

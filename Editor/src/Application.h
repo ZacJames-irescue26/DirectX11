@@ -68,6 +68,7 @@ private:
 	ConstantBuffer<CB_VS_vertexShader> constantBuffer;
 	ConstantBuffer<CB_FS_LightPos> lightConstantBuffer;
 	ConstantBuffer<CB_VS_vertexShader> floorConstantBuffer;
+	ConstantBuffer<CB_Anim_VS_vertexShader> AnimatedConstantBuffer;
 	
 	ConstantBuffer<CB_VS_ViewProj> HDRIViewProj;
 	
@@ -83,8 +84,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 	data data;
 	static bool playercam;
-	int windowWidth = 0;
-	int windowHeight = 0;
+	inline static int windowWidth = 0;
+	inline static int windowHeight = 0;
 
 	//GBuffer
 

@@ -58,6 +58,9 @@
       <FullPath>C:\DirectX11\Editor\CompiledShaders\FullScreen_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\GBufferAnimatedVert_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX11\Editor\CompiledShaders\GBufferPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>

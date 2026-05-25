@@ -14,17 +14,6 @@
 #include "AnimationInfo.h"
 namespace Engine
 {
-	inline DirectX::XMMATRIX AiMatrixToXMMATRIX(const aiMatrix4x4& m)
-	{
-		return DirectX::XMMATRIX(
-			m.a1, m.a2, m.a3, m.a4,
-			m.b1, m.b2, m.b3, m.b4,
-			m.c1, m.c2, m.c3, m.c4,
-			m.d1, m.d2, m.d3, m.d4
-		);
-
-
-	}
 	struct SkeletonNode
 	{
 		std::string Name;
@@ -36,7 +25,7 @@ namespace Engine
 	class Skeleton
 	{
 	public:
-		void BuildFromScene(const aiScene* pScene;);
+		void BuildFromScene(const aiScene* pScene);
 		int GetBoneId(const aiBone* bone);
 		void AddBoneOffset(const aiBone* bone);
 
@@ -52,8 +41,9 @@ namespace Engine
 		XMVECTOR InterpolatePosition(float animationTime, const AnimationChannel* nodeAnim);
 		XMVECTOR InterpolateScale(float animationTime, const AnimationChannel* nodeAnim);
 		XMVECTOR InterpolateRotation(float animationTime, const AnimationChannel* nodeAnim);
-		void ReadNodeHierarchy(float animationTime, const aiNode* node, const XMMATRIX& parentTransform, const AnimationClip* animation, const XMMATRIX& globalInverseTransform, std::unordered_map<std::string, uint32_t>& boneMapping, std::vector<BoneInfo>& boneInfo);
+		void ReadNodeHierarchy(float animationTime, int nodeIndex, const XMMATRIX& parentTransform, const AnimationClip* animation);
 		void EvaluateAnimationAtTime(float timeSeconds, AnimationClip* animation);
+		bool HasNode(const std::string& name) const;
 		size_t GetBoneCount() const { return m_Bones.size(); }
 
 	private:

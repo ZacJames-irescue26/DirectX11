@@ -15,6 +15,7 @@ namespace Editor
 
 		void OnImGuiRender();
 
+		void HandleDragDrop(Engine::Entity* targetEntity);
 		void SetSelectedObject(std::shared_ptr < Engine::Entity> ent);
 		Engine::Entity* GetSelectedObject() const { return m_SelectionContext; }
 	private:
@@ -29,7 +30,7 @@ namespace Editor
 			{
 				if (ImGui::MenuItem(entryName.c_str()))
 				{
-					m_SelectionContext->AddComponent(std::make_unique<T>());
+					m_SelectionContext->AddComponent<T>(std::make_unique<T>());
 					ImGui::CloseCurrentPopup();
 				}
 			}

@@ -7,16 +7,14 @@
 #include "AnimationInfo.h"
 namespace Engine
 {
-	inline DirectX::XMMATRIX AiMatrixToXMMATRIX(const aiMatrix4x4& m)
+	inline XMMATRIX AiMatrixToXMMATRIX(const aiMatrix4x4& m)
 	{
-		return DirectX::XMMATRIX(
-			m.a1, m.a2, m.a3, m.a4,
-			m.b1, m.b2, m.b3, m.b4,
-			m.c1, m.c2, m.c3, m.c4,
-			m.d1, m.d2, m.d3, m.d4
+		return XMMATRIX(
+			m.a1, m.b1, m.c1, m.d1,
+			m.a2, m.b2, m.c2, m.d2,
+			m.a3, m.b3, m.c3, m.d3,
+			m.a4, m.b4, m.c4, m.d4
 		);
-
-
 	}
 	class AnimatedMesh
 	{
@@ -30,6 +28,7 @@ namespace Engine
 		std::vector<DWORD> m_indices;
 		std::vector<Texture> textures;
 	private:
+		ID3D11Device* device;
 		VertexBuffer<AnimatedVertex> vertexbuffer;
 		IndexBuffer indexbuffer;
 		ID3D11DeviceContext* deviceContext;

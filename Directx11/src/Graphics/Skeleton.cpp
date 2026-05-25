@@ -4,7 +4,15 @@
 
 namespace Engine
 {
-
+	inline XMMATRIX AiMatrixToXMMATRIX(const aiMatrix4x4& m)
+	{
+		return XMMATRIX(
+			m.a1, m.b1, m.c1, m.d1,
+			m.a2, m.b2, m.c2, m.d2,
+			m.a3, m.b3, m.c3, m.d3,
+			m.a4, m.b4, m.c4, m.d4
+		);
+	}
 		void Skeleton::BuildFromScene(const aiScene* scene)
 		{
 			m_Bones.clear();
@@ -114,7 +122,7 @@ namespace Engine
 		{
 			const SkeletonNode& node = m_Nodes[nodeIndex];
 
-			XMMATRIX globalTransform = parentTransform * node.LocalTransform;
+			XMMATRIX globalTransform = node.LocalTransform * parentTransform;
 
 			auto boneIt = m_BoneNameToIndex.find(node.Name);
 
@@ -123,7 +131,9 @@ namespace Engine
 				uint32_t boneIndex = boneIt->second;
 
 				m_Bones[boneIndex].FinalTransformation =
-					globalTransform * m_Bones[boneIndex].OffsetMatrix;
+					m_Bones[boneIndex].OffsetMatrix *
+					globalTransform *
+					m_GlobalInverseTransform;
 			}
 
 			for (int childIndex : node.Children)
@@ -305,24 +315,32 @@ namespace Engine
 		}
 		void Skeleton::ReadNodeHierarchy(
 			float animationTime,
-			const aiNode* node,
+			int nodeIndex,
 			const XMMATRIX& parentTransform,
-			const AnimationClip* animation,
-			const XMMATRIX& globalInverseTransform,
-			std::unordered_map<std::string, uint32_t>& boneMapping,
-			std::vector<BoneInfo>& boneInfo)
+			const AnimationClip* animation)
 		{
-			std::string nodeName = node->mName.C_Str();
+			const SkeletonNode& node = m_Nodes[nodeIndex];
 
-			XMMATRIX nodeTransform = AiMatrixToXMMATRIX(node->mTransformation);
+			XMMATRIX nodeTransform = node.LocalTransform;
 
-			const AnimationChannel* nodeAnim = FindNodeAnim(animation, nodeName);
+			const AnimationChannel* nodeAnim = FindNodeAnim(animation, node.Name);
 
 			if (nodeAnim)
 			{
-				XMVECTOR translation = XMVectorZero();
-				XMVECTOR rotation = XMQuaternionIdentity();
-				XMVECTOR scale = XMVectorSet(1.0f, 1.0f, 1.0f, 0.0f);
+				XMVECTOR bindScale;
+				XMVECTOR bindRotation;
+				XMVECTOR bindTranslation;
+
+				XMMatrixDecompose(
+					&bindScale,
+					&bindRotation,
+					&bindTranslation,
+					node.LocalTransform
+				);
+
+				XMVECTOR translation = bindTranslation;
+				XMVECTOR rotation = bindRotation;
+				XMVECTOR scale = bindScale;
 
 				if (HasPositionKeys(nodeAnim))
 					translation = InterpolatePosition(animationTime, nodeAnim);
@@ -333,62 +351,72 @@ namespace Engine
 				if (HasScaleKeys(nodeAnim))
 					scale = InterpolateScale(animationTime, nodeAnim);
 
-				XMMATRIX T = XMMatrixTranslationFromVector(translation);
-				XMMATRIX R = XMMatrixRotationQuaternion(rotation);
 				XMMATRIX S = XMMatrixScalingFromVector(scale);
+				XMMATRIX R = XMMatrixRotationQuaternion(rotation);
+				XMMATRIX T = XMMatrixTranslationFromVector(translation);
 
 				nodeTransform = S * R * T;
 			}
 
-			XMMATRIX globalTransform = parentTransform * nodeTransform;
+			// For your engine's row-vector convention:
+			// local first, then parent.
+			XMMATRIX globalTransform = nodeTransform * parentTransform;
 
-			auto it = boneMapping.find(nodeName);
-			if (it != boneMapping.end())
+			auto it = m_BoneNameToIndex.find(node.Name);
+
+			if (it != m_BoneNameToIndex.end())
 			{
 				uint32_t boneIndex = it->second;
-				boneInfo[boneIndex].FinalTransformation =
-					globalInverseTransform * globalTransform * boneInfo[boneIndex].OffsetMatrix;
-				//boneInfo[boneIndex].FinalTransformation = globalTransform * boneInfo[boneIndex].OffsetMatrix;
+
+				m_Bones[boneIndex].FinalTransformation =
+					m_Bones[boneIndex].OffsetMatrix * globalTransform * m_GlobalInverseTransform;
+				/*m_Bones[boneIndex].FinalTransformation =
+					m_GlobalInverseTransform * globalTransform * m_Bones[boneIndex].OffsetMatrix ;*/
 			}
 
-			for (uint32_t i = 0; i < node->mNumChildren; ++i)
+			for (int childIndex : node.Children)
 			{
 				ReadNodeHierarchy(
 					animationTime,
-					node->mChildren[i],
+					childIndex,
 					globalTransform,
-					animation,
-					globalInverseTransform,
-					boneMapping,
-					boneInfo);
+					animation
+				);
 			}
 		}
 
-
 		void Skeleton::EvaluateAnimationAtTime(float timeSeconds, AnimationClip* animation)
 		{
-			if (!m_Scene || !animation)
+			if (!animation || m_Nodes.empty())
 				return;
 
-			float ticksPerSecond = (animation->TicksPerSecond != 0.0)
-				? (float)animation->TicksPerSecond
+			float ticksPerSecond =
+				animation->TicksPerSecond != 0.0f
+				? static_cast<float>(animation->TicksPerSecond)
 				: 25.0f;
 
+			float duration = static_cast<float>(animation->Duration);
+
+			if (duration <= 0.0f)
+				return;
+
 			float timeInTicks = timeSeconds * ticksPerSecond;
-			float animationTime = std::fmod(timeInTicks, (float)animation->Duration);
+			float animationTime = std::fmod(timeInTicks, duration);
+
 			ReadNodeHierarchy(
 				animationTime,
-				m_Scene->mRootNode,
+				0,
 				XMMatrixIdentity(),
-				animation,
-				m_GlobalInverseTransform,
-				m_BoneNameToIndex,
-				m_Bones);
+				animation
+			);
 
 		}
 
 
-
+		bool Skeleton::HasNode(const std::string& name) const
+		{
+			return m_NodeNameToIndex.find(name) != m_NodeNameToIndex.end();
+		}
 
 		
 

@@ -39,6 +39,7 @@ namespace Engine
 		void Draw(Graphics* gfx) override;
 
 		VertexShader m_GBuffervertexShader;
+		VertexShader m_GBufferAnimatedvertexShader;
 		PixelShader m_GBufferpixelShader;
 
 		Microsoft::WRL::ComPtr < ID3D11Texture2D> positionTexture;

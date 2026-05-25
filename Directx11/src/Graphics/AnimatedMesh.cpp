@@ -7,14 +7,14 @@ namespace Engine
 	AnimatedMesh::AnimatedMesh(ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::vector<AnimatedVertex>& Vertices, std::vector<DWORD>& indices, std::vector<Texture> tex, const XMMATRIX& Matrix)
 	:m_vertices(Vertices), m_indices(indices)
 	{
+		this->device = device;
 		this->deviceContext = deviceContext;
 		this->textures = tex;
 		this->transformMatrix = Matrix;
-
 		HRESULT hr = this->vertexbuffer.Initialize(device, m_vertices.data(), m_vertices.size());
 		COM_ERROR_IF_FAILED(hr, "Failed to initialize vertex buffer for mesh.");
 
-		hr = this->indexbuffer.Initialize(device, m_indices.data(), indices.size());
+		hr = this->indexbuffer.Initialize(device, m_indices.data(), m_indices.size());
 		COM_ERROR_IF_FAILED(hr, "Failed to initialize index buffer for mesh.");
 	}
 	//std::vector<Vertex> ReadVertexBuffer(
@@ -102,9 +102,13 @@ namespace Engine
 				break;
 			}
 		}
-
+		if (indexbuffer.Get() == nullptr)
+		{
+			ErrorLogger::Log("Index buffer recreate as nullptr");
+			auto hr = this->indexbuffer.Initialize(device, m_indices.data(), m_indices.size());
+			COM_ERROR_IF_FAILED(hr, "Failed to initialize index buffer for mesh.");
+		}
 		// Always bind even if they're nullptr
-
 		// Bind vertex and index buffers
 		deviceContext->IASetVertexBuffers(0, 1, vertexbuffer.GetAddressOf(), vertexbuffer.StridePtr(), &offset);
 		deviceContext->IASetIndexBuffer(indexbuffer.Get(), DXGI_FORMAT_R32_UINT, 0);

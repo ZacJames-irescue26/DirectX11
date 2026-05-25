@@ -25,8 +25,8 @@ void Application::OnCreate()
 
 	hr = this->floorConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-
+	hr = this->AnimatedConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
 	hr = this->lightConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
 
@@ -73,10 +73,11 @@ void Application::OnCreate()
 
 	auto sponza = m_Scene->AddEntity("Sponza");
 
-	sponza->AddComponent(std::make_unique<TransformComponent>(XMFLOAT3{0.0,-1.0,0.0},XMFLOAT3{0.0,0.0,0.0},XMFLOAT3{0.1,0.1,0.1}));
-	sponza->AddComponent(std::make_unique<StaticMeshComponent>("Assets/Sponza/glTF/Sponza.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), constantBuffer));
+	sponza->AddComponent<StaticMeshComponent>(std::make_unique<StaticMeshComponent>("Assets/Sponza/glTF/Sponza.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), constantBuffer));
 
+	auto anim = m_Scene->AddEntity("TestAnim");
 
+	anim->AddComponent<AnimatedMeshComponent>(std::make_unique<AnimatedMeshComponent>("Assets/FullAnim.fbx", gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer));
 
 	//if (!helmet.Initialize("Assets/DamagedHelmet/gLTF/DamagedHelmet.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
 	//	return;
@@ -328,7 +329,7 @@ void Application::OnCreate()
 	m_Prefiltering.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	m_ShadowPass.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 
-	m_SceneHierarchyPanel = std::make_unique<Editor::SceneHierarchyPanel>(m_Scene.get(), gfx.device.Get(), gfx.deviceContext.Get(), &floorConstantBuffer);
+	m_SceneHierarchyPanel = std::make_unique<Editor::SceneHierarchyPanel>(m_Scene.get(), gfx.device.Get(), gfx.deviceContext.Get(), &floorConstantBuffer, &AnimatedConstantBuffer);
 
 
 
@@ -357,14 +358,14 @@ void Application::InitializeShaders()
 
 
 
-	if (!m_BackgroundCubemap_VS.Initialize(gfx.device.Get(), L"CompiledShaders/BackgroundCubemap_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
+	/*if (!m_BackgroundCubemap_VS.Initialize(gfx.device.Get(), L"CompiledShaders/BackgroundCubemap_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
 	{
 		return;
 	}
 	if (!m_BackgroundCubemap_PS.Initialize(gfx.device.Get(), L"CompiledShaders/BackgroundCubemap_p.cso"))
 	{
 		return;
-	}
+	}*/
 
 
 	//if (!m_DebugCascade_VS.Initialize(gfx.device, L"CompiledShaders/DebugCascade_v.cso", ModelPos, ARRAYSIZE(ModelPos)))
@@ -405,13 +406,15 @@ void Application::InitializeShaders()
 void Application::OnUpdate()
 {
 	while (this->ProcessMessages() == true)
-	{
+	{	
 		this->gfx.PhysicsUpdate();
 		this->RenderFrame();
-		float dt = timer.GetMilisecondsElapsed();
+		float dtMs = timer.GetMilisecondsElapsed();
+		float dt = dtMs * 0.001f;
 		timer.Restart();
 		this->Update();
-		const float cameraSpeed = 0.01f;
+		m_Scene->UpdateScene(dt);
+		const float cameraSpeed = 5.0f;
 		if (keyboard.KeyIsPressed('W'))
 		{
 			this->gfx.camera.AdjustPosition(this->gfx.camera.GetForwardVector() * cameraSpeed * dt);

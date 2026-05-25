@@ -7,7 +7,7 @@
 #include "AnimationInfo.h"
 #include "Skeleton.h"
 #include "ConstantBufferTypes.h"
-
+#include "src/Graphics/ConstantBuffer.h"
 namespace Engine
 {
 	
@@ -15,7 +15,8 @@ namespace Engine
 	class AnimatedModel
 	{
 	public:
-		bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* deviceContext, ConstantBuffer<CB_Anim_VS_vertexShader>& cb_vs_vertexshader);
+		bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* devicecontext, ConstantBuffer<CB_Anim_VS_vertexShader>& cb_vs_vertexshader);
+		void UpdateAnimation(float deltaTime);
 		void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix);
 		void Draw();
 		inline std::vector<Engine::AnimatedMesh>& GetMeshes()
@@ -58,6 +59,11 @@ namespace Engine
 			if (index >= 0 && index < static_cast<int>(LoadedAnimations.size()))
 				m_CurrentAnimationIndex = index;
 		}
+
+		void SetPlayback(float playback)
+		{
+			m_PlaybackSpeed = playback;
+		}
 	private:
 		void ProcessNode(aiNode* node, const aiScene* scene, const XMMATRIX& transformMatrix);
 		void ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& transformMatrix);
@@ -78,8 +84,12 @@ namespace Engine
 		XMMATRIX m_GlobalInverseTransform;
 		std::vector<AnimationClip> LoadedAnimations;
 		const aiScene* pScene;
-
+		Assimp::Importer importer;
 		Skeleton m_Skeleton;
+		float m_AnimationTime = 0.0f;
+		float m_PlaybackSpeed = 1.0f;
 		int m_CurrentAnimationIndex = -1;
+		bool PlayAnimaiton = true;
+
 	};
 }

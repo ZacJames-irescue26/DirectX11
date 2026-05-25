@@ -219,9 +219,6 @@
     <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\AnimatedMesh.cpp" />
-    <ClCompile Include="src\Graphics\AnimatedModel.cpp" />
-    <ClCompile Include="src\Graphics\Skeleton.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -236,6 +233,8 @@
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\PhysicsObject.cpp" />
     <ClCompile Include="src\Graphics\AdapterReader.cpp" />
+    <ClCompile Include="src\Graphics\AnimatedMesh.cpp" />
+    <ClCompile Include="src\Graphics\AnimatedModel.cpp" />
     <ClCompile Include="src\Graphics\Camera.cpp" />
     <ClCompile Include="src\Graphics\Color.cpp" />
     <ClCompile Include="src\Graphics\ConstantBuffer.cpp" />
@@ -245,6 +244,7 @@
     <ClCompile Include="src\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Graphics\ModelSimple.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Graphics\Skeleton.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\ThirdPersonCamera.cpp" />
     <ClCompile Include="src\Graphics\VertexBuffer.cpp" />

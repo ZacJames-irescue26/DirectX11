@@ -6,7 +6,7 @@ namespace Engine
 bool VertexShader::Initialize(ID3D11Device* device, LPCWSTR shaderpath, D3D11_INPUT_ELEMENT_DESC* layoutdesc, UINT elements)
 {
 
-	HRESULT hr = D3DReadFileToBlob(shaderpath, this->shader_buffer.GetAddressOf());
+	HRESULT hr = D3DReadFileToBlob(shaderpath, shader_buffer.GetAddressOf());
 	if (FAILED(hr))
 	{
 		std::string path = "";

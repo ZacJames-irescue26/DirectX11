@@ -77,6 +77,18 @@
     <ClInclude Include="src\Graphics\AdapterReader.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\AnimatedMesh.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\AnimatedModel.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\AnimationInfo.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\BoneData.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Graphics\Camera.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
@@ -105,6 +117,9 @@
       <Filter>src\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Shader.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Skeleton.h">
       <Filter>src\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Texture.h">
@@ -226,11 +241,6 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
-    <ClInclude Include="src\Graphics\AnimatedMesh.h" />
-    <ClInclude Include="src\Graphics\AnimatedModel.h" />
-    <ClInclude Include="src\Graphics\BoneData.h" />
-    <ClInclude Include="src\Graphics\AnimationInfo.h" />
-    <ClInclude Include="src\Graphics\Skeleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -255,6 +265,12 @@
       <Filter>src\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\AdapterReader.cpp">
+      <Filter>src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\AnimatedMesh.cpp">
+      <Filter>src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\AnimatedModel.cpp">
       <Filter>src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Camera.cpp">
@@ -282,6 +298,9 @@
       <Filter>src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp">
+      <Filter>src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Skeleton.cpp">
       <Filter>src\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Texture.cpp">
@@ -386,8 +405,5 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\AnimatedMesh.cpp" />
-    <ClCompile Include="src\Graphics\AnimatedModel.cpp" />
-    <ClCompile Include="src\Graphics\Skeleton.cpp" />
   </ItemGroup>
 </Project>

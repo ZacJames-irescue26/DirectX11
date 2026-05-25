@@ -30,9 +30,12 @@ namespace Editor
 
 		if (m_Context)
 		{
-			for (auto& value : m_Context->GetEntities())
+			for (auto& entity : m_Context->GetEntities())
 			{
-				DrawEntityNode(value.get());
+				if (entity->GetParent() == 0)
+				{
+					DrawEntityNode(entity.get());
+				}
 			}
 
 			if (ImGui::IsWindowHovered() &&
@@ -86,7 +89,48 @@ namespace Editor
 			DrawComponents(m_SelectionContext);
 		}
 	}
+	void SceneHierarchyPanel::HandleDragDrop(Engine::Entity* targetEntity)
+	{
+		if (!targetEntity)
+			return;
 
+		// Drag source
+		if (ImGui::BeginDragDropSource())
+		{
+			Engine::UUID draggedID = targetEntity->GetUUID();
+
+			ImGui::SetDragDropPayload(
+				"ENTITY_HIERARCHY",
+				&draggedID,
+				sizeof(Engine::UUID)
+			);
+
+			ImGui::Text("Parent %s", targetEntity->GetName().c_str());
+
+			ImGui::EndDragDropSource();
+		}
+
+		// Drop target
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload =
+				ImGui::AcceptDragDropPayload("ENTITY_HIERARCHY"))
+			{
+				Engine::UUID droppedID =
+					*(const Engine::UUID*)payload->Data;
+
+				auto droppedEntity =
+					m_Context->GetEntityByID(droppedID);
+
+				if (droppedEntity && droppedEntity.get() != targetEntity)
+				{
+					m_Context->SetParentKeepWorld(droppedEntity.get(), targetEntity);
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+	}
 	void SceneHierarchyPanel::DrawEntityNode(Engine::Entity* entity)
 	{
 		if (!entity)
@@ -124,9 +168,16 @@ namespace Editor
 
 			ImGui::EndPopup();
 		}
-
+		HandleDragDrop(entity);
 		if (opened)
 		{
+			for (Engine::UUID childId : entity->GetChildren())
+			{
+				auto child = m_Context->GetEntityByID(childId);
+				if (child)
+					DrawEntityNode(child.get());
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -141,6 +192,32 @@ namespace Editor
 
 			m_Context->DestroyEntity(deletedId);
 		}
+
+
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload =
+				ImGui::AcceptDragDropPayload("ENTITY_HIERARCHY"))
+			{
+				Engine::UUID droppedID =
+					*(const Engine::UUID*)payload->Data;
+
+				auto droppedEntity =
+					m_Context->GetEntityByID(droppedID);
+
+				if (droppedEntity)
+				{
+					m_Context->SetParent(droppedEntity.get(), nullptr);
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+
+
+
 	}
 
 	static void DrawVec3Control(
@@ -305,6 +382,7 @@ namespace Editor
 		{
 			DisplayAddComponentEntry<Engine::TransformComponent>("Transform");
 			DisplayAddComponentEntry<Engine::StaticMeshComponent>("StaticMesh");
+			DisplayAddComponentEntry<Engine::AnimatedMeshComponent>("AnimMesh");
 			DisplayAddComponentEntry<Engine::DirectionalLightComponent>("DirectionalLight");
 			DisplayAddComponentEntry<Engine::SpotLightComponent>("SpotLight");
 			DisplayAddComponentEntry<Engine::PointLightComponent>("PointLight");
@@ -352,25 +430,6 @@ namespace Editor
 					component.Initialize(m_device, m_deviceContext, m_cb_vs_vertexshader);
 				}
 			});
-		DrawComponent<Engine::StaticMeshComponent>("StaticMesh", entity, [&](auto& component)
-			{
-				char pathBuffer[512] = {};
-				strncpy_s(pathBuffer, sizeof(pathBuffer), component.m_filepath.c_str(), _TRUNCATE);
-
-				if (ImGui::InputText("File Path", pathBuffer, sizeof(pathBuffer)))
-				{
-					component.m_filepath = std::string(pathBuffer);
-				}
-
-				if (ImGui::Button("Reload Mesh"))
-				{
-					component.Initialize(m_device, m_deviceContext, m_cb_anim_vs_vertexshader);
-				}
-
-
-
-			});
-
 
 		DrawComponent<Engine::AnimatedMeshComponent>("AnimMesh", entity, [&](auto& component)
 			{
@@ -390,9 +449,9 @@ namespace Editor
 					component.m_AnimPath = std::string(animpathBuffer);
 				}
 
-				if (ImGui::Button("Reload Mesh"))
+				if (ImGui::Button("Reload anim Mesh"))
 				{
-					component.Initialize(m_device, m_deviceContext, m_cb_vs_vertexshader);
+					component.Initialize(m_device, m_deviceContext, m_cb_anim_vs_vertexshader );
 				}
 
 				if (ImGui::Button("Load animation from filepath"))
@@ -441,8 +500,8 @@ namespace Editor
 						ImGui::EndCombo();
 					}
 				}
-				ImGui::Checkbox("Play Animation", m_PlayAnimation);
-
+				ImGui::Checkbox("Play Animation", &component.m_PlayAnimation);
+				ImGui::DragFloat("PlaybackSpeed", &component.m_PlaybackSpeed,0.1);
 			});
 
 		DrawComponent<Engine::DirectionalLightComponent>("DirectionalLight", entity, [](auto& component)

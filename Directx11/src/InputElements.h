@@ -40,4 +40,18 @@ namespace Engine::InputElements
 		{ "Radiance",0, DXGI_FORMAT_R32G32B32_FLOAT,0, offsetof(SurfelVB, indirectRadiance), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{ "RADIUS",0,DXGI_FORMAT_R32_FLOAT,0, offsetof(SurfelVB, radius), D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA,0 }
 	};
+
+	inline D3D11_INPUT_ELEMENT_DESC AnimatedLayout[] =
+	{
+		{ "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(AnimatedVertex, pos),       D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD",  0, DXGI_FORMAT_R32G32_FLOAT,    0, offsetof(AnimatedVertex, texCoord),  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",    0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(AnimatedVertex, normal),    D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TANGENT",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(AnimatedVertex, Tangent),   D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(AnimatedVertex, BiTangent), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		{ "BONEIDS",   0, DXGI_FORMAT_R32G32B32A32_UINT, 0, offsetof(AnimatedVertex, m_BoneIDs), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "WEIGHTS",   0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(AnimatedVertex, m_Weights), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+
+
 }

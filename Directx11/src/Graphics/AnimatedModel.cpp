@@ -3,8 +3,7 @@
 #include "ErrorLogger.h"
 #include "ConstantBuffer.h"
 #include "Color.h"
-#include "AnimatedMesh.h"
-#include "ConstantBufferTypes.h"
+
 
 static std::shared_mutex ModelWriteMeshMutex;
 
@@ -19,7 +18,7 @@ namespace Engine
 
 		try
 		{
-			if (!this->LoadModel(filePath))
+			if (!LoadModel(filePath))
 				return false;
 		}
 		catch (COMException& exception)
@@ -29,30 +28,49 @@ namespace Engine
 		}
 		return true;
 	}
+	void AnimatedModel::UpdateAnimation(float deltaTime)
+	{
+		if (m_CurrentAnimationIndex < 0 ||
+			m_CurrentAnimationIndex >= static_cast<int>(LoadedAnimations.size()))
+		{
+			return;
+		}
 
+		AnimationClip& clip = LoadedAnimations[m_CurrentAnimationIndex];
+
+		m_AnimationTime += deltaTime * m_PlaybackSpeed;
+
+		float durationSeconds =
+			static_cast<float>(clip.Duration / clip.TicksPerSecond);
+
+		if (durationSeconds > 0.0f)
+		{
+			m_AnimationTime = std::fmod(m_AnimationTime, durationSeconds);
+		}
+
+		m_Skeleton.EvaluateAnimationAtTime(m_AnimationTime, &clip);
+		//m_Skeleton.CalculateFinalTransforms();
+
+
+	}
 	void AnimatedModel::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
 	{
 		if (!cb_vs_vertexshader)
 			return;
 
-		deviceContext->VSSetConstantBuffers(
-			0,
-			1,
-			cb_vs_vertexshader->GetAddressOf()
-		);
+		deviceContext->VSSetConstantBuffers(0,1,cb_vs_vertexshader->GetAddressOf());
 
 		cb_vs_vertexshader->data.wvpMatrix = XMMatrixTranspose(worldMatrix * viewProjectionMatrix);
 
 		cb_vs_vertexshader->data.worldMatrix = XMMatrixTranspose(worldMatrix);
 
 		cb_vs_vertexshader->data.worldInvTransposeMatrix = XMMatrixTranspose(XMMatrixInverse(nullptr, worldMatrix));
-
-		m_Skeleton.EvaluateAnimationAtTime();
+		
 
 		const auto& bones = m_Skeleton.GetBones();
 
-		constexpr size_t MaxBones = 50;
-
+		constexpr size_t MaxBones = 100;
+		
 		for (size_t i = 0; i < MaxBones; ++i)
 		{
 			if (i < bones.size())
@@ -87,7 +105,7 @@ namespace Engine
 	{
 
 		directory = StringHelper::GetDirectoryFromPath(filePath);
-		Assimp::Importer importer;
+		
 
 		pScene = importer.ReadFile(filePath,
 			aiProcess_Triangulate |
@@ -97,11 +115,11 @@ namespace Engine
 			return false;
 
 
+		m_Skeleton.BuildFromScene(pScene);
 
 		this->ProcessNode(pScene->mRootNode, pScene, DirectX::XMMatrixIdentity());
 		
 		
-		m_Skeleton.BuildFromScene(pScene);
 		
 		return true;
 	}
@@ -134,7 +152,6 @@ namespace Engine
 		std::vector<AnimatedVertex> vertices(mesh->mNumVertices);
 		std::vector<DWORD> indices;
 		std::vector<VertexBoneData> vertexBoneData(mesh->mNumVertices);
-
 		for (UINT i = 0; i < mesh->mNumVertices; i++)
 		{
 			AnimatedVertex vertex{};
@@ -189,19 +206,36 @@ namespace Engine
 				const aiVertexWeight& weight = bone->mWeights[weightIndex];
 
 				uint32_t vertexId = weight.mVertexId;
-				float value = weight.mWeight;
 
-				vertexBoneData[vertexId].AddBoneData(boneId, value);
+				if (vertexId >= vertexBoneData.size())
+				{
+					OutputDebugStringA("ERROR: Bone weight vertex index out of range\n");
+					__debugbreak();
+					continue;
+				}
+
+				vertexBoneData[vertexId].AddBoneData(
+					static_cast<uint32_t>(boneId),
+					weight.mWeight
+				);
 			}
 		}
 
 		for (size_t i = 0; i < vertices.size(); ++i)
 		{
-			for (int j = 0; j < MAXBONEPERVERTEX; j++)
+			vertexBoneData[i].SortByWeightDesc();
+			vertexBoneData[i].Normalize();
+
+			for (int j = 0; j < MAXBONEPERVERTEX; ++j)
 			{
+				if (vertexBoneData[i].BoneIDs[j] >= 100)
+				{
+					OutputDebugStringA("ERROR: Bone ID exceeds Bones[100]\n");
+					__debugbreak();
+				}
+
 				vertices[i].m_BoneIDs[j] = vertexBoneData[i].BoneIDs[j];
 				vertices[i].m_Weights[j] = vertexBoneData[i].Weights[j];
-
 			}
 		}
 
@@ -227,7 +261,7 @@ namespace Engine
 	void AnimatedModel::CreateMesh(std::vector<AnimatedVertex> vertices, std::vector<DWORD> indices, std::vector<Texture> tex, const XMMATRIX transformMatrix)
 	{
 		std::lock_guard<std::shared_mutex> lck_guard(ModelWriteMeshMutex);
-		meshes.push_back(AnimatedMesh(this->device, this->deviceContext, vertices, indices, tex, transformMatrix));
+		meshes.emplace_back(this->device, this->deviceContext, vertices, indices, tex, transformMatrix);
 
 
 	}
@@ -399,7 +433,8 @@ namespace Engine
 
 		if (!scene || !scene->HasAnimations())
 		{
-			throw std::runtime_error("No animation found in file: " + path);
+			ErrorLogger::Log("Invalid path or no animations");
+			return;
 		}
 
 		aiAnimation* aiAnim = scene->mAnimations[0];
@@ -417,7 +452,7 @@ namespace Engine
 			std::string boneName = channel->mNodeName.C_Str();
 
 			// Only keep channels that exist in your skeleton.
-			if (!m_Skeleton.HasBone(boneName))
+			if (!m_Skeleton.HasNode(boneName))
 				continue;
 
 			AnimationChannel outChannel;
@@ -428,7 +463,7 @@ namespace Engine
 				const aiVectorKey& key = channel->mPositionKeys[k];
 
 				outChannel.Positions.push_back({
-					key.mTime,
+					(float)key.mTime,
 					XMFLOAT3(
 						key.mValue.x,
 						key.mValue.y,
@@ -442,7 +477,7 @@ namespace Engine
 				const aiQuatKey& key = channel->mRotationKeys[k];
 
 				outChannel.Rotations.push_back({
-					key.mTime,
+					(float)key.mTime,
 					XMFLOAT4(
 						key.mValue.x,
 						key.mValue.y,
@@ -457,7 +492,7 @@ namespace Engine
 				const aiVectorKey& key = channel->mScalingKeys[k];
 
 				outChannel.Scales.push_back({
-					key.mTime,
+					(float)key.mTime,
 					XMFLOAT3(
 						key.mValue.x,
 						key.mValue.y,

@@ -45,11 +45,11 @@ bool GBufferPass::Initialize(ID3D11Device* device)
 		std::cout << "Failed to create render target view" << std::endl;
 	}
 	renderTargetViewDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateRenderTargetView(NormalTexture.Get(), &renderTargetViewDesc, &NormalRTV);
+	COM_ERROR_IF_FAILED(device->CreateRenderTargetView(NormalTexture.Get(), &renderTargetViewDesc, &NormalRTV), "Failed to create RTV");
 	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateRenderTargetView(DiffuseTexture.Get(), &renderTargetViewDesc, &DiffuseRTV);
+	COM_ERROR_IF_FAILED(device->CreateRenderTargetView(DiffuseTexture.Get(), &renderTargetViewDesc, &DiffuseRTV), "Failed to create RTV");
 	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateRenderTargetView(SpecularTexture.Get(), &renderTargetViewDesc, &SpecularRTV);
+	COM_ERROR_IF_FAILED(device->CreateRenderTargetView(SpecularTexture.Get(), &renderTargetViewDesc, &SpecularRTV), "Failed to create RTV");
 
 	// Position SRV
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -58,19 +58,19 @@ bool GBufferPass::Initialize(ID3D11Device* device)
 	srvDesc.Texture2D.MipLevels = 1;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 
-	device->CreateShaderResourceView(positionTexture.Get(), &srvDesc, &positionSRV);
+	COM_ERROR_IF_FAILED(device->CreateShaderResourceView(positionTexture.Get(), &srvDesc, &positionSRV), "failed to create SRV");
 
 	srvDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
-	device->CreateShaderResourceView(NormalTexture.Get(), &srvDesc, &NormalSRV);
+	COM_ERROR_IF_FAILED(device->CreateShaderResourceView(NormalTexture.Get(), &srvDesc, &NormalSRV), "failed to create SRV");
 
 
 	// Specular SRV
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(SpecularTexture.Get(), &srvDesc, &SpecularSRV);
+	COM_ERROR_IF_FAILED(device->CreateShaderResourceView(SpecularTexture.Get(), &srvDesc, &SpecularSRV), "failed to create SRV");
 
 	// Diffuse SRV
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	device->CreateShaderResourceView(DiffuseTexture.Get(), &srvDesc, &DiffuseSRV);
+	COM_ERROR_IF_FAILED(device->CreateShaderResourceView(DiffuseTexture.Get(), &srvDesc, &DiffuseSRV), "failed to create SRV");
 
 
 
@@ -112,13 +112,17 @@ bool GBufferPass::Initialize(ID3D11Device* device)
 
 		return false;
 	}
+	if (!m_GBufferAnimatedvertexShader.Initialize(device, L"CompiledShaders/GBufferAnimatedVert_v.cso", InputElements::AnimatedLayout, ARRAYSIZE(InputElements::AnimatedLayout)))
+	{
 
+		return false;
+	}
 	if (!m_GBufferpixelShader.Initialize(device, L"CompiledShaders/GBufferPixel_p.cso"))
 	{
 		return false;
 	}
 
-
+	return true;
 }
 
 void GBufferPass::Draw(Graphics* gfx)
@@ -185,6 +189,15 @@ void GBufferPass::Draw(Graphics* gfx, Scene& scene)
 	//	}
 
 	//}
+// Animated meshes
+			gfx->SetVSShader(m_GBufferAnimatedvertexShader.GetShader());
+			gfx->SetPSShader(m_GBufferpixelShader.GetShader());
+			gfx->SetInputLayout(m_GBufferAnimatedvertexShader.GetInputLayout());
+
+			scene.DrawAnimatedScene(
+				gfx->camera.GetViewMatrix() * gfx->camera.GetProjectionMatrix()
+			);
+
 	ID3D11RenderTargetView* nullview[] = { nullptr, nullptr, nullptr, nullptr };
 	gfx->GetDeviceContext()->OMSetRenderTargets(4, nullview, nullptr);
 	gfx->GetDeviceContext()->PSSetShader(nullptr, nullptr, 0);

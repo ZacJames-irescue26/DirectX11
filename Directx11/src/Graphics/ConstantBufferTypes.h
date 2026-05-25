@@ -8,7 +8,7 @@ namespace Engine
 		XMMATRIX wvpMatrix;
 		XMMATRIX worldMatrix;
 		XMMATRIX worldInvTransposeMatrix;
-		XMMATRIX Bones[50];
+		XMMATRIX Bones[100];
 	};
 
 
