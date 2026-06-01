@@ -58,7 +58,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Game\</IntDir>
     <TargetName>Game</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -66,10 +66,10 @@
     <IntDir>..\bin-int\Release-windows-x86_64\Game\</IntDir>
     <TargetName>Game</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <ExternalIncludePath>..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
     <NMakeOutput>$(OutDir)Game</NMakeOutput>
     <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
   </PropertyGroup>
@@ -136,6 +136,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Dependances\JoltPhysics\JoltPhysics.vcxproj">
       <Project>{812AB974-EDDF-316A-76D4-2B41E288286E}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependances\lua-5.5.0\LuaLib.vcxproj">
+      <Project>{7EC9A2C1-6A6B-CD97-5326-E1EB3F6754E8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

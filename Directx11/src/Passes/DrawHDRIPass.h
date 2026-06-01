@@ -30,6 +30,6 @@ namespace Engine
 		Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> HDRIFramebufferSRV;
 		VertexBuffer<CubeWPos> m_HdriVertex;
 		IndexBuffer m_HdriIndex;
-		std::string HDRIFilepath = "Assets/HDRI/kloppenheim_06_puresky_4k.hdr";
+		std::string HDRIFilepath;
 	};
 }

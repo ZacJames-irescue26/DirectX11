@@ -1,0 +1,12 @@
+{
+  "Lua.workspace.library": [
+    "${workspaceFolder}/Assets/Scripts"
+  ],
+  "Lua.diagnostics.globals": [
+    "entity",
+    "Vec3",
+    "TransformComponent",
+    "Entity"
+  ],
+  "Lua.runtime.version": "Lua 5.5"
+}

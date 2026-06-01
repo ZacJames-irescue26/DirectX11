@@ -22,7 +22,9 @@ project "DirectX11"
 		"src/../",
 		"C:/ProgramData/NVIDIA Corporation/OptiX SDK 8.1.0/include",
 		"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include",
-		"src/Graphics/Raytracing"
+		"src/Graphics/Raytracing",
+		"%{wks.location}/Dependances/Sol2",
+		
 	}
 	IncludeDependencies()
 

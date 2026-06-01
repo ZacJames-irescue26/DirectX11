@@ -7,11 +7,11 @@ namespace Engine
 
 	bool PrefilteringPass::Initialize(ID3D11Device* device)
 	{
-		if (!m_Prefiltering_PS.Initialize(device, L"CompiledShaders/Prefiltering_p.cso"))
+		if (!m_Prefiltering_PS.Initialize(device, Project::GetEditorShaderPath("Prefiltering_p.cso").wstring()))
 		{
 			return false;
 		}
-		if (!m_EquiToHDRI_VS.Initialize(device, L"CompiledShaders/EquiToHdri_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
+		if (!m_EquiToHDRI_VS.Initialize(device, Project::GetEditorShaderPath("EquiToHdri_v.cso").wstring().c_str(), InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
 		{
 			return false;
 		}

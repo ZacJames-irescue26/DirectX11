@@ -8,24 +8,57 @@
 #include <utility>
 namespace Engine
 {
+	class Scene;
+
 	class Entity
 	{
 
 	public:
-		Entity(std::string name, UUID id)
-			: m_id(id), name(std::move(name))
+		Entity(std::string name, UUID id, Scene* scene)
+			: m_id(id), name(std::move(name)), m_Scene(scene)
 		{
 
 		}
-		template<typename T>
+
+		std::shared_ptr<Entity> Clone(Entity* old)
+		{
+			auto copy = std::make_shared<Entity>(name, m_id, m_Scene);
+
+			copy->m_Parent = m_Parent;
+			copy->m_Children = m_Children;
+			int i= 0;
+			for (const auto& component : m_Components)
+			{
+				
+				if (component)
+					copy->AddComponent(component->Clone());
+			
+			
+				i++;
+			}
+
+			return copy;
+		}
+
 		void AddComponent(std::unique_ptr<Component> comp)
 		{
-			if (!comp && !HasComponent<T>())
+			if (!comp)
 				return;
 
-			m_ComponentTypes.push_back(comp->GetType());
+			ComponentEnum type = comp->GetType();
+
+			for (ComponentEnum existing : m_ComponentTypes)
+			{
+				if (existing == type)
+					return;
+			}
+
+			m_ComponentTypes.push_back(type);
 			m_Components.push_back(std::move(comp));
 		}
+
+		
+
 		template<typename T>
 		void RemoveComponent()
 		{
@@ -67,6 +100,18 @@ namespace Engine
 				m_Children.end()
 			);
 		}
+
+		Scene* GetScene()
+		{
+			return m_Scene;
+		}
+
+		const Scene* GetScene() const
+		{
+			return m_Scene;
+		}
+		Entity* GetChildByName(const std::string& name);
+
 		template<typename T>
 		T* GetComponent()
 		{
@@ -108,6 +153,7 @@ namespace Engine
 			return name;
 		}
 	private:
+		Scene* m_Scene = nullptr;
 
 		Engine::UUID m_id;
 		std::string name;

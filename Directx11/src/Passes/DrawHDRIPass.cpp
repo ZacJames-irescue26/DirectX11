@@ -9,17 +9,16 @@ namespace Engine
 	{
 
 
-		if (!m_EquiToHDRI_VS.Initialize(device, L"CompiledShaders/EquiToHdri_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
+		if (!m_EquiToHDRI_VS.Initialize(device, (LPCWSTR)Project::GetEditorShaderPath("EquiToHdri_v.cso").wstring().c_str(), InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
 		{
 			return false;
 		}
-		if (!m_EquiToHdri_PS.Initialize(device, L"CompiledShaders/EquiToHdri_p.cso"))
+		if (!m_EquiToHdri_PS.Initialize(device, (LPCWSTR)Project::GetEditorShaderPath("EquiToHdri_p.cso").wstring().c_str()))
 		{
 			return false;
 		}
 
-
-
+		HDRIFilepath = Engine::Project::ResolveAssetPath("HDRI/kloppenheim_06_puresky_4k.hdr").string();
 
 		D3D11_SAMPLER_DESC HDRIsampDesc = {};
 		HDRIsampDesc.Filter = D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;

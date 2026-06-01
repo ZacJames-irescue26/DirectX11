@@ -1,6 +1,16 @@
 #include "pch.h"
 #include "PhysicsWorld.h"
-
+#include "Scene\Scene.h"
+#include "PhysMat.h"
+#include "Jolt\Physics\Collision\Shape\CapsuleShape.h"
+#include <DirectXMath.h>
+#include "Jolt\Physics\Collision\RayCast.h"
+#include "Jolt\Physics\Collision\CastResult.h"
+#include "PhysStructs.h"
+#include "Jolt\Physics\Collision\CollisionCollectorImpl.h"
+#include "Jolt\Physics\Collision\CollideShape.h"
+#include "Jolt\Physics\Body\BodyLockMulti.h"
+#include "RaytraceInfo.h"
 namespace Engine
 {
 
@@ -10,6 +20,7 @@ namespace Engine
 		: _body_activation_listener(std::make_unique<MyBodyActivationListener>()),
 		_contact_listener(std::make_unique<MyContactListener>())
 	{
+		initialise();
 	}
 
 	void PhysicsEngine::initialise()
@@ -140,7 +151,14 @@ BodyID PhysicsEngine::CreateAndAddObject(BodyCreationSettings settings, EActivat
 
 void PhysicsEngine::Optimize()
 {
-	_physics_system->OptimizeBroadPhase();
+	if (_physics_system)
+	{
+		_physics_system->OptimizeBroadPhase();
+	}
+	else
+	{
+		ErrorLogger::Log("Physic system null");
+	}
 }
 
 void PhysicsEngine::Update()
@@ -175,4 +193,239 @@ void PhysicsEngine::SetPosition(BodyID id, RVec3 position)
 	_physics_system->GetBodyInterface().SetPosition(id, position, EActivation::DontActivate);
 
 }
+void PhysicsEngine::GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX::XMFLOAT4* rot)
+{
+	JPH::Vec3 jphpos;
+	JPH::Quat jphrot;
+
+	_physics_system->GetBodyInterface().GetPositionAndRotation(
+		id,
+		jphpos,
+		jphrot
+	);
+
+	if (pos)
+	{
+		*pos = DirectX::XMFLOAT3(
+			jphpos.GetX(),
+			jphpos.GetY(),
+			jphpos.GetZ()
+		);
+	}
+
+	if (rot)
+	{
+		*rot = DirectX::XMFLOAT4(
+			jphrot.GetX(),
+			jphrot.GetY(),
+			jphrot.GetZ(),
+			jphrot.GetW()
+		);
+	}
+}
+void PhysicsEngine::Stop()
+{
+	BodyIDVector vec;
+	_physics_system->GetBodies(vec);
+	_physics_system->GetBodyInterface().RemoveBodies(vec.data(), vec.size());
+}
+
+void PhysicsEngine::SetGravity(float grav)
+{
+	_physics_system->SetGravity({ 0.0,-grav,0.0 });
+}
+void PhysicsEngine::ApplyForce(JPH::BodyID id, XMFLOAT3 force)
+{
+	JPH::BodyLockWrite bodyLock(_physics_system->GetBodyLockInterface(), id);
+	auto& body = bodyLock.GetBody();
+	body.AddForce({ force.x,force.y,force.z });
+}
+void PhysicsEngine::SetSensor(JPH::BodyID id, bool issensor)
+{
+	JPH::BodyLockWrite bodyLock(_physics_system->GetBodyLockInterface(), id);
+	auto& body = bodyLock.GetBody();
+	body.SetIsSensor(issensor);
+}
+
+void PhysicsEngine::CreateColliders(Scene* scene)
+{
+
+
+	for (auto& entity : scene->GetEntities())
+	{
+		if (entity->HasComponent<PhysicsComponent>())
+		{
+			auto PGO = entity->GetComponent<PhysicsComponent>();
+			auto transformcomp = entity->GetComponent<TransformComponent>();
+			BodyCreationSettings settings;
+			switch (PGO->ColliderType)
+			{
+			case EShapeSubType::Capsule:
+			{
+
+				const auto mat = PhysMat::Create(PGO->friction, PGO->restitution);
+				const CapsuleShape* capsule = new CapsuleShape(PGO->HalfHeight, PGO->radius, mat);
+				XMFLOAT3 colliderWorldPos = {0.0,0.0,0.0};
+				if (transformcomp && PGO)
+				{
+					XMFLOAT3 colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
+				}
+				if (PGO->RigidBodyType == EMotionType::Static)
+					settings = BodyCreationSettings(capsule, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::NON_MOVING);
+				else
+					settings = BodyCreationSettings(capsule, { colliderWorldPos.x, colliderWorldPos.y,colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::MOVING);
+				break;
+			}
+			case EShapeSubType::Box:
+			{
+				const auto mat = PhysMat::Create(PGO->friction, PGO->restitution);
+				const BoxShape* box = new BoxShape({ PGO->HalfSize.x, PGO->HalfSize.y, PGO->HalfSize.z });
+				
+				
+				
+				XMFLOAT3 colliderWorldPos = {0.0,0.0,0.0};
+				if (transformcomp && PGO)
+				{
+					XMFLOAT3 colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
+				}
+
+				if (PGO->RigidBodyType == EMotionType::Static)
+					settings = BodyCreationSettings(box, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::NON_MOVING);
+				else
+					settings = BodyCreationSettings(box, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::MOVING);
+				break;
+			}
+			}
+			PGO->m_BodyID = CreateAndAddObject(settings, EActivation::Activate);
+			SetSensor(PGO->m_BodyID, PGO->IsSensor);
+		}
+		
+	}
+
+	Optimize();
+}
+
+bool PhysicsEngine::CastRay(const RayCastInfo* info, RayHit& outHit, Scene* scene)
+
+{
+	outHit.Clear();
+
+	JPH::RayCast ray;
+	ray.mOrigin = JPH::Vec3(info->Origin.x, info->Origin.y, info->Origin.z);
+	ray.mDirection = ToJoltVector(XMVector3Normalize(XMLoadFloat3(&info->Direction))) * info->MaxDistance;
+
+	JPH::RayCastResult hit;
+	JPH::RayCastSettings settings; // defaults are fine
+
+	// BodyFilter is your custom filter; broadphase/object layer filters left empty
+	_physics_system->GetNarrowPhaseQuery().CastRay(JPH::RRayCast(ray), hit, {}, {}, Engine::BodyFilterJolt(*scene, info->ExcludedEntities));
+	return false;
+	// Lock the body we hit (thread-safe access)
+	JPH::BodyLockRead lock(_physics_system->GetBodyLockInterface(), hit.mBodyID);
+	if (!lock.Succeeded()) return false;
+
+	const JPH::Body& body = lock.GetBody();
+	const JPH::Vec3  hitWS = ray.GetPointOnRay(hit.mFraction);
+
+	outHit.HitEntity = static_cast<uint32_t>(body.GetUserData());
+	outHit.Position = FromJoltVector(hitWS);
+	outHit.Normal = FromJoltVector(body.GetWorldSpaceSurfaceNormal(hit.mSubShapeID2, hitWS));
+	outHit.Distance = hit.mFraction * ray.mDirection.Length();
+
+
+	if (void* ud = reinterpret_cast<void*>(body.GetShape()->GetUserData()))
+		outHit.HitCollider = reinterpret_cast<ShapeJolt*>(ud); // or set an ID/handle instead
+
+	return true;
+}
+
+int32_t PhysicsEngine::OverlapShape(Scene* scene, const ShapeOverlapInfo* shapeOverlapInfo, RayHit** outHits)
+{
+	m_OverlapIDs.clear();
+
+	JPH::Ref<JPH::Shape> shape = nullptr;
+
+	switch (shapeOverlapInfo->GetCastType())
+	{
+	case ShapeCastType::Box:
+	{
+		const auto* boxCastInfo = reinterpret_cast<const BoxOverlapInfo*>(shapeOverlapInfo);
+		shape = new JPH::BoxShape(ToJoltVector(boxCastInfo->HalfExtent));
+		break;
+	}
+	case ShapeCastType::Sphere:
+	{
+		const auto* sphereCastInfo = reinterpret_cast<const SphereOverlapInfo*>(shapeOverlapInfo);
+		shape = new JPH::SphereShape(sphereCastInfo->Radius);
+		break;
+	}
+	case ShapeCastType::Capsule:
+	{
+		const auto* capsuleCastInfo = reinterpret_cast<const CapsuleOverlapInfo*>(shapeOverlapInfo);
+		shape = new JPH::CapsuleShape(capsuleCastInfo->HalfHeight, capsuleCastInfo->Radius);
+		break;
+	}
+	}
+
+	JPH::Mat44 worldTransform = JPH::Mat44::sTranslation(ToJoltVector(shapeOverlapInfo->Origin));
+	JPH::Vec3 shapeScale = JPH::Vec3(1.0f, 1.0f, 1.0f);
+
+	JPH::CollideShapeSettings settings;
+	JPH::AllHitCollisionCollector<JPH::CollideShapeCollector> collector;
+	_physics_system->GetNarrowPhaseQuery().CollideShape(shape, shapeScale, worldTransform, settings, JPH::RVec3::sZero(), collector, {}, {}, Engine::BodyFilterJolt(*scene, shapeOverlapInfo->ExcludedEntities));
+
+	int numBodies = static_cast<int>(collector.mHits.size());
+	m_OverlapIDs.reserve(numBodies);
+	// Lock all bodies in collector.mHits
+	for (size_t i = 0; i < numBodies; i++)
+		m_OverlapIDs[i] = collector.mHits[i].mBodyID2;
+
+	{
+		JPH::BodyLockMultiRead bodyLock(_physics_system->GetBodyLockInterface(), m_OverlapIDs.data(), numBodies);
+		for (int i = 0; i < numBodies; i++)
+		{
+			const JPH::Body* body = bodyLock.GetBody(i);
+
+			if (body == nullptr)
+				continue;
+
+			XMFLOAT3 hitPosition = FromJoltVector(collector.mHits[i].mContactPointOn2);
+
+			auto& hitInfo = m_OverlapHitBuffer.emplace_back();
+			hitInfo.HitEntity = body->GetUserData();
+			hitInfo.Position = hitPosition;
+			hitInfo.Normal = FromJoltVector(body->GetWorldSpaceSurfaceNormal(collector.mHits[i].mSubShapeID2, ToJoltVector(hitPosition)));
+			XMVECTOR hitpos = XMLoadFloat3(&hitPosition);
+			XMVECTOR origin = XMLoadFloat3(&shapeOverlapInfo->Origin);
+
+			XMVECTOR diff = XMVectorSubtract(hitpos, origin);
+			XMVECTOR distVec = XMVector3Length(diff);
+
+			float distance = XMVectorGetX(distVec);
+
+			hitInfo.Distance = distance;
+			hitInfo.HitCollider = reinterpret_cast<ShapeJolt*>(body->GetShape()->GetUserData());
+		}
+	}
+
+	*outHits = m_OverlapHitBuffer.data();
+	return int32_t(m_OverlapHitBuffer.size());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

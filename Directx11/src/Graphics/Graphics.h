@@ -20,6 +20,8 @@ public:
 	void PhysicsUpdate();
 	void Present();
 	void RenderFrame();
+	Camera Editorcamera;
+	Camera RuntimeCamera;
 	Camera camera;
 	static ID3D11Device* GetDevice()
 	{

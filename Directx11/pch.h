@@ -2,7 +2,7 @@
 #define JPH_EXTERNAL_PROFILE
 #include <windows.h>
 #include <comdef.h>
-
+#include <Xinput.h>
 // DirectX includes
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -40,7 +40,7 @@
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "winmm.lib")
-
+#pragma comment(lib, "Xinput.lib")
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>

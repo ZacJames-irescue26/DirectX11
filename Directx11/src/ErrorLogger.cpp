@@ -5,6 +5,11 @@
 
 namespace Engine
 {
+	void ErrorLogger::LogToDebug(std::string message)
+	{
+		
+		OutputDebugStringW(StringHelper::StringToWide(message).c_str());
+	}
 void ErrorLogger::Log(std::string message)
 {
 	std::string error_message = "Error: " + message;

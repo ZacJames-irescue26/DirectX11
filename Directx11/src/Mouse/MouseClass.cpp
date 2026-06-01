@@ -86,6 +86,31 @@ int MouseClass::GetPosY()
 	return this->y;
 }
 
+int MouseClass::GetDeltaX() const
+{
+	return deltaX;
+}
+
+int MouseClass::GetDeltaY() const
+{
+	return deltaY;
+}
+void MouseClass::MouseMoveRaw(int newX, int newY)
+{
+	deltaX = newX - x;
+	deltaY = newY - y;
+
+	oldx = x;
+	oldy = y;
+
+	x = newX;
+	y = newY;
+}
+void MouseClass::EndFrame()
+{
+	deltaX = 0;
+	deltaY = 0;
+}
 MousePoint MouseClass::GetPos()
 {
 	return{ this->x, this->y };

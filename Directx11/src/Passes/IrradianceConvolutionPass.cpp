@@ -41,12 +41,12 @@ namespace Engine
 		COM_ERROR_IF_FAILED(device->CreateDepthStencilState(&HDRIdepthStencilDesc, &HDRIdepthStencilStateDisabled), "Failed to create Stencil");
 	
 	
-		if (!m_EquiToHDRI_VS.Initialize(device, L"CompiledShaders/EquiToHdri_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
+		if (!m_EquiToHDRI_VS.Initialize(device, Project::GetEditorShaderPath("EquiToHdri_v.cso").wstring().c_str(), InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
 		{
 			return false;
 		}
 	
-		if (!m_IrradianceConvolution_PS.Initialize(device, L"CompiledShaders/IrradianceConvolution_p.cso"))
+		if (!m_IrradianceConvolution_PS.Initialize(device, Project::GetEditorShaderPath("IrradianceConvolution_p.cso").wstring().c_str()))
 		{
 			return false;
 		}

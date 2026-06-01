@@ -72,7 +72,7 @@ void Graphics::RenderFrame()
 bool Graphics::InitializeDirectX(HWND hwnd)
 {
 	camera.SetPosition(0.0f, 0.0f, -2.0f);
-	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 1.0f, 100.0f);
+	camera.SetProjectionValues(90.0f, static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 1.0f, 1000.0f);
 	std::vector<AdapterData> adapters = AdapterReader::GetAdapters();
 
 	if (adapters.size() < 1)
@@ -169,7 +169,7 @@ bool Graphics::InitializeDirectX(HWND hwnd)
 
 	depthstencildesc.DepthEnable = true;
 	depthstencildesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthstencildesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	depthstencildesc.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
 
 	hr = this->device->CreateDepthStencilState(&depthstencildesc, this->depthStencilState.GetAddressOf());
 	if (FAILED(hr))

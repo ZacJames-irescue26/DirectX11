@@ -132,36 +132,4 @@
       <Filter>Shader\illumination</Filter>
     </FxCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="CompiledShaders\BackgroundCubemap_p.cso" />
-    <None Include="CompiledShaders\BackgroundCubemap_v.cso" />
-    <None Include="CompiledShaders\BRDF_p.cso" />
-    <None Include="CompiledShaders\BRDF_v.cso" />
-    <None Include="CompiledShaders\DebugCascade_p.cso" />
-    <None Include="CompiledShaders\DebugCascade_v.cso" />
-    <None Include="CompiledShaders\DefferedPixel_p.cso" />
-    <None Include="CompiledShaders\DefferedVert_v.cso" />
-    <None Include="CompiledShaders\DrawShadowMap_p.cso" />
-    <None Include="CompiledShaders\EquiToHdri_p.cso" />
-    <None Include="CompiledShaders\EquiToHdri_v.cso" />
-    <None Include="CompiledShaders\FullScreen_p.cso" />
-    <None Include="CompiledShaders\FullScreen_v.cso" />
-    <None Include="CompiledShaders\GBufferPixel_p.cso" />
-    <None Include="CompiledShaders\GBufferVert_v.cso" />
-    <None Include="CompiledShaders\GenerateSurfels_c.cso" />
-    <None Include="CompiledShaders\IrradianceConvolution_p.cso" />
-    <None Include="CompiledShaders\PixelPBR_p.cso" />
-    <None Include="CompiledShaders\PixelShader_p.cso" />
-    <None Include="CompiledShaders\Prefiltering_p.cso" />
-    <None Include="CompiledShaders\RealtimeShadows_c.cso" />
-    <None Include="CompiledShaders\ShadowBake_c.cso" />
-    <None Include="CompiledShaders\ShadowMapDepth_g.cso" />
-    <None Include="CompiledShaders\ShadowMapDepth_v.cso" />
-    <None Include="CompiledShaders\SurfelDebug_g.cso" />
-    <None Include="CompiledShaders\SurfelDebug_p.cso" />
-    <None Include="CompiledShaders\SurfelDebug_v.cso" />
-    <None Include="CompiledShaders\VertexPBR_v.cso" />
-    <None Include="CompiledShaders\VertexShader_v.cso" />
-    <None Include="CompiledShaders\GBufferAnimatedVert_v.cso" />
-  </ItemGroup>
 </Project>

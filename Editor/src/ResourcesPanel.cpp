@@ -58,21 +58,21 @@ namespace Editor
 					{
 						auto entity = m_Context->AddEntity("Directional Light");
 						
-						entity->AddComponent<Engine::DirectionalLightComponent>(std::make_unique<Engine::DirectionalLightComponent>());
+						entity->AddComponent(std::make_unique<Engine::DirectionalLightComponent>());
 					}
 
 					if (ImGui::MenuItem("Create Point Light"))
 					{
 						auto entity = m_Context->AddEntity("Point Light");
 						
-						entity->AddComponent<Engine::PointLightComponent>(std::make_unique<Engine::PointLightComponent>());
+						entity->AddComponent(std::make_unique<Engine::PointLightComponent>());
 					}
 
 					if (ImGui::MenuItem("Create Spot Light"))
 					{
 						auto entity = m_Context->AddEntity("Spot Light");
 						
-						entity->AddComponent<Engine::SpotLightComponent>(std::make_unique<Engine::SpotLightComponent>());
+						entity->AddComponent(std::make_unique<Engine::SpotLightComponent>());
 					}
 
 					ImGui::EndMenu();
@@ -355,13 +355,29 @@ namespace Editor
 			entity->RemoveComponent<T>();
 		}
 	}
-
+	inline int MotionIndex(JPH::EMotionType t) {
+		switch (t) {
+		case JPH::EMotionType::Static:    return 0;
+		case JPH::EMotionType::Dynamic:   return 1;
+		case JPH::EMotionType::Kinematic: return 2;
+		default: return 0;
+		}
+	}
+	inline int ShapeIndex(JPH::EShapeSubType s) {
+		switch (s) {
+		case JPH::EShapeSubType::Box:        return 0;
+		case JPH::EShapeSubType::Capsule:    return 1;
+		case JPH::EShapeSubType::ConvexHull: return 2;
+		default: return 0;
+		}
+	}
 	void SceneHierarchyPanel::DrawComponents(Engine::Entity* entity)
 	{
 	ImGui::Begin("Components");
 		if (!entity)
 			return;
-
+		if (entity->GetName().c_str())
+		{
 		char buffer[256] = {};
 		strncpy_s(buffer, sizeof(buffer), entity->GetName().c_str(), _TRUNCATE);
 
@@ -370,6 +386,7 @@ namespace Editor
 			entity->GetName() = std::string(buffer);
 		}
 
+		}
 		ImGui::SameLine();
 		ImGui::PushItemWidth(-1);
 
@@ -386,7 +403,9 @@ namespace Editor
 			DisplayAddComponentEntry<Engine::DirectionalLightComponent>("DirectionalLight");
 			DisplayAddComponentEntry<Engine::SpotLightComponent>("SpotLight");
 			DisplayAddComponentEntry<Engine::PointLightComponent>("PointLight");
-
+			DisplayAddComponentEntry<Engine::PhysicsComponent>("PhysicsComp");
+			DisplayAddComponentEntry<Engine::LuaScriptComponent>("LuaComp");
+			DisplayAddComponentEntry<Engine::CameraComponent>("CameraComp");
 			ImGui::EndPopup();
 		}
 
@@ -402,13 +421,16 @@ namespace Editor
 				};
 
 				DrawVec3Control("Rotation", rotationDegrees);
-
-				component.Rotation =
+				
+				XMFLOAT3 rotationRadians =
 				{
 					XMConvertToRadians(rotationDegrees.x),
 					XMConvertToRadians(rotationDegrees.y),
 					XMConvertToRadians(rotationDegrees.z)
 				};
+
+				component.SetRotationEulerRadians(rotationRadians);
+				
 
 				DrawVec3Control("Scale", component.Scale, 1.0f);
 
@@ -427,7 +449,10 @@ namespace Editor
 
 				if (ImGui::Button("Reload Mesh"))
 				{
-					component.Initialize(m_device, m_deviceContext, m_cb_vs_vertexshader);
+					std::filesystem::path fullPath =
+						Engine::Project::ResolveAssetPath(component.m_filepath);
+
+					component.Initialize(fullPath.string(), m_device, m_deviceContext, m_cb_vs_vertexshader);
 				}
 			});
 
@@ -451,12 +476,18 @@ namespace Editor
 
 				if (ImGui::Button("Reload anim Mesh"))
 				{
-					component.Initialize(m_device, m_deviceContext, m_cb_anim_vs_vertexshader );
+					std::filesystem::path fullPath =
+						Engine::Project::ResolveAssetPath(component.m_filepath);
+
+					component.Initialize(fullPath.string(), m_device, m_deviceContext, m_cb_anim_vs_vertexshader );
 				}
 
 				if (ImGui::Button("Load animation from filepath"))
 				{
-					component.AddAnimation(component.m_AnimPath);
+					std::filesystem::path fullPath =
+						Engine::Project::ResolveAssetPath(component.m_AnimPath);
+
+					component.AddAnimation(fullPath.string());
 				}
 
 				const auto& animations = component.m_Model.GetLoadedAnimations();
@@ -537,6 +568,133 @@ namespace Editor
 				ImGui::Checkbox("Cast Shadows", &component.CastsShadows);
 				ImGui::Checkbox("Soft Shadows", &component.SoftShadows);
 			});
+		DrawComponent<Engine::PhysicsComponent>("PhysicsComponent", entity, [](auto& component)
+			{
+				// --- Rigid Body Type ---
+				static const char* kMotionNames[] = { "Static", "Dynamic", "Kinematic" };
+				const int motionIdx = MotionIndex(component.RigidBodyType);
+				if (ImGui::BeginCombo("Rigid Body Type##motion", kMotionNames[motionIdx])) {
+					// order must match kMotionNames
+					const JPH::EMotionType motionVals[] = {
+						JPH::EMotionType::Static,
+						JPH::EMotionType::Dynamic,
+						JPH::EMotionType::Kinematic
+					};
+					for (int i = 0; i < 3; ++i) {
+						bool selected = (i == motionIdx);
+						if (ImGui::Selectable(kMotionNames[i], selected))
+							component.RigidBodyType = motionVals[i];
+						if (selected) ImGui::SetItemDefaultFocus();
+					}
+					ImGui::EndCombo();
+				}
+
+				// --- Collider Type ---
+				static const char* kShapeNames[] = { "Box", "Capsule", "Convex" };
+				const int shapeIdx = ShapeIndex(component.ColliderType);
+				if (ImGui::BeginCombo("Collider Type##shape", kShapeNames[shapeIdx])) {
+					const JPH::EShapeSubType shapeVals[] = {
+						JPH::EShapeSubType::Box,
+						JPH::EShapeSubType::Capsule,
+						JPH::EShapeSubType::ConvexHull
+					};
+					for (int i = 0; i < 3; ++i) {
+						bool selected = (i == shapeIdx);
+						if (ImGui::Selectable(kShapeNames[i], selected))
+							component.ColliderType = shapeVals[i];
+						if (selected) ImGui::SetItemDefaultFocus();
+					}
+					ImGui::EndCombo();
+				}
+
+				// --- Per-shape params ---
+				switch (component.ColliderType) {
+				case JPH::EShapeSubType::Capsule:
+					ImGui::DragFloat("Radius", &component.radius, 0.1f, 0.0f);
+					ImGui::DragFloat("Half Height", &component.HalfHeight, 0.1f, 0.0f);
+					DrawVec3Control("Collider Pos", component.ColliderPosition);
+					break;
+				case JPH::EShapeSubType::Box:
+					DrawVec3Control("Collider Pos", component.ColliderPosition);
+					DrawVec3Control("Half Size", component.HalfSize);
+					break;
+				default: break;
+				}
+
+				// --- Common params ---
+				if (ImGui::BeginTable("PhysicsProps", 2, ImGuiTableFlags_SizingStretchProp))
+				{
+					ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+					ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::TextUnformatted("Friction");
+					ImGui::TableSetColumnIndex(1);
+					ImGui::SetNextItemWidth(-1.0f);
+					ImGui::DragFloat("##Friction", &component.friction, 0.01f, 0.0f, 10.0f);
+
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
+					ImGui::TextUnformatted("Restitution");
+					ImGui::TableSetColumnIndex(1);
+					ImGui::SetNextItemWidth(-1.0f);
+					ImGui::DragFloat("##Restitution", &component.restitution, 0.01f, 0.0f, 1.0f);
+
+					ImGui::EndTable();
+				}
+				ImGui::Checkbox("Awake", &component.Awake);
+				ImGui::Checkbox("IsSensor", &component.IsSensor);
+
+		});
+
+
+		DrawComponent<Engine::LuaScriptComponent>("LuaScriptComponent", entity, [](auto& component)
+		{
+				char pathBuffer[512] = {};
+				strncpy_s(pathBuffer, sizeof(pathBuffer), component.ScriptPath.c_str(), _TRUNCATE);
+
+				if (ImGui::InputText("Script", pathBuffer, sizeof(pathBuffer)))
+				{
+					component.ScriptPath = std::string(pathBuffer);
+				}
+		});
+
+
+		DrawComponent<Engine::CameraComponent>("CameraComponent", entity, [](auto& component)
+		{
+
+			ImGui::Checkbox("Primary", &component.Primary);
+			if (ImGui::BeginTable("PhysicsProps", 2, ImGuiTableFlags_SizingStretchProp))
+			{
+				ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+				ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("v");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##FOVDegrees", &component.FOVDegrees, 0.01f, 0.0f, 10.0f);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("NearPlane");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##NearPlane", &component.NearPlane, 0.01f, 0.0f, 1.0f);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("FarPlane");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##FarPlane", &component.FarPlane, 0.01f, 0.0f, 1.0f);
+				ImGui::EndTable();
+			}
+
+		});
+
 
 		ImGui::PopItemWidth();
 		ImGui::End();

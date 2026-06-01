@@ -58,7 +58,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -66,10 +66,10 @@
     <IntDir>..\bin-int\Release-windows-x86_64\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <ExternalIncludePath>..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
     <NMakeOutput>$(OutDir)Editor</NMakeOutput>
     <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
   </PropertyGroup>
@@ -306,38 +306,9 @@
     <ProjectReference Include="..\Dependances\JoltPhysics\JoltPhysics.vcxproj">
       <Project>{812AB974-EDDF-316A-76D4-2B41E288286E}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CompiledShaders\BackgroundCubemap_p.cso" />
-    <None Include="CompiledShaders\BackgroundCubemap_v.cso" />
-    <None Include="CompiledShaders\BRDF_p.cso" />
-    <None Include="CompiledShaders\BRDF_v.cso" />
-    <None Include="CompiledShaders\DebugCascade_p.cso" />
-    <None Include="CompiledShaders\DebugCascade_v.cso" />
-    <None Include="CompiledShaders\DefferedPixel_p.cso" />
-    <None Include="CompiledShaders\DefferedVert_v.cso" />
-    <None Include="CompiledShaders\DrawShadowMap_p.cso" />
-    <None Include="CompiledShaders\EquiToHdri_p.cso" />
-    <None Include="CompiledShaders\EquiToHdri_v.cso" />
-    <None Include="CompiledShaders\FullScreen_p.cso" />
-    <None Include="CompiledShaders\FullScreen_v.cso" />
-    <None Include="CompiledShaders\GBufferAnimatedVert_v.cso" />
-    <None Include="CompiledShaders\GBufferPixel_p.cso" />
-    <None Include="CompiledShaders\GBufferVert_v.cso" />
-    <None Include="CompiledShaders\GenerateSurfels_c.cso" />
-    <None Include="CompiledShaders\IrradianceConvolution_p.cso" />
-    <None Include="CompiledShaders\PixelPBR_p.cso" />
-    <None Include="CompiledShaders\PixelShader_p.cso" />
-    <None Include="CompiledShaders\Prefiltering_p.cso" />
-    <None Include="CompiledShaders\RealtimeShadows_c.cso" />
-    <None Include="CompiledShaders\ShadowBake_c.cso" />
-    <None Include="CompiledShaders\ShadowMapDepth_g.cso" />
-    <None Include="CompiledShaders\ShadowMapDepth_v.cso" />
-    <None Include="CompiledShaders\SurfelDebug_g.cso" />
-    <None Include="CompiledShaders\SurfelDebug_p.cso" />
-    <None Include="CompiledShaders\SurfelDebug_v.cso" />
-    <None Include="CompiledShaders\VertexPBR_v.cso" />
-    <None Include="CompiledShaders\VertexShader_v.cso" />
+    <ProjectReference Include="..\Dependances\lua-5.5.0\LuaLib.vcxproj">
+      <Project>{7EC9A2C1-6A6B-CD97-5326-E1EB3F6754E8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

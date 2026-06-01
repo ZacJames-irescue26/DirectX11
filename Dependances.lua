@@ -54,6 +54,11 @@ Dependencies = {
 		LibName = "JoltPhysics",
 		IncludeDir = "%{wks.location}/Dependances/JoltPhysics/JoltPhysics",
 	},
+	LuaLib = {
+        IncludeDir = "%{wks.location}/Dependances/lua-5.5.0/src",
+        LibName = "LuaLib",
+    },
+	
 }
 
 

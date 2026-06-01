@@ -6,13 +6,13 @@ objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
 shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 
 	links { "DirectX11","d3d12.lib",
-        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib"}
+        "dxgi.lib","d3dcompiler.lib","DirectXTK.lib","JoltPhysics.lib",}
 
 
 	libdirs { }
 
 	defines { "GLM_FORCE_DEPTH_ZERO_TO_ONE", }
-
+	
 	files  { 
 		"**.h",
 		"**.c",
@@ -28,7 +28,8 @@ shaderobjectfileoutput ("CompiledShaders/%%(Filename).cso")
 	includedirs  {
 		"src/",
 		"../Directx11/src",
-		"../Directx11"
+		"../Directx11",
+
 	}
 
 	filter { "files:**.hlslh" }

@@ -6,10 +6,15 @@
 
 #include <format>
 #include "InputElements.h"
+#include "src/Utils.h"
+#include "Scripting/SciptMouse.h"
+#include "Scripting/ScriptController.h"
 
 
 void Application::Initialize(HINSTANCE hInstance, std::string window_title, std::string window_class, int width, int height)
 {
+	Engine::Project::SetEditorRoot("Editor");
+	Engine::Project::SetProjectRoot("Game");
 	EngineInit::Initialize(hInstance, window_title, window_class, width, height);
 	windowWidth = width;
 	windowHeight = height;
@@ -71,13 +76,16 @@ void Application::OnCreate()
 
 	m_Scene = std::make_unique<Scene>();
 
-	auto sponza = m_Scene->AddEntity("Sponza");
-
-	sponza->AddComponent<StaticMeshComponent>(std::make_unique<StaticMeshComponent>("Assets/Sponza/glTF/Sponza.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), constantBuffer));
+	/*auto sponza = m_Scene->AddEntity("Sponza");
+	std::filesystem::path fullPath =
+		Engine::Project::ResolveAssetPath("Sponza/glTF/Sponza.gltf");
+	sponza->AddComponent(std::make_unique<StaticMeshComponent>(fullPath.string(), gfx.GetDevice(), gfx.GetDeviceContext(), constantBuffer));
 
 	auto anim = m_Scene->AddEntity("TestAnim");
-
-	anim->AddComponent<AnimatedMeshComponent>(std::make_unique<AnimatedMeshComponent>("Assets/FullAnim.fbx", gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer));
+	fullPath =
+		Engine::Project::ResolveAssetPath("FullAnim.fbx");
+	anim->AddComponent(std::make_unique<AnimatedMeshComponent>(fullPath.string(), gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer));*/
+	
 
 	//if (!helmet.Initialize("Assets/DamagedHelmet/gLTF/DamagedHelmet.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
 	//	return;
@@ -332,7 +340,11 @@ void Application::OnCreate()
 	m_SceneHierarchyPanel = std::make_unique<Editor::SceneHierarchyPanel>(m_Scene.get(), gfx.device.Get(), gfx.deviceContext.Get(), &floorConstantBuffer, &AnimatedConstantBuffer);
 
 
+	std::filesystem::path fullPath =
+		Engine::Project::ResolveAssetPath("Scene/TestScene1.DOE");
+	m_Scene->LoadScene(fullPath.string());
 
+	m_Scene->InitializeRuntimeResources(gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer, floorConstantBuffer);
 }
 
 void Application::InitializeShaders()
@@ -405,7 +417,11 @@ void Application::InitializeShaders()
 }
 void Application::OnUpdate()
 {
-	while (this->ProcessMessages() == true)
+
+	Engine::ScriptInput::SetKeyboard(&this->keyboard);
+	Engine::ScriptMouse::SetMouse(&mouse);
+	Engine::ScriptController::SetController(&controller);
+	while (this->ProcessMessages() == true && m_IsRunning)
 	{	
 		this->gfx.PhysicsUpdate();
 		this->RenderFrame();
@@ -414,31 +430,53 @@ void Application::OnUpdate()
 		timer.Restart();
 		this->Update();
 		m_Scene->UpdateScene(dt);
+
+		if (m_Scene->IsPlaying())
+		{
+			controller.Update();
+			m_Scene->UpdateWorldTransforms();
+			m_Scene->UpdateRuntimeCamera(gfx);
+			m_Scene->UpdatePhysicsTransforms();
+			m_Scene->PlayUpdate(dt);
+
+
+			mouse.EndFrame();
+		}
+
+
 		const float cameraSpeed = 5.0f;
-		if (keyboard.KeyIsPressed('W'))
+		
+		if (!m_Scene->IsPlaying())
 		{
-			this->gfx.camera.AdjustPosition(this->gfx.camera.GetForwardVector() * cameraSpeed * dt);
+			if (keyboard.KeyIsPressed('W'))
+			{
+				this->gfx.camera.AdjustPosition(this->gfx.camera.GetForwardVector() * cameraSpeed * dt);
+			}
+			if (keyboard.KeyIsPressed('S'))
+			{
+				this->gfx.camera.AdjustPosition(this->gfx.camera.GetBackwardVector() * cameraSpeed * dt);
+			}
+			if (keyboard.KeyIsPressed('A'))
+			{
+				this->gfx.camera.AdjustPosition(this->gfx.camera.GetLeftVector() * cameraSpeed * dt);
+			}
+			if (keyboard.KeyIsPressed('D'))
+			{
+				this->gfx.camera.AdjustPosition(this->gfx.camera.GetRightVector() * cameraSpeed * dt);
+			}
+			if (keyboard.KeyIsPressed(VK_SPACE))
+			{
+				this->gfx.camera.AdjustPosition(0.0f, cameraSpeed * dt, 0.0f);
+			}
+			if (keyboard.KeyIsPressed(VK_CONTROL))
+			{
+				this->gfx.camera.AdjustPosition(0.0f, -cameraSpeed * dt, 0.0f);
+			}
 		}
-		if (keyboard.KeyIsPressed('S'))
-		{
-			this->gfx.camera.AdjustPosition(this->gfx.camera.GetBackwardVector() * cameraSpeed * dt);
-		}
-		if (keyboard.KeyIsPressed('A'))
-		{
-			this->gfx.camera.AdjustPosition(this->gfx.camera.GetLeftVector() * cameraSpeed * dt);
-		}
-		if (keyboard.KeyIsPressed('D'))
-		{
-			this->gfx.camera.AdjustPosition(this->gfx.camera.GetRightVector() * cameraSpeed * dt);
-		}
-		if (keyboard.KeyIsPressed(VK_SPACE))
-		{
-			this->gfx.camera.AdjustPosition(0.0f, cameraSpeed, 0.0f);
-		}
-		if (keyboard.KeyIsPressed('Z'))
+		/*if (keyboard.KeyIsPressed('Z'))
 		{
 			this->gfx.camera.AdjustPosition(0.0f, -cameraSpeed, 0.0f);
-		}
+		}*/
 		if (playercam)
 		{
 			//PlayerCamera.SetRadius(5.0f);
@@ -905,7 +943,73 @@ void Application::RenderFrame()
 	OnImguiRender();
 	m_ShadowPass.ImGuiPass();
 	m_SceneHierarchyPanel->OnImGuiRender();
+	m_LightingPass.ImGuiPass();
+	ImGui::Begin("Settings");
+	
+	if (!m_Scene->IsPlaying())
+	{
+		if (ImGui::Button("Play"))
+		{
+			m_EditorSaveScene = m_Scene->Copy();
+			gfx.Editorcamera = gfx.camera.Clone();
+			m_Scene->Play();
 
+		}
+
+	}
+	else
+	{
+		if (ImGui::Button("Stop"))
+		{
+			m_Scene->Stop();
+
+			gfx.camera = gfx.Editorcamera;
+
+			m_Scene = std::move(m_EditorSaveScene);
+
+			m_Scene->InitializeRuntimeResources(gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer, floorConstantBuffer);
+			m_EditorSaveScene = nullptr;
+			m_SceneHierarchyPanel->SetContext(m_Scene.get());
+		}
+	}
+	
+	if (ImGui::Button("Reload Scripts"))
+	{
+		m_Scene->ReloadScript();
+	}
+	
+	
+	char pathBuffer[512] = {};
+	strncpy_s(pathBuffer, sizeof(pathBuffer), m_GameProjectPath.c_str(), _TRUNCATE);
+
+	if (ImGui::InputText("GameProjectDir", pathBuffer, sizeof(pathBuffer)))
+	{
+		m_GameProjectPath = std::string(pathBuffer);
+
+		std::filesystem::path enteredPath =
+			std::filesystem::absolute(std::filesystem::path(m_GameProjectPath));
+
+		std::filesystem::path projectRoot;
+
+		if (enteredPath.filename() == "Assets")
+			projectRoot = enteredPath.parent_path();
+		else
+			projectRoot = enteredPath;
+
+		std::filesystem::path assetsPath = projectRoot / "Assets";
+
+		if (std::filesystem::exists(assetsPath))
+		{
+			Engine::Project::SetProjectRoot(projectRoot);
+		}
+		else
+		{
+			ErrorLogger::Log("Invalid game project path. Assets folder not found.\n");
+		}
+		
+	}
+	
+	ImGui::End();
 	//Assemble Together Draw Data
 	OnImguiRenderViewport();
 	ImGui::Render();
@@ -981,26 +1085,26 @@ void Application::OnImguiRender()
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
-				//OpenScene();
+				OpenScene();
 
 			ImGui::Separator();
 
 			if (ImGui::MenuItem("New Scene", "Ctrl+N"))
 			{
-				
+				m_Scene->ClearScene();
 
 			}
 
 			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
-				//SaveScene();
+				SaveScene();
 
 			if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
-				//SaveSceneAs();
+				SaveSceneAs();
 
 			ImGui::Separator();
 
 			if (ImGui::MenuItem("Exit"))
-				//m_IsRunning = false;
+				m_IsRunning = false;
 
 			ImGui::EndMenu();
 		}
@@ -1009,6 +1113,33 @@ void Application::OnImguiRender()
 	}
 
 	ImGui::End();
+}
+void Application::SaveScene()
+{
+	if (!m_EditorScenePath.empty())
+		m_Scene->SerializeScene(m_EditorScenePath);
+	else
+		SaveSceneAs();
+}
+
+void Application::SaveSceneAs()
+{
+	std::string filepath = Utils::SaveFile("DOE Scene (*.DOE)\0*.DOE\0", RenderWindow::GetHWND());
+	if (!filepath.empty())
+	{
+		m_Scene->SerializeScene(filepath);
+		m_EditorScenePath = filepath;
+	}
+
+}
+void Application::OpenScene()
+{
+	std::string filepath = Utils::OpenFile("DOE Scene (*.DOE)\0*.DOE\0", RenderWindow::GetHWND());
+	if (!filepath.empty())
+	{
+		m_Scene->LoadScene(filepath);
+		m_Scene->InitializeRuntimeResources(gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer, floorConstantBuffer);
+	}
 }
 
 void Application::OnImguiRenderViewport()

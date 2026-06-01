@@ -1,6 +1,9 @@
 #pragma once
+#include <DirectXMath.h>
 #include "ErrorLogger.h"
 #include "Game/PhysicsObject.h"
+
+namespace Engine { class Scene; }
 // Jolt includes
 #include <Jolt/Core/Core.h>
 #include <Jolt/Core/Factory.h>
@@ -22,8 +25,8 @@
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
 #include <Jolt/RegisterTypes.h>
-namespace Engine
-{
+#include "RaytraceInfo.h"
+
 // Callback for traces, connect this to your own trace function if you have one
 static void TraceImpl(const char* inFMT, ...)
 {
@@ -200,6 +203,8 @@ public:
 	{
 	}
 };
+namespace Engine
+{
 
 class PhysicsEngine
 {
@@ -208,7 +213,10 @@ public:
 	~PhysicsEngine();
 	// mutator methods
 	void initialise();
-	
+	static JPH::PhysicsSystem* Get()
+	{
+		return _physics_system.get();
+	}
 
 	BodyID CreateAndAddObject(BodyCreationSettings settings, EActivation mode);
 	void Optimize();
@@ -217,9 +225,77 @@ public:
 	void UnRegister();
 	RVec3 GetPosition(BodyID id);
 	void SetPosition(BodyID id, RVec3 position);
+	void GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX::XMFLOAT4* rot);
+	void ApplyForce(JPH::BodyID id, XMFLOAT3 force);
+	void Stop();
+	void SetGravity(float grav);
+	void SetSensor(JPH::BodyID id, bool issensor);
+	void CreateColliders(Scene* scene);
+	bool CastRay(const RayCastInfo* info, RayHit& outHit, Scene* scene);
+	int32_t OverlapShape(Scene* scene, const ShapeOverlapInfo* shapeOverlapInfo, RayHit** outHits);
+
+	inline static JPH::Vec3 ToJoltVector(const DirectX::XMFLOAT3& v)
+	{
+		return JPH::Vec3(v.x, v.y, v.z);
+	}
+
+	inline static JPH::Quat ToJoltQuat(const DirectX::XMFLOAT4& q)
+	{
+		return JPH::Quat(q.x, q.y, q.z, q.w);
+	}
+
+	inline static DirectX::XMFLOAT3 FromJoltVector(const JPH::Vec3& v)
+	{
+		return DirectX::XMFLOAT3(v.GetX(), v.GetY(), v.GetZ());
+	}
+
+	inline static DirectX::XMFLOAT4 FromJoltQuat(const JPH::Quat& q)
+	{
+		return DirectX::XMFLOAT4(q.GetX(), q.GetY(), q.GetZ(), q.GetW());
+	}
+	inline static JPH::Vec3 ToJoltVector(DirectX::FXMVECTOR v)
+	{
+		return JPH::Vec3(
+			DirectX::XMVectorGetX(v),
+			DirectX::XMVectorGetY(v),
+			DirectX::XMVectorGetZ(v)
+		);
+	}
+
+	inline static JPH::Quat ToJoltQuat(DirectX::FXMVECTOR q)
+	{
+		return JPH::Quat(
+			DirectX::XMVectorGetX(q),
+			DirectX::XMVectorGetY(q),
+			DirectX::XMVectorGetZ(q),
+			DirectX::XMVectorGetW(q)
+		);
+	}
+
+	inline static  DirectX::XMVECTOR FromJoltVectorV(const JPH::Vec3& v)
+	{
+		return DirectX::XMVectorSet(
+			v.GetX(),
+			v.GetY(),
+			v.GetZ(),
+			0.0f
+		);
+	}
+
+	inline static DirectX::XMVECTOR FromJoltQuatV(const JPH::Quat& q)
+	{
+		return DirectX::XMVectorSet(
+			q.GetX(),
+			q.GetY(),
+			q.GetZ(),
+			q.GetW()
+		);
+	}
+
+
 private:
 	JPH::uint _step{ 0 };
-	std::unique_ptr<JPH::PhysicsSystem> _physics_system;
+	inline static std::unique_ptr<JPH::PhysicsSystem> _physics_system;
 	std::unique_ptr<JPH::TempAllocatorImpl> _temp_allocator;
 	std::unique_ptr<JPH::JobSystemThreadPool> _job_system;
 	std::unique_ptr<MyBodyActivationListener> _body_activation_listener;
@@ -229,9 +305,13 @@ private:
 		_object_vs_broadphase_layer_filter;
 	std::unique_ptr<ObjectLayerPairFilterImpl> _object_vs_object_layer_filter;
 	
-	float cDeltaTime = 1.0f/60.0f;
+	float cDeltaTime = 1.0f / 60.0f;
+	std::vector<JPH::BodyID> m_OverlapIDs;
+
+	std::vector<RayHit> m_OverlapHitBuffer;
 };
 
 
-
 }
+
+

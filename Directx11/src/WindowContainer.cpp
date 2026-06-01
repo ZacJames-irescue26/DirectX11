@@ -79,7 +79,8 @@ LRESULT WindowContainer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	{
 		int x = LOWORD(lParam);
 		int y = HIWORD(lParam);
-		mouse.OnMouseMove(x, y);
+		//mouse.OnMouseMove(x, y);
+		mouse.MouseMoveRaw(x, y);
 		return 0;
 	}
 	case WM_LBUTTONDOWN:

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "GameObject.h"
+#include "src/Game/GameObject.h"
 
 #include "pch.h"
 #include "ErrorLogger.h"

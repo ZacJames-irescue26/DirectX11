@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "GBufferPass.h"
 #include "InputElements.h"
@@ -107,17 +108,17 @@ bool GBufferPass::Initialize(ID3D11Device* device)
 
 	COM_ERROR_IF_FAILED(device->CreateShaderResourceView(depthStencilBuffer.Get(), &depthSrvDesc, DepthSRV.GetAddressOf()), "Failed to create SRV");
 
-	if (!m_GBuffervertexShader.Initialize(device, L"CompiledShaders/GBufferVert_v.cso", InputElements::layout, ARRAYSIZE(InputElements::layout)))
+	if (!m_GBuffervertexShader.Initialize(device, Project::GetEditorShaderPath("GBufferVert_v.cso").wstring().c_str(), InputElements::layout, ARRAYSIZE(InputElements::layout)))
 	{
 
 		return false;
 	}
-	if (!m_GBufferAnimatedvertexShader.Initialize(device, L"CompiledShaders/GBufferAnimatedVert_v.cso", InputElements::AnimatedLayout, ARRAYSIZE(InputElements::AnimatedLayout)))
+	if (!m_GBufferAnimatedvertexShader.Initialize(device, Project::GetEditorShaderPath("GBufferAnimatedVert_v.cso").wstring().c_str(), InputElements::AnimatedLayout, ARRAYSIZE(InputElements::AnimatedLayout)))
 	{
 
 		return false;
 	}
-	if (!m_GBufferpixelShader.Initialize(device, L"CompiledShaders/GBufferPixel_p.cso"))
+	if (!m_GBufferpixelShader.Initialize(device, Project::GetEditorShaderPath("GBufferPixel_p.cso").wstring().c_str()))
 	{
 		return false;
 	}
@@ -154,7 +155,7 @@ void GBufferPass::Draw(Graphics* gfx, Scene& scene)
 	};
 	gfx->ClearView(bgcolor);
 
-	gfx->ClearDepthStencil(depthStencilView.Get());
+	//gfx->ClearDepthStencil(depthStencilView.Get());
 	gfx->SetInputLayout(this->m_GBuffervertexShader.GetInputLayout());
 	gfx->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	gfx->SetRasterizerState();
@@ -165,6 +166,7 @@ void GBufferPass::Draw(Graphics* gfx, Scene& scene)
 	gfx->SetPSShader(m_GBufferpixelShader.GetShader());
 	gfx->GetDeviceContext()->RSSetViewports(1, &viewport);
 	gfx->GetDeviceContext()->OMSetRenderTargets(renderTargets.size(), renderTargets.data(), depthStencilView.Get());
+	gfx->GetDeviceContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 0.0,0);
 	gfx->GetDeviceContext()->ClearRenderTargetView(renderTargets[0], bgcolor);
 	gfx->GetDeviceContext()->ClearRenderTargetView(renderTargets[1], bgcolor);
 	gfx->GetDeviceContext()->ClearRenderTargetView(renderTargets[2], bgcolor);

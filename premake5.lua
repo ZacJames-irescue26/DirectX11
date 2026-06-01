@@ -47,6 +47,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 group "Dependencies"
 include "Dependances/JoltPhysics/JoltPhysicsPremake.lua"
 include "Dependances/JoltPhysics/JoltViewerPremake.lua"
+include "Dependances/lua-5.5.0/LuaPremake.lua"
 group ""
 
 group "Core"

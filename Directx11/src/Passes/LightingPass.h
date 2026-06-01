@@ -46,5 +46,7 @@ namespace Engine
 		Microsoft::WRL::ComPtr < ID3D11Texture2D> FinalTexture;
 		Microsoft::WRL::ComPtr < ID3D11RenderTargetView> FinalRTV;
 		Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> FinalSRV;
+
+		XMFLOAT3 LightColor = {10,10,10};
 	};
 }

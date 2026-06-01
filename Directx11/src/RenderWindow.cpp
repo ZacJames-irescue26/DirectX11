@@ -73,9 +73,9 @@ bool RenderWindow::ProcessMessages()
 	return true;
 }
 
-HWND RenderWindow::GetHWND() const
+HWND RenderWindow::GetHWND()
 {
-	return this->handle;
+	return handle;
 }
 
 RenderWindow::~RenderWindow()

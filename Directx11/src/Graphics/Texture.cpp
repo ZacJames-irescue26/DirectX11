@@ -84,7 +84,6 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 		deviceContext->GenerateMips(textureView.Get());
 	}
 	texture = tex;
-	tex->Release();
 	stbi_image_free(data);
 }
 
@@ -149,7 +148,6 @@ Texture::Texture(ID3D11Device* device, aiTexture* intexture, size_t size, aiText
 
 	COM_ERROR_IF_FAILED(hr, "Failed to create Texture from memory.");
 	}
-	tex->Release();
 	texture = tex;
 }
 

@@ -20,22 +20,32 @@ namespace Engine
 		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
 		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-		sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
-		sampDesc.BorderColor[0] = 1.0f;
-		sampDesc.BorderColor[1] = 1.0f;
-		sampDesc.BorderColor[2] = 1.0f;
-		sampDesc.BorderColor[3] = 1.0f;
 
+		// Reversed depth:
+		sampDesc.ComparisonFunc = D3D11_COMPARISON_GREATER_EQUAL;
 
-		COM_ERROR_IF_FAILED(device->CreateSamplerState(&sampDesc, &shadowSampler), "Failed to create sampler");
+		// Outside the shadow map should be treated as lit.
+		// For reversed depth, far/clear depth is 0, but for comparison sampling
+		// a border of 0 can fail GREATER_EQUAL checks.
+		// Use 0 if you want outside to be shadowed, 1 if you want outside lit.
+		// Usually for shadow maps, outside should be lit:
+		sampDesc.BorderColor[0] = 0.0f;
+		sampDesc.BorderColor[1] = 0.0f;
+		sampDesc.BorderColor[2] = 0.0f;
+		sampDesc.BorderColor[3] = 0.0f;
+
+		COM_ERROR_IF_FAILED(
+			device->CreateSamplerState(&sampDesc, &shadowSampler),
+			"Failed to create sampler"
+		);
 	
-		if (!m_DeferredvertexShader.Initialize(device, L"CompiledShaders/DefferedVert_v.cso", InputElements::FullScreenRectlayout, ARRAYSIZE(InputElements::FullScreenRectlayout)))
+		if (!m_DeferredvertexShader.Initialize(device, Project::GetEditorShaderPath("DefferedVert_v.cso").wstring().c_str(), InputElements::FullScreenRectlayout, ARRAYSIZE(InputElements::FullScreenRectlayout)))
 		{
 
 			return false;
 		}
 
-		if (!m_DeferredpixelShader.Initialize(device, L"CompiledShaders/DefferedPixel_p.cso"))
+		if (!m_DeferredpixelShader.Initialize(device, Project::GetEditorShaderPath("DefferedPixel_p.cso").wstring().c_str()))
 		{
 			return false;
 		}
@@ -163,8 +173,8 @@ namespace Engine
 
 		gfx->GetDeviceContext()->DrawIndexed(6, 0, 0);
 
-		ID3D11ShaderResourceView* nullSRVs[13] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,nullptr, nullptr, nullptr, nullptr };
-		gfx->GetDeviceContext()->PSSetShaderResources(0, 12, nullSRVs);
+		ID3D11ShaderResourceView* nullSRVs[16] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr,nullptr, nullptr, nullptr, nullptr };
+		gfx->GetDeviceContext()->PSSetShaderResources(0, 16, nullSRVs);
 		ID3D11SamplerState* nullSampler[1] = { nullptr };
 		gfx->GetDeviceContext()->PSSetSamplers(0, 1, nullSampler);
 	}
@@ -186,16 +196,18 @@ namespace Engine
 		m_lightparams.data.cascadePlaneDistances.y = shadow.GetCascadesLevels()[2];
 		m_lightparams.data.cascadePlaneDistances.z = shadow.GetCascadesLevels()[3];
 		m_lightparams.data.cascadePlaneDistances.w = shadow.GetCascadesLevels()[4];
-		m_lightparams.data.LSMDirectionalShadow = shadow.GetDirShadowMatrix();
+		m_lightparams.data.LSMDirectionalShadow = (shadow.GetDirShadowMatrix());
 		m_lightparams.data.farplane = shadow.GetCascadesLevels()[5];
 		m_lightparams.data.LightDirection = shadow.GetLightDir();
-		m_lightparams.data.LightColor = {10,10,10};
+		m_lightparams.data.LightColor = LightColor;
 		m_lightparams.ApplyChanges();
 	}
 
 	void LightingPass::ImGuiPass()
 	{
-		
+		ImGui::Begin("Lighting");
+		ImGui::DragFloat3("Light Color", &LightColor.x, 0.1f);
+		ImGui::End();
 	}
 
 	std::vector<ID3D11ShaderResourceView*> LightingPass::GetSRVRenderTarget()

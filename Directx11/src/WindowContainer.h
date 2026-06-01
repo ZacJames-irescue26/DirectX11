@@ -2,6 +2,7 @@
 #include "RenderWindow.h"
 #include "Keyboard/KeyboardClass.h"
 #include "Mouse/MouseClass.h"
+#include "Controller/ControllerClass.h"
 #include "Graphics/Graphics.h"
 namespace Engine
 {
@@ -15,6 +16,7 @@ public:
 	RenderWindow render_window;
 	KeyboardClass keyboard;
 	MouseClass mouse;
+	ControllerClass controller;
 	Graphics gfx;
 protected:
 private:

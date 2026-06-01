@@ -33,7 +33,7 @@ cbuffer LightParams : register(b0)
     float4x4 LightSpaceMatrices1;
     float4x4 LightSpaceMatrices2;
     float4x4 LightSpaceMatrices3;
-    row_major float4x4 LSMDirectionalShadow;
+    float4x4 LSMDirectionalShadow;
     
 }; 
 
@@ -73,74 +73,81 @@ float3 ReconstructWorldPos(float2 uv)
 float ShadowCalculation(float3 fragPosWorld, float3 normal)
 {
     float3 fragPosView = mul(float4(fragPosWorld, 1.0f), View).xyz;
-    float viewZ = -fragPosView.z;
+    float viewZ = fragPosView.z;
 
     int cascadeIndex = NUM_CASCADES - 1;
-    for (int i = 0; i < NUM_CASCADES; ++i)
-    {
-        if (viewZ < cascadePlaneDistances[i])
-        {
-            cascadeIndex = i;
-            break;
-        }
-    }
+
+    if (viewZ < cascadePlaneDistances.x)
+        cascadeIndex = 0;
+    else if (viewZ < cascadePlaneDistances.y)
+        cascadeIndex = 1;
+    else if (viewZ < cascadePlaneDistances.z)
+        cascadeIndex = 2;
+    else
+        cascadeIndex = 3;
 
     float4x4 LightSpaceMatrices[NUM_CASCADES] =
     {
-        LightSpaceMatrices0, LightSpaceMatrices1,
-        LightSpaceMatrices2, LightSpaceMatrices3
+        LightSpaceMatrices0,
+        LightSpaceMatrices1,
+        LightSpaceMatrices2,
+        LightSpaceMatrices3
     };
 
-    float4 fragLightSpace = mul(float4(fragPosWorld, 1.0f), LightSpaceMatrices[cascadeIndex]);
+    float4 fragLightSpace =
+        mul(float4(fragPosWorld, 1.0f), LightSpaceMatrices[cascadeIndex]);
+
     float3 projCoords = fragLightSpace.xyz / fragLightSpace.w;
     projCoords = projCoords * 0.5f + 0.5f;
 
-    if (projCoords.z > 1.0f)
-        return 0.0f;
-
-    float3 N = normalize(normal);
-    float3 L = normalize(-LightDirection);
-    float bias = max(0.005f * (1.0f - dot(N, L)), 0.0005f);
-
-    uint width, height;
-    Depthtexture0.GetDimensions(width, height);
-    float2 texelSize = 1.0f / float2(width, height);
-
-    float shadowSum = 0.0f;
-
-    for (int x = -1; x <= 1; ++x)
+    if (projCoords.x < 0.0f || projCoords.x > 1.0f ||
+        projCoords.y < 0.0f || projCoords.y > 1.0f ||
+        projCoords.z < 0.0f || projCoords.z > 1.0f)
     {
-        for (int y = -1; y <= 1; ++y)
-        {
-            float2 offset = float2(x, y) * texelSize;
-            float2 sampleUV = projCoords.xy + offset;
-
-            float comparison = 0.0f;
-
-            switch (cascadeIndex)
-            {
-                case 0:
-                    comparison = Depthtexture0.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
-                    break;
-                case 1:
-                    comparison = Depthtexture1.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
-                    break;
-                case 2:
-                    comparison = Depthtexture2.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
-                    break;
-                case 3:
-                    comparison = Depthtexture3.SampleCmpLevelZero(ShadowSampler, sampleUV, projCoords.z - bias);
-                    break;
-            }
-
-            shadowSum += comparison;
-        }
+        return 0.0f;
     }
-    float comp;
-    comp = shadowSum / 9.0f;
-    return 1.0f - comp;
-}
 
+    float mapDepth = 0.0f;
+
+    switch (cascadeIndex)
+    {
+    case 0:
+        mapDepth = Depthtexture0.Sample(objSamplerState, projCoords.xy).r;
+        break;
+    case 1:
+        mapDepth = Depthtexture1.Sample(objSamplerState, projCoords.xy).r;
+        break;
+    case 2:
+        mapDepth = Depthtexture2.Sample(objSamplerState, projCoords.xy).r;
+        break;
+    case 3:
+        mapDepth = Depthtexture3.Sample(objSamplerState, projCoords.xy).r;
+        break;
+    }
+
+    float bias = 0.0005f;
+
+    return projCoords.z > mapDepth + bias ? 1.0f : 0.0f;
+}
+float4 DebugCascadeIndex(float3 worldPos)
+{
+    float3 viewPos = mul(float4(worldPos, 1.0f), View).xyz;
+
+    float viewZ = viewPos.z;
+    // If your viewZ debug is negative, use:
+    // float viewZ = -viewPos.z;
+
+    if (viewZ < cascadePlaneDistances.x)
+        return float4(1, 0, 0, 1); // red
+
+    if (viewZ < cascadePlaneDistances.y)
+        return float4(0, 1, 0, 1); // green
+
+    if (viewZ < cascadePlaneDistances.z)
+        return float4(0, 0, 1, 1); // blue
+
+    return float4(1, 1, 0, 1); // yellow
+}
 static const float2 poissonDisk[16] =
 {
     float2(-0.94201624, -0.39906216),
@@ -161,42 +168,159 @@ static const float2 poissonDisk[16] =
    float2(0.14383161, -0.14100790)
 };
 
-float DirectionalShadowCalculation_Poisson(
-    float3 P_ws, float3 N, float3 lightDir)
+float DirectionalShadowCalculation_Poisson(float3 P_ws, float3 N, float3 lightDir)
 {
+    float4 lsH = mul(float4(P_ws, 1.0f), LSMDirectionalShadow);
 
-    float4 lsH = mul(float4(P_ws, 1), LSMDirectionalShadow);
-    float3 proj = lsH.xyz / lsH.w * 0.5 + 0.5;
-    if (proj.x < 0 || proj.x > 1 || proj.y < 0 || proj.y > 1 || proj.z > 1)
-        return 0.0f;
+    float3 proj = lsH.xyz / lsH.w;
+    proj = proj * 0.5f + 0.5f;
 
-  
-    float bias = max(0.005f * (1 - dot(N, lightDir)), 0.0005f);
-    float2 texel = 1.0f / 2048; 
-
-   
-    float rnd = frac(sin(dot(proj.xy, float2(12.9898, 78.233))) * 43758.5453);
-    float angle = rnd * 6.2831853; // 2?
-    float2x2 rot = float2x2(cos(angle), -sin(angle),
-                             sin(angle), cos(angle));
-
-
-    const float radius = 3.0; 
-    float visibility = 0.0f;
-    [unroll]
-    for (int i = 0; i < 16; ++i)
+    if (proj.x < 0.0f || proj.x > 1.0f ||
+        proj.y < 0.0f || proj.y > 1.0f ||
+        proj.z < 0.0f || proj.z > 1.0f)
     {
-        // rotate & scale the disk sample
-        float2 offs = mul(rot, poissonDisk[i]) * texel * radius;
-        // compare the shadow map at that offset
-        visibility += DirectionalSM.SampleCmpLevelZero(
-                          ShadowSampler,
-                          proj.xy + offs,
-                          proj.z - bias);
+        return 0.0f;
     }
+
+    float3 L = normalize(-LightDirection);
+    float bias = max(0.001f * (1.0f - saturate(dot(normalize(N), L))), 0.0001f);
+
+    uint width, height;
+    DirectionalSM.GetDimensions(width, height);
+    float2 texel = 1.0f / float2(width, height);
+
+    float visibility = 0.0f;
+    float radius = 3.0f;
+
+    [unroll]
+        for (int i = 0; i < 16; ++i)
+        {
+            float2 offset = poissonDisk[i] * texel * radius;
+
+            visibility += DirectionalSM.SampleCmpLevelZero(
+                ShadowSampler,
+                proj.xy + offset,   // offset goes here
+                proj.z + bias       // reversed depth bias
+            );
+        }
+
     visibility /= 16.0f;
 
-    // return fraction in shadow
+    return 1.0f - visibility;
+}
+float SampleCascadeShadowMap(int cascadeIndex, float2 uv, float compareDepth)
+{
+    switch (cascadeIndex)
+    {
+    case 0:
+        return Depthtexture0.SampleCmpLevelZero(
+            ShadowSampler,
+            uv,
+            compareDepth
+        );
+
+    case 1:
+        return Depthtexture1.SampleCmpLevelZero(
+            ShadowSampler,
+            uv,
+            compareDepth
+        );
+
+    case 2:
+        return Depthtexture2.SampleCmpLevelZero(
+            ShadowSampler,
+            uv,
+            compareDepth
+        );
+
+    case 3:
+        return Depthtexture3.SampleCmpLevelZero(
+            ShadowSampler,
+            uv,
+            compareDepth
+        );
+    }
+
+    return 1.0f; // default lit
+}
+float ShadowCalculationCSM_Reversed(float3 fragPosWorld, float3 normal)
+{
+    float3 fragPosView = mul(float4(fragPosWorld, 1.0f), View).xyz;
+
+    // This is camera view depth for choosing cascade.
+    // This is separate from shadow-map reversed depth.
+    float viewZ = fragPosView.z;
+
+    int cascadeIndex = NUM_CASCADES - 1;
+
+    if (viewZ < cascadePlaneDistances.x)
+        cascadeIndex = 0;
+    else if (viewZ < cascadePlaneDistances.y)
+        cascadeIndex = 1;
+    else if (viewZ < cascadePlaneDistances.z)
+        cascadeIndex = 2;
+    else
+        cascadeIndex = 3;
+
+    float4x4 LightSpaceMatrices[NUM_CASCADES] =
+    {
+        LightSpaceMatrices0,
+        LightSpaceMatrices1,
+        LightSpaceMatrices2,
+        LightSpaceMatrices3
+    };
+
+    float4 fragLightSpace = mul(
+        float4(fragPosWorld, 1.0f),
+        LightSpaceMatrices[cascadeIndex]
+    );
+
+    float3 projCoords = fragLightSpace.xyz / fragLightSpace.w;
+    projCoords = projCoords * 0.5f + 0.5f;
+
+    if (projCoords.x < 0.0f || projCoords.x > 1.0f ||
+        projCoords.y < 0.0f || projCoords.y > 1.0f ||
+        projCoords.z < 0.0f || projCoords.z > 1.0f)
+    {
+        return 0.0f;
+    }
+
+    Texture2D shadowMaps[NUM_CASCADES] =
+    {
+        Depthtexture0,
+        Depthtexture1,
+        Depthtexture2,
+        Depthtexture3
+    };
+
+    float3 L = normalize(-LightDirection);
+    float3 N = normalize(normal);
+
+    float bias = max(0.001f * (1.0f - saturate(dot(N, L))), 0.0001f);
+
+    uint width, height;
+    float2 texelSize = 1.0f / float2(2048, 2048);
+
+    float visibility = 0.0f;
+
+    [unroll]
+        for (int x = -1; x <= 1; ++x)
+        {
+            [unroll]
+            for (int y = -1; y <= 1; ++y)
+            {
+                float2 uv = projCoords.xy + float2(x, y) * texelSize;
+
+                visibility += SampleCascadeShadowMap(
+                    cascadeIndex,
+                    uv,
+                    projCoords.z + bias
+                );
+            }
+        }
+
+    visibility /= 9.0f;
+
     return 1.0f - visibility;
 }
 float3 Eval_CastLight(const CastLight light, const float3 Pos, const float3 N)
@@ -295,18 +419,29 @@ struct FSInput
 	float2 OutTexCoord : TEXCOORD;
 
 };
-float3 ReconstructViewDir(float2 UV)
+float3 ReconstructWorldPosFromDepth(float2 uv)
 {
-    float2 ndc = UV * 2.0f - 1.0f; // from [0,1] to [-1,1]
-    // Reconstruct clip space position
-    float4 clipPos = float4(ndc.x, -ndc.y, 1.0f, 1.0f); // Z = 1 for far plane
+    float depth = DepthBuffer.Sample(objSamplerState, uv).r;
 
-// Reconstruct view space position
-    float4 viewDir4 = mul(clipPos, InvProj);
-    float3 viewDir = normalize(viewDir4.xyz / viewDir4.w);
-    float4 worldDir4 = mul(float4(viewDir, 0.0f), InvView);
-    float3 worldDir = normalize(worldDir4.xyz);
-    return worldDir;
+    // If this is sky/background, skip it.
+    // Reversed depth clears to 0.
+    if (depth <= 0.000001f)
+        return float3(0, 0, 0);
+
+    // DirectX NDC:
+    // x,y = -1..1
+    // z   = 0..1
+    float2 ndc;
+    ndc.x = uv.x * 2.0f - 1.0f;
+    ndc.y = 1.0f - uv.y * 2.0f;
+
+    float4 clip = float4(ndc, depth, 1.0f);
+
+    float4 view = mul(clip, InvProj);
+    view /= view.w;
+
+    float4 world = mul(view, InvView);
+    return world.xyz;
 }
 float LinearizeDepth(float d)
 {
@@ -418,12 +553,12 @@ float4 main( FSInput screenPos): SV_Target0
     float roughness, metalness, ao;
 
     GetGBufferAttributes(screenPos.OutTexCoord, N, P, albedo, spec, metalness);
-    P = ReconstructWorldPos(screenPos.OutTexCoord);
+    P = ReconstructWorldPosFromDepth(screenPos.OutTexCoord);
     if (length(P.xyz) == 0.0f)
     {
     // No geometry, output skybox sample
         return SkyBoxMap.Sample(
-        irradianceSamplerstate, ReconstructViewDir(screenPos.OutTexCoord));
+        irradianceSamplerstate, ReconstructWorldPosFromDepth(screenPos.OutTexCoord));
     }
     //ao = spec.r;
     roughness = spec.g;
@@ -493,26 +628,23 @@ float4 main( FSInput screenPos): SV_Target0
     float2 brdf = brdfLUT.Sample(objSamplerState, float2(dot(N, V),  roughness)).rg;
     float3 specular = prefilteredColor * (F * brdf.x + brdf.y);
     
-    float ambientscalar = 0.02;
-    float shadow = DirectionalShadowCalculation_Poisson(P, N, LightDirection);
-    float3 direct = (diffuse + specular) * (1 - shadow);
+    float3 L = normalize(-LightDirection);
+   // float shadow = DirectionalShadowCalculation_Poisson(P, N, L);
+    float shadow = DirectionalShadowCalculation_Poisson(P, N, L);
 
-// --- IBL ambient (no shadows) ---
-    float3 ambient = kD * diffuse // from irradiance map
-               + specular; // from prefiltered map + BRDF LUT
-    //ambient *= ao; // if you have AO
+    // Direct sun lighting
+    float3 direct = Lo * (1.0 - shadow);
 
-// --- final ---
-    float3 color = direct + ambient;
-	// HDR tonemapping
+    // Indirect lighting should not fully hide shadows while debugging
+    float ambientStrength = 0.05f;
+    float3 ambient = (kD * diffuse + specular) * ambientStrength;
+
+    float3 color = ambient + direct;
+
     color = color / (color + float3(1.0, 1.0, 1.0));
-	// gamma correct
-    color = pow(color, float3((1.0 / 2.2), (1.0 / 2.2), (1.0 / 2.2)));
     
-    //return float4(viewPos.zzz, 1.0);
-    //return float4(color, 1.0);
-    //return main1(albedo, N, P, LightDirection);
-    //return main_debugViewZ(P);
-    return float4(direct, 1.0f);
+    color = pow(color, float3(1.0 / 2.2, 1.0 / 2.2, 1.0 / 2.2));
+
+    return float4(color, 1.0f);
 }
 

@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Sol2">
+      <UniqueIdentifier>{45798C7C-31B0-8D0D-DA9C-7310C6B2090F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nlohmann">
+      <UniqueIdentifier>{E0661284-CC33-6D8F-F54C-5B37E178A21D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -43,12 +49,27 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{0A06D2B3-7670-862A-BFAE-37D02B58647F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scripting">
+      <UniqueIdentifier>{6FBC2D98-DB7C-A9CE-A4B7-F24B1037EEAA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\illumination">
       <UniqueIdentifier>{F1C464E6-DDBD-8338-06F0-68BDF2476344}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineInclude.h" />
+    <ClInclude Include="Sol2\config.hpp">
+      <Filter>Sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="Sol2\forward.hpp">
+      <Filter>Sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="Sol2\sol.hpp">
+      <Filter>Sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Acceleration\BVH\BVH.h">
       <Filter>src\Acceleration\BVH</Filter>
@@ -209,14 +230,29 @@
     <ClInclude Include="src\Passes\SurfelPass.h">
       <Filter>src\Passes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Physics\PhysMat.h">
+      <Filter>src\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysStructs.h">
+      <Filter>src\Physics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\PhysicsWorld.h">
+      <Filter>src\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\RaytraceInfo.h">
       <Filter>src\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderWindow.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\Project.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scene\Scene.h">
       <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptEngine.h">
+      <Filter>src\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\StringConverter.h">
       <Filter>src</Filter>
@@ -241,6 +277,12 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="src\Scripting\ScriptPhysics.h" />
+    <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\Scripting\SciptMouse.h" />
+    <ClInclude Include="src\Scripting\ScriptMath.h" />
+    <ClInclude Include="src\Controller\ControllerClass.h" />
+    <ClInclude Include="src\Scripting\ScriptController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -378,7 +420,13 @@
     <ClCompile Include="src\Passes\SurfelPass.cpp">
       <Filter>src\Passes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\PhysStructs.cpp">
+      <Filter>src\Physics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
+      <Filter>src\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\RaytraceInfo.cpp">
       <Filter>src\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\RenderWindow.cpp">
@@ -386,6 +434,9 @@
     </ClCompile>
     <ClCompile Include="src\Scene\Scene.cpp">
       <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp">
+      <Filter>src\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\StringConverter.cpp">
       <Filter>src</Filter>
@@ -405,5 +456,7 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Controller\ControllerClass.cpp" />
   </ItemGroup>
 </Project>

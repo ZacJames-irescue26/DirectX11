@@ -58,21 +58,21 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;_DEBUG;ACL_ON_ASSERT_ABORT;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;..\Dependances\Sol2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -102,7 +102,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;NDEBUG;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;..\Dependances\Sol2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -128,7 +128,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;..\Dependances\Sol2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -151,10 +151,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EngineInclude.h" />
+    <ClInclude Include="Sol2\config.hpp" />
+    <ClInclude Include="Sol2\forward.hpp" />
+    <ClInclude Include="Sol2\sol.hpp" />
+    <ClInclude Include="nlohmann\json.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Acceleration\BVH\BVH.h" />
     <ClInclude Include="src\Acceleration\Octree\Octree.h" />
     <ClInclude Include="src\Components\Components.h" />
+    <ClInclude Include="src\Controller\ControllerClass.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ErrorLogger.h" />
@@ -205,9 +210,19 @@
     <ClInclude Include="src\Passes\Prefilteringpass.h" />
     <ClInclude Include="src\Passes\ShadowPass.h" />
     <ClInclude Include="src\Passes\SurfelPass.h" />
+    <ClInclude Include="src\Physics\PhysMat.h" />
+    <ClInclude Include="src\Physics\PhysStructs.h" />
     <ClInclude Include="src\Physics\PhysicsWorld.h" />
+    <ClInclude Include="src\Physics\RaytraceInfo.h" />
     <ClInclude Include="src\RenderWindow.h" />
+    <ClInclude Include="src\Scene\Project.h" />
     <ClInclude Include="src\Scene\Scene.h" />
+    <ClInclude Include="src\Scripting\SciptMouse.h" />
+    <ClInclude Include="src\Scripting\ScriptController.h" />
+    <ClInclude Include="src\Scripting\ScriptEngine.h" />
+    <ClInclude Include="src\Scripting\ScriptMath.h" />
+    <ClInclude Include="src\Scripting\ScriptPhysics.h" />
+    <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\StringConverter.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\UUID.h" />
@@ -219,6 +234,8 @@
     <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Controller\ControllerClass.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -284,9 +301,12 @@
     <ClCompile Include="src\Passes\PrefilteringPass.cpp" />
     <ClCompile Include="src\Passes\ShadowPass.cpp" />
     <ClCompile Include="src\Passes\SurfelPass.cpp" />
+    <ClCompile Include="src\Physics\PhysStructs.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="src\Physics\RaytraceInfo.cpp" />
     <ClCompile Include="src\RenderWindow.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="src\StringConverter.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\UUID.cpp" />

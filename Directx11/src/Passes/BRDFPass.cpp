@@ -39,11 +39,11 @@ namespace Engine {
 
 
 		COM_ERROR_IF_FAILED(device->CreateShaderResourceView(BRDFTexture.Get(), &BRDFsrvDesc, &BRDFSRV), "Failed to Create SRV");
-		if (!m_BRDF_VS.Initialize(device, L"CompiledShaders/BRDF_v.cso", InputElements::FullScreenRectlayout, ARRAYSIZE(InputElements::FullScreenRectlayout)))
+		if (!m_BRDF_VS.Initialize(device, (LPCWSTR)Project::GetEditorShaderPath(L"BRDF_v.cso").wstring().c_str(), InputElements::FullScreenRectlayout, ARRAYSIZE(InputElements::FullScreenRectlayout)))
 		{
 			return false;
 		}
-		if (!m_BRDF_PS.Initialize(device, L"CompiledShaders/BRDF_p.cso"))
+		if (!m_BRDF_PS.Initialize(device, (LPCWSTR)Project::GetEditorShaderPath(L"BRDF_p.cso").wstring().c_str()))
 		{
 			return false;
 		}

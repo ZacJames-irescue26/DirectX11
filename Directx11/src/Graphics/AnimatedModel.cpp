@@ -440,6 +440,7 @@ namespace Engine
 		aiAnimation* aiAnim = scene->mAnimations[0];
 
 		AnimationClip clip;
+		clip.filepath = path;
 		clip.Name = aiAnim->mName.C_Str();
 		clip.Duration = aiAnim->mDuration;
 		clip.TicksPerSecond =

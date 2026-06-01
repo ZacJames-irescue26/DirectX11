@@ -40,7 +40,10 @@ public:
 	void RenderFrame();
 	void ForwardRender();
 	void OnImguiRender();
+	void SaveScene();
+	void SaveSceneAs();
 	void OnImguiRenderViewport();
+	void OpenScene();
 	//Light light;
 	//PhysicsObject floor;
 	//PhysicsObject gameObject;
@@ -50,9 +53,15 @@ public:
 
 
 	
+	std::unique_ptr<Scene> m_EditorSaveScene;
 	std::unique_ptr<Scene> m_Scene;
-
+	std::string m_GameProjectPath;
+	bool m_IsRunning = true;
 private:
+	Camera ActiveCamera;
+	std::string m_EditorScenePath;
+
+
 	bool m_ViewportFocused;
 	bool m_ViewportHovered;
 	

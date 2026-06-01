@@ -46,7 +46,7 @@ namespace Engine
 		std::string Name;
 		double Duration = 0.0;
 		double TicksPerSecond = 25.0;
-
+		std::string filepath;
 		std::vector<AnimationChannel> Channels;
 	};
 
