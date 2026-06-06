@@ -58,7 +58,10 @@ Dependencies = {
         IncludeDir = "%{wks.location}/Dependances/lua-5.5.0/src",
         LibName = "LuaLib",
     },
-	
+	FMOD = {
+		IncludeDir = "C:/FMOD/FMOD SoundSystem/FMOD Studio API Windows/api/core/inc",
+		Windows = {LibName = "fmodL_vc", LibDir = "C:/FMOD/FMOD SoundSystem/FMOD Studio API Windows/api/core/lib/x64"}
+	}
 }
 
 

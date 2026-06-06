@@ -24,6 +24,7 @@ namespace Engine
 	}
 
 	void PhysicsEngine::initialise()
+	
 	{
 		// Register allocation hook. In this example we'll just let Jolt use malloc /
 		// free but you can override these if you want (see Memory.h). This needs to
@@ -193,7 +194,7 @@ void PhysicsEngine::SetPosition(BodyID id, RVec3 position)
 	_physics_system->GetBodyInterface().SetPosition(id, position, EActivation::DontActivate);
 
 }
-void PhysicsEngine::GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX::XMFLOAT4* rot)
+void PhysicsEngine::GetPosAndRot(JPH::BodyID id,XMFLOAT3* pos, XMFLOAT4* rot)
 {
 	JPH::Vec3 jphpos;
 	JPH::Quat jphrot;
@@ -206,7 +207,7 @@ void PhysicsEngine::GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX
 
 	if (pos)
 	{
-		*pos = DirectX::XMFLOAT3(
+		*pos = XMFLOAT3(
 			jphpos.GetX(),
 			jphpos.GetY(),
 			jphpos.GetZ()
@@ -215,7 +216,7 @@ void PhysicsEngine::GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX
 
 	if (rot)
 	{
-		*rot = DirectX::XMFLOAT4(
+		*rot =XMFLOAT4(
 			jphrot.GetX(),
 			jphrot.GetY(),
 			jphrot.GetZ(),
@@ -258,6 +259,7 @@ void PhysicsEngine::CreateColliders(Scene* scene)
 			auto PGO = entity->GetComponent<PhysicsComponent>();
 			auto transformcomp = entity->GetComponent<TransformComponent>();
 			BodyCreationSettings settings;
+			settings.mUserData = entity->GetUUID();
 			switch (PGO->ColliderType)
 			{
 			case EShapeSubType::Capsule:
@@ -316,10 +318,16 @@ bool PhysicsEngine::CastRay(const RayCastInfo* info, RayHit& outHit, Scene* scen
 
 	JPH::RayCastResult hit;
 	JPH::RayCastSettings settings; // defaults are fine
-
+	Engine::BodyFilterJolt bodyFilter(
+		*scene,
+		info->ExcludedEntities
+	);
 	// BodyFilter is your custom filter; broadphase/object layer filters left empty
-	_physics_system->GetNarrowPhaseQuery().CastRay(JPH::RRayCast(ray), hit, {}, {}, Engine::BodyFilterJolt(*scene, info->ExcludedEntities));
-	return false;
+	if (!_physics_system->GetNarrowPhaseQuery().CastRay(JPH::RRayCast(ray), hit, {}, {}, bodyFilter))
+	{
+		return false;
+	}
+	
 	// Lock the body we hit (thread-safe access)
 	JPH::BodyLockRead lock(_physics_system->GetBodyLockInterface(), hit.mBodyID);
 	if (!lock.Succeeded()) return false;
@@ -327,7 +335,7 @@ bool PhysicsEngine::CastRay(const RayCastInfo* info, RayHit& outHit, Scene* scen
 	const JPH::Body& body = lock.GetBody();
 	const JPH::Vec3  hitWS = ray.GetPointOnRay(hit.mFraction);
 
-	outHit.HitEntity = static_cast<uint32_t>(body.GetUserData());
+	outHit.HitEntity = static_cast<uint64_t>(body.GetUserData());
 	outHit.Position = FromJoltVector(hitWS);
 	outHit.Normal = FromJoltVector(body.GetWorldSpaceSurfaceNormal(hit.mSubShapeID2, hitWS));
 	outHit.Distance = hit.mFraction * ray.mDirection.Length();
@@ -372,7 +380,13 @@ int32_t PhysicsEngine::OverlapShape(Scene* scene, const ShapeOverlapInfo* shapeO
 
 	JPH::CollideShapeSettings settings;
 	JPH::AllHitCollisionCollector<JPH::CollideShapeCollector> collector;
-	_physics_system->GetNarrowPhaseQuery().CollideShape(shape, shapeScale, worldTransform, settings, JPH::RVec3::sZero(), collector, {}, {}, Engine::BodyFilterJolt(*scene, shapeOverlapInfo->ExcludedEntities));
+
+	Engine::BodyFilterJolt bodyFilter(
+		*scene,
+		shapeOverlapInfo->ExcludedEntities
+	);
+
+	_physics_system->GetNarrowPhaseQuery().CollideShape(shape, shapeScale, worldTransform, settings, JPH::RVec3::sZero(), collector, {}, {}, bodyFilter);
 
 	int numBodies = static_cast<int>(collector.mHits.size());
 	m_OverlapIDs.reserve(numBodies);
@@ -413,7 +427,30 @@ int32_t PhysicsEngine::OverlapShape(Scene* scene, const ShapeOverlapInfo* shapeO
 }
 
 
+void PhysicsEngine::UnregisterEntity(Entity* entity)
+{
+	auto* rb = entity->GetComponent<PhysicsComponent>();
 
+	if (!rb)
+		return;
+
+	JPH::BodyInterface& bodyInterface =
+		_physics_system->GetBodyInterface();
+
+	JPH::BodyID bodyID = rb->m_BodyID;
+
+	if (!bodyID.IsInvalid())
+	{
+		if (bodyInterface.IsAdded(bodyID))
+		{
+			bodyInterface.RemoveBody(bodyID);
+		}
+
+		bodyInterface.DestroyBody(bodyID);
+	}
+
+	rb->m_BodyID = JPH::BodyID();
+}
 
 
 

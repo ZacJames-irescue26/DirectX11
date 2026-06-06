@@ -40,4 +40,19 @@ namespace ErrorColors
 	const Color UnloadedTextureColor(100, 100, 100);
 	const Color UnhandledTextureColor(250, 0, 0);
 }
+
+
+struct RGBA8
+{
+	uint8_t r, g, b, a;
+};
+#include <DirectXPackedVector.h>
+
+struct RGBA16F
+{
+	DirectX::PackedVector::HALF r;
+	DirectX::PackedVector::HALF g;
+	DirectX::PackedVector::HALF b;
+	DirectX::PackedVector::HALF a;
+};
 }

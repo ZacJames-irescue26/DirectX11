@@ -27,12 +27,12 @@ struct CB_VS_ViewProj
 };
 struct CB_FS_LightPos
 {
-	DirectX::XMFLOAT3 ambientLightColor;
+	XMFLOAT3 ambientLightColor;
 	float ambientLightStrength;
 
-	DirectX::XMFLOAT3 dynamicLightColor;
+	XMFLOAT3 dynamicLightColor;
 	float dynamicLightStrength;
-	DirectX::XMFLOAT3 dynamicLightPosition;
+	XMFLOAT3 dynamicLightPosition;
 };
 struct CameraInfo
 {
@@ -46,9 +46,9 @@ struct CameraInfo
 struct DirectionalLightParams
 {
 
-	DirectX::XMFLOAT3 LightColor;
+	XMFLOAT3 LightColor;
 	float padding = 0.0;
-	DirectX::XMFLOAT3 LightDirection;
+	XMFLOAT3 LightDirection;
 	float farplane =1000;
 	XMFLOAT4 cascadePlaneDistances;
 	XMMATRIX LightSpaceMatrices0;
@@ -62,7 +62,7 @@ struct DirectionalLightParams
 struct PrefilteringParams
 {
 	float roughness;
-	DirectX::XMFLOAT3 padding;
+	XMFLOAT3 padding;
 };
 
 struct LightSpaceMatrices
@@ -123,6 +123,49 @@ struct SurfelCSBUffer
 	XMFLOAT2 screenSize;
 	uint tileCountX;
 	uint tileCountY;
+};
+struct SurfelCreation
+{
+	XMMATRIX InvViewProj[6];
+
+	XMFLOAT3 ProbePosition;
+	float CaptureRadius;
+
+	uint32_t FaceSize;
+	uint32_t SourceProbeIndex;
+	uint32_t ReversedZ;
+	uint32_t Padding0;
+};
+
+
+struct ComputeLightCB
+{
+	XMFLOAT3 LightDirection;
+	float  LightIntensity;
+
+	XMFLOAT3 LightColor;
+	uint32_t SurfelCount;
+
+	uint32_t ProbeCount;
+	float  RadianceScale;
+	float  ProbeInfluenceRadius;
+	float  Padding0;
+	XMMATRIX LightSpaceMatrix;
+};
+
+struct ComputeNormalizeCB
+{
+	uint32_t ProbeCount;
+	float InvRadianceScale;
+	XMFLOAT2 Padding;
+};
+
+struct ProbeVolumeCB
+{
+	uint32_t ProbeCount;
+	uint32_t UseGI;
+	uint32_t ShowGIOnly;
+	float Padding;
 };
 
 }

@@ -11,6 +11,9 @@
 #include <Jolt/Physics/Collision/Shape/Shape.h>      // JPH::EShapeSubType
 #include "Sol2/sol.hpp"
 #include "Utils.h"
+#include <fmod.hpp>
+#include "src/Sound/Sound.h"
+#include "src/Sound/Channel.h"
 namespace Engine
 {
 	enum ComponentEnum
@@ -24,6 +27,7 @@ namespace Engine
 		PhysicsComp,
 		LuaScript,
 		CameraComp,
+		AudioComp,
 	};
 
 	struct Component
@@ -104,18 +108,18 @@ namespace Engine
 			XMStoreFloat4(&RotationQuat, XMQuaternionNormalize(q));
 			CalculateModelMatrix();
 		}
-		void SetRotationQuat(const DirectX::XMFLOAT4& quat)
+		void SetRotationQuat(const XMFLOAT4& quat)
 		{
-			DirectX::XMVECTOR q = DirectX::XMLoadFloat4(&quat);
-			q = DirectX::XMQuaternionNormalize(q);
+			XMVECTOR q = XMLoadFloat4(&quat);
+			q = XMQuaternionNormalize(q);
 
-			DirectX::XMStoreFloat4(&RotationQuat, q);
+			XMStoreFloat4(&RotationQuat, q);
 
 			// Optional, only for editor display.
 			Rotation = Utils::QuaternionToEuler(RotationQuat);
 		}
 
-		DirectX::XMFLOAT4 GetRotationQuat() const
+		XMFLOAT4 GetRotationQuat() const
 		{
 			return RotationQuat;
 		}
@@ -471,7 +475,7 @@ namespace Engine
 		float FarPlane = 1000.0f;
 
 		float OrthoSize = 10.0f;
-
+		XMFLOAT3 ForwardVector;
 		XMMATRIX ViewMatrix = XMMatrixIdentity();
 		XMMATRIX ProjectionMatrix = XMMatrixIdentity();
 		XMMATRIX ViewProjectionMatrix = XMMatrixIdentity();
@@ -491,5 +495,70 @@ namespace Engine
 			return std::make_unique<CameraComponent>(*this);
 		}
 	};
+	struct AudioComponent : public Component
+	{
 
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::AudioComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<AudioComponent>(*this);
+		}
+
+		FMOD::Sound** GetSoundAddress()
+		{
+			return m_Sound.GetSoundAddress();
+		}
+		FMOD::Sound* GetSound()
+		{
+			return m_Sound.Get();
+		}
+		FMOD::Channel** GetChannelAddress()
+		{
+			return m_Channel.GetChannelAddress();
+		}
+		FMOD::Channel* GetChannel()
+		{
+			return m_Channel.Get();
+		}
+		void SetLoopMode(FMOD_MODE mode)
+		{
+			loopMode = mode;
+			if (m_Sound.Get())
+			{
+				m_Sound.Get()->setMode(mode);
+			}
+		}
+		void SetLoopMode()
+		{
+			if (m_Sound.Get())
+			{
+				m_Sound.Get()->setMode(loopMode);
+			}
+		}
+
+		void SetMinMaxDistance()
+		{
+			m_Sound.SetMinMaxDistance(MinDistance, MaxDistance);
+		}
+
+		Sound m_Sound;
+		Channel m_Channel;
+		std::string AudioPath;
+		std::vector<std::string> QueueLoadingSounds;	
+		float MinDistance = 0.5;
+		float MaxDistance = 5000;
+		FMOD_MODE loopMode;
+
+	
+
+
+	};
 }

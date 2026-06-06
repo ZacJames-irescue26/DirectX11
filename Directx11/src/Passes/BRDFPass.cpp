@@ -50,10 +50,10 @@ namespace Engine {
 
 		std::vector<FullScreenQuad> vertices = {
 			// Positions (x, y, z) and Texture coordinates (u, v)
-			{DirectX::XMFLOAT2(-1.0f,  1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)}, // Top-left
-			{ DirectX::XMFLOAT2(1.0f,  1.0f), DirectX::XMFLOAT2(1.0f, 0.0f) }, // Top-right
-			{ DirectX::XMFLOAT2(-1.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
-			{ DirectX::XMFLOAT2(1.0f, -1.0f), DirectX::XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
+			{XMFLOAT2(-1.0f,  1.0f),XMFLOAT2(0.0f, 0.0f)}, // Top-left
+			{XMFLOAT2(1.0f,  1.0f), XMFLOAT2(1.0f, 0.0f) }, // Top-right
+			{XMFLOAT2(-1.0f, -1.0f),XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
+			{XMFLOAT2(1.0f, -1.0f), XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
 		};
 
 		COM_ERROR_IF_FAILED(m_FullScreenVertex.Initialize(device, vertices.data(), vertices.size()), "Failed to create vertex buffer");

@@ -11,7 +11,7 @@ namespace JPH {
 namespace Engine
 {
 	class Scene;
-	using ExcludedEntityMap = std::unordered_set<uint32_t>;
+	using ExcludedEntityMap = std::unordered_set<uint64_t>;
 	class BodyFilterJolt : public JPH::BodyFilter
 	{
 	public:

@@ -10,11 +10,14 @@ namespace Engine
 		Engine::BodyFilterJolt::BodyFilterJolt(Scene& scene, const ExcludedEntityMap& excludeMap)
 		{
 			m_ExcludedBodies.reserve(excludeMap.size());
-			for (uint32_t entityID : excludeMap)
+			for (uint64_t entityID : excludeMap)
 			{
 				auto ent = scene.GetEntityByID(entityID);
 				auto pcomp = ent->GetComponent<PhysicsComponent>();
-				m_ExcludedBodies.insert(pcomp->m_BodyID);
+				if (pcomp)
+				{
+					m_ExcludedBodies.insert(pcomp->m_BodyID);
+				}
 				
 			}
 		}

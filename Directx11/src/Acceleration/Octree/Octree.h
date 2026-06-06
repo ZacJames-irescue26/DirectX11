@@ -2,123 +2,189 @@
 #include "src/illumination/Surfel.h"
 #include "src/Math/AABB.h"
 #include <array>
+#include <vector>
+#include <cstdint>
 
 namespace Engine
 {
-	struct OctreeNode
-	{
-		AABB* boundingbox;
+    struct OctreeNode
+    {
+        AABB boundingbox;
 
-		std::vector<Surfel*> surfels; // Surfels stored in this node
+        std::vector<uint32_t> surfelIndices;
 
-		std::array<Engine::OctreeNode*, 8> children; // Pointers to child nodes
+        std::array<OctreeNode*, 8> children;
 
-		OctreeNode(AABB* aabb)
-			:  boundingbox(aabb)
-		{}
-		bool IsLeaf() const {
-			return children.empty();
-		}
-		~OctreeNode() {
-			for (OctreeNode* child : children) {
-				delete child; 
-			}
-		}
-	};
+        OctreeNode(const AABB& aabb)
+            : boundingbox(aabb)
+        {
+            children.fill(nullptr);
+        }
+
+        bool IsLeaf() const
+        {
+            for (OctreeNode* child : children)
+            {
+                if (child != nullptr)
+                    return false;
+            }
+
+            return true;
+        }
+
+        ~OctreeNode()
+        {
+            for (OctreeNode* child : children)
+            {
+                delete child;
+            }
+        }
+    };
+
 
 	class Octree
 	{
 	public:
-		// Constructor
-		Octree(AABB* sceneBounds, int maxDepth) : maxLevels(maxDepth)
+		Octree(const AABB& sceneBounds, int maxDepth)
+			: maxLevels(maxDepth)
 		{
 			root = new OctreeNode(sceneBounds);
 			Subdivide(root, 0);
 		}
-	
+
 		~Octree()
 		{
 			delete root;
 		}
+
+		void Insert(uint32_t surfelIndex, const XMFLOAT3& position)
+		{
+			OctreeNode* leaf = FindLeaf(root, position);
+
+			if (!leaf)
+				return;
+
+			leaf->surfelIndices.push_back(surfelIndex);
+		}
+
+		void QueryRadius(
+			const XMFLOAT3& center,
+			float radius,
+			std::vector<uint32_t>& outIndices) 
+		{
+			QueryRadiusRecursive(root, center, radius, outIndices);
+		}
+
 		OctreeNode* Root()
 		{
 			return root;
 		}
+
+	private:
+		OctreeNode* root = nullptr;
+		int maxLevels = 0;
+
 		void Subdivide(OctreeNode* node, int depth)
 		{
-			if (depth > maxLevels)
+			if (!node)
 				return;
 
-			auto splitboxes = node->boundingbox->SplitIntoOct();
-			auto& refboxes = splitboxes;
-			for (int i = 0; i < splitboxes.size(); i++)
-			{
-				OctreeNode* child = new OctreeNode(refboxes[i]);
-				node->children[i] = child;
+			if (depth >= maxLevels)
+				return;
 
-				Subdivide(child, depth + 1);
+			auto splitBoxes = node->boundingbox.SplitIntoOct();
+
+			for (int i = 0; i < 8; ++i)
+			{
+				// This assumes SplitIntoOct returns AABB objects.
+				// If it returns AABB*, dereference/copy carefully.
+				node->children[i] = new OctreeNode(splitBoxes[i]);
+
+				Subdivide(node->children[i], depth + 1);
 			}
-		
 		}
 
-		//void DebugDraw(Program* shader, const glm::mat4& viewproj, OctreeNode* node = nullptr, int depth = 0)
-		//{
-		//	if (depth == 0)
-		//		node = root;
-		//	if (depth > maxLevels)
-		//	{
-		//		return;
-		//	}
-		//	if (node != nullptr && node->boundingbox != nullptr)
-		//	{
-		//		node->boundingbox->DebugDraw(shader, viewproj);
-		//	}
-		//		for (int j = 0; j < node->children.size(); j++)
-		//		{
-		//			if (node->children[j] != nullptr) 
-		//			{ // Ensure the child exists
-		//				DebugDraw(shader, viewproj, node->children[j], depth + 1);
-		//			}
-		//		}
-
-		//}
-
-		OctreeNode* FindSmallestAABB(OctreeNode* node, const XMFLOAT3& SurfelArea, int depth = 0)
+		OctreeNode* FindLeaf(
+			OctreeNode* node,
+			const XMFLOAT3& position)
 		{
-			if (depth > maxLevels)
-			{
+			if (!node)
+				return nullptr;
+
+			if (!node->boundingbox.ContainsPoint(position))
+				return nullptr;
+
+			if (node->IsLeaf())
 				return node;
-			}
-		
-			if (!node) return nullptr; // Base case: Node is null.
 
-
-			// Check if the surfel is within this node's bounding box
-
-			// If this node is a leaf, return its bounding box.
-			if (node->IsLeaf()) {
-				if (node->boundingbox->ContainsPoint(SurfelArea)) {
-					return node;
-				}
-				else {
-					return nullptr; // Surfel not in this leaf.
-				}
+			for (OctreeNode* child : node->children)
+			{
+				if (child && child->boundingbox.ContainsPoint(position))
+					return FindLeaf(child, position);
 			}
 
-			// Recursively check children for a smaller enclosing node.
-			for (int i = 0; i < node->children.size(); ++i) {
-				if (node->children[i] != nullptr && node->children[i]->boundingbox->ContainsPoint(SurfelArea)) {
-					OctreeNode* result = FindSmallestAABB(node->children[i], SurfelArea, depth + 1);
-					if (result) return result; // Return as soon as we find a valid enclosing node.
-				}
-			}
-
-			// If no child fully contains the surfel, this node is the smallest enclosing one.
 			return node;
 		}
-	private:
-		OctreeNode* root;
-		int maxLevels;
+
+		void QueryRadiusRecursive(
+			OctreeNode* node,
+			const XMFLOAT3& center,
+			float radius,
+			std::vector<uint32_t>& outIndices) 
+		{
+			if (!node)
+				return;
+
+			if (!AABBIntersectsSphere(node->boundingbox, center, radius))
+				return;
+
+			if (node->IsLeaf())
+			{
+				outIndices.insert(
+					outIndices.end(),
+					node->surfelIndices.begin(),
+					node->surfelIndices.end()
+				);
+
+				return;
+			}
+
+			for (OctreeNode* child : node->children)
+			{
+				QueryRadiusRecursive(child, center, radius, outIndices);
+			}
+		}
+
+		inline bool AABBIntersectsSphere(
+			
+			AABB& box,
+			const XMFLOAT3& center,
+			float radius)
+		{
+			float sqDist = 0.0f;
+
+			auto testAxis = [&](float v, float minV, float maxV)
+				{
+					if (v < minV)
+					{
+						float d = minV - v;
+						sqDist += d * d;
+					}
+					else if (v > maxV)
+					{
+						float d = v - maxV;
+						sqDist += d * d;
+					}
+				};
+
+			testAxis(center.x, box.Minf().x, box.Maxf().x);
+			testAxis(center.y, box.Minf().y, box.Maxf().y);
+			testAxis(center.z, box.Minf().z, box.Maxf().z);
+
+			return sqDist <= radius * radius;
+		}
+
+
 	};
 
 }

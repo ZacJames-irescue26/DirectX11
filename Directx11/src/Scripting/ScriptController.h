@@ -35,6 +35,17 @@ namespace Engine
 		{
 			return s_Controller ? s_Controller->GetRightY() : 0.0f;
 		}
+		static float LeftTrigger()
+		{
+			return s_Controller ? s_Controller->GetLeftTrigger() : 0.0f;
+
+		}
+
+		static float RightTrigger()
+		{
+			return s_Controller ? s_Controller->GetRightTrigger() : 0.0f;
+
+		}
 
 		static bool IsButtonDown(int button)
 		{

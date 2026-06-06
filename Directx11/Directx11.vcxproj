@@ -58,21 +58,21 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -208,6 +208,7 @@
     <ClInclude Include="src\Passes\IrradianceConvolutionPass.h" />
     <ClInclude Include="src\Passes\LightingPass.h" />
     <ClInclude Include="src\Passes\Prefilteringpass.h" />
+    <ClInclude Include="src\Passes\ProbeCubemapCreation.h" />
     <ClInclude Include="src\Passes\ShadowPass.h" />
     <ClInclude Include="src\Passes\SurfelPass.h" />
     <ClInclude Include="src\Physics\PhysMat.h" />
@@ -222,11 +223,16 @@
     <ClInclude Include="src\Scripting\ScriptEngine.h" />
     <ClInclude Include="src\Scripting\ScriptMath.h" />
     <ClInclude Include="src\Scripting\ScriptPhysics.h" />
-    <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\Scripting\ScriptAudio.h" />
+    <ClInclude Include="src\Sound\Channel.h" />
+    <ClInclude Include="src\Sound\Sound.h" />
+    <ClInclude Include="src\Sound\System.h" />
     <ClInclude Include="src\StringConverter.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\UUID.h" />
+    <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\WindowContainer.h" />
+    <ClInclude Include="src\illumination\Probe.h" />
     <ClInclude Include="src\illumination\Surfel.h" />
     <ClInclude Include="src\illumination\SurfelGenerator.h" />
     <ClInclude Include="src\resource.h" />
@@ -234,8 +240,9 @@
     <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Controller\ControllerClass.cpp" />
-    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Sound\Channel.cpp" />
+    <ClCompile Include="src\Sound\Sound.cpp" />
+    <ClCompile Include="src\Sound\System.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -245,7 +252,9 @@
     </ClCompile>
     <ClCompile Include="src\Acceleration\BVH\BVH.cpp" />
     <ClCompile Include="src\Acceleration\Octree\Octree.cpp" />
+    <ClCompile Include="src\Controller\ControllerClass.cpp" />
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ErrorLogger.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\PhysicsObject.cpp" />
@@ -299,6 +308,7 @@
     <ClCompile Include="src\Passes\IrradianceConvolutionPass.cpp" />
     <ClCompile Include="src\Passes\LightingPass.cpp" />
     <ClCompile Include="src\Passes\PrefilteringPass.cpp" />
+    <ClCompile Include="src\Passes\ProbeCubemapCreation.cpp" />
     <ClCompile Include="src\Passes\ShadowPass.cpp" />
     <ClCompile Include="src\Passes\SurfelPass.cpp" />
     <ClCompile Include="src\Physics\PhysStructs.cpp" />
@@ -311,6 +321,7 @@
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\UUID.cpp" />
     <ClCompile Include="src\WindowContainer.cpp" />
+    <ClCompile Include="src\illumination\Probe.cpp" />
     <ClCompile Include="src\illumination\Surfel.cpp" />
     <ClCompile Include="src\illumination\SurfelGenerator.cpp" />
   </ItemGroup>

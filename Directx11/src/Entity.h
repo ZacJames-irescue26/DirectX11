@@ -148,6 +148,10 @@ namespace Engine
 		{
 			return m_id;
 		}
+		std::string GetUUIDString() const
+		{
+			return std::to_string(m_id);
+		}
 		std::string& GetName() 
 		{
 			return name;

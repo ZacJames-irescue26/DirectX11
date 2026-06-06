@@ -10,6 +10,9 @@
     <Filter Include="Shader\Compute">
       <UniqueIdentifier>{08BD4B2D-F48A-3F33-DD1E-B059C98B1B98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Compute\Probes">
+      <UniqueIdentifier>{A213FFCB-0E80-BAC6-D773-5224439FDC2E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Shader\illumination">
       <UniqueIdentifier>{205F8C87-8CC0-6995-152E-B047818EA054}</UniqueIdentifier>
     </Filter>
@@ -68,6 +71,12 @@
     <FxCompile Include="Shader\CSM\ShadowMapDepth_v.hlsl">
       <Filter>Shader\CSM</Filter>
     </FxCompile>
+    <FxCompile Include="Shader\Compute\Probes\AccumilateProbe_c.hlsl">
+      <Filter>Shader\Compute\Probes</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Compute\Probes\LightingSurfels_c.hlsl">
+      <Filter>Shader\Compute\Probes</Filter>
+    </FxCompile>
     <FxCompile Include="Shader\Compute\RealtimeShadows_c.hlsl">
       <Filter>Shader\Compute</Filter>
     </FxCompile>
@@ -111,6 +120,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\Prefiltering_p.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ProbeGBuffer_p.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ProbeGBuffer_v.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Shader\VertexPBR_v.hlsl">

@@ -117,7 +117,7 @@ namespace Engine
 
 		m_Skeleton.BuildFromScene(pScene);
 
-		this->ProcessNode(pScene->mRootNode, pScene, DirectX::XMMatrixIdentity());
+		this->ProcessNode(pScene->mRootNode, pScene, XMMatrixIdentity());
 		
 		
 		

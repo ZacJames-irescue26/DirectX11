@@ -217,7 +217,7 @@ public:
 	{
 		return _physics_system.get();
 	}
-
+	
 	BodyID CreateAndAddObject(BodyCreationSettings settings, EActivation mode);
 	void Optimize();
 	void Update();
@@ -225,7 +225,7 @@ public:
 	void UnRegister();
 	RVec3 GetPosition(BodyID id);
 	void SetPosition(BodyID id, RVec3 position);
-	void GetPosAndRot(JPH::BodyID id, DirectX::XMFLOAT3* pos, DirectX::XMFLOAT4* rot);
+	void GetPosAndRot(JPH::BodyID id, XMFLOAT3* pos, XMFLOAT4* rot);
 	void ApplyForce(JPH::BodyID id, XMFLOAT3 force);
 	void Stop();
 	void SetGravity(float grav);
@@ -234,47 +234,47 @@ public:
 	bool CastRay(const RayCastInfo* info, RayHit& outHit, Scene* scene);
 	int32_t OverlapShape(Scene* scene, const ShapeOverlapInfo* shapeOverlapInfo, RayHit** outHits);
 
-	inline static JPH::Vec3 ToJoltVector(const DirectX::XMFLOAT3& v)
+	inline static JPH::Vec3 ToJoltVector(const XMFLOAT3& v)
 	{
 		return JPH::Vec3(v.x, v.y, v.z);
 	}
 
-	inline static JPH::Quat ToJoltQuat(const DirectX::XMFLOAT4& q)
+	inline static JPH::Quat ToJoltQuat(const XMFLOAT4& q)
 	{
 		return JPH::Quat(q.x, q.y, q.z, q.w);
 	}
 
-	inline static DirectX::XMFLOAT3 FromJoltVector(const JPH::Vec3& v)
+	inline static XMFLOAT3 FromJoltVector(const JPH::Vec3& v)
 	{
-		return DirectX::XMFLOAT3(v.GetX(), v.GetY(), v.GetZ());
+		return XMFLOAT3(v.GetX(), v.GetY(), v.GetZ());
 	}
 
-	inline static DirectX::XMFLOAT4 FromJoltQuat(const JPH::Quat& q)
+	inline static XMFLOAT4 FromJoltQuat(const JPH::Quat& q)
 	{
-		return DirectX::XMFLOAT4(q.GetX(), q.GetY(), q.GetZ(), q.GetW());
+		return XMFLOAT4(q.GetX(), q.GetY(), q.GetZ(), q.GetW());
 	}
-	inline static JPH::Vec3 ToJoltVector(DirectX::FXMVECTOR v)
+	inline static JPH::Vec3 ToJoltVector(FXMVECTOR v)
 	{
 		return JPH::Vec3(
-			DirectX::XMVectorGetX(v),
-			DirectX::XMVectorGetY(v),
-			DirectX::XMVectorGetZ(v)
+			XMVectorGetX(v),
+			XMVectorGetY(v),
+			XMVectorGetZ(v)
 		);
 	}
 
-	inline static JPH::Quat ToJoltQuat(DirectX::FXMVECTOR q)
+	inline static JPH::Quat ToJoltQuat(FXMVECTOR q)
 	{
 		return JPH::Quat(
-			DirectX::XMVectorGetX(q),
-			DirectX::XMVectorGetY(q),
-			DirectX::XMVectorGetZ(q),
-			DirectX::XMVectorGetW(q)
+			XMVectorGetX(q),
+			XMVectorGetY(q),
+			XMVectorGetZ(q),
+			XMVectorGetW(q)
 		);
 	}
 
-	inline static  DirectX::XMVECTOR FromJoltVectorV(const JPH::Vec3& v)
+	inline static  XMVECTOR FromJoltVectorV(const JPH::Vec3& v)
 	{
-		return DirectX::XMVectorSet(
+		return XMVectorSet(
 			v.GetX(),
 			v.GetY(),
 			v.GetZ(),
@@ -282,9 +282,9 @@ public:
 		);
 	}
 
-	inline static DirectX::XMVECTOR FromJoltQuatV(const JPH::Quat& q)
+	inline static XMVECTOR FromJoltQuatV(const JPH::Quat& q)
 	{
-		return DirectX::XMVectorSet(
+		return XMVectorSet(
 			q.GetX(),
 			q.GetY(),
 			q.GetZ(),
@@ -292,7 +292,7 @@ public:
 		);
 	}
 
-
+	void UnregisterEntity(Entity* entity);
 private:
 	JPH::uint _step{ 0 };
 	inline static std::unique_ptr<JPH::PhysicsSystem> _physics_system;
@@ -309,6 +309,7 @@ private:
 	std::vector<JPH::BodyID> m_OverlapIDs;
 
 	std::vector<RayHit> m_OverlapHitBuffer;
+
 };
 
 

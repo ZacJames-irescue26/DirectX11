@@ -1,0 +1,205 @@
+{
+    "Entities": [
+        {
+            "Children": [],
+            "Components": {
+                "StaticMeshComponent": {
+                    "ModelPath": "C:/DirectX11/Game/Assets/Sponza/glTF/Sponza.gltf"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        0.10000000149011612,
+                        0.10000000149011612,
+                        0.10000000149011612
+                    ]
+                }
+            },
+            "ID": 8147860017021319488,
+            "Name": "Sponza",
+            "Parent": 0
+        },
+        {
+            "Children": [],
+            "Components": {
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        -1.100000023841858,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        69.69999694824219,
+                        1.0,
+                        72.30000305175781
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 0,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 14474266530384034668,
+            "Name": "PhysGround",
+            "Parent": 0
+        },
+        {
+            "Children": [
+                117165704402830602
+            ],
+            "Components": {
+                "LuaScriptComponent": {
+                    "ScriptPath": "Scripts/test.lua"
+                },
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 2,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "StaticMeshComponent": {
+                    "ModelPath": "TestCube.glb"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.4300000071525574,
+                        9.380000114440918,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 9908706380894310884,
+            "Name": "TestPhys",
+            "Parent": 0
+        },
+        {
+            "Children": [],
+            "Components": {
+                "CameraComponent": {
+                    "FOVDegrees": 90.0,
+                    "FarPlane": 1000.0,
+                    "Mode": 0,
+                    "NearPlane": 0.10000000149011612,
+                    "OrthoSize": 10.0,
+                    "Primary": true
+                },
+                "TransformComponent": {
+                    "Position": [
+                        -0.05999999865889549,
+                        1.7400000095367432,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 117165704402830602,
+            "Name": "Camera",
+            "Parent": 9908706380894310884
+        },
+        {
+            "Children": [],
+            "Components": {
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        1.2000000476837158,
+                        16.200000762939453,
+                        34.400001525878906
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 0,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "StaticMeshComponent": {
+                    "ModelPath": "TestCube.glb"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        -22.799999237060547,
+                        0.8999999761581421,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.2000000476837158,
+                        17.0,
+                        34.400001525878906
+                    ]
+                }
+            },
+            "ID": 2932677253564696445,
+            "Name": "Block1",
+            "Parent": 0
+        }
+    ]
+}

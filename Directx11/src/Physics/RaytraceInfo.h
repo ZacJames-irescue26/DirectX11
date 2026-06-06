@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 #include "pch.h"
 
-using ExcludedEntityMap = std::unordered_set<uint32_t>;
+using ExcludedEntityMap = std::unordered_set<uint64_t>;
 namespace Engine
 {
 	class ShapeJolt;

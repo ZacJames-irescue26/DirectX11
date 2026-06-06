@@ -26,6 +26,7 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 		if (data == nullptr)
 		{
 			ErrorLogger::Log("Failed to load image\n");
+			return;
 		}
 	}
 	// create texture
@@ -77,7 +78,7 @@ Texture::Texture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const
 		hr = device->CreateShaderResourceView(tex.Get(), &view_desc, textureView.GetAddressOf());
 		if (FAILED(hr))
 		{
-			ErrorLogger::Log(hr, L"Failed to create render target view\n");
+			ErrorLogger::Log(hr, L"Failed to create SRV\n");
 
 		}
 		deviceContext->UpdateSubresource(tex.Get(), 0, nullptr, data, img_width * 4, 0);
@@ -108,6 +109,7 @@ Texture::Texture(ID3D11Device* device, aiTexture* intexture, size_t size, aiText
 		if (data == nullptr)
 		{
 			ErrorLogger::Log("Failed to load image\n");
+			return;
 		}
 	}
 

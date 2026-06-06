@@ -80,7 +80,7 @@ XMVECTOR AABB::Center()
 	return (min + max) / 2.0f;
 }
 
-std::array<Engine::AABB*, 8> AABB::SplitIntoOct()
+std::array<Engine::AABB, 8> AABB::SplitIntoOct()
 {
 	XMVECTOR c = Center();
 
@@ -91,14 +91,14 @@ std::array<Engine::AABB*, 8> AABB::SplitIntoOct()
 	XMFLOAT3 cf;
 	XMStoreFloat3(&cf, c);
 
-	return { new AABB{minf, cf},
-			new AABB{XMFLOAT3{cf.x, minf.y, minf.z},XMFLOAT3 {maxf.x, cf.y, cf.z}},
-			new AABB{XMFLOAT3{minf.x, cf.y, minf.z},XMFLOAT3 {cf.x, maxf.y, cf.z}},
-			new AABB{XMFLOAT3{cf.x, cf.y, minf.z}, XMFLOAT3{maxf.x, maxf.y, cf.z}},
-			new AABB{XMFLOAT3{minf.x, minf.y, cf.z},XMFLOAT3 {cf.x, cf.y, maxf.z}},
-			new AABB{XMFLOAT3{cf.x, minf.y, cf.z}, XMFLOAT3{maxf.x, cf.y, maxf.z} },
-			new AABB{XMFLOAT3{minf.x, cf.y, cf.z}, XMFLOAT3{cf.x, maxf.y, maxf.z}},
-			new AABB{cf, maxf} };
+	return {  AABB{minf, cf},
+			 AABB{XMFLOAT3{cf.x, minf.y, minf.z},XMFLOAT3 {maxf.x, cf.y, cf.z}},
+			 AABB{XMFLOAT3{minf.x, cf.y, minf.z},XMFLOAT3 {cf.x, maxf.y, cf.z}},
+			 AABB{XMFLOAT3{cf.x, cf.y, minf.z}, XMFLOAT3{maxf.x, maxf.y, cf.z}},
+			 AABB{XMFLOAT3{minf.x, minf.y, cf.z},XMFLOAT3 {cf.x, cf.y, maxf.z}},
+			 AABB{XMFLOAT3{cf.x, minf.y, cf.z}, XMFLOAT3{maxf.x, cf.y, maxf.z} },
+			 AABB{XMFLOAT3{minf.x, cf.y, cf.z}, XMFLOAT3{cf.x, maxf.y, maxf.z}},
+			 AABB{cf, maxf} };
 }
 
 //void AABB::CreateDebugBox()

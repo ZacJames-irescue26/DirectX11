@@ -15,6 +15,7 @@ namespace Engine
 		ID3D11ShaderResourceView* BRDFSRV;
 		ID3D11ShaderResourceView* DirShadowMapSRV;
 		ID3D11ShaderResourceView* CascadeShadowMapSRV[4];
+		ID3D11ShaderResourceView* ProbesSRV;
 
 	};
 
@@ -24,12 +25,15 @@ namespace Engine
 	public:
 		bool Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 
-		void Draw(Graphics* gfx, GBufferSRV bufSRV, LightingSRVData SRVData);
+		void Draw(Graphics* gfx, GBufferSRV bufSRV, LightingSRVData SRVData, uint32_t probeCount);
 		void SetLightMatrixBuffers(ShadowPass& shadow);
 
 		void ImGuiPass() override;
 
-
+		inline XMFLOAT3 GetLightColor()
+		{
+			return LightColor;
+		}
 		std::vector<ID3D11ShaderResourceView*> GetSRVRenderTarget() override;
 
 		private: 
@@ -43,10 +47,13 @@ namespace Engine
 		PixelShader m_DeferredpixelShader;
 		ConstantBuffer<DirectionalLightParams> m_lightparams;
 		ConstantBuffer<CameraInfo> CameraInfoConstantBuffer;
+		ConstantBuffer<ProbeVolumeCB> ProbeVolumeConstantBuffer;
 		Microsoft::WRL::ComPtr < ID3D11Texture2D> FinalTexture;
 		Microsoft::WRL::ComPtr < ID3D11RenderTargetView> FinalRTV;
 		Microsoft::WRL::ComPtr < ID3D11ShaderResourceView> FinalSRV;
 
 		XMFLOAT3 LightColor = {10,10,10};
+		bool useGI = true;
+		bool ShowGIOnly =false;
 	};
 }

@@ -22,6 +22,9 @@
     <Filter Include="src\Components">
       <UniqueIdentifier>{221ADC4D-0EE8-CF53-F77B-407AE3E8ABB8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Controller">
+      <UniqueIdentifier>{A0401C75-8C0E-107B-75A2-80A1610FECDF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Game">
       <UniqueIdentifier>{F6C81ECF-E295-79DA-0BAF-6782F7DAAE68}</UniqueIdentifier>
     </Filter>
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="src\Components\Components.h">
       <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controller\ControllerClass.h">
+      <Filter>src\Controller</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
@@ -224,6 +230,9 @@
     <ClInclude Include="src\Passes\Prefilteringpass.h">
       <Filter>src\Passes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Passes\ProbeCubemapCreation.h">
+      <Filter>src\Passes</Filter>
+    </ClInclude>
     <ClInclude Include="src\Passes\ShadowPass.h">
       <Filter>src\Passes</Filter>
     </ClInclude>
@@ -251,7 +260,19 @@
     <ClInclude Include="src\Scene\Scene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripting\SciptMouse.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptController.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scripting\ScriptEngine.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptMath.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptPhysics.h">
       <Filter>src\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\StringConverter.h">
@@ -263,8 +284,14 @@
     <ClInclude Include="src\UUID.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\WindowContainer.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\illumination\Probe.h">
+      <Filter>src\illumination</Filter>
     </ClInclude>
     <ClInclude Include="src\illumination\Surfel.h">
       <Filter>src\illumination</Filter>
@@ -277,12 +304,10 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
-    <ClInclude Include="src\Scripting\ScriptPhysics.h" />
-    <ClInclude Include="src\Utils.h" />
-    <ClInclude Include="src\Scripting\SciptMouse.h" />
-    <ClInclude Include="src\Scripting\ScriptMath.h" />
-    <ClInclude Include="src\Controller\ControllerClass.h" />
-    <ClInclude Include="src\Scripting\ScriptController.h" />
+    <ClInclude Include="src\Sound\System.h" />
+    <ClInclude Include="src\Sound\Sound.h" />
+    <ClInclude Include="src\Sound\Channel.h" />
+    <ClInclude Include="src\Scripting\ScriptAudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -294,7 +319,13 @@
     <ClCompile Include="src\Acceleration\Octree\Octree.cpp">
       <Filter>src\Acceleration\Octree</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller\ControllerClass.cpp">
+      <Filter>src\Controller</Filter>
+    </ClCompile>
     <ClCompile Include="src\Engine.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ErrorLogger.cpp">
@@ -414,6 +445,9 @@
     <ClCompile Include="src\Passes\PrefilteringPass.cpp">
       <Filter>src\Passes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Passes\ProbeCubemapCreation.cpp">
+      <Filter>src\Passes</Filter>
+    </ClCompile>
     <ClCompile Include="src\Passes\ShadowPass.cpp">
       <Filter>src\Passes</Filter>
     </ClCompile>
@@ -450,13 +484,17 @@
     <ClCompile Include="src\WindowContainer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\illumination\Probe.cpp">
+      <Filter>src\illumination</Filter>
+    </ClCompile>
     <ClCompile Include="src\illumination\Surfel.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Controller\ControllerClass.cpp" />
+    <ClCompile Include="src\Sound\System.cpp" />
+    <ClCompile Include="src\Sound\Sound.cpp" />
+    <ClCompile Include="src\Sound\Channel.cpp" />
   </ItemGroup>
 </Project>

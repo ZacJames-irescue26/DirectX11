@@ -46,10 +46,6 @@ namespace Engine
 		{
 			return direction;
 		}
-		XMFLOAT3 GetLightColor()
-		{
-			return LightColor;
-		}
 		void CalcCascadeOrthoProjs(Graphics* gfx);
 		void ImGuiPass() override;
 

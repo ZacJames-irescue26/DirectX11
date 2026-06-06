@@ -1,4 +1,7 @@
-// Textures  
+#include "include/GPUProbe.hlsli"
+// Textures 
+
+
 Texture2D NormalTexture: register( t0);  
 Texture2D DiffuseAlbedoTexture: register( t1);  
 Texture2D SpecularAlbedoTexture: register( t2);  
@@ -13,6 +16,7 @@ Texture2D Depthtexture2 : register(t10);
 Texture2D Depthtexture3 : register(t11);
 Texture2D DepthBuffer : register(t12);
 Texture2D DirectionalSM : register(t13);
+StructuredBuffer<GPUProbe> Probes : register(t14);
 SamplerState objSamplerState : SAMPLER : register(s0);
 SamplerState irradianceSamplerstate : SAMPLER : register(s1);
 SamplerComparisonState ShadowSampler : register(s2);
@@ -48,6 +52,13 @@ cbuffer CameraParams : register(b1)
     float padding2;
 };  
 
+cbuffer ProbeVolumeCB : register(b2)
+{
+    uint ProbeCount;
+    uint UseGI;
+    uint ShowGIOnly;
+    float Padding;
+};
 struct CastLight
 {
     float3 intensity;
@@ -476,29 +487,23 @@ float3 ReconstructViewPos(float2 uv)
 
 
 
-float4 main1(float3 albedo, float3 normal, float3 position, float3 lightdir)
+GPUProbe FindNearestProbe(uint ProbeCount, float3 worldPos)
 {
-    
-    float3 color = albedo;
-    float3 norm = normalize(normal);
-    float3 lightColor = float3(0.3, 0.3,0.3);
-    // ambient
-    float3 ambient = 0.3 * lightColor;
-    // diffuse
-    float diff = max(dot(lightdir, normal), 0.0);
-    float3 diffuse = diff * lightColor;
-    // specular
-    float3 viewDir = normalize(CameraPos - position);
-    float3 reflectDir = reflect(-lightdir, normal);
-    float spec = 0.0;
-    float3 halfwayDir = normalize(lightdir + viewDir);
-    spec = pow(max(dot(normal, halfwayDir), 0.0), 64.0);
-    float3 specular = spec * lightColor;
-    // calculate shadow
-    float shadow = ShadowCalculation(position, norm);
-    float3 lighting = (ambient + (1.0f - shadow) * (diffuse + specular)) * color;
-    
-    return float4(lighting, 1.0);
+    float bestDist = 9999999.0f;
+    uint bestIndex = 0;
+
+    for (uint i = 0; i < ProbeCount; ++i)
+    {
+        float d = dot(Probes[i].Position - worldPos, Probes[i].Position - worldPos);
+
+        if (d < bestDist)
+        {
+            bestDist = d;
+            bestIndex = i;
+        }
+    }
+
+    return Probes[bestIndex];
 }
 float4 main_debugCascade(float3 position)
 {
@@ -546,7 +551,57 @@ float4 main_debugViewZ(float3 worldPos)
     // (assumes your scene’s Z ? [–1,+1]; tweak as needed)
     return float4(v, v, v, 1);
 }
+float3 SampleProbeGI4(float3 P, float3 N)
+{
+    uint bestIndex[4] = { 0, 0, 0, 0 };
+    float bestDist[4] =
+    {
+        3.402823e38f,
+        3.402823e38f,
+        3.402823e38f,
+        3.402823e38f
+    };
 
+    for (uint i = 0; i < ProbeCount; ++i)
+    {
+        float3 d = Probes[i].Position.xyz - P;
+        float distSq = dot(d, d);
+
+        if (distSq < bestDist[3])
+        {
+            bestDist[3] = distSq;
+            bestIndex[3] = i;
+
+            for (int j = 3; j > 0; --j)
+            {
+                if (bestDist[j] < bestDist[j - 1])
+                {
+                    float td = bestDist[j - 1];
+                    bestDist[j - 1] = bestDist[j];
+                    bestDist[j] = td;
+
+                    uint ti = bestIndex[j - 1];
+                    bestIndex[j - 1] = bestIndex[j];
+                    bestIndex[j] = ti;
+                }
+            }
+        }
+    }
+
+    float3 gi = 0.0f;
+    float weightSum = 0.0f;
+
+    [unroll]
+        for (int k = 0; k < 4; ++k)
+        {
+            float w = 1.0f / max(bestDist[k], 0.25f);
+
+            gi += SampleAmbientCube(Probes[bestIndex[k]], N) * w;
+            weightSum += w;
+        }
+
+    return gi / max(weightSum, 0.0001f);
+}
 float4 main( FSInput screenPos): SV_Target0  
 {  
     float3 N, P, albedo, spec;
@@ -636,15 +691,36 @@ float4 main( FSInput screenPos): SV_Target0
     float3 direct = Lo * (1.0 - shadow);
 
     // Indirect lighting should not fully hide shadows while debugging
-    float ambientStrength = 0.05f;
+    float ambientStrength = 0.005f;
     float3 ambient = (kD * diffuse + specular) * ambientStrength;
 
-    float3 color = ambient + direct;
+    float3 gi = SampleProbeGI4(P, N);
 
+    float3 indirect = albedo * gi;
+    float3 directLighting = direct;   // whatever your direct light result is
+    float3 ambientLighting = ambient; // optional fallback
+    float3 color;
+    if (UseGI)
+    {
+         color = ambientLighting + directLighting + indirect;
+
+    }
+    else
+    {
+         color = ambientLighting + directLighting;
+    }
+
+    // Tone map
     color = color / (color + float3(1.0, 1.0, 1.0));
-    
-    color = pow(color, float3(1.0 / 2.2, 1.0 / 2.2, 1.0 / 2.2));
 
+    // Gamma correct
+    color = pow(color, float3(1.0 / 2.2, 1.0 / 2.2, 1.0 / 2.2));
+   
+   if (ShowGIOnly)
+   {
+       return float4(gi,1.0);
+
+   }
     return float4(color, 1.0f);
 }
 

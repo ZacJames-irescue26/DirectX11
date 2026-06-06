@@ -51,10 +51,10 @@ namespace Engine
 		}
 		std::vector<FullScreenQuad> vertices = {
 			// Positions (x, y, z) and Texture coordinates (u, v)
-			{DirectX::XMFLOAT2(-1.0f,  1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)}, // Top-left
-			{ DirectX::XMFLOAT2(1.0f,  1.0f), DirectX::XMFLOAT2(1.0f, 0.0f) }, // Top-right
-			{ DirectX::XMFLOAT2(-1.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
-			{ DirectX::XMFLOAT2(1.0f, -1.0f), DirectX::XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
+			{XMFLOAT2(-1.0f,  1.0f), XMFLOAT2(0.0f, 0.0f)}, // Top-left
+			{XMFLOAT2(1.0f,  1.0f),  XMFLOAT2(1.0f, 0.0f) }, // Top-right
+			{XMFLOAT2(-1.0f, -1.0f), XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
+			{XMFLOAT2(1.0f, -1.0f),  XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
 		};
 
 		COM_ERROR_IF_FAILED(m_FullScreenVertex.Initialize(device, vertices.data(), vertices.size()), "Failed to create vertex buffer");
@@ -104,12 +104,12 @@ namespace Engine
 		COM_ERROR_IF_FAILED(m_lightparams.Initialize(device, deviceContext), "Failed to initialize constant buffer.");
 
 		COM_ERROR_IF_FAILED(CameraInfoConstantBuffer.Initialize(device, deviceContext) , "Failed to initialize constant buffer.");
-	
+		COM_ERROR_IF_FAILED(ProbeVolumeConstantBuffer.Initialize(device, deviceContext), "Failed to initialize constant buffer.");
 	
 	
 	}
 
-	void LightingPass::Draw(Graphics* gfx, GBufferSRV bufSRV, LightingSRVData SRVData )
+	void LightingPass::Draw(Graphics* gfx, GBufferSRV bufSRV, LightingSRVData SRVData, uint32_t probeCount)
 	{
 		D3D11_VIEWPORT viewport;
 		viewport = {};
@@ -150,7 +150,8 @@ namespace Engine
 			SRVData.CascadeShadowMapSRV[2],
 			SRVData.CascadeShadowMapSRV[3],
 			bufSRV.m_Depth,
-			SRVData.DirShadowMapSRV
+			SRVData.DirShadowMapSRV,
+			SRVData.ProbesSRV,
 		};
 
 		gfx->GetDeviceContext()->PSSetShaderResources(0, shaderresources.size(), shaderresources.data());
@@ -165,6 +166,13 @@ namespace Engine
 
 		CameraInfoConstantBuffer.ApplyChanges();
 		gfx->SetPSConstantBuffers(1, 1, CameraInfoConstantBuffer.GetAddressOf());
+		
+		ProbeVolumeConstantBuffer.data.ProbeCount = probeCount;
+		ProbeVolumeConstantBuffer.data.UseGI = useGI;
+		ProbeVolumeConstantBuffer.data.ShowGIOnly = ShowGIOnly;
+		ProbeVolumeConstantBuffer.ApplyChanges();
+		gfx->SetPSConstantBuffers(2, 1, ProbeVolumeConstantBuffer.GetAddressOf());
+		
 		gfx->SetInputLayout(this->m_DeferredvertexShader.GetInputLayout());
 		gfx->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -207,6 +215,8 @@ namespace Engine
 	{
 		ImGui::Begin("Lighting");
 		ImGui::DragFloat3("Light Color", &LightColor.x, 0.1f);
+		ImGui::Checkbox("Use GI", &useGI);
+		ImGui::Checkbox("Show GI Only", &ShowGIOnly);
 		ImGui::End();
 	}
 

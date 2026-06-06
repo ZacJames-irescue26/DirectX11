@@ -3,6 +3,7 @@
 #include <thread>
 #include <shared_mutex>
 #include "Math\Triangle.h"
+#include "Math\AABB.h"
 
 namespace Engine
 {
@@ -15,6 +16,10 @@ public:
 	inline std::vector<Mesh>& GetMeshes()
 	{
 		return meshes;
+	}
+	inline AABB GetAABB()
+	{
+		return ModelAABB;
 	}
 private:
 	std::vector<Mesh> meshes;
@@ -32,8 +37,8 @@ private:
 	ConstantBuffer<CB_VS_vertexShader>* cb_vs_vertexshader = nullptr;
 	std::string directory = "";
 	std::vector<Engine::Triangle> ExtractTriangles();
-
-
+	AABB ModelAABB;
+	std::map<std::string,Texture> m_LoadedTextureMap;
 
 };
 }

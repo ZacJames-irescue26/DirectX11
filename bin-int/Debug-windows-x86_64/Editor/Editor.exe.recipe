@@ -34,6 +34,12 @@
       <FullPath>C:\DirectX11\Editor\CompiledShaders\ShadowMapDepth_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\AccumilateProbe_c.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\LightingSurfels_c.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX11\Editor\CompiledShaders\RealtimeShadows_c.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -77,6 +83,12 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX11\Editor\CompiledShaders\Prefiltering_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\ProbeGBuffer_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\ProbeGBuffer_v.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\DirectX11\Editor\CompiledShaders\VertexPBR_v.cso</FullPath>

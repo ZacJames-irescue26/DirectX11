@@ -10,6 +10,8 @@
 #include "Passes\ShadowPass.h"
 #include "Passes\LightingPass.h"
 #include "ResourcesPanel.h"
+#include "Passes\ProbeCubemapCreation.h"
+#include "illumination\Probe.h"
 
 
 using namespace Engine;
@@ -129,6 +131,11 @@ private:
 	//CSM
 	ShadowPass m_ShadowPass;
 
+	ProbeCubemapCreationPass m_ProbeCubemap;
+	std::vector<Probe> m_Probes;
+	bool generateProbes;
+
+
 	std::vector<VertexBuffer<CubeWPos>> m_DebugCascade;
 	IndexBuffer m_CascadeIndex;
 	VertexShader m_DebugCascade_VS;
@@ -137,8 +144,8 @@ private:
 	int shadowmapIndex = 0;
 
 	// surfels
-	SurfelGenerator* gen;
-	Octree* octree;
+	//SurfelGenerator* gen;
+	//Octree* octree;
 
 	VertexBuffer<SurfelVB> SurfelVertexBuffer;
 	VertexShader m_SurfelDebug_VS;

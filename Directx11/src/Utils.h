@@ -89,6 +89,23 @@ namespace Utils
 
 		return euler;
 	}
-	
+	inline bool TryParseUUID(const std::string& text, uint64_t& outUUID)
+	{
+		try
+		{
+			size_t parsedChars = 0;
+			unsigned long long value = std::stoull(text, &parsedChars, 10);
+
+			if (parsedChars != text.size())
+				return false;
+
+			outUUID = static_cast<uint64_t>(value);
+			return true;
+		}
+		catch (...)
+		{
+			return false;
+		}
+	}
 }
 

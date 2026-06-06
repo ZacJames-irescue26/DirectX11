@@ -28,7 +28,7 @@ namespace Engine
 		bool ContainsAABB(AABB aabb);
 		bool OverlappingwithSphere(const XMFLOAT3& c, float radius);
 		XMVECTOR Center();
-		std::array<Engine::AABB*, 8> SplitIntoOct();
+		std::array<Engine::AABB, 8> SplitIntoOct();
 		//void CreateDebugBox();
 
 		static AABB& Combine(const AABB& currentBounds, const AABB& addingbounds);

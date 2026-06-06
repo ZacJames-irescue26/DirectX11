@@ -6,21 +6,44 @@
 namespace Engine
 {
 
+	struct LuaRaycastHit
+	{
+		bool Hit = false;
+
+		std::string Entity;
+
+		XMFLOAT3 Position = {};
+		XMFLOAT3 Normal = {};
+
+
+		float Distance = 0.0f;
+	};
+	struct LuaOverlapHit
+	{
+		std::string Entity;
+
+		XMFLOAT3 Position = {};
+		XMFLOAT3 Normal = {};
+
+		float Distance = 0.0f;
+	};
 
 struct ScriptPhysics
 {
-	static DirectX::XMFLOAT3 GetLinearVelocity(Entity* entity)
+	static XMFLOAT3 GetLinearVelocity(Entity* entity)
 	{
 		if (!entity)
-			return DirectX::XMFLOAT3(0, 0, 0);
+			return XMFLOAT3(0, 0, 0);
 
 		auto* rb = entity->GetComponent<PhysicsComponent>();
 
 		if (!rb)
-			return DirectX::XMFLOAT3(0, 0, 0);
+			return XMFLOAT3(0, 0, 0);
 
 		return PhysicsEngine::FromJoltVector(PhysicsEngine::Get()->GetBodyInterface().GetLinearVelocity(rb->m_BodyID));
 	}
+
+
 	static void SetPosition(Entity* entity, XMFLOAT3 position)
 	{
 		if (!entity)

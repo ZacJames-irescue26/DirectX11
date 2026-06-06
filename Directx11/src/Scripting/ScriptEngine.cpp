@@ -8,11 +8,16 @@
 #include "SciptMouse.h"
 #include "ScriptMath.h"
 #include "ScriptController.h"
+#include <DirectXMath.h>
+#include "Physics/RaytraceInfo.h"
+#include "ErrorLogger.h"
+#include "Scene/Scene.h"
 
 namespace Engine
 {
-	bool ScriptEngine::Initialize()
+	bool ScriptEngine::Initialize(const EngineContext& context)
 	{
+		SetContext(context);
 		if (m_Initialized)
 			return true;
 
@@ -28,32 +33,34 @@ namespace Engine
 		RegisterController();
 		RegisterPhysics();
 		RegisterMath();
+		RegisterLogging();
+		RegisterAudio();
 		m_Initialized = true;
 		return true;
 	}
 
 	void ScriptEngine::RegisterTypes()
 	{
-		m_Lua.new_usertype<DirectX::XMFLOAT3>(
+		m_Lua.new_usertype<XMFLOAT3>(
 			"Vec3",
 			sol::constructors<
-			DirectX::XMFLOAT3(),
-			DirectX::XMFLOAT3(float, float, float)
+			XMFLOAT3(),
+			XMFLOAT3(float, float, float)
 			>(),
-			"x", &DirectX::XMFLOAT3::x,
-			"y", &DirectX::XMFLOAT3::y,
-			"z", &DirectX::XMFLOAT3::z
+			"x", &XMFLOAT3::x,
+			"y", &XMFLOAT3::y,
+			"z", &XMFLOAT3::z
 		);
-		m_Lua.new_usertype<DirectX::XMFLOAT4>(
+		m_Lua.new_usertype<XMFLOAT4>(
 			"Quat",
 			sol::constructors<
-			DirectX::XMFLOAT4(),
-			DirectX::XMFLOAT4(float, float, float, float)
+			XMFLOAT4(),
+			XMFLOAT4(float, float, float, float)
 			>(),
-			"x", &DirectX::XMFLOAT4::x,
-			"y", &DirectX::XMFLOAT4::y,
-			"z", &DirectX::XMFLOAT4::z,
-			"w", &DirectX::XMFLOAT4::w
+			"x", &XMFLOAT4::x,
+			"y", &XMFLOAT4::y,
+			"z", &XMFLOAT4::z,
+			"w", &XMFLOAT4::w
 		);
 
 
@@ -76,13 +83,73 @@ namespace Engine
 
 		m_Lua.new_usertype<Entity>(
 			"Entity",
+			"GetUUID", &Entity::GetUUIDString,
 			"GetName", &Entity::GetName,
 			"GetTransform", [](Entity& entity) -> TransformComponent*
 			{
 				return entity.GetComponent<TransformComponent>();
 			},
+			"GetCamera", [](Entity& entity) -> CameraComponent*
+			{
+				return entity.GetComponent<CameraComponent>();
+			},
 			"GetChildByName", &Entity::GetChildByName
+			"DestroyEntity", [this](Entity& entity) ->void
+			{
+				Scene* scene = m_Context.ActiveScene;
+
+				if (!scene)
+					return;
+
+				scene->QueueDestroyEntity(entity.GetUUID());
+			},
 		);
+
+		m_Lua.set_function("DestroyEntityByString",[this](const std::string& uuidString){
+			Scene* scene = m_Context.ActiveScene;
+
+			if (!scene)
+				return;
+
+			try
+			{
+				UUID uuid = static_cast<UUID>(std::stoull(uuidString));
+				scene->QueueDestroyEntity(uuid);
+			}
+			catch (...)
+			{
+				// Optional: log invalid UUID string
+			}
+		});
+
+		m_Lua.new_usertype<CameraComponent>(
+			"CameraComponent",
+
+			"primary", &CameraComponent::Primary,
+
+			"GetForward",
+			[](CameraComponent& self) -> XMFLOAT3
+			{
+				return self.ForwardVector;
+			}
+		);
+		m_Lua.new_usertype<LuaRaycastHit>(
+			"RaycastHit",
+			"hit", &LuaRaycastHit::Hit,
+			"entity", &LuaRaycastHit::Entity,
+			"position", &LuaRaycastHit::Position,
+			"normal", &LuaRaycastHit::Normal,
+			"distance", &LuaRaycastHit::Distance
+		);
+
+		m_Lua.new_usertype<LuaOverlapHit>(
+			"OverlapHit",
+			"entity", &LuaOverlapHit::Entity,
+			"position", &LuaOverlapHit::Position,
+			"normal", &LuaOverlapHit::Normal,
+			"distance", &LuaOverlapHit::Distance
+		);
+
 		m_LuaTypes.push_back({
 	   "Entity",
 	   {},
@@ -105,7 +172,8 @@ namespace Engine
 
 		mouse.set_function("GetDeltaX", &ScriptMouse::GetDeltaX);
 		mouse.set_function("GetDeltaY", &ScriptMouse::GetDeltaY);
-
+		mouse.set_function("IsLeftMouseDown", &ScriptMouse::IsMouseLeftDown);
+		mouse.set_function("IsRightMouseDown", &ScriptMouse::IsMouseRightDown);
 
 		sol::table key = m_Lua.create_named_table("Key");
 
@@ -134,6 +202,8 @@ namespace Engine
 		controller.set_function("RightX", &ScriptController::RightX);
 		controller.set_function("RightY", &ScriptController::RightY);
 		controller.set_function("IsButtonDown", &ScriptController::IsButtonDown);
+		controller.set_function("LeftTrigger", &ScriptController::LeftTrigger);
+		controller.set_function("RightTrigger", &ScriptController::RightTrigger);
 
 		sol::table gamepad = m_Lua.create_named_table("GamepadButton");
 
@@ -151,6 +221,14 @@ namespace Engine
 		gamepad["DPadDown"] = XINPUT_GAMEPAD_DPAD_DOWN;
 		gamepad["DPadLeft"] = XINPUT_GAMEPAD_DPAD_LEFT;
 		gamepad["DPadRight"] = XINPUT_GAMEPAD_DPAD_RIGHT;
+
+	}
+	void ScriptEngine::RegisterLogging()
+	{
+		sol::table Logging = m_Lua.create_named_table("Logging");
+
+		Logging.set_function("LogToWindow", [](const std::string& message) {ErrorLogger::Log(message); });
+		Logging.set_function("LogToConsol", [](const std::string& message) {ErrorLogger::LogToDebug(message); });
 	}
 	void ScriptEngine::RegisterPhysics()
 	{
@@ -163,6 +241,127 @@ namespace Engine
 		physics.set_function("AddForce", &ScriptPhysics::AddForce);
 		physics.set_function("AddImpulse", &ScriptPhysics::AddImpulse);
 		physics.set_function("GetLinearVelocity", &ScriptPhysics::GetLinearVelocity);
+
+		physics.set_function("Raycast",
+			[this](const XMFLOAT3& origin,
+				const XMFLOAT3& direction,
+				float maxDistance,
+				sol::optional<std::vector<std::string>> excludedUUIDs) -> LuaRaycastHit
+			{
+				Scene* scene = m_Context.ActiveScene;
+				PhysicsEngine* physicsEngine = m_Context.Physics;
+
+				LuaRaycastHit luaHit = {};
+
+				if (!scene || !physicsEngine)
+					return luaHit;
+
+				RayCastInfo info = {};
+				info.Origin = origin;
+				info.Direction = direction;
+				info.MaxDistance = maxDistance;
+
+				if (excludedUUIDs)
+				{
+					for (const std::string& uuidString : *excludedUUIDs)
+					{
+						try
+						{
+							uint64_t uuid = std::stoull(uuidString);
+
+							// Use whichever matches your ExcludedEntityMap type:
+							info.ExcludedEntities.insert(uuid);
+							// or:
+							// info.ExcludedEntities[uuid] = true;
+						}
+						catch (...)
+						{
+							// Invalid UUID string. Ignore it or log a warning.
+						}
+					}
+				}
+
+				RayHit hit = {};
+
+				bool didHit = physicsEngine->CastRay(&info,hit, m_Context.ActiveScene);
+
+				luaHit.Hit = didHit;
+
+				if (didHit)
+				{
+					luaHit.Entity = std::to_string(hit.HitEntity);
+					luaHit.Position = hit.Position;
+					luaHit.Normal = hit.Normal;
+					luaHit.Distance = hit.Distance;
+				}
+
+				return luaHit;
+			});
+
+		physics.set_function("OverlapSphere", 
+		[this](const XMFLOAT3& origin,
+			float radius,
+			sol::optional<sol::table> excludedTable) -> std::vector<LuaOverlapHit>
+		{
+				std::vector<LuaOverlapHit> luaHits;
+
+				Scene* scene = m_Context.ActiveScene;
+				PhysicsEngine* physicsEngine = m_Context.Physics;
+
+				if (!scene || !physicsEngine)
+					return luaHits;
+
+				SphereOverlapInfo info = {};
+				info.Origin = origin;
+				info.Radius = radius;
+
+				if (excludedTable)
+				{
+					sol::table table = *excludedTable;
+
+					for (auto& pair : table)
+					{
+						sol::object value = pair.second;
+
+						if (!value.is<std::string>())
+							continue;
+
+						uint64_t uuid = 0;
+
+						if (Utils::TryParseUUID(value.as<std::string>(), uuid))
+						{
+							// Use the version that matches your ExcludedEntityMap:
+							info.ExcludedEntities.insert(uuid);
+							// or:
+							// info.ExcludedEntities[uuid] = true;
+						}
+					}
+				}
+
+				RayHit* hits = nullptr;
+
+				int32_t count = physicsEngine->OverlapShape(
+					scene,
+					&info,
+					&hits
+				);
+
+				luaHits.reserve(count);
+
+				for (int32_t i = 0; i < count; ++i)
+				{
+					LuaOverlapHit out = {};
+					out.Entity = std::to_string(hits[i].HitEntity);
+					out.Position = hits[i].Position;
+					out.Normal = hits[i].Normal;
+					out.Distance = hits[i].Distance;
+
+					luaHits.push_back(out);
+				}
+
+				return luaHits;
+		});
+
 	}
 
 	void ScriptEngine::RegisterMath()
@@ -173,21 +372,37 @@ namespace Engine
 		mathEx.set_function("RightFromYaw", &ScriptMath::RightFromYaw);
 		mathEx.set_function("Normalize", &ScriptMath::Normalize);
 
-		mathEx.set_function("QuatFromEuler", [](const DirectX::XMFLOAT3& euler)
+		mathEx.set_function("QuatFromEuler", [](const XMFLOAT3& euler)
 			{
-				DirectX::XMVECTOR q =
-					DirectX::XMQuaternionRotationRollPitchYaw(
+				XMVECTOR q =
+					XMQuaternionRotationRollPitchYaw(
 						euler.x,
 						euler.y,
 						euler.z
 					);
 
-				DirectX::XMFLOAT4 out;
-				DirectX::XMStoreFloat4(&out, DirectX::XMQuaternionNormalize(q));
+				XMFLOAT4 out;
+				XMStoreFloat4(&out, XMQuaternionNormalize(q));
 				return out;
 			});
 	}
+	void ScriptEngine::RegisterAudio()
+	{
+		sol::table audio = m_Lua.create_named_table("Audio");
+		audio.set_function("PlayEntityAudio", [this](Entity* entity) {
 
+			Scene* scene = m_Context.ActiveScene;
+			PhysicsEngine* physicsEngine = m_Context.Physics;
+
+			if (!scene || !physicsEngine || !entity)
+				return;
+			
+			scene->PlayAudio(entity);
+
+
+		});
+
+	}
 	void ScriptEngine::GenerateLuaAPIFile(const std::filesystem::path& path)
 	{
 		std::ofstream out(path);
@@ -256,7 +471,7 @@ namespace Engine
 		if (!script.OnCreate.valid())
 			return;
 
-		sol::protected_function_result result = script.OnCreate(entity);
+		sol::protected_function_result result = script.OnCreate(*entity);
 
 		if (!result.valid())
 		{
@@ -271,7 +486,7 @@ namespace Engine
 		if (!script.OnUpdate.valid())
 			return;
 
-		sol::protected_function_result result = script.OnUpdate(entity, dt);
+		sol::protected_function_result result = script.OnUpdate(*entity, dt);
 
 		if (!result.valid())
 		{

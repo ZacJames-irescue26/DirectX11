@@ -132,10 +132,10 @@ void Application::OnCreate()
 	//------------------------FullScreenQuad-----------------------------------------//
 	std::vector<FullScreenQuad> vertices = {
 		// Positions (x, y, z) and Texture coordinates (u, v)
-		{DirectX::XMFLOAT2(-1.0f,  1.0f), DirectX::XMFLOAT2(0.0f, 0.0f)}, // Top-left
-		{ DirectX::XMFLOAT2(1.0f,  1.0f), DirectX::XMFLOAT2(1.0f, 0.0f) }, // Top-right
-		{ DirectX::XMFLOAT2(-1.0f, -1.0f), DirectX::XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
-		{ DirectX::XMFLOAT2(1.0f, -1.0f), DirectX::XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
+		{ XMFLOAT2(-1.0f,  1.0f), XMFLOAT2(0.0f, 0.0f)}, // Top-left
+		{ XMFLOAT2(1.0f,  1.0f),  XMFLOAT2(1.0f, 0.0f) }, // Top-right
+		{ XMFLOAT2(-1.0f, -1.0f), XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
+		{ XMFLOAT2(1.0f, -1.0f),  XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
 	};
 
 	hr = m_FullScreenVertex.Initialize(gfx.GetDevice(), vertices.data(), vertices.size());
@@ -337,14 +337,30 @@ void Application::OnCreate()
 	m_Prefiltering.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	m_ShadowPass.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 
-	m_SceneHierarchyPanel = std::make_unique<Editor::SceneHierarchyPanel>(m_Scene.get(), gfx.device.Get(), gfx.deviceContext.Get(), &floorConstantBuffer, &AnimatedConstantBuffer);
-
-
 	std::filesystem::path fullPath =
 		Engine::Project::ResolveAssetPath("Scene/TestScene1.DOE");
 	m_Scene->LoadScene(fullPath.string());
 
 	m_Scene->InitializeRuntimeResources(gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer, floorConstantBuffer);
+	ProbeVolumeDesc sponzaProbes = {};
+
+	AABB SceneAABB = m_Scene->GetSceneAABB();
+
+	sponzaProbes.Min = SceneAABB.Minf();
+	sponzaProbes.Max = SceneAABB.Maxf();
+	sponzaProbes.Spacing = 20.f;
+	sponzaProbes.CaptureRadius = 40.0f;
+
+	m_Probes = CreateProbeGrid(sponzaProbes);
+	
+	m_ProbeCubemap.Initialize(gfx.GetDevice(), gfx.GetDeviceContext(), 64, m_Probes);
+	
+	
+	m_SceneHierarchyPanel = std::make_unique<Editor::SceneHierarchyPanel>(m_Scene.get(), gfx.device.Get(), gfx.deviceContext.Get(), &floorConstantBuffer, &AnimatedConstantBuffer);
+
+
+
+
 }
 
 void Application::InitializeShaders()
@@ -423,14 +439,13 @@ void Application::OnUpdate()
 	Engine::ScriptController::SetController(&controller);
 	while (this->ProcessMessages() == true && m_IsRunning)
 	{	
-		this->gfx.PhysicsUpdate();
-		this->RenderFrame();
 		float dtMs = timer.GetMilisecondsElapsed();
 		float dt = dtMs * 0.001f;
 		timer.Restart();
 		this->Update();
 		m_Scene->UpdateScene(dt);
 
+		this->RenderFrame();
 		if (m_Scene->IsPlaying())
 		{
 			controller.Update();
@@ -438,7 +453,7 @@ void Application::OnUpdate()
 			m_Scene->UpdateRuntimeCamera(gfx);
 			m_Scene->UpdatePhysicsTransforms();
 			m_Scene->PlayUpdate(dt);
-
+			m_Scene->FlushDestroyedEntities();
 
 			mouse.EndFrame();
 		}
@@ -907,12 +922,17 @@ void Application::RenderFrame()
 		RenderIrradianceandHDRI = false;
 
 	}
-
+	if (generateProbes)
+	{
+		m_ProbeCubemap.Draw(&gfx, m_Probes, *m_Scene);
+		generateProbes = false;
+	}
 	m_GBuffer.Draw(&gfx, *m_Scene);
-
 	//Square
 	m_ShadowPass.Draw(&gfx, *m_Scene);
 	//BackgroundCubeMap();
+	m_ProbeCubemap.LightSurfels(&gfx,m_ShadowPass.GetDirSRV(), m_ShadowPass.GetDirShadowMatrix(), m_ShadowPass.GetLightDir(), m_LightingPass.GetLightColor());
+	m_ProbeCubemap.NormalizeAndAccumilate(&gfx);
 	LightingSRVData data;
 	data.IrradianceSRV = m_IrradianceConvolution.GetSRVRenderTarget()[0];
 	data.PrefilteringSRV = m_Prefiltering.GetSRVRenderTarget()[0];
@@ -923,8 +943,10 @@ void Application::RenderFrame()
 	data.CascadeShadowMapSRV[1] = m_ShadowPass.GetCascades(1);
 	data.CascadeShadowMapSRV[2] = m_ShadowPass.GetCascades(2);
 	data.CascadeShadowMapSRV[3] = m_ShadowPass.GetCascades(3);
+	data.ProbesSRV = m_ProbeCubemap.GetProbesSRV();
 	m_LightingPass.SetLightMatrixBuffers(m_ShadowPass);
-	m_LightingPass.Draw(&gfx, m_GBuffer.GetGBufferSRV(), data);
+
+	m_LightingPass.Draw(&gfx, m_GBuffer.GetGBufferSRV(), data, m_Probes.size());
 	//if	(drawsurfeldebug)
 	//{
 	//	SpawnSurfels();
@@ -946,6 +968,11 @@ void Application::RenderFrame()
 	m_LightingPass.ImGuiPass();
 	ImGui::Begin("Settings");
 	
+	if (ImGui::Button("GenerateProbes"))
+	{
+		generateProbes = true;
+	}
+
 	if (!m_Scene->IsPlaying())
 	{
 		if (ImGui::Button("Play"))

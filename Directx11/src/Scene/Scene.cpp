@@ -4,6 +4,8 @@
 #include "Components\Components.h"
 #include "..\Graphics.h"
 #include "src\Utils.h"
+#include "Math\AABB.h"
+#include "Scripting\ScriptEngine.h"
 namespace Engine
 {
 
@@ -28,15 +30,35 @@ namespace Engine
 			return;
 
 		m_IsPlaying = true;
-
-		
-		if (!m_ScriptEngine.Initialize())
+		auto enginecontext = EngineContext(this, m_PhysEngine.get(), m_SoundSystem.get());
+		if (!m_ScriptEngine)
+		{
+			m_ScriptEngine = std::make_unique<ScriptEngine>(enginecontext);
+		}
+		if (!m_ScriptEngine->Initialize(enginecontext))
 		{
 			m_IsPlaying = false;
 			return;
 		}
-		
+		if (!m_SoundSystem)
+		{
+			m_SoundSystem = std::make_unique<SoundSystem>();
+			m_SoundSystem->Initialize();
 
+		}
+		for (auto& ent : GetEntities())
+		{
+			if (!ent)
+				continue;
+
+			auto* Audiocomp = ent->GetComponent<AudioComponent>();
+
+			if (!Audiocomp)
+				continue;
+			m_SoundSystem->CreateSound(Audiocomp->AudioPath, Audiocomp->GetSoundAddress());
+			Audiocomp->SetLoopMode();
+			Audiocomp->SetMinMaxDistance();
+		}
 		for (auto& ent : GetEntities())
 		{
 			if (!ent)
@@ -49,15 +71,28 @@ namespace Engine
 
 			scriptcomp->ResetRuntime();
 
-			if (m_ScriptEngine.LoadScript(ent.get(), *scriptcomp))
+			if (m_ScriptEngine->LoadScript(ent.get(), *scriptcomp))
 			{
-				m_ScriptEngine.CallOnCreate(ent.get(),*scriptcomp);
+				m_ScriptEngine->CallOnCreate(ent.get(),*scriptcomp);
 			}
 		}
 
 		CreatePhysics();
+		 enginecontext = EngineContext(this, m_PhysEngine.get(), m_SoundSystem.get());
+		m_ScriptEngine->SetContext(enginecontext);
 	}
+	void Scene::PlayAudio(Entity* ent)
+	{
+		if (!ent)
+			return;
 
+		auto* audiocomp = ent->GetComponent<AudioComponent>();
+
+		if (!audiocomp)
+			return;
+
+		m_SoundSystem->PlaySound(audiocomp->GetSound(), false, audiocomp->m_Channel);
+	}
 	void Scene::PlayUpdate(float dt)
 	{
 		for (auto& ent : GetEntities())
@@ -65,9 +100,11 @@ namespace Engine
 			if (ent->HasComponent<LuaScriptComponent>())
 			{
 				auto scriptcomp = ent->GetComponent<LuaScriptComponent>();
-				m_ScriptEngine.CallOnUpdate(ent.get(), *scriptcomp, dt);
+				m_ScriptEngine->CallOnUpdate(ent.get(), *scriptcomp, dt);
 			}
 		}
+		m_PhysEngine->Update();
+		m_SoundSystem->Update();
 	}
 	void Scene::ResetPhysics()
 	{
@@ -80,8 +117,8 @@ namespace Engine
 			if (ent->HasComponent<LuaScriptComponent>())
 			{
 				auto scriptcomp = ent->GetComponent<LuaScriptComponent>();
-				m_ScriptEngine.LoadScript(ent.get(), *scriptcomp);
-				m_ScriptEngine.CallOnCreate(ent.get(), *scriptcomp);
+				m_ScriptEngine->LoadScript(ent.get(), *scriptcomp);
+				m_ScriptEngine->CallOnCreate(ent.get(), *scriptcomp);
 			}
 		}
 	}
@@ -94,8 +131,16 @@ namespace Engine
 		m_NameToUUID.insert({ name, id });
 		return entity;
 	}
+
+
 	void Scene::DestroyEntity(UUID id)
 	{
+		auto entity = GetEntityByID(id);
+		if (!entity)
+			return;
+		m_PhysEngine->UnregisterEntity(entity.get());
+
+
 		m_NameToUUID.erase(m_Entities.find(id)->second->GetName());
 		m_Entities.erase(id);
 
@@ -214,7 +259,68 @@ namespace Engine
 
 
 	}
+	AABB TransformAABB( AABB& localBounds, const XMMATRIX& world)
+	{
+		
 
+		XMFLOAT3 corners[8] =
+		{
+			{ localBounds.Minf().x, localBounds.Minf().y, localBounds.Minf().z },
+			{ localBounds.Maxf().x, localBounds.Minf().y, localBounds.Minf().z },
+			{ localBounds.Minf().x, localBounds.Maxf().y, localBounds.Minf().z },
+			{ localBounds.Maxf().x, localBounds.Maxf().y, localBounds.Minf().z },
+
+			{ localBounds.Minf().x, localBounds.Minf().y, localBounds.Maxf().z },
+			{ localBounds.Maxf().x, localBounds.Minf().y, localBounds.Maxf().z },
+			{ localBounds.Minf().x, localBounds.Maxf().y, localBounds.Maxf().z },
+			{ localBounds.Maxf().x, localBounds.Maxf().y, localBounds.Maxf().z }
+		};
+
+		AABB result;
+		result.Minf() = XMFLOAT3(FLT_MAX, FLT_MAX, FLT_MAX);
+		result.Maxf() = XMFLOAT3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+		for (int i = 0; i < 8; ++i)
+		{
+			XMVECTOR c = XMLoadFloat3(&corners[i]);
+			XMVECTOR w = XMVector3TransformCoord(c, world);
+
+			XMFLOAT3 p;
+			XMStoreFloat3(&p, w);
+			result.extend(p);
+		}
+
+		return result;
+	}
+
+	void Scene::QueueDestroyEntity(UUID uuid)
+	{
+		m_EntitiesToDestroy.push_back(uuid);
+	}
+
+	void Scene::FlushDestroyedEntities()
+	{
+		for (UUID id : m_EntitiesToDestroy)
+		{
+			DestroyEntity(id);
+		}
+
+		m_EntitiesToDestroy.clear();
+	}
+	AABB Scene::GetSceneAABB()
+	{
+		AABB SceneAABB;
+		for (auto& [id, entity] : m_Entities)
+		{
+			if (entity->GetComponent<StaticMeshComponent>() && entity->GetComponent<TransformComponent>())
+			{
+				AABB entityAABB = entity->GetComponent<StaticMeshComponent>()->m_Model.GetAABB();
+				
+				SceneAABB = SceneAABB.Combine(SceneAABB, TransformAABB(entityAABB, entity->GetComponent<TransformComponent>()->ModelMatrix));
+			}
+		}
+		return SceneAABB;
+	}
 	void Scene::SetParent(Entity* child, Entity* parent)
 	{
 
@@ -553,6 +659,15 @@ namespace Engine
 				};
 			}
 
+			if (auto* audio = ent->GetComponent<AudioComponent>())
+			{
+				components["AudioComponent"] = {
+					{"AudioPath",audio->AudioPath},
+					{"loopMode", audio->loopMode},
+					{"minDistance",audio->MinDistance},
+					{"maxDistance",audio->MaxDistance }
+				};
+			}
 
 			entityJson["Components"] = components;
 
@@ -1012,7 +1127,7 @@ namespace Engine
 					camera.FarPlane
 				);
 		}
-
+		XMStoreFloat3(&camera.ForwardVector, forward);
 		camera.ViewProjectionMatrix =
 			camera.ViewMatrix * camera.ProjectionMatrix;
 	}
@@ -1048,7 +1163,7 @@ namespace Engine
 		if (!transform || !camera)
 			return;
 
-		XMMATRIX world = transform->ModelMatrix;
+		XMMATRIX world = GetWorldMatrix(cameraEntity);
 
 		XMVECTOR scale;
 		XMVECTOR rotationQuat;
@@ -1084,7 +1199,7 @@ namespace Engine
 			camera->NearPlane,
 			camera->FarPlane
 		);
-
+		XMStoreFloat3(&camera->ForwardVector, forward);
 		gfx.camera.SetViewMartix(view);
 	}
 

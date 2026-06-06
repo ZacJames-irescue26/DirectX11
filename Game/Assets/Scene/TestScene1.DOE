@@ -60,6 +60,49 @@
             "Parent": 0
         },
         {
+            "Children": [],
+            "Components": {
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        -1.100000023841858,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        69.69999694824219,
+                        1.0,
+                        72.30000305175781
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 0,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 14474266530384034668,
+            "Name": "PhysGround",
+            "Parent": 0
+        },
+        {
             "Children": [
                 117165704402830602
             ],
@@ -111,50 +154,9 @@
             "Parent": 0
         },
         {
-            "Children": [],
-            "Components": {
-                "PhysicsComponent": {
-                    "Awake": true,
-                    "ColliderPos": [
-                        0.0,
-                        -1.100000023841858,
-                        0.0
-                    ],
-                    "Friction": 0.0,
-                    "HalfSize": [
-                        69.69999694824219,
-                        1.0,
-                        72.30000305175781
-                    ],
-                    "Restitution": 0.0,
-                    "RigidBodyType": 0,
-                    "Sensor": false,
-                    "ShapeType": 1
-                },
-                "TransformComponent": {
-                    "Position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            "ID": 14474266530384034668,
-            "Name": "PhysGround",
-            "Parent": 0
-        },
-        {
-            "Children": [],
+            "Children": [
+                5008795558042714027
+            ],
             "Components": {
                 "CameraComponent": {
                     "FOVDegrees": 90.0,
@@ -185,6 +187,34 @@
             "ID": 117165704402830602,
             "Name": "Camera",
             "Parent": 9908706380894310884
+        },
+        {
+            "Children": [],
+            "Components": {
+                "StaticMeshComponent": {
+                    "ModelPath": "ScarHModel.gltf"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        -0.699999988079071,
+                        1.100000023841858
+                    ],
+                    "Rotation": [
+                        0.0,
+                        1.7802348136901855,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 5008795558042714027,
+            "Name": "TestGun",
+            "Parent": 117165704402830602
         }
     ]
 }

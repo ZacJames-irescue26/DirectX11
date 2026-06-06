@@ -1,7 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
 #include <complex>
-using namespace DirectX;
 
 struct ScriptMath
 {

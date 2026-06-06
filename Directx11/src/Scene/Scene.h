@@ -6,6 +6,7 @@
 #include "Keyboard/KeyboardClass.h"
 #include "Mouse/MouseClass.h"
 #include "src/Graphics/Graphics.h"
+#include "Sound/System.h"
 
 namespace Engine { class PhysicsEngine; }
 
@@ -15,8 +16,10 @@ namespace Engine
 	class Scene
 	{
 	public:
+		Scene() {}
 		void Stop();
 		void Play();
+		void PlayAudio(Entity* ent);
 		void PlayUpdate(float dt);
 		void ResetPhysics();
 		void ReloadScript();
@@ -31,6 +34,9 @@ namespace Engine
 		void DrawAnimatedScene(const XMMATRIX& viewProjectionMatrix);
 		void DrawWithoutCBuffer(ConstantBuffer<ModelOnly>* constantbuffer);
 		void UpdateScene(float deltatime);
+		void QueueDestroyEntity(UUID uuid);
+		void FlushDestroyedEntities();
+		AABB GetSceneAABB();
 		void SetParent(Entity* child, Entity* parent);
 		XMMATRIX GetWorldMatrix(Entity* entity);
 		bool IsDescendant(Entity* possibleChild, Entity* possibleParent);
@@ -60,7 +66,9 @@ namespace Engine
 		std::unordered_map<UUID, std::shared_ptr<Entity>> m_Entities;
 		std::unordered_map<std::string, UUID> m_NameToUUID;
 		std::shared_ptr<Engine::PhysicsEngine> m_PhysEngine;
-		ScriptEngine m_ScriptEngine;
-		bool m_IsPlaying;
+		std::unique_ptr<ScriptEngine> m_ScriptEngine;
+		std::unique_ptr<SoundSystem> m_SoundSystem;
+		std::vector<UUID> m_EntitiesToDestroy;
+		bool m_IsPlaying = false;
 	};
 }

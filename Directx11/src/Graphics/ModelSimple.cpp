@@ -71,7 +71,7 @@ bool Model::LoadModel(const std::string& filePath)
 	if (pScene == nullptr)
 		return false;
 
-	this->ProcessNode(pScene->mRootNode, pScene, DirectX::XMMatrixIdentity());
+	this->ProcessNode(pScene->mRootNode, pScene, XMMatrixIdentity());
 	return true;
 }
 
@@ -108,10 +108,10 @@ void Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const XMMATRIX& tran
 	for (UINT i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-
 		vertex.pos.x = mesh->mVertices[i].x;
 		vertex.pos.y = mesh->mVertices[i].y;
 		vertex.pos.z = mesh->mVertices[i].z;
+		ModelAABB.extend(vertex.pos);
 
 		if (mesh->mTextureCoords[0])
 		{
@@ -239,6 +239,8 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* pMaterial, aiTextur
 			if (aiColor.IsBlack()) //If color = black, just use grey
 			{
 				materialTextures.push_back(Texture(this->device, ErrorColors::UnhandledTextureColor, textureType));
+				
+				
 				return materialTextures;
 			}
 			materialTextures.push_back(Texture(this->device, Color(aiColor.r * 255, aiColor.g * 255, aiColor.b * 255), textureType));
@@ -285,12 +287,27 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* pMaterial, aiTextur
 			case TextureStorageType::EmbeddedIndexCompressed:
 			{
 				int index = GetTextureIndex(&path);
-				Texture embeddedIndexedTexture(this->device,
-					/*reinterpret_cast<uint8_t*>*/(pScene->mTextures[index]),
-					pScene->mTextures[index]->mWidth,
-					textureType);
-				materialTextures.push_back(embeddedIndexedTexture);
-				break;
+				if (m_LoadedTextureMap.find(path.C_Str()) != m_LoadedTextureMap.end())
+				{
+				
+					materialTextures.push_back(m_LoadedTextureMap.find(path.C_Str())->second);
+					break;
+				}
+				else
+				{
+
+					Texture embeddedIndexedTexture(this->device,
+						/*reinterpret_cast<uint8_t*>*/(pScene->mTextures[index]),
+						pScene->mTextures[index]->mWidth,
+						textureType);
+					if (embeddedIndexedTexture.GetRawTexture() == nullptr)
+					{
+						break;
+					}
+					m_LoadedTextureMap.insert({path.C_Str(), embeddedIndexedTexture});
+					materialTextures.push_back(embeddedIndexedTexture);
+					break;
+				}
 			}
 
 			case TextureStorageType::EmbeddedCompressed:
@@ -307,9 +324,23 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* pMaterial, aiTextur
 			case TextureStorageType::Disk:
 			{
 				std::string filename = this->directory + '\\' + path.C_Str();
-				Texture diskTexture(this->device, deviceContext, filename, textureType);
-				materialTextures.push_back(diskTexture);
-				break;
+				if (m_LoadedTextureMap.find(filename) != m_LoadedTextureMap.end())
+				{
+					materialTextures.push_back(m_LoadedTextureMap.find(filename)->second);
+					break;
+				}
+				else
+				{
+
+					Texture diskTexture(this->device, deviceContext, filename, textureType);
+					if (diskTexture.GetRawTexture() == nullptr)
+					{
+						break;
+					}
+					m_LoadedTextureMap.insert({ filename, diskTexture });
+					materialTextures.push_back(diskTexture);
+					break;
+				}
 			}
 			}
 		}

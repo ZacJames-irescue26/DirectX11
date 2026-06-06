@@ -406,6 +406,8 @@ namespace Editor
 			DisplayAddComponentEntry<Engine::PhysicsComponent>("PhysicsComp");
 			DisplayAddComponentEntry<Engine::LuaScriptComponent>("LuaComp");
 			DisplayAddComponentEntry<Engine::CameraComponent>("CameraComp");
+			DisplayAddComponentEntry<Engine::AudioComponent>("AudioComponent");
+
 			ImGui::EndPopup();
 		}
 
@@ -672,7 +674,7 @@ namespace Editor
 
 				ImGui::TableNextRow();
 				ImGui::TableSetColumnIndex(0);
-				ImGui::TextUnformatted("v");
+				ImGui::TextUnformatted("FOVDegrees");
 				ImGui::TableSetColumnIndex(1);
 				ImGui::SetNextItemWidth(-1.0f);
 				ImGui::DragFloat("##FOVDegrees", &component.FOVDegrees, 0.01f, 0.0f, 10.0f);
@@ -695,7 +697,39 @@ namespace Editor
 
 		});
 
+		DrawComponent<Engine::AudioComponent>("AudioComponent", entity, [](auto& component){
+		
 
+			char audiopathBuffer[512] = {};
+			strncpy_s(audiopathBuffer, sizeof(audiopathBuffer), component.AudioPath.c_str(), _TRUNCATE);
+
+			if (ImGui::InputText("Audio Path", audiopathBuffer, sizeof(audiopathBuffer)))
+			{
+				component.AudioPath = std::string(audiopathBuffer);
+			}
+
+			if (ImGui::BeginTable("AudioProps", 2, ImGuiTableFlags_SizingStretchProp))
+			{
+				ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+				ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("MinDistance");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##MinDistance", &component.MinDistance, 0.01f,0.001);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("MaxDistance");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##MaxDistance", &component.MaxDistance, 0.01f,0.001);
+				ImGui::EndTable();
+			}
+
+		});
 		ImGui::PopItemWidth();
 		ImGui::End();
 	}
