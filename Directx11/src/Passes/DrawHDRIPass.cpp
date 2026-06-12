@@ -39,6 +39,7 @@ namespace Engine
 		if (data == nullptr)
 		{
 			ErrorLogger::Log("Failed to load hdri image");
+			return false;
 		}
 		D3D11_TEXTURE2D_DESC texDesc = {};
 		texDesc.Width = width;

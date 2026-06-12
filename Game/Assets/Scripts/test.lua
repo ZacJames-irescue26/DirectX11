@@ -35,6 +35,7 @@ end
 function FireGun(entity)
     local camera = entity:GetChildByName("Camera")
     local audioPlayer = entity:GetChildByName("Audio")
+
     Logging.LogToConsol("Started fire")
     Audio.PlayEntityAudio(audioPlayer)
     if camera == nil then
@@ -46,8 +47,7 @@ function FireGun(entity)
     if camTransform == nil then
         return
     end
-
-    local origin = camTransform.Position
+    local origin = camera:GetWorldPosition()
 
     -- Since your controller stores yaw on the body and pitch on the camera,
     -- build the forward direction from yaw + pitch.
@@ -79,12 +79,13 @@ function FireGun(entity)
     if hit.hit then
         Logging.LogToConsol(hit.entity)
         Logging.LogToConsol("Distance: " .. hit.distance)
-
+        Logging.LogToConsol(GetEntityByUUID(hit.entity):GetName())
+        Entity.ApplyDamage(hit.entity, 10)
         -- Optional, if you expose these functions:
         -- Entity.ApplyDamage(hit.entity, gunDamage)
         -- Effects.SpawnImpact(hit.position, hit.normal)
 
-        --Debug.DrawLine(origin, hit.position, Vec3.new(1.0, 0.0, 0.0), 0.25)
+        Debug.DrawLine(origin, hit.position, Vec3.new(1.0, 0.0, 0.0))
     else
         local endPos = Vec3.new(
             origin.x + direction.x * gunRange,
@@ -92,7 +93,7 @@ function FireGun(entity)
             origin.z + direction.z * gunRange
         )
 
-        --Debug.DrawLine(origin, endPos, Vec3.new(1.0, 1.0, 1.0), 0.25)
+        Debug.DrawLine(origin, endPos, Vec3.new(1.0, 1.0, 1.0), 0.25)
     end
 end
 
@@ -201,8 +202,10 @@ function OnUpdate(entity, dt)
     if Controller.RightTrigger() > 0.2 then
         wantsToFire = true
     end
-if wantsToFire and timeSinceLastShot >= fireCooldown then
-    timeSinceLastShot = 0.0
-    FireGun(entity)
-end
+    if wantsToFire and timeSinceLastShot >= fireCooldown then
+        timeSinceLastShot = 0.0
+        FireGun(entity)
+    end
+    
+
 end

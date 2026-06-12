@@ -7,8 +7,10 @@
 #include "Mouse/MouseClass.h"
 #include "src/Graphics/Graphics.h"
 #include "Sound/System.h"
+#include "Pathfinding/NavMeshSystem.h"
 
-namespace Engine { class PhysicsEngine; }
+
+namespace Engine { class PhysicsEngine; class NavMeshSystem;}
 
 namespace Engine
 {
@@ -17,6 +19,13 @@ namespace Engine
 	{
 	public:
 		Scene() {}
+		~Scene(){}
+		Scene(const Scene&) = delete;
+		Scene& operator=(const Scene&) = delete;
+
+		Scene(Scene&&) noexcept = default;
+		Scene& operator=(Scene&&) noexcept = default;
+
 		void Stop();
 		void Play();
 		void PlayAudio(Entity* ent);
@@ -61,6 +70,13 @@ namespace Engine
 		Entity* GetPrimaryCameraEntity();
 		XMMATRIX GetActiveCameraViewProjection(float aspectRatio);
 		void UpdateRuntimeCamera(Graphics& gfx);
+		void UpdateListener(float dt);
+		void CreateNavMesh();
+		void DrawNavMesh();
+		
+		XMFLOAT3 BodyPositionToNavPosition(const XMFLOAT3& bodyCenter, const PhysicsComponent& physics) const;
+		XMFLOAT3 NavPositionToBodyPosition(const XMFLOAT3& navPosition, const PhysicsComponent& physics) const;
+		void UpdateAgents(float dt);
 	private:
 	
 		std::unordered_map<UUID, std::shared_ptr<Entity>> m_Entities;
@@ -68,6 +84,7 @@ namespace Engine
 		std::shared_ptr<Engine::PhysicsEngine> m_PhysEngine;
 		std::unique_ptr<ScriptEngine> m_ScriptEngine;
 		std::unique_ptr<SoundSystem> m_SoundSystem;
+		std::unique_ptr<Engine::NavMeshSystem> m_NavMeshSystem;
 		std::vector<UUID> m_EntitiesToDestroy;
 		bool m_IsPlaying = false;
 	};

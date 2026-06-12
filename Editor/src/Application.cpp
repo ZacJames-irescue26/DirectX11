@@ -24,311 +24,24 @@ void Application::OnCreate()
 {
 	InitializeShaders();
 
-	//Initialize Constant Buffer(s)
-	HRESULT hr = this->constantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	hr = this->floorConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-	hr = this->AnimatedConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-	hr = this->lightConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-
-
+	////Initialize Constant Buffer(s)
+	//HRESULT hr = this->constantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	//COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
 
 	
-
-	
-
-
-
-	
-	hr = m_ViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	hr = m_DebugColors.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	hr = m_CastLight.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	hr = lcb.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-	hr = m_BaseCB.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
-
-	m_SurfelCSBUffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize constant buffer.");
+	COM_ERROR_IF_FAILED(this->floorConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext()), "Failed to initialize constant buffer.");
+	COM_ERROR_IF_FAILED(this->AnimatedConstantBuffer.Initialize(gfx.GetDevice(), gfx.GetDeviceContext()), "Failed to initialize constant buffer.");
+	m_Scene = nullptr;
+	auto newscene = std::make_unique<Scene>();
+	m_Scene = std::move(newscene);
 
 
-	m_CastLight.data.light.position = XMFLOAT3(0.0,5.0,0.0);
-	m_CastLight.data.light.intensity = XMFLOAT3(1.0, 1.0, 1.0);
-	m_CastLight.data.light.direction = XMFLOAT3(0.0, -1.0, 0.0);
-	m_CastLight.data.light.cutOff = 0.9;
-	m_CastLight.ApplyChanges();
-
-	this->lightConstantBuffer.data.ambientLightColor = XMFLOAT3(1.0f, 1.0f, 1.0f);
-	this->lightConstantBuffer.data.ambientLightStrength = 1.0f;
-
-	HDRIViewProj.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
-
-	m_Scene = std::make_unique<Scene>();
-
-	/*auto sponza = m_Scene->AddEntity("Sponza");
-	std::filesystem::path fullPath =
-		Engine::Project::ResolveAssetPath("Sponza/glTF/Sponza.gltf");
-	sponza->AddComponent(std::make_unique<StaticMeshComponent>(fullPath.string(), gfx.GetDevice(), gfx.GetDeviceContext(), constantBuffer));
-
-	auto anim = m_Scene->AddEntity("TestAnim");
-	fullPath =
-		Engine::Project::ResolveAssetPath("FullAnim.fbx");
-	anim->AddComponent(std::make_unique<AnimatedMeshComponent>(fullPath.string(), gfx.GetDevice(), gfx.GetDeviceContext(), AnimatedConstantBuffer));*/
-	
-
-	//if (!helmet.Initialize("Assets/DamagedHelmet/gLTF/DamagedHelmet.gltf", gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
-	//	return;
-	
-
-	/*if (!light.Initialize(gfx.GetDevice(), gfx.GetDeviceContext(), this->constantBuffer))
-	{}*/
-
-//	BodyCreationSettings Box_settings(new BoxShape(JPH::Vec3(1, 1, 1)), RVec3(0.0_r, 5.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Dynamic, Layers::MOVING);
-//	if (!gameObject.Initialize(gfx.physicsController.CreateAndAddObject(Box_settings, EActivation::Activate),
-//	"Assets/TexturedSphere.glb", gfx.GetDevice(), 
-//	gfx.GetDeviceContext(), this->constantBuffer))
-//{}
-// 
-// 
-// 
-	//BodyCreationSettings Floor_settings(new BoxShape(JPH::Vec3(100, 0.1, 100)), RVec3(0.0_r, -2.0_r, 0.0_r), Quat::sIdentity(), EMotionType::Static, Layers::NON_MOVING);
-
-	//if (!floor.Initialize(gfx.physicsController.CreateAndAddObject(Floor_settings, EActivation::DontActivate),
-	//	"Assets/Sponza/glTF/Sponza.gltf", gfx.GetDevice(),
-	//	gfx.GetDeviceContext(), this->constantBuffer))
-	//{
-	//	return;
-	//}
-
-
-	/*if (!MiscItems.Initialize(
-		"Assets/MiscItems.gltf", gfx.GetDevice(),
-		gfx.GetDeviceContext(), this->floorConstantBuffer))
-	{
-		return;
-	}*/
-	//helmet.SetScale({0.1,0.1,0.1});
-	//helmet.SetPosition(XMFLOAT3{1.0,1.0,1.0});
-	//floor.SetPosition(XMVECTOR{-.1f,-0.1,-0.1});
-	//floor.SetScale({0.01,0.01,0.01});
-	/*MiscItems.SetPosition(XMVECTOR{0.0,-2.0,0.0});
-	MiscItems.SetScale({10,10,10});*/
-	//gfx.physicsController.Optimize();
-	//PlayerCamera.SetPosition(0.0,0.0,-4.0);
-	//PlayerCamera.SetProjectionValues(90, static_cast<float>(gfx.windowWidth) / static_cast<float>(gfx.windowHeight), 0.1f, 1000.0f);
-	
 	gfx.camera.SetPosition(0.0,3.0,0.0);
-	//------------------------FullScreenQuad-----------------------------------------//
-	std::vector<FullScreenQuad> vertices = {
-		// Positions (x, y, z) and Texture coordinates (u, v)
-		{ XMFLOAT2(-1.0f,  1.0f), XMFLOAT2(0.0f, 0.0f)}, // Top-left
-		{ XMFLOAT2(1.0f,  1.0f),  XMFLOAT2(1.0f, 0.0f) }, // Top-right
-		{ XMFLOAT2(-1.0f, -1.0f), XMFLOAT2(0.0f, 1.0f) }, // Bottom-left
-		{ XMFLOAT2(1.0f, -1.0f),  XMFLOAT2(1.0f, 1.0f) }, // Bottom-right
-	};
+	auto newDebugRenderer = std::make_unique<Engine::DebugRenderer>();
+	m_DebugRenderer = std::move(newDebugRenderer);
 
-	hr = m_FullScreenVertex.Initialize(gfx.GetDevice(), vertices.data(), vertices.size());
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize Vertex buffer.");
-	DWORD indices[] = {
-	0, 1, 2, // First triangle
-	2, 1, 3  // Second triangle
-	};
-	hr = m_FullScreenIndex.Initialize(gfx.GetDevice(), indices, 6);
-	COM_ERROR_IF_FAILED(hr, "Failed to initialize index buffer.");
-
-
-
-	/*gameObject.SetPosition(XMFLOAT3{0,0,0});
-	m_lightparams.data.LightColor = DirectX::XMFLOAT3(10.0, 10.0, 10.0);
-	m_lightparams.data.LightDirection = DirectX::XMFLOAT3(0.0, -4.8, -1.0);
-	m_lightparams.ApplyChanges();*/
-
-
-
-
-	//AABB testbox = AABB(XMFLOAT3{-15.0,-5.0,-15.0},{15.0,15.0,15.0});
-	//octree = new Octree(&testbox,5);
-	//std::vector<GameObject> objects;
-	//objects.push_back(floor);
-
-	//accel = BVHBuilder::BuildModelAccel(floor.GetModel(), 500);
-
-	//
-	//
-	//BVHBuilder::FlattenMeshBVH(accel.get(), Flat, triangles, baseRoots, floor.worldMatrix);
-
-	//D3D11_BUFFER_DESC bufDesc = {};
-	//bufDesc.ByteWidth = UINT(Flat.size() * sizeof(FlatNode));
-	//bufDesc.Usage = D3D11_USAGE_DEFAULT;
-	//bufDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	//bufDesc.CPUAccessFlags = 0;
-	//bufDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-	//bufDesc.StructureByteStride = sizeof(FlatNode);
-
-	//// 2) Provide initial data
-	//D3D11_SUBRESOURCE_DATA flatdata = {};
-	//flatdata.pSysMem = Flat.data();
-	//// 3) Create the buffer
-
-	// hr = gfx.device->CreateBuffer(&bufDesc, &flatdata, nodeBuffer.GetAddressOf());
-	//// check hr...
-
-	//// 4) Create the SRV so shaders can read it
-	//D3D11_SHADER_RESOURCE_VIEW_DESC flatdesc = {};
-	//flatdesc.Format = DXGI_FORMAT_UNKNOWN;  // structured buffer
-	//flatdesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
-	//flatdesc.Buffer.ElementOffset = 0;
-	//flatdesc.Buffer.NumElements = UINT(Flat.size());
-
-
-	//hr = gfx.device->CreateShaderResourceView(nodeBuffer.Get(), &flatdesc, nodeSRV.GetAddressOf());
-	//
-	//bufDesc.ByteWidth = UINT(triangles.size() * sizeof(TriangleJustPos));
-	//bufDesc.Usage = D3D11_USAGE_DEFAULT;
-	//bufDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	//bufDesc.CPUAccessFlags = 0;
-	//bufDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-	//bufDesc.StructureByteStride = sizeof(TriangleJustPos);
-
-	//// 2) Provide initial data
-	//flatdata.pSysMem = triangles.data();
-
-	//// 3) Create the buffer
-
-	// hr = gfx.device->CreateBuffer(&bufDesc, &flatdata, TrianglesBuffer.GetAddressOf());
-	//// check hr...
-
-	//// 4) Create the SRV so shaders can read it
-	//flatdesc.Format = DXGI_FORMAT_UNKNOWN;  // structured buffer
-	//flatdesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
-	//flatdesc.Buffer.ElementOffset = 0;
-	//flatdesc.Buffer.NumElements = UINT(triangles.size());
-
-
-	//hr = gfx.device->CreateShaderResourceView(TrianglesBuffer.Get(), &flatdesc, TrianglesSRV.GetAddressOf());
-	//// create StructuredBuffer<uint> for baseRoots
-	//D3D11_BUFFER_DESC bdesc = {};
-	//bdesc.ByteWidth = UINT(baseRoots.size() * sizeof(uint32_t));
-	//bdesc.Usage = D3D11_USAGE_DEFAULT;
-	//bdesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	//bdesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-	//bdesc.StructureByteStride = sizeof(uint32_t);
-
-	//D3D11_SUBRESOURCE_DATA init = { baseRoots.data(), 0, 0 };
-
-	//
-	//gfx.device->CreateBuffer(&bdesc, &init, &baseRootBuffer);
-
-	//D3D11_SHADER_RESOURCE_VIEW_DESC srvd = {};
-	//srvd.Format = DXGI_FORMAT_UNKNOWN;
-	//srvd.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
-	//srvd.Buffer.NumElements = UINT(baseRoots.size());
-
-	//
-	//gfx.device->CreateShaderResourceView(
-	//	baseRootBuffer.Get(), &srvd, &baseRootSRV);
-	D3D11_BUFFER_DESC surfelBufDesc = {};
-	surfelBufDesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
-	surfelBufDesc.ByteWidth = sizeof(GPUSurfel) * 10000;
-	surfelBufDesc.StructureByteStride = sizeof(GPUSurfel);
-	surfelBufDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-	surfelBufDesc.Usage = D3D11_USAGE_DEFAULT;
-	surfelBufDesc.CPUAccessFlags = 0;
-
-	
-	hr = gfx.device->CreateBuffer(&surfelBufDesc, nullptr, m_SurfelsBuffer.GetAddressOf());
-
-	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
-	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
-	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
-	uavDesc.Buffer.FirstElement = 0;
-	uavDesc.Buffer.NumElements = 10000;
-
-	
-	hr = gfx.device->CreateUnorderedAccessView(m_SurfelsBuffer.Get(), &uavDesc, m_SurfelsUAV.GetAddressOf());
-
-	D3D11_BUFFER_DESC vbDesc = {};
-	vbDesc.Usage = D3D11_USAGE_DEFAULT;
-	vbDesc.ByteWidth = sizeof(GPUSurfel) * 10000;
-	vbDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vbDesc.CPUAccessFlags = 0;
-	vbDesc.StructureByteStride = 0;
-	vbDesc.MiscFlags = 0;
-
-	
-	gfx.device->CreateBuffer(&vbDesc, nullptr, m_VertexBuffer.GetAddressOf());
-
-
-	D3D11_BUFFER_DESC bdesc = {};
-	bdesc.ByteWidth = 4; // size of a single uint
-	bdesc.Usage = D3D11_USAGE_DEFAULT;
-	bdesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
-	bdesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_ALLOW_RAW_VIEWS;
-	bdesc.StructureByteStride = 0;
-
-	
-	hr = gfx.device->CreateBuffer(&bdesc, nullptr, surfelCounterBuffer.GetAddressOf());
-
-	D3D11_UNORDERED_ACCESS_VIEW_DESC suavDesc = {};
-	suavDesc.Format = DXGI_FORMAT_R32_TYPELESS;
-	suavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
-	suavDesc.Buffer.Flags = D3D11_BUFFER_UAV_FLAG_RAW;
-	suavDesc.Buffer.NumElements = 1;
-	suavDesc.Buffer.FirstElement = 0;
-
-	
-	hr = gfx.device->CreateUnorderedAccessView(surfelCounterBuffer.Get(), &suavDesc, surfelCounterUAV.GetAddressOf());
-
-	UINT zero = 0;
-	gfx.deviceContext->UpdateSubresource(surfelCounterBuffer.Get(), 0, nullptr, &zero, 0, 0);
-
-	D3D11_TEXTURE2D_DESC ttexDesc = {};
-	ttexDesc.Width = windowWidth / 16;
-	ttexDesc.Height = windowHeight / 16;
-	ttexDesc.MipLevels = 1;
-	ttexDesc.ArraySize = 1;
-	ttexDesc.Format = DXGI_FORMAT_R32_UINT;
-	ttexDesc.SampleDesc.Count = 1;
-	ttexDesc.Usage = D3D11_USAGE_DEFAULT;
-	ttexDesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
-	ttexDesc.CPUAccessFlags = 0;
-	ttexDesc.MiscFlags = 0;
-
-	
-	hr = gfx.device->CreateTexture2D(&ttexDesc, nullptr, m_TileCoverageTex.GetAddressOf());
-
-	D3D11_UNORDERED_ACCESS_VIEW_DESC tuavDesc = {};
-	tuavDesc.Format = DXGI_FORMAT_R32_UINT;
-	tuavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
-	tuavDesc.Texture2D.MipSlice = 0;
-
-	
-	hr = gfx.device->CreateUnorderedAccessView(m_TileCoverageTex.Get(), &tuavDesc, m_TileCoverageUAV.GetAddressOf());
-
-
-	UINT clearValue[4] = { 0, 0, 0, 0 };
-	gfx.deviceContext->ClearUnorderedAccessViewUint(m_TileCoverageUAV.Get(), clearValue);
-
-	D3D11_SHADER_RESOURCE_VIEW_DESC tsrvDesc = {};
-	tsrvDesc.Format = DXGI_FORMAT_R32_UINT;
-	tsrvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	tsrvDesc.Texture2D.MostDetailedMip = 0;
-	tsrvDesc.Texture2D.MipLevels = 1;
-
-	
-	hr = gfx.device->CreateShaderResourceView(m_TileCoverageTex.Get(), &tsrvDesc, m_TileCoverageSRV.GetAddressOf());
-
+	m_DebugRenderer->Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
+	Engine::DebugRenderer::Set(m_DebugRenderer.get());
 	m_BRDFPass.Initialize(gfx.device.Get());
 	m_HDRIPass.Initialize(gfx.GetDevice(), gfx.GetDeviceContext());
 	m_GBuffer.Initialize(gfx.GetDevice());
@@ -367,69 +80,6 @@ void Application::InitializeShaders()
 {
 
 
-	
-
-	//UINT numElements = ARRAYSIZE(layout);
-	//if (!m_vertexShader.Initialize(gfx.device, L"CompiledShaders/VertexShader_v.cso", layout, ARRAYSIZE(layout)))
-	//{
-	//	return;
-	//}	
-	//
-	//if (!m_pixelShader.Initialize(gfx.device, L"CompiledShaders/PixelShader_p.cso"))
-	//{
-	//	return;
-	//}
-
-
-
-
-
-
-
-	/*if (!m_BackgroundCubemap_VS.Initialize(gfx.device.Get(), L"CompiledShaders/BackgroundCubemap_v.cso", InputElements::posDesc, ARRAYSIZE(InputElements::posDesc)))
-	{
-		return;
-	}
-	if (!m_BackgroundCubemap_PS.Initialize(gfx.device.Get(), L"CompiledShaders/BackgroundCubemap_p.cso"))
-	{
-		return;
-	}*/
-
-
-	//if (!m_DebugCascade_VS.Initialize(gfx.device, L"CompiledShaders/DebugCascade_v.cso", ModelPos, ARRAYSIZE(ModelPos)))
-	//{
-	//	return;
-	//}
-	//if (!m_DebugCascade_PS.Initialize(gfx.device, L"CompiledShaders/DebugCascade_p.cso"))
-	//{
-	//	return;
-	//}
-	//if (!m_DebugDrawShadowMap_PS.Initialize(gfx.device, L"CompiledShaders/DrawShadowMap_p.cso"))
-	//{
-	//	return;
-	//}
-
-	//if (!m_SurfelDebug_VS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_v.cso", Surfelvb, ARRAYSIZE(Surfelvb)))
-	//{
-	//	return;
-	//}
-	//if (!m_SurfelDebug_PS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_p.cso"))
-	//{
-	//	return;
-	//}
-	//if (!m_SureflDebug_GS.Initialize(gfx.device, L"CompiledShaders/SurfelDebug_g.cso"))
-	//{
-	//	return;
-	//}
-	//if (!m_Shadow_CS.Initialize(gfx.device, L"CompiledShaders/RealtimeShadows_c.cso"))
-	//{
-	//	return;
-	//}
-	//if (!m_GenerateSurfel_CS.Initialize(gfx.device, L"CompiledShaders/GenerateSurfels_c.cso"))
-	//{
-	//	return;
-	//}
-
 }
 void Application::OnUpdate()
 {
@@ -444,13 +94,14 @@ void Application::OnUpdate()
 		timer.Restart();
 		this->Update();
 		m_Scene->UpdateScene(dt);
-
+		Engine::DebugRenderer::Get()->Update(dt);
 		this->RenderFrame();
 		if (m_Scene->IsPlaying())
 		{
 			controller.Update();
 			m_Scene->UpdateWorldTransforms();
 			m_Scene->UpdateRuntimeCamera(gfx);
+			m_Scene->UpdateAgents(dt);  
 			m_Scene->UpdatePhysicsTransforms();
 			m_Scene->PlayUpdate(dt);
 			m_Scene->FlushDestroyedEntities();
@@ -911,7 +562,7 @@ void Application::BindLightingPass()
 
 void Application::RenderFrame()
 {
-	
+	//Engine::DebugRenderer::Get()->BeginFrame();
 	if (RenderIrradianceandHDRI)
 	{
 		m_HDRIPass.Draw(&gfx);
@@ -945,17 +596,17 @@ void Application::RenderFrame()
 	data.CascadeShadowMapSRV[3] = m_ShadowPass.GetCascades(3);
 	data.ProbesSRV = m_ProbeCubemap.GetProbesSRV();
 	m_LightingPass.SetLightMatrixBuffers(m_ShadowPass);
-
 	m_LightingPass.Draw(&gfx, m_GBuffer.GetGBufferSRV(), data, m_Probes.size());
-	//if	(drawsurfeldebug)
-	//{
-	//	SpawnSurfels();
-	//	DrawSurfels();
-	//}
-	////DrawShadowMaps();
-	//DrawDebugCascade();
 
-	//ForwardRender();
+	if (m_DrawDebug)
+	{
+		m_Scene->DrawNavMesh();
+
+	}
+
+
+	Engine::DebugRenderer::Get()->Flush(gfx.GetDeviceContext(), (gfx.camera.GetViewMatrix() * gfx.camera.GetProjectionMatrix()));
+
 	// Start the Dear ImGui frame
 	gfx.GetDeviceContext()->OMSetRenderTargets(1, gfx.renderTargetView.GetAddressOf(), nullptr);
 	ImGui_ImplDX11_NewFrame();
@@ -966,8 +617,15 @@ void Application::RenderFrame()
 	m_ShadowPass.ImGuiPass();
 	m_SceneHierarchyPanel->OnImGuiRender();
 	m_LightingPass.ImGuiPass();
-	ImGui::Begin("Settings");
+	ImGui::Begin("NavMesh");
+	if (ImGui::Button("Generate NavMesh"))
+	{
+		m_Scene->CreateNavMesh();
+	}
+	ImGui::End();
 	
+	ImGui::Begin("Settings");
+	ImGui::Checkbox("Draw Debug", &m_DrawDebug);
 	if (ImGui::Button("GenerateProbes"))
 	{
 		generateProbes = true;
@@ -1037,6 +695,8 @@ void Application::RenderFrame()
 	}
 	
 	ImGui::End();
+
+
 	//Assemble Together Draw Data
 	OnImguiRenderViewport();
 	ImGui::Render();

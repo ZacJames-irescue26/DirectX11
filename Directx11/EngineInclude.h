@@ -14,3 +14,4 @@
 #include "src/Passes/GBufferPass.h"
 #include "src/Physics/PhysicsWorld.h"
 #include "src/Scene/Project.h"
+#include "DebugRenderer/DebugRenderer.h"

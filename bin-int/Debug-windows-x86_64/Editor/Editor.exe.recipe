@@ -46,6 +46,12 @@
       <FullPath>C:\DirectX11\Editor\CompiledShaders\ShadowBake_c.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\DrawLine_p.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\DirectX11\Editor\CompiledShaders\DrawLine_v.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\DirectX11\Editor\CompiledShaders\DefferedPixel_p.cso</FullPath>
     </ContentFile>
     <ContentFile>

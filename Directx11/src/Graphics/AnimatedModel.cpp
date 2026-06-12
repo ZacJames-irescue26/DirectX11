@@ -36,23 +36,73 @@ namespace Engine
 			return;
 		}
 
-		AnimationClip& clip = LoadedAnimations[m_CurrentAnimationIndex];
+		AnimationClip& clip =
+			LoadedAnimations[m_CurrentAnimationIndex];
+
+		const double ticksPerSecond =
+			clip.TicksPerSecond > 0.0
+			? clip.TicksPerSecond
+			: 25.0;
+
+		const float durationSeconds =
+			static_cast<float>(
+				clip.Duration / ticksPerSecond
+				);
+
+		if (durationSeconds <= 0.0f)
+			return;
 
 		m_AnimationTime += deltaTime * m_PlaybackSpeed;
 
-		float durationSeconds =
-			static_cast<float>(clip.Duration / clip.TicksPerSecond);
-
-		if (durationSeconds > 0.0f)
+		if (m_Looping)
 		{
-			m_AnimationTime = std::fmod(m_AnimationTime, durationSeconds);
+			m_AnimationTime =
+				std::fmod(m_AnimationTime, durationSeconds);
+
+			if (m_AnimationTime < 0.0f)
+				m_AnimationTime += durationSeconds;
+		}
+		else
+		{
+			m_AnimationTime =
+				std::clamp(
+					m_AnimationTime,
+					0.0f,
+					durationSeconds
+				);
 		}
 
-		m_Skeleton.EvaluateAnimationAtTime(m_AnimationTime, &clip);
-		//m_Skeleton.CalculateFinalTransforms();
-
-
+		m_Skeleton.EvaluateAnimationAtTime(
+			m_AnimationTime,
+			&clip
+		);
 	}
+
+	bool AnimatedModel::HasAnimationFinished() const
+	{
+		if (m_CurrentAnimationIndex < 0 ||
+			m_CurrentAnimationIndex >= static_cast<int>(LoadedAnimations.size()))
+		{
+			return true;
+		}
+
+		const AnimationClip& clip =
+			LoadedAnimations[m_CurrentAnimationIndex];
+
+		const double ticksPerSecond =
+			clip.TicksPerSecond > 0.0
+			? clip.TicksPerSecond
+			: 25.0;
+
+		const float durationSeconds =
+			static_cast<float>(
+				clip.Duration / ticksPerSecond
+				);
+
+		return !m_Looping &&
+			m_AnimationTime >= durationSeconds;
+	}
+
 	void AnimatedModel::Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix)
 	{
 		if (!cb_vs_vertexshader)
@@ -420,7 +470,8 @@ namespace Engine
 	}
 
 	void AnimatedModel::LoadAnimationOnly(
-		const std::string& path)
+		const std::string& path,
+		const std::string& name)
 	{
 		Assimp::Importer importer;
 
@@ -441,7 +492,7 @@ namespace Engine
 
 		AnimationClip clip;
 		clip.filepath = path;
-		clip.Name = aiAnim->mName.C_Str();
+		clip.Name = name;
 		clip.Duration = aiAnim->mDuration;
 		clip.TicksPerSecond =
 			aiAnim->mTicksPerSecond != 0.0 ? aiAnim->mTicksPerSecond : 25.0;

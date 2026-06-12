@@ -19,7 +19,7 @@ namespace Engine
 		{
 
 		}
-
+		~Entity(){}
 		std::shared_ptr<Entity> Clone(Entity* old)
 		{
 			auto copy = std::make_shared<Entity>(name, m_id, m_Scene);
@@ -57,7 +57,28 @@ namespace Engine
 			m_Components.push_back(std::move(comp));
 		}
 
-		
+		template<typename T, typename... Args>
+		T& AddComponent(Args&&... args)
+		{
+			static_assert(std::is_base_of_v<Component, T>,
+				"T must inherit from Component");
+
+			if (HasComponent<T>())
+			{
+				return *GetComponent<T>();
+			}
+
+			auto component = std::make_unique<T>(
+				std::forward<Args>(args)...
+			);
+
+			T* raw = component.get();
+
+			m_ComponentTypes.push_back(T::StaticType());
+			m_Components.push_back(std::move(component));
+
+			return *raw;
+		}
 
 		template<typename T>
 		void RemoveComponent()

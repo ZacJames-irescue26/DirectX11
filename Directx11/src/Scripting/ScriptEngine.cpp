@@ -12,6 +12,7 @@
 #include "Physics/RaytraceInfo.h"
 #include "ErrorLogger.h"
 #include "Scene/Scene.h"
+#include "DebugRenderer/DebugRenderer.h"
 
 namespace Engine
 {
@@ -35,6 +36,10 @@ namespace Engine
 		RegisterMath();
 		RegisterLogging();
 		RegisterAudio();
+		RegisterGamePlay();
+		RegisterAi();
+		RegisterDebug();
+		RegisterAnimation();
 		m_Initialized = true;
 		return true;
 	}
@@ -93,7 +98,7 @@ namespace Engine
 			{
 				return entity.GetComponent<CameraComponent>();
 			},
-			"GetChildByName", &Entity::GetChildByName
+			"GetChildByName", &Entity::GetChildByName,
 			"DestroyEntity", [this](Entity& entity) ->void
 			{
 				Scene* scene = m_Context.ActiveScene;
@@ -103,9 +108,25 @@ namespace Engine
 
 				scene->QueueDestroyEntity(entity.GetUUID());
 			},
+			"GetWorldPosition",
+			[](Entity& entity) -> XMFLOAT3
+			{
+				Scene* scene = entity.GetScene();
+
+				if (!scene)
+					return {};
+
+				XMMATRIX world = scene->GetWorldMatrix(&entity);
+
+				XMFLOAT3 position;
+				XMStoreFloat3(&position, world.r[3]);
+
+				return position;
+			}
+
 		);
 
-		m_Lua.set_function("DestroyEntityByString",[this](const std::string& uuidString){
+		m_Lua.set_function("DestroyEntity",[this](const std::string& uuidString){
 			Scene* scene = m_Context.ActiveScene;
 
 			if (!scene)
@@ -121,7 +142,28 @@ namespace Engine
 				// Optional: log invalid UUID string
 			}
 		});
+		m_Lua.set_function(
+			"GetEntityByUUID",
+			[this](const std::string& uuidString) -> Entity*
+			{
+				Scene* scene = m_Context.ActiveScene;
 
+				if (!scene)
+					return nullptr;
+
+				try
+				{
+					const uint64_t uuid = std::stoull(uuidString);
+					auto entity = scene->GetEntityByID(uuid);
+
+					return entity ? entity.get() : nullptr;
+				}
+				catch (...)
+				{
+					return nullptr;
+				}
+			}
+		);
 		m_Lua.new_usertype<CameraComponent>(
 			"CameraComponent",
 
@@ -149,7 +191,27 @@ namespace Engine
 			"normal", &LuaOverlapHit::Normal,
 			"distance", &LuaOverlapHit::Distance
 		);
+		m_Lua.new_usertype<HealthComponent>(
+			"HealthComponent",
+			"health", &HealthComponent::Health,
+			"maxHealth", &HealthComponent::MaxHealth
+		);
 
+		m_Lua.new_usertype<ProjectileComponent>(
+			"ProjectileComponent",
+			"owner", &ProjectileComponent::OwnerUUID,
+			"velocity", &ProjectileComponent::Velocity,
+			"damage", &ProjectileComponent::Damage,
+			"lifetime", &ProjectileComponent::Lifetime,
+			"age", &ProjectileComponent::Age
+		);
+
+		m_Lua.new_usertype<PatrolAgentComponent>(
+			"PatrolAgentComponent",
+			"patrolRadius", &PatrolAgentComponent::PatrolRadius,
+			"speed", &PatrolAgentComponent::Speed,
+			"waitTime", &PatrolAgentComponent::WaitTime
+		);
 		m_LuaTypes.push_back({
 	   "Entity",
 	   {},
@@ -403,6 +465,195 @@ namespace Engine
 		});
 
 	}
+
+	void ScriptEngine::RegisterGamePlay()
+	{
+		entityTable = m_Lua["Entity"].get_or_create<sol::table>();
+
+
+		entityTable.set_function(
+			"AddHealth",
+			[](Entity& entity, float maxHealth) -> HealthComponent*
+			{
+				HealthComponent* health = entity.GetComponent<HealthComponent>();
+
+				if (!health)
+				{
+					health = &entity.AddComponent<HealthComponent>();
+				}
+
+				health->MaxHealth = maxHealth;
+				health->Health = maxHealth;
+
+				return health;
+			}
+		);
+
+		entityTable.set_function(
+			"GetHealth",
+			[](Entity& entity) -> HealthComponent*
+			{
+				return entity.GetComponent<HealthComponent>();
+			}
+		);
+
+		entityTable.set_function(
+			"HasHealth",
+			[](Entity& entity) -> bool
+			{
+				return entity.HasComponent<HealthComponent>();
+			}
+		);
+
+
+		entityTable.set_function(
+			"ApplyDamage",
+			[this](const std::string& uuidString, float damage)
+			{
+				Scene* scene = m_Context.ActiveScene;
+				if (!scene)
+					return;
+
+				uint64_t uuid = 0;
+
+				try
+				{
+					uuid = std::stoull(uuidString);
+				}
+				catch (...)
+				{
+					return;
+				}
+
+				auto entity = scene->GetEntityByID(uuid);
+
+				if (!entity)
+					return;
+
+				HealthComponent* health =
+					entity->GetComponent<HealthComponent>();
+
+				if (!health)
+					return;
+
+				health->Health -= damage;
+
+				if (health->Health <= 0.0f)
+				{
+					scene->QueueDestroyEntity(entity->GetUUID());
+				}
+			}
+		);
+
+
+
+	}
+
+	void ScriptEngine::RegisterAi()
+	{
+		entityTable.set_function(
+			"AddPatrolAgent",
+			[](Entity& entity,
+				float patrolRadius,
+				XMFLOAT3 Center,
+				float speed) -> PatrolAgentComponent*
+			{
+				PatrolAgentComponent* patrol =
+					entity.GetComponent<PatrolAgentComponent>();
+
+				if (!patrol)
+				{
+					patrol = &entity.AddComponent<PatrolAgentComponent>();
+				}
+
+				patrol->PatrolRadius = patrolRadius;
+				patrol->Speed = speed;
+				patrol->Center = Center;
+				return patrol;
+			}
+		);
+
+
+
+
+	}
+	void ScriptEngine::RegisterDebug()
+	{
+		sol::table Debug = m_Lua.create_named_table("Debug");
+
+		Debug.set_function("DrawLine", [](XMFLOAT3 A, XMFLOAT3 B, XMFLOAT3 Color) {
+			DebugRenderer::Get()->DrawLine(A, B, Color, 10);
+
+			});
+
+	}
+
+	void ScriptEngine::RegisterAnimation()
+	{
+		sol::table animation = m_Lua.create_named_table("Animation");
+
+		animation.set_function("Play", [](Entity& entity, const std::string& name, bool loop)
+		{
+			auto* anim = entity.GetComponent<AnimatedMeshComponent>();
+
+			if (!anim)
+				return;
+			
+			anim->SetAnimationindexByName(name);
+					
+			
+
+
+		});
+
+		animation.set_function(
+			"SetSpeed",
+			[](Entity& entity, float playbackSpeed)
+			{
+				auto* component =
+					entity.GetComponent<AnimatedMeshComponent>();
+
+				if (!component)
+					return;
+
+				component->m_Model.SetPlayback(
+					std::max(playbackSpeed, 0.0f)
+				);
+			}
+		
+		);
+
+		animation.set_function(
+			"SetLooping",
+			[](Entity& entity, bool looping)
+			{
+				auto* component =
+					entity.GetComponent<AnimatedMeshComponent>();
+
+				if (!component)
+					return;
+
+				component->SetLooping(looping);
+			}
+		);
+
+		animation.set_function(
+			"HasFinished",
+			[](Entity& entity) -> bool
+			{
+				auto* component =
+					entity.GetComponent<AnimatedMeshComponent>();
+
+				if (!component)
+					return true;
+
+				return component->m_Model.HasAnimationFinished();
+			}
+		);
+
+	}
+
+
 	void ScriptEngine::GenerateLuaAPIFile(const std::filesystem::path& path)
 	{
 		std::ofstream out(path);

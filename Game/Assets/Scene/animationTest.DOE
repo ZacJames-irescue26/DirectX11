@@ -1,0 +1,302 @@
+{
+    "Entities": [
+        {
+            "Children": [],
+            "Components": {
+                "StaticMeshComponent": {
+                    "ModelPath": "C:/DirectX11/Game/Assets/Sponza/glTF/Sponza.gltf"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        0.10000000149011612,
+                        0.10000000149011612,
+                        0.10000000149011612
+                    ]
+                }
+            },
+            "ID": 8147860017021319488,
+            "Name": "Sponza",
+            "Parent": 0
+        },
+        {
+            "Children": [],
+            "Components": {
+                "AnimatedMeshComponent": {
+                    "AnimatedModelPath": "EnemyAnimations/Enemy_Idle.gltf",
+                    "Animations": {
+                        "Idle": "C:/DirectX11/Game/Assets/EnemyAnimations/Enemy_Idle.gltf",
+                        "RunForward": "C:/DirectX11/Game/Assets/EnemyAnimations/Enemy_RunForward.gltf"
+                    },
+                    "PlayAnimation": true,
+                    "PlayBackSpeed": 1.0
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 440530256315064912,
+            "Name": "Enemy Mesh",
+            "Parent": 5765669906832927642
+        },
+        {
+            "Children": [],
+            "Components": {
+                "AnimatedMeshComponent": {
+                    "AnimatedModelPath": "C:/DirectX11/Game/Assets/FullAnim.fbx",
+                    "Animations": {},
+                    "PlayAnimation": true,
+                    "PlayBackSpeed": 1.0
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 3488722189396356311,
+            "Name": "TestAnim",
+            "Parent": 0
+        },
+        {
+            "Children": [],
+            "Components": {
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        -1.100000023841858,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        69.69999694824219,
+                        1.0,
+                        72.30000305175781
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 0,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 14474266530384034668,
+            "Name": "PhysGround",
+            "Parent": 0
+        },
+        {
+            "Children": [
+                117165704402830602
+            ],
+            "Components": {
+                "LuaScriptComponent": {
+                    "ScriptPath": "Scripts/test.lua"
+                },
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 2,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "StaticMeshComponent": {
+                    "ModelPath": "TestCube.glb"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.4300000071525574,
+                        9.380000114440918,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 9908706380894310884,
+            "Name": "TestPhys",
+            "Parent": 0
+        },
+        {
+            "Children": [
+                5008795558042714027
+            ],
+            "Components": {
+                "CameraComponent": {
+                    "FOVDegrees": 90.0,
+                    "FarPlane": 1000.0,
+                    "Mode": 0,
+                    "NearPlane": 0.10000000149011612,
+                    "OrthoSize": 10.0,
+                    "Primary": true
+                },
+                "TransformComponent": {
+                    "Position": [
+                        -0.05999999865889549,
+                        1.7400000095367432,
+                        0.0
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 117165704402830602,
+            "Name": "Camera",
+            "Parent": 9908706380894310884
+        },
+        {
+            "Children": [
+                440530256315064912
+            ],
+            "Components": {
+                "LuaScriptComponent": {
+                    "ScriptPath": "Scripts/Agent.lua"
+                },
+                "PhysicsComponent": {
+                    "Awake": true,
+                    "ColliderPos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Friction": 0.0,
+                    "HalfSize": [
+                        3.0,
+                        4.0,
+                        3.0
+                    ],
+                    "Restitution": 0.0,
+                    "RigidBodyType": 2,
+                    "Sensor": false,
+                    "ShapeType": 1
+                },
+                "TransformComponent": {
+                    "Position": [
+                        -32.20000076293945,
+                        8.600000381469727,
+                        2.5
+                    ],
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        3.0,
+                        4.099999904632568,
+                        3.0
+                    ]
+                }
+            },
+            "ID": 5765669906832927642,
+            "Name": "TestAgent",
+            "Parent": 0
+        },
+        {
+            "Children": [],
+            "Components": {
+                "StaticMeshComponent": {
+                    "ModelPath": "ScarHModel.gltf"
+                },
+                "TransformComponent": {
+                    "Position": [
+                        0.0,
+                        -0.699999988079071,
+                        1.100000023841858
+                    ],
+                    "Rotation": [
+                        0.0,
+                        1.7802348136901855,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "ID": 5008795558042714027,
+            "Name": "TestGun",
+            "Parent": 117165704402830602
+        }
+    ]
+}

@@ -407,7 +407,10 @@ namespace Editor
 			DisplayAddComponentEntry<Engine::LuaScriptComponent>("LuaComp");
 			DisplayAddComponentEntry<Engine::CameraComponent>("CameraComp");
 			DisplayAddComponentEntry<Engine::AudioComponent>("AudioComponent");
-
+			DisplayAddComponentEntry<Engine::AudioListenerComponent>("AudioListenerComp");
+			DisplayAddComponentEntry<Engine::NavMeshComponent>("NavMeshComponent");
+			DisplayAddComponentEntry<Engine::NavAgentComponent>("NavAgentComponent");
+			DisplayAddComponentEntry<Engine::PatrolAgentComponent>("PatrolAgentComp");
 			ImGui::EndPopup();
 		}
 
@@ -483,13 +486,19 @@ namespace Editor
 
 					component.Initialize(fullPath.string(), m_device, m_deviceContext, m_cb_anim_vs_vertexshader );
 				}
+				char animnameBuffer[512] = {};
+				strncpy_s(animnameBuffer, sizeof(animnameBuffer), component.m_AnimName.c_str(), _TRUNCATE);
 
+				if (ImGui::InputText("Animation name", animnameBuffer, sizeof(animnameBuffer)))
+				{
+					component.m_AnimName = std::string(animnameBuffer);
+				}
 				if (ImGui::Button("Load animation from filepath"))
 				{
 					std::filesystem::path fullPath =
 						Engine::Project::ResolveAssetPath(component.m_AnimPath);
 
-					component.AddAnimation(fullPath.string());
+					component.AddAnimation(fullPath.string(), component.m_AnimName);
 				}
 
 				const auto& animations = component.m_Model.GetLoadedAnimations();
@@ -730,6 +739,67 @@ namespace Editor
 			}
 
 		});
+		DrawComponent<Engine::AudioListenerComponent>("AudioListenerComponent", entity, [](auto& component) {
+
+			ImGui::Checkbox("IsListening", &component.IsListening);
+			
+
+			});
+
+		DrawComponent<Engine::NavMeshComponent>("NavMeshComponent", entity, [](auto& component) {
+
+			
+
+
+			});
+		DrawComponent<Engine::NavAgentComponent>("NavAgentComponent", entity, [](auto& component) {
+
+			
+
+
+			});
+		DrawComponent<Engine::PatrolAgentComponent>("PatrolAgentComponent", entity, [](auto& component) {
+			
+			if (ImGui::BeginTable("ParolProps", 2, ImGuiTableFlags_SizingStretchProp))
+			{
+				ImGui::TableSetupColumn("Label", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+				ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("PatrolRadius");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##PatrolRadius", &component.PatrolRadius, 0.01f, 0.001);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("Speed");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##Speed", &component.Speed, 0.01f, 0.001);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("StoppingDistance");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##StoppingDistance", &component.StoppingDistance, 0.01f, 0.001);
+
+				ImGui::TableNextRow();
+				ImGui::TableSetColumnIndex(0);
+				ImGui::TextUnformatted("WaitTime");
+				ImGui::TableSetColumnIndex(1);
+				ImGui::SetNextItemWidth(-1.0f);
+				ImGui::DragFloat("##WaitTime", &component.WaitTime, 0.01f, 0.001);
+
+
+
+				ImGui::EndTable();
+			}
+
+
+			});
 		ImGui::PopItemWidth();
 		ImGui::End();
 	}

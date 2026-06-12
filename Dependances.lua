@@ -60,8 +60,19 @@ Dependencies = {
     },
 	FMOD = {
 		IncludeDir = "C:/FMOD/FMOD SoundSystem/FMOD Studio API Windows/api/core/inc",
-		Windows = {LibName = "fmodL_vc", LibDir = "C:/FMOD/FMOD SoundSystem/FMOD Studio API Windows/api/core/lib/x64"}
-	}
+		Windows = {LibName = "fmod_vc", LibDir = "C:/FMOD/FMOD SoundSystem/FMOD Studio API Windows/api/core/lib/x64"},
+
+	},
+	RecastNaviagtion = 
+	{
+		LibName = "Recast",
+		IncludeDir = "%{wks.location}/Dependances/recastnavigation/Recast/Include",
+	},
+	Detour = 
+	{
+		LibName = "Detour",
+		IncludeDir = "%{wks.location}/Dependances/recastnavigation/Detour/Include"
+	},
 }
 
 

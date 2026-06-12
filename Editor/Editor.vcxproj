@@ -58,7 +58,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -66,10 +66,10 @@
     <IntDir>..\bin-int\Release-windows-x86_64\Editor\</IntDir>
     <TargetName>Editor</TargetName>
     <TargetExt>.exe</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <ExternalIncludePath>C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
     <NMakeOutput>$(OutDir)Editor</NMakeOutput>
     <AdditionalOptions>/EHsc /Zc:preprocessor /Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
   </PropertyGroup>
@@ -95,7 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;DirectXTK.lib;JoltPhysics.lib;assimp-vc143-mtd.lib;dxcompiler.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;DirectXTK.lib;JoltPhysics.lib;assimp-vc143-mtd.lib;dxcompiler.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Dependances\assimp\bin\windows\Debug;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -128,7 +128,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;DirectXTK.lib;JoltPhysics.lib;assimp-vc143-mt.lib;dxcompiler.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;DirectXTK.lib;JoltPhysics.lib;assimp-vc143-mt.lib;dxcompiler.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Dependances\assimp\bin\windows\Release;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>-pthread -ldl %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -210,6 +210,16 @@
     </FxCompile>
     <FxCompile Include="Shader\Compute\ShadowBake_c.hlsl">
       <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugShaders\DrawLine_p.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <EntryPointName>main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugShaders\DrawLine_v.hlsl">
+      <ShaderType>Vertex</ShaderType>
       <ShaderModel>5.0</ShaderModel>
       <EntryPointName>main</EntryPointName>
     </FxCompile>
@@ -323,11 +333,17 @@
     <ProjectReference Include="..\Directx11\DirectX11.vcxproj">
       <Project>{5A877304-C6F1-277B-0F30-D9207BD905D0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Dependances\recastnavigation\Detour.vcxproj">
+      <Project>{18FEE2AD-04A0-0D84-ED5A-21D8D99B94D4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Dependances\JoltPhysics\JoltPhysics.vcxproj">
       <Project>{812AB974-EDDF-316A-76D4-2B41E288286E}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Dependances\lua-5.5.0\LuaLib.vcxproj">
       <Project>{7EC9A2C1-6A6B-CD97-5326-E1EB3F6754E8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Dependances\recastnavigation\Recast.vcxproj">
+      <Project>{A7A881CE-934A-ACA4-7C05-C0F8684633F5}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

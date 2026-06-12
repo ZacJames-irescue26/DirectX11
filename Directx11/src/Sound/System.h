@@ -13,6 +13,7 @@ namespace Engine
 		void CreateSound(const std::string& filepath, FMOD::Sound** inSound);
 		void PlaySound(FMOD::Sound* sound, bool Paused, Channel outchannel);
 		void Update();
+		void SetListenerAttribs(XMFLOAT3 pos, XMFLOAT3 vel, XMFLOAT3 forward, XMFLOAT3 up);
 		void DestroySounds(Entity* entity);
 	private:
 

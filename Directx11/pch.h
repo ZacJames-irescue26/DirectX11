@@ -1,5 +1,4 @@
 #pragma once
-#define JPH_EXTERNAL_PROFILE
 #include <windows.h>
 #include <comdef.h>
 #include <Xinput.h>

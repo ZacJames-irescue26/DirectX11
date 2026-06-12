@@ -58,21 +58,21 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\Release-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Release-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <OutDir>..\bin\Dist-windows-x86_64\DirectX11\</OutDir>
     <IntDir>..\bin-int\Dist-windows-x86_64\DirectX11\</IntDir>
     <TargetName>DirectX11</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>..\Dependances\assimp\include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>..\Dependances\assimp\include;..\Dependances\recastnavigation\Detour\Include;C:\FMOD\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;..\Dependances\JoltPhysics\JoltPhysics;..\Dependances\lua-5.5.0\src;..\Dependances\recastnavigation\Recast\Include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -101,7 +101,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;GLM_FORCE_DEPTH_ZERO_TO_ONE;NDEBUG;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;JPH_DEBUG_RENDERER;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_EXTERNAL_PROFILE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;.;C:\ProgramData\NVIDIA Corporation\OptiX SDK 8.1.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include;src\Graphics\Raytracing;..\Dependances\Sol2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -160,6 +160,9 @@
     <ClInclude Include="src\Acceleration\Octree\Octree.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Controller\ControllerClass.h" />
+    <ClInclude Include="src\DebugRenderer\DebugLineVertex.h" />
+    <ClInclude Include="src\DebugRenderer\DebugRenderer.h" />
+    <ClInclude Include="src\DebugRenderer\JoltDebugRenderer.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ErrorLogger.h" />
@@ -211,6 +214,7 @@
     <ClInclude Include="src\Passes\ProbeCubemapCreation.h" />
     <ClInclude Include="src\Passes\ShadowPass.h" />
     <ClInclude Include="src\Passes\SurfelPass.h" />
+    <ClInclude Include="src\Pathfinding\NavMeshSystem.h" />
     <ClInclude Include="src\Physics\PhysMat.h" />
     <ClInclude Include="src\Physics\PhysStructs.h" />
     <ClInclude Include="src\Physics\PhysicsWorld.h" />
@@ -219,11 +223,11 @@
     <ClInclude Include="src\Scene\Project.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\Scripting\SciptMouse.h" />
+    <ClInclude Include="src\Scripting\ScriptAudio.h" />
     <ClInclude Include="src\Scripting\ScriptController.h" />
     <ClInclude Include="src\Scripting\ScriptEngine.h" />
     <ClInclude Include="src\Scripting\ScriptMath.h" />
     <ClInclude Include="src\Scripting\ScriptPhysics.h" />
-    <ClInclude Include="src\Scripting\ScriptAudio.h" />
     <ClInclude Include="src\Sound\Channel.h" />
     <ClInclude Include="src\Sound\Sound.h" />
     <ClInclude Include="src\Sound\System.h" />
@@ -240,9 +244,6 @@
     <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Sound\Channel.cpp" />
-    <ClCompile Include="src\Sound\Sound.cpp" />
-    <ClCompile Include="src\Sound\System.cpp" />
     <ClCompile Include="STB_Image.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -253,6 +254,7 @@
     <ClCompile Include="src\Acceleration\BVH\BVH.cpp" />
     <ClCompile Include="src\Acceleration\Octree\Octree.cpp" />
     <ClCompile Include="src\Controller\ControllerClass.cpp" />
+    <ClCompile Include="src\DebugRenderer\DebugRenderer.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ErrorLogger.cpp" />
@@ -311,12 +313,16 @@
     <ClCompile Include="src\Passes\ProbeCubemapCreation.cpp" />
     <ClCompile Include="src\Passes\ShadowPass.cpp" />
     <ClCompile Include="src\Passes\SurfelPass.cpp" />
+    <ClCompile Include="src\Pathfinding\NavMeshSystem.cpp" />
     <ClCompile Include="src\Physics\PhysStructs.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\RaytraceInfo.cpp" />
     <ClCompile Include="src\RenderWindow.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="src\Sound\Channel.cpp" />
+    <ClCompile Include="src\Sound\Sound.cpp" />
+    <ClCompile Include="src\Sound\System.cpp" />
     <ClCompile Include="src\StringConverter.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\UUID.cpp" />

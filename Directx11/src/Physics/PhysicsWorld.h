@@ -25,6 +25,8 @@ namespace Engine { class Scene; }
 #include <Jolt/Physics/PhysicsSettings.h>
 #include <Jolt/Physics/PhysicsSystem.h>
 #include <Jolt/RegisterTypes.h>
+#include "Entity.h"
+#include "DebugRenderer/JoltDebugRenderer.h"
 #include "RaytraceInfo.h"
 
 // Callback for traces, connect this to your own trace function if you have one
@@ -293,6 +295,9 @@ public:
 	}
 
 	void UnregisterEntity(Entity* entity);
+	static XMFLOAT3 GetLinearVelocity(Entity* entity);
+	void DebugDraw();
+	float GetColliderFeetOffset(const PhysicsComponent& physics);
 private:
 	JPH::uint _step{ 0 };
 	inline static std::unique_ptr<JPH::PhysicsSystem> _physics_system;
@@ -309,7 +314,9 @@ private:
 	std::vector<JPH::BodyID> m_OverlapIDs;
 
 	std::vector<RayHit> m_OverlapHitBuffer;
-
+#ifdef JPH_DEBUG_RENDERER
+	std::unique_ptr<Engine::JoltDebugRenderer> m_JoltDebugRenderer;
+#endif
 };
 
 

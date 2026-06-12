@@ -56,9 +56,12 @@ public:
 
 	
 	std::unique_ptr<Scene> m_EditorSaveScene;
-	std::unique_ptr<Scene> m_Scene;
+	std::unique_ptr<Scene> m_Scene = nullptr;
+	std::unique_ptr<Engine::DebugRenderer> m_DebugRenderer;
+
 	std::string m_GameProjectPath;
 	bool m_IsRunning = true;
+	bool m_DrawDebug = false;
 private:
 	Camera ActiveCamera;
 	std::string m_EditorScenePath;

@@ -73,7 +73,10 @@ struct ModelOnly
 {
 	XMMATRIX Model;
 };
-
+struct OneMatrix
+{
+	XMMATRIX Matrix;
+};
 struct DebugColors
 {
 	XMFLOAT4 Red = { 1.0,0.0,0.0,1.0 };

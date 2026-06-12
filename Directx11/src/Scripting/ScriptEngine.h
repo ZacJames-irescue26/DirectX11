@@ -56,10 +56,15 @@ namespace Engine
 		void RegisterPhysics();
 		void RegisterMath();
 		void RegisterAudio();
+		void RegisterGamePlay();
+		void RegisterAi();
+		void RegisterDebug();
+		void RegisterAnimation();
 		void GenerateLuaAPIFile(const std::filesystem::path& path);
 	private:
 		EngineContext m_Context;
 		sol::state m_Lua;
+		sol::table entityTable;
 		std::vector<LuaTypeInfo> m_LuaTypes;
 		bool m_Initialized = false;
 	};

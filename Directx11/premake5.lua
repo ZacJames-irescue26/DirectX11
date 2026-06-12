@@ -44,7 +44,7 @@ project "DirectX11"
 	shadermodel "6.0"
 	shaderentry "main"
 
-	filter { "configurations:Debug or configurations:Debug-AS or configurations:Release" }
+	filter { "configurations:Debug or configurations:Release" }
 		defines {
 
 			"JPH_DEBUG_RENDERER",
@@ -59,17 +59,13 @@ project "DirectX11"
 		symbols "On"
 		defines {  "_DEBUG", "ACL_ON_ASSERT_ABORT", }
 
-	filter { "system:windows", "configurations:Debug-AS" }	
-		sanitize { "Address" }
-		flags { "NoRuntimeChecks", "NoIncrementalLink" }
-
 	filter "configurations:Release"
 		optimize "On"
 		vectorextensions "AVX2"
 		isaextensions { "BMI", "POPCNT", "LZCNT", "F16C" }
 		defines {"NDEBUG" }
 
-	filter { "configurations:Debug or configurations:Debug-AS or configurations:Release" }
+	filter { "configurations:Debug or configurations:Release" }
 		defines {
 			"JPH_DEBUG_RENDERER",
 			"JPH_FLOATING_POINT_EXCEPTIONS_ENABLED",

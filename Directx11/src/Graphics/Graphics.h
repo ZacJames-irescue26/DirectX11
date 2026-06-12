@@ -23,7 +23,7 @@ public:
 	Camera Editorcamera;
 	Camera RuntimeCamera;
 	Camera camera;
-	static ID3D11Device* GetDevice()
+	ID3D11Device* GetDevice()
 	{
 		return device.Get();
 	}
@@ -48,8 +48,7 @@ public:
 	//Light light;
 	//PhysicsObject floor;
 	//PhysicsObject gameObject;
-	PhysicsEngine physicsController;
-	static Microsoft::WRL::ComPtr<ID3D11Device> device;
+	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> deviceContext;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapchain;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;

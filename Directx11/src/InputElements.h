@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include "src/Graphics/Vertex.h"
+#include "DebugRenderer/DebugLineVertex.h"
 
 
 namespace Engine::InputElements
@@ -53,5 +54,9 @@ namespace Engine::InputElements
 		{ "WEIGHTS",   0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, offsetof(AnimatedVertex, m_Weights), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
-
+	inline D3D11_INPUT_ELEMENT_DESC LineLayout[] =
+	{
+		{ "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(DebugLineVertex, Position),       D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, offsetof(DebugLineVertex, Color), D3D11_INPUT_PER_VERTEX_DATA, 0},
+	};
 }

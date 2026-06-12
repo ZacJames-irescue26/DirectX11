@@ -4,7 +4,7 @@
             "Children": [],
             "Components": {
                 "StaticMeshComponent": {
-                    "ModelPath": "C:/DirectX11/Game/Assets/Sponza/glTF/Sponza.gltf"
+                    "ModelPath": "Sponza/glTF/Sponza.gltf"
                 },
                 "TransformComponent": {
                     "Position": [
@@ -32,8 +32,7 @@
             "Children": [],
             "Components": {
                 "AnimatedMeshComponent": {
-                    "AnimatedModelPath": "C:/DirectX11/Game/Assets/FullAnim.fbx",
-                    "Animations": [],
+                    "AnimatedModelPath": "FullAnim.fbx",
                     "PlayAnimation": true,
                     "PlayBackSpeed": 1.0
                 },

@@ -17,6 +17,7 @@ namespace Engine
 	public:
 		bool Initialize(const std::string& filePath, ID3D11Device* device, ID3D11DeviceContext* devicecontext, ConstantBuffer<CB_Anim_VS_vertexShader>& cb_vs_vertexshader);
 		void UpdateAnimation(float deltaTime);
+		bool HasAnimationFinished() const;
 		void Draw(const XMMATRIX& worldMatrix, const XMMATRIX& viewProjectionMatrix);
 		void Draw();
 		inline std::vector<Engine::AnimatedMesh>& GetMeshes()
@@ -27,7 +28,7 @@ namespace Engine
 		{
 			return m_Skeleton;
 		}
-		void LoadAnimationOnly(const std::string& path);
+		void LoadAnimationOnly(const std::string& path, const std::string& name);
 		bool LoadModel(const std::string& filePath);
 
 		void RemoveAnimation(uint32_t index)
@@ -45,6 +46,22 @@ namespace Engine
 				}
 			}
 		}
+
+		void SetAnimationIndexByName(const std::string& name)
+		{
+			int i = 0;
+			for (auto& anim : LoadedAnimations)
+			{
+				if (anim.Name == name)
+				{
+					m_CurrentAnimationIndex = i;
+					return;
+				}
+				i++;
+			}
+		}
+
+
 		const std::vector<AnimationClip>& GetLoadedAnimations()
 		{
 			return LoadedAnimations;
@@ -63,6 +80,14 @@ namespace Engine
 		void SetPlayback(float playback)
 		{
 			m_PlaybackSpeed = playback;
+		}
+		void SetAnimationTime(float time)
+		{
+			m_AnimationTime = time;
+		}
+		void SetLooping(bool loop)
+		{
+			m_Looping = loop;
 		}
 	private:
 		void ProcessNode(aiNode* node, const aiScene* scene, const XMMATRIX& transformMatrix);
@@ -90,6 +115,7 @@ namespace Engine
 		float m_PlaybackSpeed = 1.0f;
 		int m_CurrentAnimationIndex = -1;
 		bool PlayAnimaiton = true;
+		bool m_Looping = false;
 
 	};
 }

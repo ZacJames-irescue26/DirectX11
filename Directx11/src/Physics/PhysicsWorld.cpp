@@ -21,11 +21,14 @@ namespace Engine
 		_contact_listener(std::make_unique<MyContactListener>())
 	{
 		initialise();
+
 	}
 
 	void PhysicsEngine::initialise()
 	
 	{
+		
+
 		// Register allocation hook. In this example we'll just let Jolt use malloc /
 		// free but you can override these if you want (see Memory.h). This needs to
 		// be done before any other Jolt function is called.
@@ -33,8 +36,12 @@ namespace Engine
 
 		// Install trace and assert callbacks
 		JPH::Trace = TraceImpl;
-		JPH_IF_ENABLE_ASSERTS(AssertFailed = ErrorLogger::AssertFailedImpl;)
+#ifdef JPH_ENABLE_ASSERTS
+		JPH::AssertFailed = ErrorLogger::AssertFailedImpl;
+#endif
 
+		JPH_IF_ENABLE_ASSERTS(AssertFailed = ErrorLogger::AssertFailedImpl;)
+		m_JoltDebugRenderer = std::make_unique<Engine::JoltDebugRenderer>();
 			// Create a factory, this class is responsible for creating instances of
 			// classes based on their name or hash and is mainly used for deserialization
 			// of saved data. It is not directly used in this example but still required.
@@ -259,7 +266,7 @@ void PhysicsEngine::CreateColliders(Scene* scene)
 			auto PGO = entity->GetComponent<PhysicsComponent>();
 			auto transformcomp = entity->GetComponent<TransformComponent>();
 			BodyCreationSettings settings;
-			settings.mUserData = entity->GetUUID();
+			
 			switch (PGO->ColliderType)
 			{
 			case EShapeSubType::Capsule:
@@ -270,12 +277,18 @@ void PhysicsEngine::CreateColliders(Scene* scene)
 				XMFLOAT3 colliderWorldPos = {0.0,0.0,0.0};
 				if (transformcomp && PGO)
 				{
-					XMFLOAT3 colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
+					colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
 				}
 				if (PGO->RigidBodyType == EMotionType::Static)
+				{
 					settings = BodyCreationSettings(capsule, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::NON_MOVING);
+					settings.mUserData = entity->GetUUID();
+				}
 				else
+				{
 					settings = BodyCreationSettings(capsule, { colliderWorldPos.x, colliderWorldPos.y,colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::MOVING);
+					settings.mUserData = entity->GetUUID();
+				}
 				break;
 			}
 			case EShapeSubType::Box:
@@ -288,13 +301,19 @@ void PhysicsEngine::CreateColliders(Scene* scene)
 				XMFLOAT3 colliderWorldPos = {0.0,0.0,0.0};
 				if (transformcomp && PGO)
 				{
-					XMFLOAT3 colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
+					colliderWorldPos = PGO->GetWorldPosition(*transformcomp);
 				}
 
 				if (PGO->RigidBodyType == EMotionType::Static)
+				{
 					settings = BodyCreationSettings(box, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::NON_MOVING);
+					settings.mUserData = entity->GetUUID();
+				}
 				else
+				{
 					settings = BodyCreationSettings(box, { colliderWorldPos.x, colliderWorldPos.y, colliderWorldPos.z }, Quat::sIdentity(), PGO->RigidBodyType, Layers::MOVING);
+					settings.mUserData = entity->GetUUID();
+				}
 				break;
 			}
 			}
@@ -452,12 +471,57 @@ void PhysicsEngine::UnregisterEntity(Entity* entity)
 	rb->m_BodyID = JPH::BodyID();
 }
 
+XMFLOAT3 PhysicsEngine::GetLinearVelocity(Entity* entity)
+{
+	if (!entity)
+		return XMFLOAT3(0, 0, 0);
 
+	auto* rb = entity->GetComponent<PhysicsComponent>();
 
+	if (!rb)
+		return XMFLOAT3(0, 0, 0);
 
+	return PhysicsEngine::FromJoltVector(PhysicsEngine::Get()->GetBodyInterface().GetLinearVelocity(rb->m_BodyID));
+}
 
+void PhysicsEngine::DebugDraw()
+{
+#ifdef JPH_DEBUG_RENDERER
+	if (!m_JoltDebugRenderer)
+		return;
 
+	JPH::BodyManager::DrawSettings settings;
 
+	settings.mDrawShape = true;
+	settings.mDrawShapeWireframe = true;
+	settings.mDrawBoundingBox = false;
+	settings.mDrawCenterOfMassTransform = false;
+	settings.mDrawWorldTransform = false;
+	settings.mDrawVelocity = false;
+	settings.mDrawMassAndInertia = false;
+
+	BodyIDVector bodyvec;
+	_physics_system->DrawBodies(settings, m_JoltDebugRenderer.get());
+#endif
+}
+
+float PhysicsEngine::GetColliderFeetOffset(const PhysicsComponent& physics)
+{
+	switch (physics.ColliderType)
+	{
+	case JPH::EShapeSubType::Capsule:
+		return physics.HalfHeight + physics.radius;
+
+	case JPH::EShapeSubType::Box:
+		return physics.HalfSize.y;
+
+	case JPH::EShapeSubType::Sphere:
+		return physics.radius;
+
+	default:
+		return 0.0f;
+	}
+}
 
 
 

@@ -28,6 +28,11 @@ namespace Engine
 		LuaScript,
 		CameraComp,
 		AudioComp,
+		AudioListenerComp,
+		NavMeshComp,
+		AgentComp,
+		PatrolAgentComp,
+		HealthComp
 	};
 
 	struct Component
@@ -218,11 +223,16 @@ namespace Engine
 				m_Model.Draw(worldMatrix, viewProjectionMatrix);
 			}
 		}
-		void AddAnimation(const std::string& path)
+		void AddAnimation(const std::string& path, std::string name)
 		{
-			m_AnimPaths.push_back(path);
-			m_Model.LoadAnimationOnly(path);
+			m_AnimPaths.insert({name, path});
+			m_Model.LoadAnimationOnly(path, name);
 		}
+		void SetAnimationindexByName(const std::string& name)
+		{
+			m_Model.SetAnimationIndexByName(name);
+		}
+		
 		void RemoveAnimation(uint32_t index)
 		{
 			m_Model.RemoveAnimation(index);
@@ -230,6 +240,10 @@ namespace Engine
 		void RemoveAnimationByName(const std::string& name)
 		{
 			m_Model.RemoveAnimationByName(name);
+		}
+		void SetAnimationTime(float time)
+		{
+			m_Model.SetAnimationTime(time);
 		}
 		void Update(float deltatime)
 		{
@@ -239,7 +253,10 @@ namespace Engine
 				m_Model.UpdateAnimation(deltatime);
 			}
 		}
-		
+		void SetLooping(bool loop)
+		{
+			m_Model.SetLooping(loop);
+		}
 		std::unique_ptr<Component> Clone() override
 		{
 			auto clone = std::make_unique<AnimatedMeshComponent>();
@@ -259,8 +276,10 @@ namespace Engine
 		
 		
 		AnimatedModel m_Model;
+		std::string currentAnimation;
 		std::string m_filepath;
-		std::vector<std::string> m_AnimPaths;
+		std::string m_AnimName;
+		std::map<std::string, std::string> m_AnimPaths;
 		std::string m_AnimPath;
 		bool Initialized = false;
 		bool m_PlayAnimation;
@@ -476,6 +495,7 @@ namespace Engine
 
 		float OrthoSize = 10.0f;
 		XMFLOAT3 ForwardVector;
+		XMFLOAT3 UpVector;
 		XMMATRIX ViewMatrix = XMMatrixIdentity();
 		XMMATRIX ProjectionMatrix = XMMatrixIdentity();
 		XMMATRIX ViewProjectionMatrix = XMMatrixIdentity();
@@ -556,9 +576,126 @@ namespace Engine
 		float MinDistance = 0.5;
 		float MaxDistance = 5000;
 		FMOD_MODE loopMode;
-
+		
 	
 
 
+	};
+	struct AudioListenerComponent : public Component
+	{
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::AudioListenerComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<AudioListenerComponent>(*this);
+		}
+
+		bool IsListening = true;
+
+	};
+
+	struct NavMeshComponent : public Component
+	{
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::NavMeshComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<NavMeshComponent>(*this);
+		}
+	};
+	struct NavAgentComponent : public Component
+	{
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::AgentComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<NavAgentComponent>(*this);
+		}
+	};
+
+
+	struct PatrolAgentComponent : public Component
+	{
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::PatrolAgentComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<PatrolAgentComponent>(*this);
+		}
+
+		float PatrolRadius = 10.0f;
+		float Speed = 3.0f;
+		float StoppingDistance = 1.0f;
+		XMFLOAT3 Center = {0.0,0.0,0.0};
+		float WaitTime = 1.0f;
+		float WaitTimer = 0.0f;
+
+		bool HasPath = false;
+		int CurrentPathIndex = 0;
+
+		std::vector<XMFLOAT3> Path;
+	};
+	struct HealthComponent : public Component
+	{
+		static ComponentEnum StaticType()
+		{
+			return ComponentEnum::HealthComp;
+		}
+
+		ComponentEnum GetType() const override
+		{
+			return StaticType();
+		}
+		std::unique_ptr<Component> Clone() override
+		{
+			return std::make_unique<HealthComponent>(*this);
+		}
+		float Health = 100.0f;
+		float MaxHealth = 100.0f;
+	};
+
+	struct DamageDealerComponent
+	{
+		float Damage = 10.0f;
+		uint64_t OwnerUUID = 0;
+	};
+
+	struct ProjectileComponent
+	{
+		uint64_t OwnerUUID = 0;
+
+		XMFLOAT3 Velocity = { 0, 0, 0 };
+
+		float Damage = 10.0f;
+		float Lifetime = 5.0f;
+		float Age = 0.0f;
 	};
 }

@@ -36,7 +36,15 @@ namespace Engine
 	{
 		m_System->update();
 	}
+	void SoundSystem::SetListenerAttribs(XMFLOAT3 pos, XMFLOAT3 vel, XMFLOAT3 forward, XMFLOAT3 up)
+	{
 
+		FMOD_VECTOR FMODPos = { pos.x,pos.y,pos.z };
+		FMOD_VECTOR FMODvel = { vel.x,vel.y,vel.z };
+		FMOD_VECTOR FMODforward = { forward.x,forward.y,forward.z };
+		FMOD_VECTOR FMODup = { up.x,up.y,up.z };
+		m_System->set3DListenerAttributes(0, &FMODPos, &FMODvel, &FMODforward, &FMODup);
+	}
 	void SoundSystem::DestroySounds(Entity* entity)
 	{
 		if(!entity)

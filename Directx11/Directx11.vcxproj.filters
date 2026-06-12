@@ -25,6 +25,9 @@
     <Filter Include="src\Controller">
       <UniqueIdentifier>{A0401C75-8C0E-107B-75A2-80A1610FECDF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DebugRenderer">
+      <UniqueIdentifier>{DADA8821-46F1-86B7-8F68-12D9FBBD573F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Game">
       <UniqueIdentifier>{F6C81ECF-E295-79DA-0BAF-6782F7DAAE68}</UniqueIdentifier>
     </Filter>
@@ -46,6 +49,9 @@
     <Filter Include="src\Passes">
       <UniqueIdentifier>{6BDFF626-5797-3874-C09E-11D0AC75D364}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Pathfinding">
+      <UniqueIdentifier>{A85600A4-14E2-6D68-1DF3-F05C89FDC968}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Physics">
       <UniqueIdentifier>{9F8B9316-0B41-0C0C-9435-06E300EA0210}</UniqueIdentifier>
     </Filter>
@@ -54,6 +60,9 @@
     </Filter>
     <Filter Include="src\Scripting">
       <UniqueIdentifier>{6FBC2D98-DB7C-A9CE-A4B7-F24B1037EEAA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Sound">
+      <UniqueIdentifier>{A5DED8B3-1149-8D2A-5A87-3ED0C6306B7F}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\illumination">
       <UniqueIdentifier>{F1C464E6-DDBD-8338-06F0-68BDF2476344}</UniqueIdentifier>
@@ -85,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="src\Controller\ControllerClass.h">
       <Filter>src\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugRenderer\DebugLineVertex.h">
+      <Filter>src\DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugRenderer\DebugRenderer.h">
+      <Filter>src\DebugRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugRenderer\JoltDebugRenderer.h">
+      <Filter>src\DebugRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine.h">
       <Filter>src</Filter>
@@ -239,6 +257,9 @@
     <ClInclude Include="src\Passes\SurfelPass.h">
       <Filter>src\Passes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Pathfinding\NavMeshSystem.h">
+      <Filter>src\Pathfinding</Filter>
+    </ClInclude>
     <ClInclude Include="src\Physics\PhysMat.h">
       <Filter>src\Physics</Filter>
     </ClInclude>
@@ -263,6 +284,9 @@
     <ClInclude Include="src\Scripting\SciptMouse.h">
       <Filter>src\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptAudio.h">
+      <Filter>src\Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scripting\ScriptController.h">
       <Filter>src\Scripting</Filter>
     </ClInclude>
@@ -274,6 +298,15 @@
     </ClInclude>
     <ClInclude Include="src\Scripting\ScriptPhysics.h">
       <Filter>src\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sound\Channel.h">
+      <Filter>src\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sound\Sound.h">
+      <Filter>src\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sound\System.h">
+      <Filter>src\Sound</Filter>
     </ClInclude>
     <ClInclude Include="src\StringConverter.h">
       <Filter>src</Filter>
@@ -304,10 +337,6 @@
     </ClInclude>
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
-    <ClInclude Include="src\Sound\System.h" />
-    <ClInclude Include="src\Sound\Sound.h" />
-    <ClInclude Include="src\Sound\Channel.h" />
-    <ClInclude Include="src\Scripting\ScriptAudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="STB_Image.cpp" />
@@ -321,6 +350,9 @@
     </ClCompile>
     <ClCompile Include="src\Controller\ControllerClass.cpp">
       <Filter>src\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugRenderer\DebugRenderer.cpp">
+      <Filter>src\DebugRenderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine.cpp">
       <Filter>src</Filter>
@@ -454,6 +486,9 @@
     <ClCompile Include="src\Passes\SurfelPass.cpp">
       <Filter>src\Passes</Filter>
     </ClCompile>
+    <ClCompile Include="src\Pathfinding\NavMeshSystem.cpp">
+      <Filter>src\Pathfinding</Filter>
+    </ClCompile>
     <ClCompile Include="src\Physics\PhysStructs.cpp">
       <Filter>src\Physics</Filter>
     </ClCompile>
@@ -471,6 +506,15 @@
     </ClCompile>
     <ClCompile Include="src\Scripting\ScriptEngine.cpp">
       <Filter>src\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\Channel.cpp">
+      <Filter>src\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\Sound.cpp">
+      <Filter>src\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\System.cpp">
+      <Filter>src\Sound</Filter>
     </ClCompile>
     <ClCompile Include="src\StringConverter.cpp">
       <Filter>src</Filter>
@@ -493,8 +537,5 @@
     <ClCompile Include="src\illumination\SurfelGenerator.cpp">
       <Filter>src\illumination</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sound\System.cpp" />
-    <ClCompile Include="src\Sound\Sound.cpp" />
-    <ClCompile Include="src\Sound\Channel.cpp" />
   </ItemGroup>
 </Project>

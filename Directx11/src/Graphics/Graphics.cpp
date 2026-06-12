@@ -11,7 +11,7 @@
 
 namespace Engine
 {
-Microsoft::WRL::ComPtr<ID3D11Device> Graphics::device = nullptr;
+
 
 
 Graphics::~Graphics()
@@ -30,7 +30,6 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 	windowHeight = height;
 	if (!InitializeDirectX(hwnd))
 		return false;
-	physicsController.initialise();
 
 	if (!InitializeShaders())
 		return false;
@@ -53,7 +52,6 @@ bool Graphics::Initialize(HWND hwnd, int width, int height)
 }
 void Graphics::PhysicsUpdate()
 {
-	physicsController.Update();
 }
 
 void Graphics::Present()

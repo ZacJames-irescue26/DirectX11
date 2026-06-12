@@ -5,7 +5,9 @@
 #include "..\Graphics.h"
 #include "src\Utils.h"
 #include "Math\AABB.h"
+#include "src/Pathfinding/NavMeshSystem.h"
 #include "Scripting\ScriptEngine.h"
+#include "Project.h"
 namespace Engine
 {
 
@@ -148,7 +150,12 @@ namespace Engine
 
 	std::shared_ptr<Entity> Scene::GetEntityByID(UUID id)
 	{
-		return m_Entities.find(id)->second;
+		if (m_Entities.find(id) != m_Entities.end())
+		{
+			return m_Entities.find(id)->second;
+		}
+
+		return nullptr;
 	}
 	std::shared_ptr<Entity> Scene::GetEntityByName(std::string name)
 	{
@@ -485,18 +492,18 @@ namespace Engine
 			
 			if (auto* staticMesh = entity->GetComponent<StaticMeshComponent>())
 			{
-
-				staticMesh->Initialize(staticMesh->m_filepath, device, context, &staticCB);
+				
+				staticMesh->Initialize(Project::ResolveAssetPath(staticMesh->m_filepath).string(), device, context, &staticCB);
 
 			}
 
 
 			if (auto* anim = entity->GetComponent<AnimatedMeshComponent>())
 			{
-				anim->Initialize(anim->m_filepath, device, context, &animCB);
-				for (const auto& paths : anim->m_AnimPaths)
+				anim->Initialize(Project::ResolveAssetPath(anim->m_filepath).string(), device, context, &animCB);
+				for (const auto& [Name,paths] : anim->m_AnimPaths)
 				{
-					anim->AddAnimation(paths);
+					anim->AddAnimation(paths, Name);
 				}
 			}
 		}
@@ -813,7 +820,7 @@ namespace Engine
 				if (animJson.contains("Animations"))
 				{
 					anim->m_AnimPaths =
-						animJson["Animations"].get<std::vector<std::string>>();
+						animJson["Animations"].get<std::map<std::string, std::string>>();
 				}
 
 				anim->m_PlayAnimation =
@@ -1200,7 +1207,344 @@ namespace Engine
 			camera->FarPlane
 		);
 		XMStoreFloat3(&camera->ForwardVector, forward);
+		XMStoreFloat3(&camera->UpVector, up);
 		gfx.camera.SetViewMartix(view);
 	}
+	void Scene::UpdateListener(float dt)
+	{
+		for (auto& ent : GetEntities())
+		{
+			if (!ent)
+				continue;
+
+			auto* listener = ent->GetComponent<AudioListenerComponent>();
+
+			if (!listener || !listener->IsListening)
+				continue;
+
+			auto* transform = ent->GetComponent<TransformComponent>();
+
+			if (!transform)
+				continue;
+
+			XMMATRIX world = GetWorldMatrix(ent.get());
+
+			XMVECTOR scale;
+			XMVECTOR rotationQuat;
+			XMVECTOR position;
+
+			if (!XMMatrixDecompose(&scale, &rotationQuat, &position, world))
+				continue;
+
+			XMMATRIX rotation =
+				XMMatrixRotationQuaternion(rotationQuat);
+
+			XMVECTOR forward = XMVector3Normalize(
+				XMVector3TransformNormal(
+					XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f),
+					rotation
+				)
+			);
+
+			XMVECTOR up =XMVector3Normalize(
+				XMVector3TransformNormal(
+					XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f),
+					rotation
+				)
+			);
+
+			XMFLOAT3 pos;
+			XMFLOAT3 fwd;
+			XMFLOAT3 upVec;
+
+			XMStoreFloat3(&pos, position);
+			XMStoreFloat3(&fwd, forward);
+			XMStoreFloat3(&upVec, up);
+
+			XMFLOAT3 velocity = { 0.0f, 0.0f, 0.0f };
+
+			if (auto* rb = ent->GetComponent<PhysicsComponent>())
+			{
+				velocity = m_PhysEngine->GetLinearVelocity(ent.get());
+			}
+
+			m_SoundSystem->SetListenerAttribs(
+				pos,
+				velocity,
+				fwd,
+				upVec
+			);
+
+			// Usually only one active listener.
+			break;
+		}
+	}
+
+	void Scene::CreateNavMesh()
+	{
+		if (!m_NavMeshSystem )
+		{
+			m_NavMeshSystem = std::make_unique<Engine::NavMeshSystem>();
+		}
+		m_NavMeshSystem->BuildFromScene(*this);
+
+	}
+	void Scene::DrawNavMesh()
+	{
+		if (!m_NavMeshSystem )
+		{
+			m_NavMeshSystem = std::make_unique<Engine::NavMeshSystem>();
+		}
+		if (m_PhysEngine)
+		{
+			m_PhysEngine->DebugDraw();
+		}
+		m_NavMeshSystem->DebugDraw();
+	}
+	float GetColliderBottomOffset(
+		const PhysicsComponent& physics)
+	{
+		switch (physics.ColliderType)
+		{
+		case JPH::EShapeSubType::Capsule:
+			return physics.HalfHeight + physics.radius;
+
+		case JPH::EShapeSubType::Box:
+			return physics.HalfSize.y;
+
+		case JPH::EShapeSubType::Sphere:
+			return physics.radius;
+
+		default:
+			return 0.0f;
+		}
+	}
+
+	XMFLOAT3 Scene::BodyPositionToNavPosition(
+		const XMFLOAT3& bodyCenter,
+		const PhysicsComponent& physics) const
+	{
+		XMFLOAT3 result = bodyCenter;
+		result.y -= GetColliderBottomOffset(physics);
+		return result;
+	}
+
+	XMFLOAT3 Scene::NavPositionToBodyPosition(
+		const XMFLOAT3& navPosition,
+		const PhysicsComponent& physics) const
+	{
+		XMFLOAT3 result = navPosition;
+		result.y += GetColliderBottomOffset(physics);
+		return result;
+	}
+	void Scene::UpdateAgents(float dt)
+	{
+
+		if (!m_NavMeshSystem || !m_PhysEngine)
+			return;
+
+		for (auto& ent : GetEntities())
+		{
+			if (!ent)
+				continue;
+
+			auto* patrol =
+				ent->GetComponent<PatrolAgentComponent>();
+
+			auto* transform =
+				ent->GetComponent<TransformComponent>();
+
+			if (!patrol || !transform)
+				continue;
+
+			auto* physics =
+				ent->GetComponent<PhysicsComponent>();
+
+			// This is the position used for navmesh queries.
+			// Ideally this should represent the agent's feet.
+			XMFLOAT3 navPosition = transform->Position;
+
+			if (physics && !physics->m_BodyID.IsInvalid())
+			{
+				const JPH::RVec3 bodyCenter =
+					m_PhysEngine->Get()->GetBodyInterface()
+					.GetPosition(physics->m_BodyID);
+
+				// Convert collider center to feet/navmesh position.
+				navPosition =
+					BodyPositionToNavPosition(
+						PhysicsEngine::FromJoltVector(bodyCenter),
+						*physics
+					);
+			}
+
+			if (!patrol->HasPath)
+			{
+				patrol->WaitTimer -= dt;
+
+				if (patrol->WaitTimer > 0.0f)
+					continue;
+
+				XMFLOAT3 randomDestination = {};
+
+				if (!m_NavMeshSystem->FindRandomPointAround(
+					navPosition,
+					patrol->PatrolRadius,
+					randomDestination))
+				{
+					continue;
+				}
+
+				patrol->Path.clear();
+
+				if (!m_NavMeshSystem->FindPath(
+					navPosition,
+					randomDestination,
+					patrol->Path) ||
+					patrol->Path.size() < 2)
+				{
+					continue;
+				}
+
+				patrol->HasPath = true;
+				patrol->CurrentPathIndex = 1;
+			}
+
+			if (!patrol->HasPath)
+				continue;
+
+			if (patrol->CurrentPathIndex >= patrol->Path.size())
+			{
+				patrol->HasPath = false;
+				patrol->WaitTimer = patrol->WaitTime;
+				continue;
+			}
+
+			const XMFLOAT3 target =
+				patrol->Path[patrol->CurrentPathIndex];
+
+			// Navigation controls horizontal movement.
+			XMFLOAT3 horizontalDelta =
+			{
+				target.x - navPosition.x,
+				0.0f,
+				target.z - navPosition.z
+			};
+
+			const float horizontalDistance =
+				std::sqrt(
+					horizontalDelta.x * horizontalDelta.x +
+					horizontalDelta.z * horizontalDelta.z
+				);
+
+			if (horizontalDistance <= patrol->StoppingDistance)
+			{
+				++patrol->CurrentPathIndex;
+
+				if (patrol->CurrentPathIndex >= patrol->Path.size())
+				{
+					patrol->HasPath = false;
+					patrol->WaitTimer = patrol->WaitTime;
+
+					// Stop horizontal movement at the final point.
+					if (physics && !physics->m_BodyID.IsInvalid())
+					{
+						const JPH::Vec3 currentVelocity =
+							m_PhysEngine->Get()->GetBodyInterface()
+							.GetLinearVelocity(physics->m_BodyID);
+
+						m_PhysEngine->Get()->GetBodyInterface()
+							.SetLinearVelocity(
+								physics->m_BodyID,
+								JPH::Vec3(
+									0.0f,
+									currentVelocity.GetY(),
+									0.0f
+								)
+							);
+					}
+				}
+
+				continue;
+			}
+
+			const float inverseDistance =
+				1.0f / horizontalDistance;
+
+			XMFLOAT3 direction =
+			{
+				horizontalDelta.x * inverseDistance,
+				0.0f,
+				horizontalDelta.z * inverseDistance
+			};
+
+			const XMFLOAT3 horizontalVelocity =
+			{
+				direction.x * patrol->Speed,
+				0.0f,
+				direction.z * patrol->Speed
+			};
+
+			if (physics && !physics->m_BodyID.IsInvalid())
+			{
+				JPH::BodyInterface& bodyInterface =
+					m_PhysEngine->Get()->GetBodyInterface();
+
+				const JPH::Vec3 currentVelocity =
+					bodyInterface.GetLinearVelocity(
+						physics->m_BodyID
+					);
+
+				// Preserve gravity, falling and jumping velocity.
+				bodyInterface.SetLinearVelocity(
+					physics->m_BodyID,
+					JPH::Vec3(
+						horizontalVelocity.x,
+						currentVelocity.GetY(),
+						horizontalVelocity.z
+					)
+				);
+
+				// Rotate the physics body as well as the render transform.
+				const float yaw =
+					std::atan2(
+						direction.x,
+						direction.z
+					);
+
+				bodyInterface.SetRotation(
+					physics->m_BodyID,
+					JPH::Quat::sRotation(
+						JPH::Vec3::sAxisY(),
+						yaw
+					),
+					JPH::EActivation::Activate
+				);
+
+				transform->SetRotationEulerRadians(
+					XMFLOAT3(0.0f, yaw, 0.0f)
+				);
+			}
+			else
+			{
+				transform->Position.x +=
+					horizontalVelocity.x * dt;
+
+				transform->Position.z +=
+					horizontalVelocity.z * dt;
+
+				const float yaw =
+					std::atan2(
+						direction.x,
+						direction.z
+					);
+
+				transform->SetRotationEulerRadians(
+					XMFLOAT3(0.0f, yaw, 0.0f)
+				);
+			}
+		}
+	}
+
 
 }

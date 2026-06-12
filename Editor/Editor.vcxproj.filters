@@ -13,6 +13,9 @@
     <Filter Include="Shader\Compute\Probes">
       <UniqueIdentifier>{A213FFCB-0E80-BAC6-D773-5224439FDC2E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\DebugShaders">
+      <UniqueIdentifier>{BC3F5971-28A1-367F-B10E-7D311D6F6D3E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Shader\illumination">
       <UniqueIdentifier>{205F8C87-8CC0-6995-152E-B047818EA054}</UniqueIdentifier>
     </Filter>
@@ -82,6 +85,12 @@
     </FxCompile>
     <FxCompile Include="Shader\Compute\ShadowBake_c.hlsl">
       <Filter>Shader\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugShaders\DrawLine_p.hlsl">
+      <Filter>Shader\DebugShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugShaders\DrawLine_v.hlsl">
+      <Filter>Shader\DebugShaders</Filter>
     </FxCompile>
     <FxCompile Include="Shader\DefferedPixel_p.hlsl">
       <Filter>Shader</Filter>
